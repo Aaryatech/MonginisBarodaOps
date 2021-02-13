@@ -492,7 +492,8 @@ top: -50px;
 .fix_btm{position: absolute; right:0; bottom:0px; width: 30%}
 
 
-h2.login_head_one{width: 100%; float: left; padding-bottom: 15px; text-align: center; color: #FFF; font-size: 18px;}
+h2.login_head_one{width: 100%; float: left; padding-bottom: 15px; text-align: center; color: #FFF; font-size: 25px;
+    font-weight: bold;}
 .login_txt{font-size: 15px; line-height: 22px; margin: 15px 0 0 0; color: #4D4D4D;}
 .login_txt span{font-weight:700; }
 .login_r.frget_pass{padding: 100px 50px 50px 50px;}
