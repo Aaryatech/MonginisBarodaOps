@@ -42,7 +42,7 @@ abbr:hover {cursor: pointer;}
 			</c:if>
 
 			<c:set var="flag" value="${0}"></c:set>
-			<c:forEach items="${setList}" var="setting" varStatus="count">
+		<%-- 	<c:forEach items="${setList}" var="setting" varStatus="count">
 				<c:choose>
 
 					<c:when test="${setting.settingKey eq 'Express Bill'}">
@@ -62,9 +62,9 @@ abbr:hover {cursor: pointer;}
 						<div class="title">
 							Express Bill <span></span>
 						</div></a></li>
-			</c:if>
+			</c:if> --%>
 			<c:set var="flag" value="${0}"></c:set>
-			<c:forEach items="${setList}" var="setting" varStatus="count">
+			<%-- <c:forEach items="${setList}" var="setting" varStatus="count">
 				<c:choose>
 
 					<c:when test="${setting.settingKey eq 'Customer Bill'}">
@@ -84,9 +84,9 @@ abbr:hover {cursor: pointer;}
 
 
 				</c:choose>
-			</c:forEach>
+			</c:forEach> --%>
 			<c:if test="${  flag==1 }">
-				<li><a
+				<%-- <li><a
 					href="${pageContext.request.contextPath}/showCustomerBill"><div
 							class="img">
 							<i class="fa fa-file-pdf-o icon"
@@ -94,8 +94,8 @@ abbr:hover {cursor: pointer;}
 						</div>
 						<div class="title">
 							Customer Bill <span></span>
-						</div></a></li>
-							<c:if
+						</div></a></li> --%>
+				<%-- 			<c:if
 				test="${(info.accessRight==1 or info.accessRight==2) && flagForPhyStk==1}">
 				<li><a
 					href="${pageContext.request.contextPath}/showStockMatchUtility"><div
@@ -105,7 +105,7 @@ abbr:hover {cursor: pointer;}
 						<div class="title">
 							Bill As Per <span>Physical Stock </span>
 						</div></a></li>
-			</c:if>
+			</c:if> --%>
 				<li><a href="${pageContext.request.contextPath}/viewBill"><div
 							class="img">
 							<i class="fa fa-eye" aria-hidden="true"  style="font-size: 22px !important;"></i>
@@ -198,7 +198,7 @@ abbr:hover {cursor: pointer;}
 			
 
 			<c:set var="flag" value="${0}"></c:set>
-			<c:forEach items="${setList}" var="setting" varStatus="count">
+			<%-- <c:forEach items="${setList}" var="setting" varStatus="count">
 				<c:choose>
 
 					<c:when test="${setting.settingKey eq 'Other Purchase Bill'}">
@@ -207,17 +207,17 @@ abbr:hover {cursor: pointer;}
 
 
 				</c:choose>
-			</c:forEach>
-			<c:if test="${ flag==1}">
+			</c:forEach> --%>
+		<%-- 	<c:if test="${ flag==1}">
 				<li><a href="${pageContext.request.contextPath}/showOtherBill"><div
 							class="img">
 							<i class="fa fa-file-pdf-o icon"
 								style="font-size: 22px !important;"></i>
 						</div>
 						<div class="title">Other Purchase Bill</div></a></li>
-			</c:if>
+			</c:if> --%>
           <c:set var="flag" value="${0}"></c:set>
-			<c:forEach items="${setList}" var="setting" varStatus="count">
+			<%-- <c:forEach items="${setList}" var="setting" varStatus="count">
 				<c:choose>
 
 					<c:when test="${setting.settingKey eq 'Other Item Stock'}">
@@ -225,8 +225,8 @@ abbr:hover {cursor: pointer;}
 					</c:when>
 
 
-				</c:choose>
-			</c:forEach>
+				</c:choose> 
+			</c:forEach>--%>
 			<c:if test="${flag==1}">
 				<li><a
 					href="${pageContext.request.contextPath}/showOthItemStock"><div
@@ -258,13 +258,13 @@ abbr:hover {cursor: pointer;}
 			</c:if>
 			
 			
-			<li><a
+		<%-- 	<li><a
 					href="${pageContext.request.contextPath}/dashboarddemo"><div
 							class="img">
 							<i class="fa fa-dashboard"
 								style="font-size: 22px !important;"></i>
 						</div>
-						<div class="title">Dashboard</div></a></li>
+						<div class="title">Dashboard</div></a></li> --%>
 
 			<c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">
@@ -311,7 +311,7 @@ abbr:hover {cursor: pointer;}
 			
 			<c:if
 				test="${(info.accessRight==1 or info.accessRight==2) && flag==1}">
-				<li><a
+				<%-- <li><a
 					href="${pageContext.request.contextPath}/showstockdetail"><div
 							class="img">
 							<i class="fa fa-bar-chart-o" aria-hidden="true" style="font-size: 22px !important;"></i>
@@ -319,7 +319,7 @@ abbr:hover {cursor: pointer;}
 						<div class="title">
 							Stock <span>Details</span>
 						</div></a></li>
-						
+						 --%>
 				<li><a
 					href="${pageContext.request.contextPath}/showExpenseList"><div
 							class="img">
@@ -330,7 +330,7 @@ abbr:hover {cursor: pointer;}
 						</div></a></li>
 						
 						
-						
+			<%-- 			
 				<li><a
 					href="${pageContext.request.contextPath}/showPattyCashMgmnt"><div
 							class="img">
@@ -338,7 +338,7 @@ abbr:hover {cursor: pointer;}
 						</div>
 						<div class="title">
 							Petty <span>Cash</span>
-						</div></a></li>
+						</div></a></li> --%>
 			</c:if>
 		
 
@@ -687,7 +687,7 @@ abbr:hover {cursor: pointer;}
 				alt="monginis"></a>
 			<div class="listarea">
 				<ul><div class="row">
-					<li class="small-box">
+					<%-- <li class="small-box">
 
 						<div class="ibox">
 							<div class="ibox-head">
@@ -716,14 +716,14 @@ abbr:hover {cursor: pointer;}
 								class="fa fa-files-o icon"></i>Datewise Sub Category Sale Report</a>
 								
 								
-								<%-- <a
+								<a
 								href="${pageContext.request.contextPath}/showHsnDateWiseSellReport"><i
-								class="fa fa-files-o icon"></i>Bill wise HSN wise Report</a> --%>
+								class="fa fa-files-o icon"></i>Bill wise HSN wise Report</a>
 								
 								
 						</div>
 								
-					</li>
+					</li> --%>
 							
 					<li class="small-box">
 
@@ -799,15 +799,15 @@ abbr:hover {cursor: pointer;}
 								href="${pageContext.request.contextPath}/showSpAdvTaxReport"><i
 								class="fa fa-files-o icon"></i>Sp Advance Tax Report</a> --%> <a
 								href="${pageContext.request.contextPath}/showInsertCreditNote"><i
-								class="fa fa-files-o icon"></i>Credit Note Report</a> <a
+								class="fa fa-files-o icon"></i>Credit Note Report</a> <%-- <a
 								href="${pageContext.request.contextPath}/showCumulativeCrnNotes"><i
-								class="fa fa-files-o icon"></i>Cumulative Credit Note</a> <a
+								class="fa fa-files-o icon"></i>Cumulative Credit Note</a> --%> <a
 								href="${pageContext.request.contextPath}/grnReport"><i
 								class="fa fa-files-o icon"></i> GRN Report (Sale)</a> <a
 								href="${pageContext.request.contextPath}/gvnReport"><i
-								class="fa fa-files-o icon"></i> GVN Report (Sale)</a> <a
+								class="fa fa-files-o icon"></i> GVN Report (Sale)</a> <%-- <a
 								href="${pageContext.request.contextPath}/showCutomerList"><i
-								class="fa fa-files-o icon"></i>Customer List(Sale)</a> 
+								class="fa fa-files-o icon"></i>Customer List(Sale)</a> --%> 
 						</div>
 					</li>
 </div>
@@ -849,7 +849,7 @@ abbr:hover {cursor: pointer;}
 
 						</div>
 					</li>
-<li class="small-box">
+						<%-- <li class="small-box">
 								
 								
 								<div class="ibox">
@@ -864,7 +864,7 @@ abbr:hover {cursor: pointer;}
 						<a href="${pageContext.request.contextPath}/viewDailySalesReport"><i class="fa fa-files-o icon"></i> Daily Sales Report</a>
 						</div>
 						
-						</li>
+						</li> --%>
 
 </div>
 				</ul>

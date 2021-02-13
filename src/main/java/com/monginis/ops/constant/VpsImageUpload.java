@@ -10,16 +10,22 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 public class VpsImageUpload {
-	
-	/*private static final String FR_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploadspune/FR/";
-	private static final String SP_CAKE_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploadspune/SPCAKE/";
-	private static final String CUST_CHOICE_PHOTO_CAKE_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploadspune/CUSTCHOICEPHOTOCAKE/";
-	private static final String GVN_PHOTO_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploadspune/GVN/";
-	*/
-	private static final String FR_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploads/FR/";
-	private static final String SP_CAKE_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploads/SPCAKE/";
-	private static final String CUST_CHOICE_PHOTO_CAKE_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploads/CUSTCHOICEPHOTOCAKE/";
-	private static final String GVN_PHOTO_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploads/GVN/";
+
+	/*
+	 * private static final String FR_FOLDER =
+	 * "/opt/apache-tomcat-8.5.37/webapps/uploadspune/FR/"; private static final
+	 * String SP_CAKE_FOLDER =
+	 * "/opt/apache-tomcat-8.5.37/webapps/uploadspune/SPCAKE/"; private static final
+	 * String CUST_CHOICE_PHOTO_CAKE_FOLDER =
+	 * "/opt/apache-tomcat-8.5.37/webapps/uploadspune/CUSTCHOICEPHOTOCAKE/"; private
+	 * static final String GVN_PHOTO_FOLDER =
+	 * "/opt/apache-tomcat-8.5.37/webapps/uploadspune/GVN/";
+	 */
+	public static final String fileUploadPath = "/opt/cpanel/ea-tomcat85/webapps/uploads/baroda/";
+	private static final String FR_FOLDER = fileUploadPath + "FR/";
+	private static final String SP_CAKE_FOLDER = fileUploadPath + "SPCAKE/";
+	private static final String CUST_CHOICE_PHOTO_CAKE_FOLDER = fileUploadPath + "CUSTCHOICEPHOTOCAKE/";
+	private static final String GVN_PHOTO_FOLDER = fileUploadPath + "GVN/";
 
 	public void saveUploadedFiles(List<MultipartFile> files, int imageType, String imageName) throws IOException {
 
@@ -42,25 +48,23 @@ public class VpsImageUpload {
 
 				System.out.println("Path= " + path.toString());
 
-			} 
-			else if (imageType == 4) {
+			} else if (imageType == 4) {
 
 				path = Paths.get(SP_CAKE_FOLDER + imageName);
 
 			}
-			
+
 			else if (imageType == 5) {
 
 				path = Paths.get(CUST_CHOICE_PHOTO_CAKE_FOLDER + imageName);
 
-			}
-			else if (imageType == 6) {
+			} else if (imageType == 6) {
 
 				path = Paths.get(GVN_PHOTO_FOLDER + imageName);
 
 			}
 
-
+			System.out.println("****************** path " + path);
 			Files.write(path, bytes);
 
 		}

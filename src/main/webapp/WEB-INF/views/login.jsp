@@ -12,7 +12,7 @@
 	href="${pageContext.request.contextPath}/resources/css/monginis.css"
 	rel="stylesheet" type="text/css" />
 <link rel="icon"
-	href="${pageContext.request.contextPath}/resources/images/atsfav.png"
+	href="${pageContext.request.contextPath}/resources/images/MongiFavicon.png"
 	type="image/x-icon" />
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
@@ -115,7 +115,7 @@
 					<div class="loginInner">
 					
 						<div class="login_l"><a href=""><img
-						src="${pageContext.request.contextPath}/resources/images/ats-logo.png"
+						src="${pageContext.request.contextPath}/resources/images/monginis1.png"
 						alt="monginis"></a>
 						
 						<p class="login_txt">
@@ -128,7 +128,7 @@
 					
 					
 						<h2 class="login_head_one">
-							Account Login
+							Franchisee Login
 						</h2>
 						<div class="loginBox">
 							<%-- <div class="loginUser">

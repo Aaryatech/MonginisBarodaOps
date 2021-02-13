@@ -18,7 +18,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/assets/bootstrap/css/lightbox.css">
 <link rel="icon"
-	href="${pageContext.request.contextPath}/resources/images/atsfav.png"
+	href="${pageContext.request.contextPath}/resources/images/MongiFavicon.png"
 	type="image/x-icon" />
 	
 	<link
