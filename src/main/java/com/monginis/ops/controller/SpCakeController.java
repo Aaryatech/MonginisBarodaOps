@@ -147,7 +147,11 @@ public class SpCakeController {
 			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
 			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
 			model.addObject("customerList", customerList);
-
+			System.err.println("Cust Lis--->"+customerList);
+			
+			
+			
+			
 			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
 			String itemShow = menuList.get(globalIndex).getItemShow();
 
