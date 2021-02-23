@@ -369,7 +369,14 @@ public class SpCakeController {
 
 				weightList.add(minWt);
 				float currentWt = minWt;
-				while (currentWt < 2) {
+				while(currentWt < maxWt) {
+					currentWt=currentWt+0.5f;	
+					weightList.add(currentWt);
+					}
+				
+				
+				/******************************Prev Logic For Weight List Start *****************************/
+				/*while (currentWt < 2) {
 					currentWt = currentWt + 0.5f;//spr rate 2 means weight increment by 
 					if(currentWt<=2) {
 					weightList.add(currentWt);
@@ -381,7 +388,11 @@ public class SpCakeController {
 				{
 					max=max+specialCake.getSpRate2();
 					weightList.add(max);
-				}
+				}*/
+				
+				/******************************Prev Logic For Weight List End *****************************/
+				
+				
 				/*float max=Collections.max(weightList);
 					if(max<2) {
 						 max = max + 0.5f;
