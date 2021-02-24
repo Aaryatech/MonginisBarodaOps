@@ -189,10 +189,9 @@ public class ItemController {
 
 		subCatList = new ArrayList<>();
 		globalIndex = index;
-		
-		String prevDate=request.getParameter("prevdatepicker");
-		System.err.println("PREV DATE -------- "+prevDate);
-		
+
+		String prevDate = request.getParameter("prevdatepicker");
+		System.err.println("PREV DATE -------- " + prevDate);
 
 		Date date = new Date(Calendar.getInstance().getTime().getTime());
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -275,10 +274,9 @@ public class ItemController {
 		System.out.println("Order date: " + orderDate);
 		System.out.println("Production date: " + productionDate);
 		System.out.println("Delivery date: " + deliveryDate);
-		
-		
-		if(prevDate!=null) {
-			productionDate=DateConvertor.convertToYMD(prevDate);
+
+		if (prevDate != null) {
+			productionDate = DateConvertor.convertToYMD(prevDate);
 		}
 		System.out.println("PREV DATE AS Production date: " + productionDate);
 
@@ -310,6 +308,7 @@ public class ItemController {
 
 					flagRes = 1;
 					model.addObject("flagRes", flagRes);
+					System.out.println("in iff ");
 				} catch (Exception e) {
 					flagRes = 0;
 					model.addObject("flagRes", flagRes);
@@ -326,12 +325,12 @@ public class ItemController {
 			map.add("isSameDayApplicable", isSameDayApplicable);
 
 			RestTemplate restTemplate = new RestTemplate();
-
+			System.out.println("before service");
 			ParameterizedTypeReference<List<GetFrItem>> typeRef = new ParameterizedTypeReference<List<GetFrItem>>() {
 			};
 			ResponseEntity<List<GetFrItem>> responseEntity = restTemplate.exchange(Constant.URL + "/getFrItems",
 					HttpMethod.POST, new HttpEntity<>(map), typeRef);
-
+			System.out.println("after service");
 			frItemList = responseEntity.getBody();
 			prevFrItemList = responseEntity.getBody();
 			System.out.println("Fr Item List " + frItemList.toString());
@@ -343,20 +342,20 @@ public class ItemController {
 		Set<String> setName = new HashSet<String>();
 
 		double grandTotal = 0;
-		
-		System.err.println("RATE CAT = "+frDetails.getFrRateCat());
+
+		System.err.println("RATE CAT = " + frDetails.getFrRateCat());
 
 		for (int i = 0; i < frItemList.size(); i++) {
 
 			if (frDetails.getFrRateCat() == 1) {
-				System.err.println(" 1 - "+(frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate1()));
+				System.err.println(" 1 - " + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate1()));
 				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate1());
 			} else if (frDetails.getFrRateCat() == 2) {
-				System.err.println(" 2 - "+(frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate2()));
+				System.err.println(" 2 - " + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate2()));
 				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate2());
 
 			} else if (frDetails.getFrRateCat() == 3) {
-				System.err.println(" 3 - "+(frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate3()));
+				System.err.println(" 3 - " + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate3()));
 				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate3());
 
 			}
@@ -474,19 +473,21 @@ public class ItemController {
 		model.addObject("isSameDayApplicable", isSameDayApplicable);
 		model.addObject("qtyMessage", qtyAlert);
 		model.addObject("url", Constant.ITEM_IMAGE_URL);
-		
-		if(prevDate==null) {
+
+		if (prevDate == null) {
 			model.addObject("prevDate", strOrderDate);
-		}else {
+		} else {
 			model.addObject("prevDate", prevDate);
 		}
-		
 
 		try {
-			List<OpsCurStockAndShelfLife> itemStock = new StockController()
-					.getItemCurrentStockForOps(menuList.get(index).getItemShow(), request, response);
-			model.addObject("itemStock", itemStock);
-			System.err.println("ITEM CURR STOCK -------- " + itemStock);
+
+			/*
+			 * List<OpsCurStockAndShelfLife> itemStock = new StockController()
+			 * .getItemCurrentStockForOps(menuList.get(index).getItemShow(), request,
+			 * response); model.addObject("itemStock", itemStock);
+			 * System.err.println("ITEM CURR STOCK -------- " + itemStock);
+			 */
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -495,8 +496,6 @@ public class ItemController {
 		return model;
 
 	}
-
-
 
 	// -----------------------------------------------------------------------------------------
 	@RequestMapping(value = "/quantityValidation", method = RequestMethod.GET)
@@ -733,8 +732,7 @@ public class ItemController {
 
 			if (isValidQty) {
 				frItemList = new ArrayList<GetFrItem>();
-				
-				
+
 //				map = new LinkedMultiValueMap<String, Object>();
 //
 //				map.add("items", menuList.get(index).getItemShow());
@@ -742,7 +740,6 @@ public class ItemController {
 //				map.add("date", productionDate);
 //				map.add("menuId", menuList.get(index).getMenuId());
 //				map.add("isSameDayApplicable", isSameDayApplicable);
-				
 
 				ParameterizedTypeReference<List<GetFrItem>> typeRef = new ParameterizedTypeReference<List<GetFrItem>>() {
 				};
@@ -750,8 +747,8 @@ public class ItemController {
 						HttpMethod.POST, new HttpEntity<>(map), typeRef);
 
 				frItemList = responseEntity.getBody();
-				
-				System.err.println("FR ITEMS =========== "+frItemList);
+
+				System.err.println("FR ITEMS =========== " + frItemList);
 
 			}
 
@@ -871,7 +868,7 @@ public class ItemController {
 //							orderList.add(frItem);
 //						}
 
-						if(qty>0) {
+						if (qty > 0) {
 							frItem.setItemQty(qty);
 							orderList.add(frItem);
 						}

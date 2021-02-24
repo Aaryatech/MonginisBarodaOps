@@ -155,8 +155,8 @@ a:hover {
 								style="width: 30%" placeholder="Previous Order Date"
 								name="prevdatepicker" type="text"
 								class="texboxitemcode texboxcal" value="${prevDate}"
-								onchange="onChangePrevOrderDate(this.value,${con_index});" min="${prevDate}">
-							<input type="submit" vlaue="submit">
+								onchange="onChangePrevOrderDate(this.value,${con_index});"
+								min="${prevDate}"> <input type="submit" vlaue="submit">
 						</h3>
 
 
@@ -284,12 +284,12 @@ a:hover {
 												<tr class="bgpink">
 													<th class="col-md-2" style="text-align: center;">Item
 														Name</th>
-													<th class="col-md-1" style="text-align: center;">Shelf
-														Life</th>
+													<!-- <th class="col-md-1" style="text-align: center;">Shelf
+														Life</th> -->
 													<th class="col-md-1" style="text-align: center;">Min
 														Quantity</th>
-													<th class="col-md-1" style="text-align: right;">Current
-														Stock</th>
+													<!-- <th class="col-md-1" style="text-align: right;">Current
+														Stock</th> -->
 													<th class="col-md-1" style="text-align: center;">Quantity</th>
 													<th class="col-md-1" style="text-align: center;">MRP</th>
 													<th class="col-md-1" style="text-align: center;">Rate</th>
@@ -313,12 +313,12 @@ a:hover {
 												<tr class="bgpink">
 													<th class="col-md-2" style="text-align: center;">Item
 														Name</th>
-													<th class="col-md-1" style="text-align: center;">Shelf
-														Life</th>
+													<!-- <th class="col-md-1" style="text-align: center;">Shelf
+														Life</th> -->
 													<th class="col-md-1" style="text-align: center;">Min
 														Quantity</th>
-													<th class="col-md-1" style="text-align: right;">Current
-														Stock</th>
+													<!-- <th class="col-md-1" style="text-align: right;">Current
+														Stock</th> -->
 													<th class="col-md-1" style="text-align: center;">Quantity</th>
 													<th class="col-md-1" style="text-align: center;">MRP</th>
 													<th class="col-md-1" style="text-align: center;">Rate</th>
@@ -351,7 +351,7 @@ a:hover {
 																	</c:otherwise>
 																		</c:choose></td>
 
-																	<td class="col-md-1" style="text-align: center;"><c:set
+																	<%-- <td class="col-md-1" style="text-align: center;"><c:set
 																			value="0" var="temp"></c:set> <c:forEach var="shelf"
 																			items="${itemStock}">
 
@@ -362,12 +362,12 @@ a:hover {
 
 																				</c:if>
 																			</c:if>
-																		</c:forEach></td>
+																		</c:forEach></td> --%>
 
 																	<td class="col-md-1" style="text-align: center;"><c:out
 																			value='${items.minQty}' /></td>
 
-																	<td class="col-md-1" style="text-align: right;"><c:set
+																	<%-- <td class="col-md-1" style="text-align: right;"><c:set
 																			value="0" var="temp"></c:set> <c:forEach var="stock"
 																			items="${itemStock}">
 
@@ -378,7 +378,7 @@ a:hover {
 
 																				</c:if>
 																			</c:if>
-																		</c:forEach></td>
+																		</c:forEach></td> --%>
 
 
 																	<td class="col-md-1" style="text-align: center;"><input
@@ -448,7 +448,7 @@ a:hover {
 																		</c:choose></td>
 
 
-																	<td class="col-md-1" style="text-align: center;"><c:set
+																	<%-- <td class="col-md-1" style="text-align: center;"><c:set
 																			value="0" var="temp"></c:set> <c:forEach var="shelf"
 																			items="${itemStock}">
 
@@ -459,12 +459,12 @@ a:hover {
 
 																				</c:if>
 																			</c:if>
-																		</c:forEach></td>
+																		</c:forEach></td> --%>
 
 																	<td class="col-md-1" style="text-align: center;"><c:out
 																			value='${items.minQty}' /></td>
 
-																	<td class="col-md-1" style="text-align: right;"><c:set
+																	<%-- <td class="col-md-1" style="text-align: right;"><c:set
 																			value="0" var="temp"></c:set> <c:forEach var="stock"
 																			items="${itemStock}">
 
@@ -475,7 +475,7 @@ a:hover {
 
 																				</c:if>
 																			</c:if>
-																		</c:forEach></td>
+																		</c:forEach></td> --%>
 
 
 
@@ -542,7 +542,7 @@ a:hover {
 																		</c:choose></td>
 
 
-																	<td class="col-md-1" style="text-align: center;"><c:set
+																	<%-- <td class="col-md-1" style="text-align: center;"><c:set
 																			value="0" var="temp"></c:set> <c:forEach var="shelf"
 																			items="${itemStock}">
 
@@ -553,12 +553,12 @@ a:hover {
 
 																				</c:if>
 																			</c:if>
-																		</c:forEach></td>
+																		</c:forEach></td> --%>
 
 																	<td class="col-md-1" style="text-align: center;"><c:out
 																			value='${items.minQty}' /></td>
 
-																	<td class="col-md-1" style="text-align: right;"><c:set
+																	<%-- <td class="col-md-1" style="text-align: right;"><c:set
 																			value="0" var="temp"></c:set> <c:forEach var="stock"
 																			items="${itemStock}">
 
@@ -569,7 +569,7 @@ a:hover {
 
 																				</c:if>
 																			</c:if>
-																		</c:forEach></td>
+																		</c:forEach></td> --%>
 
 
 																	<td class="col-md-1" style="text-align: center;"><input

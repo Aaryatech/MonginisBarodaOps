@@ -2,9 +2,9 @@ package com.monginis.ops.constant;
 
 public class Constant {
 
-	 public static final String URL = "http://localhost:8097/";
+	//public static final String URL = "http://localhost:8097/";
 
-	//public static final String URL = "http://107.180.72.86:8080/barodaApi/";
+	public static final String URL = "http://107.180.72.86:8080/barodaApi/";
 
 	public static final String fileUploadPath = "/opt/cpanel/ea-tomcat85/webapps/uploads/baroda/";
 	public static final String fileShowPath = "http://107.180.72.86:8080/uploads/baroda/";
