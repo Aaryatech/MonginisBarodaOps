@@ -503,11 +503,17 @@ select {
               <option value="${eventList.spMsgText}"><c:out value="${eventList.spMsgText}" /></option>
              </c:forEach>
             </select></div>
+            
+            
+        <div class="col3"><input class="texboxitemcode" placeholder="Name" name="event_name" type="text" id="event_name" autocomplete="off">
+			</div>    
 		
-	</div><div class="colOuter">
+	</div>
+
+<!-- 	<div class="colOuter">
 		<div class="col1"><div class="col1title">MSG Name</div></div>
 		<div class="col2">  <select id="show" class="form-control" name="text1" onchange="showDiv1(this)" required>
-                            <!--   <option value="1" id="marathi" >GUJARATI</option> -->
+                              <option value="1" id="marathi" >GUJARATI</option>
                               <option value="2" id="hindi" >Hindi</option>
                               <option value="3" id="english" selected>English</option>
                        </select></div>
@@ -517,7 +523,7 @@ select {
 			</div> 
 						<div class="col3" id="msgEnglish" ><input class="texboxitemcode" placeholder="Name" name="event_name1" type="text" id="event_name_e" autocomplete="off">
 		</div>
-		</div>
+		</div> -->
 <c:choose>
 <c:when test="${specialCake.isCustChoiceCk=='1'}">
 		
@@ -548,6 +554,37 @@ select {
                             </div>
                             </div>
                             </div>
+                            
+           <!--                  <div class="colOuter">
+	         <div class="col1"><div class="col1title">Photo Cake3</div></div>
+	    	   <div class="col2full"><div class="editimg">
+	    	     <div class="editpics">
+	    	        <div class="fileUpload">
+                                <span> <i class="fa fa-pencil"></i></span>
+                                <input class="upload" type="file" id="order_photo3" name="order_photo3"/>
+                                
+                            </div>
+                            </div>
+                             <img id="image3" />
+                            </div>
+                            </div>
+                            </div> -->
+                            
+  <!--                            <div class="colOuter">
+	        <div class="col1"><div class="col1title">Photo Cake2</div></div>
+	    	  <div class="col2full"><div class="editimg">
+	    	    <div class="editpics">
+	    	        <div class="fileUpload">
+                                <span> <i class="fa fa-pencil"></i></span>
+                                <input class="upload" type="file" id="cust_choice_ck4" name="cust_choice_ck4"/>   
+                            </div>
+                            </div>
+                             <img id="img4" />
+                            </div>
+                            </div>
+                            </div> -->
+                            
+                          
 	
 	
    </c:when>
@@ -572,11 +609,11 @@ select {
 	</c:when>
 </c:choose> 
 
-       <div class="colOuter">
+       <div class="colOuter" style="display: none;" >
 		<div class="col1"><div class="col1title">Special Instructions</div></div>
         <div class="col2full">
                       <select id="show" class="form-control" name="showtextarea" onchange="showDiv(this)" required>
-                           <!--    <option value="1" id="marathi" >Marathi</option>-->
+                              <option value="1" id="marathi" >Marathi</option>
                             
                               <option value="3" id="english" selected>English</option>
                                 <option value="2" id="hindi" >Hindi</option> 
@@ -660,9 +697,21 @@ select {
 	</div>
 	
 	<div class="colOuter" id="ctype1">
-			<div class="col1"><div class="col1title" id="cktype">Cake Type</div></div>
+<!-- 			<div class="col1"><div class="col1title" id="cktype">Cake Type</div></div>
 	
-			<div class="col2full"><input class="texboxitemcode" placeholder="Cake Type"   name="ctype" type="text" id="ctype" required autocomplete="off"></div>
+			<div class="col2full"><input class="texboxitemcode" placeholder="Cake Type"   name="ctype" type="text" id="ctype" required autocomplete="off"></div> -->
+
+<div class="col1"><div class="col1title">Cake Shape</div></div>${SelectedshapeList}
+		<div class="col2full" >
+                <select name="ctype"  tabindex="-1"  id="ctype" required>
+                  <option value="">Select Shape</option>
+                   <c:forEach items="${selectedShapes}" var="shape">
+                     <option value="${shape.shapeName}">${shape.shapeName}</option>
+                   </c:forEach>
+                  
+                 </select>
+        </div>
+
 	
 	</div>
 	<div class="colOuter" >
@@ -1529,6 +1578,8 @@ function validate() {
 				  	isValid= true;  
 				  }
 		     }
+			}else if (temp==2) {
+				//alert("Akhilesh ")
 			}
     if(isValid)
     	{
@@ -1563,6 +1614,32 @@ function validate() {
     reader.onload = function (e) {
         // get loaded data and render thumbnail.
         document.getElementById("img").src = e.target.result;
+    };
+
+    // read the image file as a data URL.
+    reader.readAsDataURL(this.files[0]);
+};
+</script>
+<script>
+ document.getElementById("order_photo3").onchange = function () {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+        // get loaded data and render thumbnail.
+        document.getElementById("image3").src = e.target.result;
+    };
+
+    // read the image file as a data URL.
+    reader.readAsDataURL(this.files[0]);
+};
+</script>
+<script>
+ document.getElementById("cust_choice_ck4").onchange = function () {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+        // get loaded data and render thumbnail.
+        document.getElementById("img4").src = e.target.result;
     };
 
     // read the image file as a data URL.
@@ -1711,8 +1788,8 @@ function showDiv(elem){
        document.getElementById('textarea').value = '';
 	   document.getElementById('marathiDiv').style="display:none";
    }
-}
-function showDiv1(elem){
+} 
+/* function showDiv1(elem){
 	   if(elem.value == 1)
 		   {
 	         document.getElementById('msgGujrati').style.display= "block";
@@ -1735,7 +1812,7 @@ function showDiv1(elem){
 	       document.getElementById('msgGujrati').style="display:none";
 
 	   }
-	}
+	} */
 </script>
 <!------------------------END--------------------------------------------> 
 

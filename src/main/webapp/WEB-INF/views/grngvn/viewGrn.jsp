@@ -133,9 +133,11 @@ table, th, td {
 
 										</tr>
 									</thead>
+								
 									<tbody>
 
 										<c:forEach items="${grnList}" var="grnList" varStatus="count">
+											
 											<tr>
 												<td class="col-md-3" style="text-align: center;"><c:out
 														value="${grnList.grngvnSrno}" /> <input type="hidden"

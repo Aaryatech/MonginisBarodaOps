@@ -36,6 +36,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.monginis.ops.billing.SellBillDetail;
@@ -57,6 +59,7 @@ import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Main;
 import com.monginis.ops.model.SearchSpCakeResponse;
+import com.monginis.ops.model.Shape;
 import com.monginis.ops.model.SpCakeOrder;
 import com.monginis.ops.model.SpCakeOrderRes;
 import com.monginis.ops.model.SpCakeResponse;
@@ -283,6 +286,25 @@ public class SpCakeController {
 			System.out.println("sp id is:::"+specialCake.toString());
 			 cutSec =searchSpCakeResponse.getSpCakeSup().getCutSection();
 			
+			 List<Shape> shapeList=new ArrayList<>();
+				Shape[] shapeArr= restTemplate.getForObject(Constant.URL + "getAllChef",Shape[].class);
+				shapeList=new ArrayList<>(Arrays.asList(shapeArr));
+				String[] selectedShapeArr=specialCake.getSpeIdlist().split(",");
+			List<Shape> selShapes=new ArrayList<>();	
+			for(int i=0;i<selectedShapeArr.length;i++) {
+					int shapeid = Integer.parseInt(selectedShapeArr[i]);
+					for(Shape shapeObj : shapeList) {
+						//System.err.println("ShapeId=="+shapeid+"\t"+"shape=="+shapeObj.getShapeId());
+						if(shapeid==shapeObj.getShapeId()) {
+							selShapes.add(shapeObj);
+						}
+					}
+				}
+				
+			model.addObject("selectedShapes", selShapes);
+			
+		System.err.println("Selected  Shapes===="+selShapes);
+			 
 			System.out.println("cutSec is ::::"+cutSec);
           //-------------------------------------------------Order No Generation------------------------------
 			String spNo="";
@@ -687,7 +709,9 @@ public class SpCakeController {
 	@RequestMapping(value = "/orderSpCake", method = RequestMethod.POST)
 	public String addItemProcess(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value = "order_photo", required = false) List<MultipartFile> orderPhoto,
-			@RequestParam(value = "cust_choice_ck", required = false) List<MultipartFile> custChoiceCk)
+			@RequestParam(value = "cust_choice_ck", required = false) List<MultipartFile> custChoiceCk
+			/*@RequestParam(value = "order_photo3", required = false) List<MultipartFile> orderPhoto3,
+			@RequestParam(value = "cust_choice_ck4", required = false) List<MultipartFile> custChoiceCk4*/)
 			throws JsonProcessingException {
 
 		ModelAndView mav = new ModelAndView("order/orderRes");
@@ -847,7 +871,8 @@ public class SpCakeController {
 	 
 		    spPhoUpload = request.getParameter("spPhoUpload");
 
-		    int  eventNameLang = Integer.parseInt(request.getParameter("text1"));
+		    String eventName="";
+		   /* int  eventNameLang = Integer.parseInt(request.getParameter("text1"));
 		    logger.info("eventNameLang" + eventNameLang);
 		    String eventName="";
 		    if(eventNameLang==1 || eventNameLang==2 )
@@ -856,8 +881,8 @@ public class SpCakeController {
 		    }else  if(eventNameLang==3)
 		    {
 		    	eventName =request.getParameter("event_name1");
-		    }
-		    
+		    }*/
+		    eventName =request.getParameter("event_name");
 			
 			 logger.info("37  eventName" + eventName);
 			isCustCh = request.getParameter("isCustCh");
@@ -884,6 +909,8 @@ public class SpCakeController {
 
 			String custChCk = "";
 			String orderPhoto1 = "";
+			String custCh4 = "";
+			String orderPh = "";
 
 			if (isSpPhoUpload == 1) {
 
@@ -953,6 +980,32 @@ public class SpCakeController {
 					
 					upload.saveUploadedFiles(custChoiceCk, Constant.CUST_CHIOICE_IMAGE_TYPE,
 							curTimeStamp+""+custChoiceCk.get(0).getOriginalFilename());
+					
+					/*if(orderPhoto3.get(0).getOriginalFilename()=="")
+					{
+						orderPh ="";
+					}else
+					{
+						orderPh= curTimeStamp+""+orderPhoto.get(0).getOriginalFilename();
+					}
+					
+
+					upload.saveUploadedFiles(orderPhoto3, Constant.SPCAKE_IMAGE_TYPE,
+							curTimeStamp+""+orderPhoto3.get(0).getOriginalFilename());
+					if(custChoiceCk4.get(0).getOriginalFilename()=="")
+					{
+						custCh4="";
+					}else
+					{
+						custCh4 = curTimeStamp+""+custChoiceCk.get(0).getOriginalFilename();
+					}
+					
+					
+					upload.saveUploadedFiles(custChoiceCk4, Constant.CUST_CHIOICE_IMAGE_TYPE,
+							curTimeStamp+""+custChoiceCk4.get(0).getOriginalFilename());
+					*/
+					
+					
 
 					System.out.println("upload method called for two photo   " + orderPhoto.get(0).getName());
 
