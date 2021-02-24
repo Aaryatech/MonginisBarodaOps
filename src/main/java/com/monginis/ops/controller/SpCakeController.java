@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -709,9 +710,9 @@ public class SpCakeController {
 	@RequestMapping(value = "/orderSpCake", method = RequestMethod.POST)
 	public String addItemProcess(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value = "order_photo", required = false) List<MultipartFile> orderPhoto,
-			@RequestParam(value = "cust_choice_ck", required = false) List<MultipartFile> custChoiceCk
-			/*@RequestParam(value = "order_photo3", required = false) List<MultipartFile> orderPhoto3,
-			@RequestParam(value = "cust_choice_ck4", required = false) List<MultipartFile> custChoiceCk4*/)
+			@RequestParam(value = "cust_choice_ck", required = false) List<MultipartFile> custChoiceCk,
+			@RequestParam(value = "order_photo3", required = false) List<MultipartFile> pic3,
+			@RequestParam(value = "cust_choice_ck4", required = false) List<MultipartFile> pic4)
 			throws JsonProcessingException {
 
 		ModelAndView mav = new ModelAndView("order/orderRes");
@@ -911,15 +912,16 @@ public class SpCakeController {
 			String orderPhoto1 = "";
 			String custCh4 = "";
 			String orderPh = "";
-
+		    Random random = new Random();
+String photoNames="";
 			if (isSpPhoUpload == 1) {
-
+				System.out.println("A] isSpPhoUpload =1");
 				System.out.println("Empty image");
 				// orderPhoto1 = ImageS3Util.uploadPhotoCakeImage(orderPhoto);
 
 				VpsImageUpload upload = new VpsImageUpload();
 
-				
+
 
 				try {
 					if(orderPhoto.get(0).getOriginalFilename()=="")
@@ -927,13 +929,13 @@ public class SpCakeController {
 						orderPhoto1 ="";
 					}else
 					{
-						orderPhoto1 = curTimeStamp+""+orderPhoto.get(0).getOriginalFilename();
+						orderPhoto1 = curTimeStamp+random.nextLong()+""+orderPhoto.get(0).getOriginalFilename();
 					}
 					
 					upload.saveUploadedFiles(orderPhoto, Constant.SPCAKE_IMAGE_TYPE,
-							curTimeStamp+""+orderPhoto.get(0).getOriginalFilename());
+							orderPhoto1);
 					System.out.println("upload method called " + orderPhoto.toString());
-
+					photoNames=orderPhoto1+"~";
 				} catch (IOException e) {
 
 					System.out.println("Exce in File Upload In Sp Cake Photo Insert " + e.getMessage());
@@ -943,7 +945,7 @@ public class SpCakeController {
 			}
 
 			if (isCustSpCk == 1) {
-
+				System.out.println("B] isCustSpCk =1");
 				System.out.println("Empty image");
 				// custChCk = ImageS3Util.uploadPhotoCakeImage(custChoiceCk);
 
@@ -958,56 +960,73 @@ public class SpCakeController {
 				//String curTimeStamp = sdf.format(cal.getTime());
 
 				try {
-					if(orderPhoto.get(0).getOriginalFilename()=="")
-					{
-						orderPhoto1 ="";
-					}else
-					{
-						orderPhoto1 = curTimeStamp+""+orderPhoto.get(0).getOriginalFilename();
-					}
-					
-
-					upload.saveUploadedFiles(orderPhoto, Constant.SPCAKE_IMAGE_TYPE,
-							curTimeStamp+""+orderPhoto.get(0).getOriginalFilename());
+				/*
+				 * if(orderPhoto.get(0).getOriginalFilename()=="") { orderPhoto1 =""; }else {
+				 * orderPhoto1 =
+				 * curTimeStamp+random.nextInt()+""+orderPhoto.get(0).getOriginalFilename(); }
+				 * 
+				 * 
+				 * upload.saveUploadedFiles(orderPhoto, Constant.SPCAKE_IMAGE_TYPE,
+				 * orderPhoto1);
+				 */
 					if(custChoiceCk.get(0).getOriginalFilename()=="")
 					{
 						custChCk ="";
 					}else
 					{
-						custChCk = curTimeStamp+""+custChoiceCk.get(0).getOriginalFilename();
+						custChCk = curTimeStamp+random.nextInt()+""+custChoiceCk.get(0).getOriginalFilename();
 					}
-					
+					photoNames=custChCk+"~"+photoNames;
 					
 					upload.saveUploadedFiles(custChoiceCk, Constant.CUST_CHIOICE_IMAGE_TYPE,
-							curTimeStamp+""+custChoiceCk.get(0).getOriginalFilename());
+							custChCk);
 					
-					/*if(orderPhoto3.get(0).getOriginalFilename()=="")
-					{
-						orderPh ="";
-					}else
-					{
-						orderPh= curTimeStamp+""+orderPhoto.get(0).getOriginalFilename();
+					//Upload 3
+					try {
+						if(pic3.get(0).getOriginalFilename()=="")
+						{
+							orderPhoto1="";
+						}else
+						{
+							System.out.println("C] ");
+							orderPhoto1 = curTimeStamp+random.nextInt()+""+pic3.get(0).getOriginalFilename();
+						}
+						
+						upload.saveUploadedFiles(pic3, Constant.SPCAKE_IMAGE_TYPE,
+								orderPhoto1);
+						//System.out.println("upload method called " + orderPhoto.toString());
+						photoNames=orderPhoto1+"~"+photoNames;
+					} catch (IOException e) {
+
+						System.out.println("Exce in File Upload In Sp Cake Photo Insert " + e.getMessage());
+						e.printStackTrace();
 					}
 					
+					//Upload 4
+					try {
+						if(pic4.get(0).getOriginalFilename()=="")
+						{
+							orderPhoto1="";
+						}else
+						{
+							System.out.println("D] ");
+							orderPhoto1 = curTimeStamp+random.nextInt()+""+pic4.get(0).getOriginalFilename();
+						}
+						
+						upload.saveUploadedFiles(pic4, Constant.SPCAKE_IMAGE_TYPE,
+								orderPhoto1);
+						System.out.println("upload method called " + orderPhoto.toString());
+						photoNames=orderPhoto1+"~"+photoNames;
+					} catch (IOException e) {
 
-					upload.saveUploadedFiles(orderPhoto3, Constant.SPCAKE_IMAGE_TYPE,
-							curTimeStamp+""+orderPhoto3.get(0).getOriginalFilename());
-					if(custChoiceCk4.get(0).getOriginalFilename()=="")
-					{
-						custCh4="";
-					}else
-					{
-						custCh4 = curTimeStamp+""+custChoiceCk.get(0).getOriginalFilename();
+						System.out.println("Exce in File Upload In Sp Cake Photo Insert " + e.getMessage());
+						e.printStackTrace();
 					}
 					
-					
-					upload.saveUploadedFiles(custChoiceCk4, Constant.CUST_CHIOICE_IMAGE_TYPE,
-							curTimeStamp+""+custChoiceCk4.get(0).getOriginalFilename());
-					*/
-					
+					System.err.println("photoNames " +photoNames);
 					
 
-					System.out.println("upload method called for two photo   " + orderPhoto.get(0).getName());
+					//System.out.println("upload method called for two photo   " + orderPhoto.get(0).getName());
 
 				} catch (IOException e) {
 
@@ -1101,7 +1120,7 @@ public class SpCakeController {
 			spCakeOrder.setSpBookForMobNo("0");//getInvoiceNo(request,response);   //commented on 16 may 19 Mahesh
 			spCakeOrder.setSpCustDob(sqlSpCustDOB);
 			spCakeOrder.setSpInstructions(spInstructions);
-			spCakeOrder.setOrderPhoto(orderPhoto1);
+			spCakeOrder.setOrderPhoto(photoNames);//sac
 			spCakeOrder.setOrderPhoto2(custChCk);
 
 			spCakeOrder.setSpCustMobNo(spCustMobileNo);

@@ -555,7 +555,7 @@ select {
                             </div>
                             </div>
                             
-           <!--                  <div class="colOuter">
+                            <div class="colOuter">
 	         <div class="col1"><div class="col1title">Photo Cake3</div></div>
 	    	   <div class="col2full"><div class="editimg">
 	    	     <div class="editpics">
@@ -568,9 +568,9 @@ select {
                              <img id="image3" />
                             </div>
                             </div>
-                            </div> -->
+                            </div>
                             
-  <!--                            <div class="colOuter">
+                             <div class="colOuter">
 	        <div class="col1"><div class="col1title">Photo Cake2</div></div>
 	    	  <div class="col2full"><div class="editimg">
 	    	    <div class="editpics">
@@ -582,7 +582,7 @@ select {
                              <img id="img4" />
                             </div>
                             </div>
-                            </div> -->
+                            </div>
                             
                           
 	
