@@ -984,7 +984,7 @@ String photoNames="";
 					}
 					photoNames=custChCk+"~"+photoNames;
 					
-					upload.saveUploadedFiles(custChoiceCk, Constant.CUST_CHIOICE_IMAGE_TYPE,
+					upload.saveUploadedFiles(custChoiceCk, Constant.SPCAKE_IMAGE_TYPE,
 							custChCk);
 					
 					//Upload 3
