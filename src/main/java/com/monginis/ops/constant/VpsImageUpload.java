@@ -25,6 +25,7 @@ public class VpsImageUpload {
 	private static final String FR_FOLDER = fileUploadPath + "FR/";
 	private static final String SP_CAKE_FOLDER = fileUploadPath + "SPCAKE/";
 	private static final String CUST_CHOICE_PHOTO_CAKE_FOLDER = fileUploadPath + "CUSTCHOICEPHOTOCAKE/";
+	
 	private static final String GVN_PHOTO_FOLDER = fileUploadPath + "GVN/";
 
 	public void saveUploadedFiles(List<MultipartFile> files, int imageType, String imageName) throws IOException {

@@ -320,14 +320,14 @@ abbr:hover {cursor: pointer;}
 							Stock <span>Details</span>
 						</div></a></li>
 						 --%>
-				<li><a
+			<%-- 	<li><a
 					href="${pageContext.request.contextPath}/showExpenseList"><div
 							class="img">
 							<i class="fa fa-suitcase" aria-hidden="true" style="font-size: 22px !important;"></i>
 						</div>
 						<div class="title">
 							Expense <span>List</span>
-						</div></a></li>
+						</div></a></li> --%>
 						
 						
 			<%-- 			

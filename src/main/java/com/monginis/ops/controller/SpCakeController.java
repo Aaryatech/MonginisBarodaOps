@@ -389,11 +389,17 @@ public class SpCakeController {
 				float minWt = Float.valueOf(specialCake.getSpMinwt());
 
 				float maxWt = Float.valueOf(specialCake.getSpMaxwt());
-
+				
+				System.err.println("SACHIN min wt  " +minWt + "maxwt " +maxWt+ "wt inc by " +specialCake.getSpRate2());
 				weightList.add(minWt);
 				float currentWt = minWt;
-				while(currentWt < maxWt) {
+				while(currentWt <3) {
 					currentWt=currentWt+0.5f;	
+					weightList.add(currentWt);
+					}
+				
+					while(currentWt <maxWt) {
+					currentWt=currentWt+specialCake.getSpRate2();
 					weightList.add(currentWt);
 					}
 				
@@ -1023,6 +1029,25 @@ String photoNames="";
 						e.printStackTrace();
 					}
 					
+
+					try {
+						if(orderPhoto.get(0).getOriginalFilename()=="")
+						{
+							orderPhoto1 ="";
+						}else
+						{
+							orderPhoto1 = curTimeStamp+random.nextLong()+""+orderPhoto.get(0).getOriginalFilename();
+						}
+						
+						upload.saveUploadedFiles(orderPhoto, Constant.SPCAKE_IMAGE_TYPE,
+								orderPhoto1);
+						System.out.println("upload method called " + orderPhoto.toString());
+						photoNames=orderPhoto1+"~"+photoNames;
+					} catch (IOException e) {
+
+						System.out.println("Exce in File Upload In Sp Cake Photo Insert " + e.getMessage());
+						e.printStackTrace();
+					}
 					System.err.println("photoNames " +photoNames);
 					
 
@@ -1872,7 +1897,11 @@ String photoNames="";
 					mav.addObject("isFound", true);
 					mav.addObject("exCharges", exCharges);
 					mav.addObject("disc", disc);
-
+					
+					String photoArray[]=spCake.getOrderPhoto().split("~");
+					
+					mav.addObject("photoArray", photoArray);
+					
 				}
 				else
 				{

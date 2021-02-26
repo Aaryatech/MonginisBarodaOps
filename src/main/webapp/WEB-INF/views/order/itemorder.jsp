@@ -344,10 +344,10 @@ a:hover {
 																			<c:when test="${items.itemImage!=''}">
 																				<a href="${url}${items.itemImage}"
 																					data-lightbox="image-1" tabindex="-1"
-																					style="color: #000000;">${items.itemName}</a>
+																					style="color: #000000;">${items.itemName} ${items.itemGrp3}</a>
 																			</c:when>
 																			<c:otherwise>
-																	${items.itemName}
+																	${items.itemName} ${items.itemGrp3}
 																	</c:otherwise>
 																		</c:choose></td>
 
@@ -386,7 +386,7 @@ a:hover {
 																		value='${items.itemQty}' class="tableInput"
 																		type="text" onkeydown="myFunction()"
 																		onkeypress='return event.charCode >= 48 && event.charCode <= 57'
-																		onchange="onChange('${items.itemRate1}',${items.id})">
+																		onchange="onChange('${items.itemRate1}',${items.id},'${items.itemGrp3}')">
 
 																		<input type="hidden" value="${items.minQty}"
 																		id="minqty${items.id}" /></td>
@@ -440,10 +440,10 @@ a:hover {
 																			<c:when test="${items.itemImage!=''}">
 																				<a href="${url}${items.itemImage}"
 																					data-lightbox="image-1" tabindex="-1"
-																					style="text-decoration: underline; color: #000000;">${items.itemName}</a>
+																					style="text-decoration: underline; color: #000000;">${items.itemName}${items.itemGrp3}</a>
 																			</c:when>
 																			<c:otherwise>
-																	${items.itemName}
+																	${items.itemName} ${items.itemGrp3}
 																	</c:otherwise>
 																		</c:choose></td>
 
@@ -485,7 +485,7 @@ a:hover {
 																		value='${items.itemQty}' class="tableInput"
 																		type="text"
 																		onkeypress='return event.charCode >= 48 && event.charCode <= 57'
-																		onchange="onChange('${items.itemRate2}',${items.id})">
+																		onchange="onChange('${items.itemRate2}',${items.id},'${items.itemGrp3}')">
 
 																		<input type="hidden" value="${items.minQty}"
 																		id="minqty${items.id}" /></td>
@@ -534,10 +534,10 @@ a:hover {
 																			<c:when test="${items.itemImage!=''}">
 																				<a href="${url}${items.itemImage}"
 																					data-lightbox="image-1" tabindex="-1"
-																					style="text-decoration: underline; color: #000000;">${items.itemName}</a>
+																					style="text-decoration: underline; color: #000000;">${items.itemName} ${items.itemGrp3}</a>
 																			</c:when>
 																			<c:otherwise>
-																	${items.itemName}
+																	${items.itemName} ${items.itemGrp3}
 																	</c:otherwise>
 																		</c:choose></td>
 
@@ -577,7 +577,7 @@ a:hover {
 																		value='${items.itemQty}' class="tableInput"
 																		type="text"
 																		onkeypress='return event.charCode >= 48 && event.charCode <= 57'
-																		onchange="onChange('${items.itemRate3}',${items.id})">
+																		onchange="onChange('${items.itemRate3}',${items.id},'${items.itemGrp3}')">
 
 																		<input type="hidden" value="${items.minQty}"
 																		id="minqty${items.id}" /></td>
@@ -760,11 +760,19 @@ a:hover {
 
 
 <script type="text/javascript">
-		function onChange(rate,id) {
+		function onChange(rate,id,ordLimit) {
 
 			//calculate total value  
 			var qty = $('#'+id).val();
-			
+			if(parseInt(qty)>parseInt(ordLimit)){
+				var total =0;
+				 
+				alert("Order Qty Limit Exceeds");
+				$('#'+id).val('0');
+				
+				$('#total'+id).html(total);
+				$('#'+id).focus();
+			}
 			
 			var minqty = $('#minqty'+id).val();
 			

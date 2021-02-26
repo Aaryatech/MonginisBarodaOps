@@ -248,17 +248,36 @@ $("#tech").change(function() {
 	<c:choose>
 		<c:when test="${isCustCh=='1'}">
 	<div class="fullform">
-		<div class="cackleft">Order Photo</div>
+		<div class="cackleft">Order Photo 1</div>
 		<div class="cackright">
-       <img src="${SPCAKE_URL}${specialCake.orderPhoto}"alt="image"/>
+       <img src="${SPCAKE_URL}${photoArray[0]}" alt="image"/>
         </div>
 	</div>
 	<div class="fullform">
+		<div class="cackleft">Order Photo 2</div>
+		<div class="cackright">
+       <img src="${SPCAKE_URL}${photoArray[1]}"alt="image"/>
+        </div>
+	</div>
+	<div class="fullform">
+		<div class="cackleft">Order Photo 3</div>
+		<div class="cackright">
+       <img src="${SPCAKE_URL}${photoArray[2]}"alt="image"/>
+        </div>
+	</div>
+	<div class="fullform">
+		<div class="cackleft">Order Photo 4</div>
+		<div class="cackright">
+       <img src="${SPCAKE_URL}${photoArray[3]}"alt="image"/>
+        </div>
+	</div>
+	
+	<%-- <div class="fullform">
 		<div class="cackleft">Customer Choice Photo</div>
 		<div class="cackright">
        <img src="${PHOTO_URL}${specialCake.orderPhoto2}"alt="image"/>
         </div>
-	</div>
+	</div> --%>
 	
 	
     </c:when>
@@ -266,10 +285,9 @@ $("#tech").change(function() {
     <div class="fullform">
 		<div class="cackleft">Order Photo</div>
 		<div class="cackright">
-       <img src="${SPCAKE_URL}${specialCake.orderPhoto}"alt="img"/>
+       <img src="${SPCAKE_URL}${photoArray[0]}"alt="img"/>
         </div>
 	</div>
-    
     
        </c:when>
     </c:choose>
