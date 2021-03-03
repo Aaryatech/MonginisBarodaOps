@@ -93,7 +93,7 @@ select {
 							<div class="left">
 
 
-								<div class="fullform">
+								<%-- <div class="fullform">
 									<div class="cackleft">Category</div>
 									<div class="cackright">
 										<select name="catId" id="catId" class="form-control"
@@ -107,8 +107,9 @@ select {
 											</c:forEach>
 										</select>
 									</div>
-								</div>
-								<div class="fullform">
+								</div> --%>
+									<input type="hidden" id="regular_sp_cake" name="regular_sp_cake">
+							<!-- 	<div class="fullform">
 									<div class="cackleft">Sub Category</div>
 									<div class="cackright">
 										<select name="regular_sp_cake" id="regular_sp_cake" onchange="onSubCatChange(this.value)"
@@ -117,15 +118,18 @@ select {
 
 										</select>
 									</div>
-								</div>
+								</div> -->
 								<div class="fullform">
-									<div class="cackleft2">Regular Cake</div>
+									<div class="cackleft2">Select Item</div>
 									<div class="cackrighttexbox">
 										<select data-placeholder="Select Item" class="form-control"
 											tabindex="7" id="regSpCkItem" name="regSpCkItem" required>
 
-										</select>
-
+										<option value="-1" >Select Item</option>
+										<c:forEach items="${selectedItems}" var="item">
+											<option value="${item.id}" >${item.itemName}</option>
+										</c:forEach>
+									</select>
 									</div>
 								</div>
 								&nbsp; &nbsp;
@@ -144,9 +148,9 @@ select {
 									</div>
 								</div>
 								&nbsp; --%>
-
+								<input type="hidden" id="maxQty" name="maxQty">
 								<div class="fullform">
-									<div class="cackleft">Description</div>
+									<div class="cackleft">Min Qty.</div>
 									<div class="cackright" id="spDesc">
 										<span class="cakename" id="reg_desc">- - - -</span>
 									</div>
@@ -222,7 +226,7 @@ select {
 									</div>
 									<div class="col2full">
 										<input class="texboxitemcode" placeholder="" name="sp_qty"
-											type="text" id="sp_qty" onkeyup="calculatePerQuantity()"
+											type="text" id="sp_qty" onchange="calculatePerQuantity()"
 											required value="1">
 									</div>
 								</div>
@@ -291,7 +295,7 @@ select {
 										<div class="col1title">Customer Mobile No.</div>
 									</div>
 									<div class="col2full">
-										<input class="texboxitemcode" placeholder="Mobile No."
+										<input class="texboxitemcode" placeholder="Mobile No." maxlength="10"
 											name="sp_cust_mobile_no" type="text" id="sp_cust_mobile_no"
 											required>
 									</div>
@@ -426,7 +430,7 @@ select {
 
 	<script type="text/javascript">
 	
-	function onCatChange(catId)
+/* 	function onCatChange(catId)
 	{
 		   $.getJSON('${findSubCategory}',
 					{
@@ -450,10 +454,10 @@ select {
 
 					});
 		
-	}
+	} */
 	
 	
-	function onSubCatChange(id)
+/* 	function onSubCatChange(id)
 	{
 		   $.getJSON('${findAllRegularSpCk}',
 					{
@@ -477,7 +481,7 @@ select {
 
 					});
 		
-	}
+	} */
 	
 	
 	
@@ -520,17 +524,20 @@ select {
 							$('#regSpCkItem')
 									.change(
 											function() {
+												//alert(document.getElementById("regSpCkItem").value)
+												var Pid=document.getElementById("regSpCkItem").value;
 												$
 														.getJSON(
 																'${findRegSpecialCkById}',
 																{
-																	id : $(this).val(),
+																	id : Pid,
 																	ajax : 'true'
 																},
 																function(data) {
-
+																	//alert(JSON.stringify(data))
 																	var len = data.length;
-																	var actqty =parseFloat($("#sp_qty").val());
+																	 var actqty =data.itemGrp3;
+																	/* var actqty =parseFloat($("#sp_qty").val()); */
 																	var frRateCat = $("#frRateCat").val();
 																	if (frRateCat == 1) {
 																		data.itemMrp3 = data.itemMrp1;
@@ -547,6 +554,9 @@ select {
 																	document.getElementById("MRP").setAttribute('value',data.itemMrp3);
 
 																	$("#rg_ck_name").text(data.itemName);
+																	$("#reg_desc").text(data.itemGrp3);
+																	$("#maxQty").val(data.itemGrp3);
+																	$("#regular_sp_cake").val(data.itemGrp2);
 																	document.getElementById("rg_sp_name").setAttribute('value',data.itemName);
                                                                     
 																	var calcPrice=(data.itemMrp3*actqty).toFixed(2);
@@ -608,7 +618,7 @@ select {
                                                         				}
                                                         			   
                                                         			}
-                                                        			
+                                                        			  	
                                                         			document.getElementById("t1Amt").setAttribute('value',tax1Amt.toFixed(2));
 																	document.getElementById("t2Amt").setAttribute('value',tax2Amt.toFixed(2));
 																	
@@ -627,8 +637,8 @@ select {
 
 																	$('#rmAmt').html(total.toFixed(2));
 																	document.getElementById("rm_amount").setAttribute('value',total.toFixed(2));
-
-																	document.getElementById("sp_qty").setAttribute('value',1);
+																	
+																	document.getElementById("sp_qty").setAttribute('value',data.itemGrp3);
 
 																});
 											});
@@ -650,99 +660,110 @@ select {
 	<script type="text/javascript">
 		function calculatePerQuantity() {
 			var qty =parseFloat($("#sp_qty").val());
+			var maxqty =parseFloat($("#maxQty").val());
+			//alert(maxqty)
+	if(qty>=maxqty){
+		//alert("Ok")
+		var price = parseFloat($("#MRP").val());
 
-			var price = parseFloat($("#MRP").val());
-
-			var taxPer3 = parseFloat($("#t3").val());
-			
-			var taxPer1 = parseFloat($("#t1").val());
-			var taxPer2 = parseFloat($("#t2").val());
-
-			var calcPrice = parseFloat(qty * price);
-
-
-            var taxPlus100=parseFloat(taxPer3+100);
-			var mrpBaseRate =parseFloat(calcPrice * 100 /(taxPlus100));
+		var taxPer3 = parseFloat($("#t3").val());
 		
-		
- 			var gstInRs=0;
-			var taxPerPerc1=0;
-			var taxPerPerc2=0;
-			var tax1Amt=0;
-			var tax2Amt=0;
-			 var total=0;
-			if(taxPer3==0)
-				{
-				    gstInRs=0;
-				    total=mrpBaseRate+gstInRs;
-				}
-		    else
+		var taxPer1 = parseFloat($("#t1").val());
+		var taxPer2 = parseFloat($("#t2").val());
+
+		var calcPrice = parseFloat(qty * price);
+
+
+        var taxPlus100=parseFloat(taxPer3+100);
+		var mrpBaseRate =parseFloat(calcPrice * 100 /(taxPlus100));
+	
+	
+			var gstInRs=0;
+		var taxPerPerc1=0;
+		var taxPerPerc2=0;
+		var tax1Amt=0;
+		var tax2Amt=0;
+		 var total=0;
+		if(taxPer3==0)
 			{
-			   gstInRs=(mrpBaseRate*taxPer3)/100;
-			   total=mrpBaseRate+gstInRs;
-			   
-			   if(taxPer1==0)
-				{
-				   taxPerPerc1=0;
-				}
-			   else
-				{
-				    taxPerPerc1=parseFloat((taxPer1*100)/taxPer3);
-				    tax1Amt=parseFloat((gstInRs*taxPerPerc1)/100);
-
-				}
-			   if(taxPer2==0)
-				{
-				   taxPerPerc2=0;
-				}
-			   else
-				{
-					taxPerPerc2=parseFloat((taxPer2*100)/taxPer3);
-					tax2Amt=parseFloat((gstInRs*taxPerPerc2)/100);
-
-				}
-			   
+			    gstInRs=0;
+			    total=mrpBaseRate+gstInRs;
 			}
+	    else
+		{
+		   gstInRs=(mrpBaseRate*taxPer3)/100;
+		   total=mrpBaseRate+gstInRs;
+		   
+		   if(taxPer1==0)
+			{
+			   taxPerPerc1=0;
+			}
+		   else
+			{
+			    taxPerPerc1=parseFloat((taxPer1*100)/taxPer3);
+			    tax1Amt=parseFloat((gstInRs*taxPerPerc1)/100);
+
+			}
+		   if(taxPer2==0)
+			{
+			   taxPerPerc2=0;
+			}
+		   else
+			{
+				taxPerPerc2=parseFloat((taxPer2*100)/taxPer3);
+				tax2Amt=parseFloat((gstInRs*taxPerPerc2)/100);
+
+			}
+		   
+		}
+		
+		
+			document.getElementById("t1Amt").setAttribute('value',tax1Amt.toFixed(2));
+		document.getElementById("t2Amt").setAttribute('value',tax2Amt.toFixed(2));
+		
+		$("#price").text(total);
+		document.getElementById("sp_calc_price").setAttribute('value',
+				total);
+
+		$("#subtotal").text(total);
+		document.getElementById("sp_sub_total").setAttribute('value',
+				total);
+
+		$("#INR").text('INR-' + total);
+		document.getElementById("sp_grand")
+				.setAttribute('value', total);
+
+		$("#tax3").html(taxPer3 + ' %');
+		document.getElementById("t3").setAttribute('value', taxPer3);
+
+		$('#gstrs').html(gstInRs.toFixed(2));
+		document.getElementById("gst_rs").setAttribute('value', gstInRs.toFixed(2));
+
+		$('#tot').html('TOTAL-' + total);
+		document.getElementById("total_amt").setAttribute('value',
+				total);
+
+		$('#mgstamt').html('AMT-' + mrpBaseRate.toFixed(2));
+		document.getElementById("m_gst_amt").setAttribute('value', mrpBaseRate.toFixed(2));
+
+		$('#rmAmt').html(total);
+		document.getElementById("rm_amount").setAttribute('value',
+				total);
+
+		var advance = $("#adv").val();
+		var rmamt = $("#total_amt").val();
+
+		$('#rmAmt').html(rmamt - advance);
+		document.getElementById("rm_amount").setAttribute('value',
+				rmamt - advance);
+	
+}else{
+	document.getElementById("sp_qty").value=maxqty;
+	alert("Please Place Order For Min Qty Of!!!"+maxqty)
+	
+	
+}
 			
-			
- 			document.getElementById("t1Amt").setAttribute('value',tax1Amt.toFixed(2));
-			document.getElementById("t2Amt").setAttribute('value',tax2Amt.toFixed(2));
-			
-			$("#price").text(total);
-			document.getElementById("sp_calc_price").setAttribute('value',
-					total);
-
-			$("#subtotal").text(total);
-			document.getElementById("sp_sub_total").setAttribute('value',
-					total);
-
-			$("#INR").text('INR-' + total);
-			document.getElementById("sp_grand")
-					.setAttribute('value', total);
-
-			$("#tax3").html(taxPer3 + ' %');
-			document.getElementById("t3").setAttribute('value', taxPer3);
-
-			$('#gstrs').html(gstInRs.toFixed(2));
-			document.getElementById("gst_rs").setAttribute('value', gstInRs.toFixed(2));
-
-			$('#tot').html('TOTAL-' + total);
-			document.getElementById("total_amt").setAttribute('value',
-					total);
-
-			$('#mgstamt').html('AMT-' + mrpBaseRate.toFixed(2));
-			document.getElementById("m_gst_amt").setAttribute('value', mrpBaseRate.toFixed(2));
-
-			$('#rmAmt').html(total);
-			document.getElementById("rm_amount").setAttribute('value',
-					total);
-
-			var advance = $("#adv").val();
-			var rmamt = $("#total_amt").val();
-
-			$('#rmAmt').html(rmamt - advance);
-			document.getElementById("rm_amount").setAttribute('value',
-					rmamt - advance);
 		}
 	</script>
 	<!------------------------------------------------END------------------------------------------------>

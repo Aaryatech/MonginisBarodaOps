@@ -172,6 +172,14 @@ abbr:hover {cursor: pointer;}
 
 
 			</c:if>
+				<li><a href="${pageContext.request.contextPath}/showPriceList"><div
+							class="img">
+							<i class="fa fa-list icon"
+								style="font-size: 22px !important;"></i>
+						</div>
+						<div class="title">
+							Price <span>Lists</span>
+						</div></a></li>
 
 			<c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">

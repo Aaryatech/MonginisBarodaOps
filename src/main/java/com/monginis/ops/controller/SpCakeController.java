@@ -1887,7 +1887,7 @@ String photoNames="";
 					mav.addObject("spImage", spImage);
 					mav.addObject("url", Constant.SPCAKE_IMAGE_URL);
 					mav.addObject("SPCAKE_URL", Constant.SP_CAKE_FOLDER);
-					mav.addObject("SPCAKE_URL", Constant.SPCAKE_IMAGE_URL);
+					mav.addObject("SPCAKE_URL", Constant.SP_CAKE_FOLDER);
 					mav.addObject("spName", spName);
 					mav.addObject("productionTime", productionTime);
 					mav.addObject("flavourName", flavourName);
@@ -1913,6 +1913,8 @@ String photoNames="";
 					mav.addObject("flavourList", flavourList);
 					mav.addObject("url", Constant.SPCAKE_IMAGE_URL);
 					mav.addObject("SPCAKE_URL", Constant.SPCAKE_IMAGE_URL);
+					mav.addObject("SPCAKE_URL", Constant.SP_CAKE_FOLDER);
+
 					mav.addObject("spBookb4", 0);
 					mav.addObject("sprRate", 0);
 					mav.addObject("globalIndex", globalIndex);
@@ -1941,6 +1943,7 @@ String photoNames="";
 			mav.addObject("flavourList", flavourList);
 			mav.addObject("globalIndex", globalIndex);
 			mav.addObject("SPCAKE_URL", Constant.SPCAKE_IMAGE_URL);
+			mav.addObject("SPCAKE_URL", Constant.SP_CAKE_FOLDER);
 
 			e.printStackTrace();
 			mav.addObject("isFound", false);

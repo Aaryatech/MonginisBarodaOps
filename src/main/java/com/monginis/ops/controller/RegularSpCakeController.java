@@ -20,8 +20,11 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -49,6 +52,7 @@ import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetRegularSpCkItem;
 import com.monginis.ops.model.Info;
+import com.monginis.ops.model.Item;
 import com.monginis.ops.model.MCategory;
 import com.monginis.ops.model.Main;
 import com.monginis.ops.model.RegularSpCake;
@@ -74,7 +78,7 @@ public class RegularSpCakeController {
 	 float totalAmt=0; float rgGstAmount=0; float gstRs=0; float rspAdvanceAmt=0;	float rgCkGrand=0; float rspMrp=0; 
 	 float rspRate=0; float tax1=0; float tax2=0; float tax1Amt=0;  float tax2Amt=0;
 	 List<SpMessage> spMessageList;
-	 
+	 List<Item> itemList;
 	 RegularSpCkItemResponse regularSpCkItemList;
 	String spImage = "0463a490-b678-46d7-b31d-d7d6bae5c954-ats.png";//Default Image to spCake order Page
    //--------------------------Show Regular Special Cake Order Page--------------------------------------
@@ -93,20 +97,36 @@ public class RegularSpCakeController {
 	        	     menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
 
 	 			    currentMenuId = menuList.get(index).getMenuId();
+	 			  
 	 			    String menutitle=menuList.get(index).getMenuTitle();
 	 			    System.out.println("MenuList" + currentMenuId);
 	 			    globalIndex = index;
 	 			    
 	 			   Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 	 				itemShow = menuList.get(globalIndex).getItemShow();
-	 				
+	 				//System.err.println("Item Show-->"+itemShow);
 				    logger.info("/ITEMSHOW"+itemShow);
+				    
+				    MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				    map.add("itemList", itemShow);
+
+					ParameterizedTypeReference<List<Item>> typeRef1 = new ParameterizedTypeReference<List<Item>>() {
+					};
+
+					ResponseEntity<List<Item>> responseEntity1 = restTemplate.exchange(Constant.URL + "getItemsByItemId",
+							HttpMethod.POST, new HttpEntity<>(map), typeRef1);
+					itemList = responseEntity1.getBody();
+					model.addObject("selectedItems",responseEntity1.getBody());
+					
+					//System.err.println("Item List--->"+responseEntity1.getBody());
 
 	        	 //   MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				  //  map.add("catId",2);
 		
 				    SubCategoryResponse categoryResponse = restTemplate.getForObject(Constant.URL + "/showAllCategory",SubCategoryResponse.class);
 				    logger.info("/regularSpCkOrder  request mapping"+categoryResponse.toString());
+				    
+				    
               
 					AllspMessageResponse allspMessageList = restTemplate.getForObject(Constant.URL + "getAllSpMessage",
 							AllspMessageResponse.class);
@@ -334,26 +354,28 @@ public class RegularSpCakeController {
 
 		 //-------------------------GET Regular Cake (AJAX METHOD)-------------------------
 		@RequestMapping(value = "/getRegSpecialCkById", method = RequestMethod.GET)
-		public @ResponseBody GetRegularSpCkItem getSpecialCkById(@RequestParam(value = "id", required = true) int id) {
-			
+		public @ResponseBody Item getSpecialCkById(@RequestParam(value = "id", required = true) int id) throws Exception{
+			System.err.println("In /getRegSpecialCkById"+id);
 			List<GetRegularSpCkItem> regularSpCkItems=new ArrayList<GetRegularSpCkItem>();
-		    regularSpCkItems=regularSpCkItemList.getGetRegularSpCkItems();
-		    GetRegularSpCkItem getRegularSpCkItem=new GetRegularSpCkItem();
+		   // regularSpCkItems=regularSpCkItemList.getGetRegularSpCkItems();
+		    /*GetRegularSpCkItem getRegularSpCkItem=new GetRegularSpCkItem();*/
+		    Item item=new Item();
 
-		     for(GetRegularSpCkItem regularSpCkItem:regularSpCkItems)
+		     for(Item selItem:itemList)
 		     {
-		    	 if(regularSpCkItem.getId()==id)
+		    	 if(selItem.getId()==id)
 		    	 {
-		    		 getRegularSpCkItem=regularSpCkItem;
+		    		 item=selItem;
 		    	 }
 		     
 		}
-				return getRegularSpCkItem;
+		     System.err.println("Item is"+item);
+				return item;
 		}
 		  //------------------------Order Regular Special Cake Process----------------------------
 		@RequestMapping(value = "/orderRegularSpCake", method = RequestMethod.POST)
 		public String orderRegularSpCake(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException, ParseException {
-
+			System.err.println("In /orderRegularSpCake");
 			ModelAndView mav;
 			HttpSession session = request.getSession();
            try {
