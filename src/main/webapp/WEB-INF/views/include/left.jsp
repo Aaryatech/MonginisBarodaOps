@@ -428,8 +428,8 @@ abbr:hover {cursor: pointer;}
 								int catId = (Integer) pageContext.getAttribute("catId");
 								int settingType = (int) pageContext.getAttribute("settingType");
 
-								System.out.println("\n\n\nMenu To Timing" + menuToTiming);
-								System.out.println("Menu From Timing" + menuFromTiming);
+								//System.out.println("\n\n\nMenu To Timing" + menuToTiming);
+								//System.out.println("Menu From Timing" + menuFromTiming);
 
 								LocalTime toTime = LocalTime.parse(menuToTiming);
 								LocalTime fromTime = LocalTime.parse(menuFromTiming);
@@ -437,8 +437,8 @@ abbr:hover {cursor: pointer;}
 								Boolean isLate = now.isAfter(toTime);
 								Boolean isEarly = now.isBefore(fromTime);
 
-								System.out.println("\nLocal time" + now + "Is Early :" + isLate);
-								System.out.println("Local time" + now + "Is Late :" + isLate);
+								//System.out.println("\nLocal time" + now + "Is Early :" + isLate);
+								//System.out.println("Local time" + now + "Is Late :" + isLate);
 
 								/* 	try {
 									    final SimpleDateFormat sdf = new SimpleDateFormat("H:mm");
@@ -452,14 +452,14 @@ abbr:hover {cursor: pointer;}
 								Boolean isValid = false;
 
 								if (isSameDay) {
-									System.out.println("in isSameDay if loop");
+									//System.out.println("in isSameDay if loop");
 
 									if (!isLate && !isEarly) {
 
 										isValid = true;
 									}
 								} else {
-									System.out.println("in isSameDay else loop");
+									//System.out.println("in isSameDay else loop");
 
 									if (now.isAfter(fromTime)) {
 										isValid = true;
@@ -548,7 +548,7 @@ abbr:hover {cursor: pointer;}
 			%>
 
 
-			<li>
+			<%-- Non Applicable menu by time comment Sachin 03Mar21 <li>
 
 				<div class="listareaBox" style="background-color: #eedfdf;">
 
@@ -572,7 +572,7 @@ abbr:hover {cursor: pointer;}
 					</a>
 				</div>
 
-			</li>
+			</li> --%>
 			<%
 				}
 			%>

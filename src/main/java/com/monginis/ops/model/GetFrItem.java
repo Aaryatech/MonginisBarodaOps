@@ -34,7 +34,29 @@ public class GetFrItem  {
 
 	private float discPer;//new
 	
+	//NEw field added Sachin 04-03-2021
+		private double orderRate;
+		private double orderMrp;
+		
+		
+		
 	
+	public double getOrderRate() {
+			return orderRate;
+		}
+
+		public void setOrderRate(double orderRate) {
+			this.orderRate = orderRate;
+		}
+
+		public double getOrderMrp() {
+			return orderMrp;
+		}
+
+		public void setOrderMrp(double orderMrp) {
+			this.orderMrp = orderMrp;
+		}
+
 	public float getDiscPer() {
 		return discPer;
 	}
@@ -248,7 +270,8 @@ public class GetFrItem  {
 				+ ", itemMrp3=" + itemMrp3 + ", itemImage=" + itemImage + ", itemTax1=" + itemTax1 + ", itemTax2="
 				+ itemTax2 + ", itemTax3=" + itemTax3 + ", itemIsUsed=" + itemIsUsed + ", itemSortId=" + itemSortId
 				+ ", grnTwo=" + grnTwo + ", itemQty=" + itemQty + ", delStatus=" + delStatus + ", subCatName="
-				+ subCatName + ", menuId=" + menuId + ", minQty=" + minQty + ", discPer=" + discPer + "]";
+				+ subCatName + ", menuId=" + menuId + ", minQty=" + minQty + ", discPer=" + discPer + ", orderRate="
+				+ orderRate + ", orderMrp=" + orderMrp + "]";
 	}
      
 }

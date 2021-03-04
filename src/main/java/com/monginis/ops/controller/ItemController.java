@@ -48,6 +48,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.monginis.ops.common.Common;
 import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.common.Firebase;
+import com.monginis.ops.common.SetOrderDataCommon;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.CustList;
 import com.monginis.ops.model.CustomerBillItem;
@@ -333,9 +334,9 @@ public class ItemController {
 			System.out.println("after service");
 			frItemList = responseEntity.getBody();
 			prevFrItemList = responseEntity.getBody();
-			System.out.println("Fr Item List " + frItemList.toString());
+			System.err.println("Fr Item List prevFrItemList " + prevFrItemList.toString());
 		} catch (Exception e) {
-
+			e.printStackTrace();
 			System.out.println("Exception Item List " + e.getMessage());
 		}
 
@@ -344,25 +345,49 @@ public class ItemController {
 		double grandTotal = 0;
 
 		System.err.println("RATE CAT = " + frDetails.getFrRateCat());
-
+		FrMenu menu=menuList.get(globalIndex);
 		for (int i = 0; i < frItemList.size(); i++) {
+			//Sachin Logic
+			
+			int rateCat = menu.getRateSettingType();
+			float mrp = 0;
+			float profitPer = 0;
 
-			if (frDetails.getFrRateCat() == 1) {
-				System.err.println(" 1 - " + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate1()));
-				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate1());
-			} else if (frDetails.getFrRateCat() == 2) {
-				System.err.println(" 2 - " + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate2()));
-				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate2());
-
-			} else if (frDetails.getFrRateCat() == 3) {
-				System.err.println(" 3 - " + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate3()));
-				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate3());
-
+			if (rateCat == 1) {
+				mrp = (float) frItemList.get(i).getItemMrp1();
+			} else if (rateCat == 2) {
+				mrp = (float) frItemList.get(i).getItemMrp2();
+			} else {
+				mrp = (float) frItemList.get(i).getItemMrp3();
 			}
+			profitPer = menu.getProfitPer();
+			float rate = (mrp - (mrp * profitPer) / 100);
+			
+			frItemList.get(i).setOrderMrp(mrp);
+			frItemList.get(i).setOrderRate(rate);
+			grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getOrderRate());
+
+			//Sachin Logic End
+			/*Sac prev logic commented
+			 * if (frDetails.getFrRateCat() == 1) { System.err.println(" 1 - " +
+			 * (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate1()));
+			 * grandTotal = grandTotal + (frItemList.get(i).getItemQty() *
+			 * frItemList.get(i).getItemRate1()); } else if (frDetails.getFrRateCat() == 2)
+			 * { System.err.println(" 2 - " + (frItemList.get(i).getItemQty() *
+			 * frItemList.get(i).getItemRate2())); grandTotal = grandTotal +
+			 * (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate2());
+			 * 
+			 * } else if (frDetails.getFrRateCat() == 3) { System.err.println(" 3 - " +
+			 * (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate3()));
+			 * grandTotal = grandTotal + (frItemList.get(i).getItemQty() *
+			 * frItemList.get(i).getItemRate3());
+			 * 
+			 * }
+			 */
 			setName.add(frItemList.get(i).getSubCatName());
 
 		}
-
+		System.err.println("grandTotal SAC" +grandTotal);
 		subCatList.addAll(setName);
 
 		List<TabTitleData> subCatListWithQtyTotal = new ArrayList<>();
@@ -378,20 +403,26 @@ public class ItemController {
 				if (frItemList.get(j).getSubCatName().equalsIgnoreCase(subCat)) {
 
 					qty = qty + frItemList.get(j).getItemQty();
+					total = total + (frItemList.get(j).getOrderRate() * frItemList.get(j).getItemQty());
 
-					if (frDetails.getFrRateCat() == 1) {
-
-						total = total + (frItemList.get(j).getItemRate1() * frItemList.get(j).getItemQty());
-
-					} else if (frDetails.getFrRateCat() == 2) {
-
-						total = total + (frItemList.get(j).getItemRate2() * frItemList.get(j).getItemQty());
-
-					} else if (frDetails.getFrRateCat() == 3) {
-
-						total = total + (frItemList.get(j).getItemRate3() * frItemList.get(j).getItemQty());
-
-					}
+					/*Sac
+					 * if (frDetails.getFrRateCat() == 1) {
+					 * 
+					 * total = total + (frItemList.get(j).getItemRate1() *
+					 * frItemList.get(j).getItemQty());
+					 * 
+					 * } else if (frDetails.getFrRateCat() == 2) {
+					 * 
+					 * total = total + (frItemList.get(j).getItemRate2() *
+					 * frItemList.get(j).getItemQty());
+					 * 
+					 * } else if (frDetails.getFrRateCat() == 3) {
+					 * 
+					 * total = total + (frItemList.get(j).getItemRate3() *
+					 * frItemList.get(j).getItemQty());
+					 * 
+					 * }
+					 */
 
 				}
 
@@ -937,8 +968,22 @@ public class ItemController {
 
 						}
 
+						//orders.add(order);
+						try {
+							System.err.println("Here SetOrderDataCommon");
+						SetOrderDataCommon orderDataSetting=new SetOrderDataCommon();
+						System.err.println("1"+ menuList.get(globalIndex) );
+								//System.err.println("2"+Integer.parseInt(menuId));
+									System.err.println("3"+ frDetails.getFrId());
+						order=orderDataSetting.setOrderData(order, menuList.get(globalIndex), menuList.get(globalIndex).getMenuId(),
+								frDetails.getFrId(),
+								order.getOrderQty(), request);
+						System.err.println("Afer call "+order);
 						orders.add(order);
-
+						System.err.println("Afer");
+						}catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
 
 					String jsonStr = null;

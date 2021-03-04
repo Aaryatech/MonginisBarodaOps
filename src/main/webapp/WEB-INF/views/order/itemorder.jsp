@@ -324,7 +324,7 @@ a:hover {
 													<th class="col-md-1" style="text-align: center;">Rate</th>
 													<th class="col-md-1" style="text-align: center;">Total</th>
 													<c:choose>
-														<c:when test="${menuIdFc eq menuIdShow}">
+														<c:when test=" ${menuIdFc eq menuIdShow}">
 															<th class="col-md-1">Order1</th>
 														</c:when>
 													</c:choose>
@@ -335,8 +335,76 @@ a:hover {
 
 												<c:forEach var="items" items="${itemList}" varStatus="loop">
 													<c:if test="${items.subCatName eq tabs.name}">
+													
+																<tr>
 
-														<c:choose>
+																	<td class="col-md-2" style="text-align: left;"><c:choose>
+																			<c:when test="${items.itemImage!=''}">
+																				<a href="${url}${items.itemImage}"
+																					data-lightbox="image-1" tabindex="-1"
+																					style="color: #000000;">${items.itemName}</a>
+																			</c:when>
+																			<c:otherwise>
+																	${items.itemName}
+																	</c:otherwise>
+																		</c:choose></td>
+
+																	<td class="col-md-1" style="text-align: center;"><c:out
+																			value='${items.minQty}' /></td>
+
+																	<td class="col-md-1" style="text-align: center;"><input
+																		name='${items.id}' id='${items.id}'
+																		value='${items.itemQty}' class="tableInput"
+																		type="text" onkeydown="myFunction()"
+																		onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+																		onchange="onChange('${items.orderRate}',${items.id},'${items.itemGrp3}')">
+
+																		<input type="hidden" value="${items.minQty}"
+																		id="minqty${items.id}" /></td>
+																	<td class="col-md-1" style="text-align: center;"><c:out
+																			value='${items.orderMrp}' /></td>
+
+
+																	<td class="col-md-1" style="text-align: center;"><c:out
+																			value='${items.orderRate}' /></td>
+																	<c:set var="rate" value="${items.orderRate}" />
+																	<c:set var="qty" value="${items.itemQty}" />
+																	<td class="col-md-1" id="total${items.id}"
+																		style="text-align: center;"><fmt:formatNumber
+																			type="number" minFractionDigits="2"
+																			maxFractionDigits="2" value="${rate * qty}" /></td>
+
+
+																	<c:choose>
+																		<c:when test="${menuIdFc eq menuIdShow}">
+
+																			<c:choose>
+																				<c:when test="${flagRes==1}">
+																					<c:set var="orderQty" value="0" />
+																					<c:forEach var="orderListRes" items="${orderList}"
+																						varStatus="cnt">
+																						<c:choose>
+																							<c:when test="${orderListRes.id==items.id}">
+																								<c:set var="orderQty"
+																									value="${orderListRes.orderQty}" />
+																							</c:when>
+
+																						</c:choose>
+
+																					</c:forEach>
+																					<td class="col-md-1">A ${orderQty}</td>
+																				</c:when>
+																				<c:otherwise>
+																					<td class="col-md-1">A 0</td>
+																				</c:otherwise>
+																			</c:choose>
+																		</c:when>
+																	</c:choose>
+
+																</tr>
+														
+													
+														<%-- <c:choose>
 															<c:when test="${frDetails.frRateCat=='1'}">
 																<tr>
 
@@ -351,7 +419,7 @@ a:hover {
 																	</c:otherwise>
 																		</c:choose></td>
 
-																	<%-- <td class="col-md-1" style="text-align: center;"><c:set
+																	<td class="col-md-1" style="text-align: center;"><c:set
 																			value="0" var="temp"></c:set> <c:forEach var="shelf"
 																			items="${itemStock}">
 
@@ -362,12 +430,12 @@ a:hover {
 
 																				</c:if>
 																			</c:if>
-																		</c:forEach></td> --%>
+																		</c:forEach></td>
 
 																	<td class="col-md-1" style="text-align: center;"><c:out
 																			value='${items.minQty}' /></td>
 
-																	<%-- <td class="col-md-1" style="text-align: right;"><c:set
+																	<td class="col-md-1" style="text-align: right;"><c:set
 																			value="0" var="temp"></c:set> <c:forEach var="stock"
 																			items="${itemStock}">
 
@@ -378,7 +446,7 @@ a:hover {
 
 																				</c:if>
 																			</c:if>
-																		</c:forEach></td> --%>
+																		</c:forEach></td>
 
 
 																	<td class="col-md-1" style="text-align: center;"><input
@@ -421,10 +489,10 @@ a:hover {
 																						</c:choose>
 
 																					</c:forEach>
-																					<td class="col-md-1">${orderQty}</td>
+																					<td class="col-md-1">A ${orderQty}</td>
 																				</c:when>
 																				<c:otherwise>
-																					<td class="col-md-1">0</td>
+																					<td class="col-md-1">A 0</td>
 																				</c:otherwise>
 																			</c:choose>
 																		</c:when>
@@ -448,7 +516,7 @@ a:hover {
 																		</c:choose></td>
 
 
-																	<%-- <td class="col-md-1" style="text-align: center;"><c:set
+																	<td class="col-md-1" style="text-align: center;"><c:set
 																			value="0" var="temp"></c:set> <c:forEach var="shelf"
 																			items="${itemStock}">
 
@@ -459,12 +527,12 @@ a:hover {
 
 																				</c:if>
 																			</c:if>
-																		</c:forEach></td> --%>
+																		</c:forEach></td>
 
 																	<td class="col-md-1" style="text-align: center;"><c:out
 																			value='${items.minQty}' /></td>
 
-																	<%-- <td class="col-md-1" style="text-align: right;"><c:set
+																	<td class="col-md-1" style="text-align: right;"><c:set
 																			value="0" var="temp"></c:set> <c:forEach var="stock"
 																			items="${itemStock}">
 
@@ -475,7 +543,7 @@ a:hover {
 
 																				</c:if>
 																			</c:if>
-																		</c:forEach></td> --%>
+																		</c:forEach></td>
 
 
 
@@ -515,10 +583,10 @@ a:hover {
 																						</c:choose>
 
 																					</c:forEach>
-																					<td class="col-md-1">${orderQty}</td>
+																					<td class="col-md-1">B ${orderQty}</td>
 																				</c:when>
 																				<c:otherwise>
-																					<td class="col-md-1">0</td>
+																					<td class="col-md-1">B 0</td>
 																				</c:otherwise>
 																			</c:choose>
 																		</c:when>
@@ -542,7 +610,7 @@ a:hover {
 																		</c:choose></td>
 
 
-																	<%-- <td class="col-md-1" style="text-align: center;"><c:set
+																	<td class="col-md-1" style="text-align: center;"><c:set
 																			value="0" var="temp"></c:set> <c:forEach var="shelf"
 																			items="${itemStock}">
 
@@ -553,12 +621,12 @@ a:hover {
 
 																				</c:if>
 																			</c:if>
-																		</c:forEach></td> --%>
+																		</c:forEach></td>
 
 																	<td class="col-md-1" style="text-align: center;"><c:out
 																			value='${items.minQty}' /></td>
 
-																	<%-- <td class="col-md-1" style="text-align: right;"><c:set
+																	<td class="col-md-1" style="text-align: right;"><c:set
 																			value="0" var="temp"></c:set> <c:forEach var="stock"
 																			items="${itemStock}">
 
@@ -569,7 +637,7 @@ a:hover {
 
 																				</c:if>
 																			</c:if>
-																		</c:forEach></td> --%>
+																		</c:forEach></td>
 
 
 																	<td class="col-md-1" style="text-align: center;"><input
@@ -619,7 +687,7 @@ a:hover {
 																	</c:choose>
 																</tr>
 															</c:when>
-														</c:choose>
+														</c:choose> --%>
 
 													</c:if>
 												</c:forEach>
