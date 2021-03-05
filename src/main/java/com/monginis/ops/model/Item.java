@@ -65,6 +65,48 @@ public class Item {
 	private String extVar2;
 
 	private String extVar3;
+	
+	
+	//Sachin New field added at ops only to set orderRate and OrderMrp as per Menu Setting
+	//5-03-2021
+	//NEw field added Sachin 05-03-2021
+			private double orderRate;
+			private double orderMrp;
+			private float menuDiscPer;
+			
+			
+
+	
+
+	public float getMenuDiscPer() {
+				return menuDiscPer;
+			}
+
+
+			public void setMenuDiscPer(float menuDiscPer) {
+				this.menuDiscPer = menuDiscPer;
+			}
+
+
+	public double getOrderRate() {
+				return orderRate;
+			}
+
+
+			public void setOrderRate(double orderRate) {
+				this.orderRate = orderRate;
+			}
+
+
+			public double getOrderMrp() {
+				return orderMrp;
+			}
+
+
+			public void setOrderMrp(double orderMrp) {
+				this.orderMrp = orderMrp;
+			}
+
 
 	public int getIsSaleable() {
 		return isSaleable;
@@ -387,15 +429,16 @@ public class Item {
 
 	@Override
 	public String toString() {
-		return "Item [id=" + id + ", itemId=" + itemId + ", itemName=" + itemName + ", itemGrp1=" + itemGrp1 + ", itemGrp2="
-				+ itemGrp2 + ", itemGrp3=" + itemGrp3 + ", itemRate1=" + itemRate1 + ", itemRate2=" + itemRate2
-				+ ", itemMrp1=" + itemMrp1 + ", itemMrp2=" + itemMrp2 + ", itemMrp3=" + itemMrp3 + ", itemImage="
-				+ itemImage + ", itemTax1=" + itemTax1 + ", itemTax2=" + itemTax2 + ", itemTax3=" + itemTax3
-				+ ", itemIsUsed=" + itemIsUsed + ", itemSortId=" + itemSortId + ", grnTwo=" + grnTwo + ", delStatus="
-				+ delStatus + ", minQty=" + minQty + ", itemRate3=" + itemRate3 + ", shelfLife=" + shelfLife
-				+ ", isSaleable=" + isSaleable + ", isStockable=" + isStockable + ", isFactOrFr=" + isFactOrFr
-				+ ", extInt1=" + extInt1 + ", extInt2=" + extInt2 + ", extFloat1=" + extFloat1 + ", extFloat2=" + extFloat2
-				+ ", extVar1=" + extVar1 + ", extVar2=" + extVar2 + ", extVar3=" + extVar3 + "]";
+		return "Item [id=" + id + ", itemId=" + itemId + ", itemName=" + itemName + ", itemGrp1=" + itemGrp1
+				+ ", itemGrp2=" + itemGrp2 + ", itemGrp3=" + itemGrp3 + ", itemRate1=" + itemRate1 + ", itemRate2="
+				+ itemRate2 + ", itemMrp1=" + itemMrp1 + ", itemMrp2=" + itemMrp2 + ", itemMrp3=" + itemMrp3
+				+ ", itemImage=" + itemImage + ", itemTax1=" + itemTax1 + ", itemTax2=" + itemTax2 + ", itemTax3="
+				+ itemTax3 + ", itemIsUsed=" + itemIsUsed + ", itemSortId=" + itemSortId + ", grnTwo=" + grnTwo
+				+ ", delStatus=" + delStatus + ", minQty=" + minQty + ", itemRate3=" + itemRate3 + ", shelfLife="
+				+ shelfLife + ", isSaleable=" + isSaleable + ", isStockable=" + isStockable + ", isFactOrFr="
+				+ isFactOrFr + ", extInt1=" + extInt1 + ", extInt2=" + extInt2 + ", extFloat1=" + extFloat1
+				+ ", extFloat2=" + extFloat2 + ", extVar1=" + extVar1 + ", extVar2=" + extVar2 + ", extVar3=" + extVar3
+				+ ", orderRate=" + orderRate + ", orderMrp=" + orderMrp + "]";
 	}
 		
 }

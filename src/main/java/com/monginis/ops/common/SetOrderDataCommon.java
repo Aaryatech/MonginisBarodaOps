@@ -32,6 +32,7 @@ import com.monginis.ops.model.FlavourList;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetFrItem;
+import com.monginis.ops.model.Item;
 import com.monginis.ops.model.Orders;
 import com.monginis.ops.model.RegularSpCake;
 import com.monginis.ops.model.SpecialCake;
@@ -300,9 +301,59 @@ public class SetOrderDataCommon {
 		spCake.setSpBackendRate(spBackEndRate);
 		spCake.setSprAddOnRate(addOnRate);
 		spCake.setProfitPer(profitPer);
+		spCake.setMenuDiscPer(menu.getDiscPer());
 		System.err.println("specail Cake "+spCake);
 		System.err.println("mrp_sprRate  " + mrp_sprRate + "spBackEndRate " + spBackEndRate + "addOnRate " + addOnRate);
 		return spCake;
+	}
+	//Sachin 5-03-2021 Used for reg Item and Advance Order Item Rate MRP Setting
+	public GetFrItem setFrItemRateMRP(GetFrItem item, FrMenu menu,
+			HttpServletRequest request) {
+		
+		int rateCat = menu.getRateSettingType();
+		float mrp = 0;
+		float profitPer = 0;
+
+		if (rateCat == 1) {
+			mrp = (float) item.getItemMrp1();
+		} else if (rateCat == 2) {
+			mrp = (float) item.getItemMrp2();
+		} else {
+			mrp = (float) item.getItemMrp3();
+		}
+		profitPer = menu.getProfitPer();
+		float rate = (mrp - (mrp * profitPer) / 100);
+		
+		item.setOrderMrp(mrp);
+		item.setOrderRate(rate);
+		item.setGrnPer(menu.getGrnPer());
+		item.setMenuDiscPer(menu.getDiscPer());
+		
+		
+		return item;
+	}
+	//Sachin 5-03-2021 Used for Reg Sp Cake Item Rate MRP DISC Setting
+	public Item setItemRateMRP(Item item, FrMenu menu,
+			HttpServletRequest request) {
+		
+		int rateCat = menu.getRateSettingType();
+		float mrp = 0;
+		float profitPer = 0;
+
+		if (rateCat == 1) {
+			mrp = (float) item.getItemMrp1();
+		} else if (rateCat == 2) {
+			mrp = (float) item.getItemMrp2();
+		} else {
+			mrp = (float) item.getItemMrp3();
+		}
+		profitPer = menu.getProfitPer();
+		float rate = (mrp - (mrp * profitPer) / 100);
+		
+		item.setOrderMrp(mrp);
+		item.setOrderRate(rate);
+		item.setMenuDiscPer(menu.getDiscPer());
+		return item;
 	}
 
 }

@@ -80,9 +80,18 @@ public class SpecialCake {
 		float sprRateMrp;
 		float spBackendRate;
 		int menuSettingDelDays;
+		float menuDiscPer; //SAC 05-03-2021
 		private float sprAddOnRate;//existing just pinched below
 	private float profitPer;
 	
+	
+	
+	public float getMenuDiscPer() {
+		return menuDiscPer;
+	}
+	public void setMenuDiscPer(float menuDiscPer) {
+		this.menuDiscPer = menuDiscPer;
+	}
 	public int getNoOfChars() {
 		return noOfChars;
 	}

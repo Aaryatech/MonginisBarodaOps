@@ -336,6 +336,13 @@ select {
 												name="sp_sub_total" id="sp_sub_total" type="hidden" value="">
 											</li>
 											<li>
+												<div class="priceLeft">Disc Amt</div>
+												<div class="priceRight" id="sp_menu_disc_amt"></div> <input
+												name="menu_disc_amt" id="menu_disc_amt" type="hidden" value="">
+											</li>
+											
+											
+											<li>
 												<div class="priceLeft">GST</div>
 												<div class="priceRight" id="tax3">%</div> <input
 												type="hidden" id="t3" name="t3" value="">
@@ -538,7 +545,7 @@ select {
 																	var len = data.length;
 																	 var actqty =data.itemGrp3;
 																	/* var actqty =parseFloat($("#sp_qty").val()); */
-																	var frRateCat = $("#frRateCat").val();
+																	/*SAchin comment var frRateCat = $("#frRateCat").val();
 																	if (frRateCat == 1) {
 																		data.itemMrp3 = data.itemMrp1;
 																		document.getElementById("rate").setAttribute('value',data.itemRate1);
@@ -550,9 +557,14 @@ select {
 																		data.itemMrp3 = data.itemMrp3;
 																		document.getElementById("rate").setAttribute('value',data.itemRate3);
 
-																	}
-																	document.getElementById("MRP").setAttribute('value',data.itemMrp3);
-
+																	} */
+																	
+																	document.getElementById("MRP").setAttribute('value',data.orderMrp);
+																	data.itemMrp3 = data.orderMrp;
+																	document.getElementById("rate").setAttribute('value',data.orderRate);
+					
+																	
+																	
 																	$("#rg_ck_name").text(data.itemName);
 																	$("#reg_desc").text(data.itemGrp3);
 																	$("#maxQty").val(data.itemGrp3);
@@ -564,7 +576,10 @@ select {
 																	document.getElementById("sp_calc_price").setAttribute('value',calcPrice);
 
 																	$("#subtotal").text(calcPrice);
-																	document.getElementById("sp_sub_total").setAttribute('value',calcPrice);
+																	var discAmt=calcPrice*(data.menuDiscPer/100);
+																	//alert(data.menuDiscPer);
+																	$("#sp_menu_disc_amt").text(discAmt);
+																	document.getElementById("sp_sub_total").setAttribute('value',(calcPrice-discAmt).toFixed(2));
 
 																	document.getElementById("t1").setAttribute('value',data.itemTax1);
 																	document.getElementById("t2").setAttribute('value',data.itemTax2);
@@ -622,21 +637,21 @@ select {
                                                         			document.getElementById("t1Amt").setAttribute('value',tax1Amt.toFixed(2));
 																	document.getElementById("t2Amt").setAttribute('value',tax2Amt.toFixed(2));
 																	
-                                                                    $("#INR").text('INR-'+ total.toFixed(2));
-																	document.getElementById("sp_grand").setAttribute('value',total.toFixed(2));
+                                                                    $("#INR").text('INR-'+ (total-discAmt).toFixed(2));
+																	document.getElementById("sp_grand").setAttribute('value',(total-discAmt).toFixed(2));
 																	
 																	$('#gstrs').html(gstInRs.toFixed(2));
 																	document.getElementById("gst_rs").setAttribute('value',gstInRs.toFixed(2));
 
-																	$('#tot').html('TOTAL-'+ total.toFixed(2));
-																	document.getElementById("total_amt").setAttribute('value',total.toFixed(2));
+																	$('#tot').html('TOTAL-'+ (total-discAmt).toFixed(2));
+																	document.getElementById("total_amt").setAttribute('value',(total-discAmt).toFixed(2));
 
 
 																	$('#mgstamt').html('AMT-'+ mrpBaseRate.toFixed(2));
 																	document.getElementById("m_gst_amt").setAttribute('value',mrpBaseRate.toFixed(2));
 
-																	$('#rmAmt').html(total.toFixed(2));
-																	document.getElementById("rm_amount").setAttribute('value',total.toFixed(2));
+																	$('#rmAmt').html((total-discAmt).toFixed(2));
+																	document.getElementById("rm_amount").setAttribute('value',(total-discAmt).toFixed(2));
 																	
 																	document.getElementById("sp_qty").setAttribute('value',data.itemGrp3);
 

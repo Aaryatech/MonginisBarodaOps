@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.bouncycastle.cert.ocsp.Req;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
@@ -41,6 +42,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.common.Firebase;
+import com.monginis.ops.common.SetOrderDataCommon;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.SubCategoryResponse;
 import com.monginis.ops.model.frsetting.FrSetting;
@@ -50,6 +52,7 @@ import com.monginis.ops.model.EventList;
 import com.monginis.ops.model.Flavour;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
+import com.monginis.ops.model.GetFrItem;
 import com.monginis.ops.model.GetRegularSpCkItem;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Item;
@@ -354,20 +357,24 @@ public class RegularSpCakeController {
 
 		 //-------------------------GET Regular Cake (AJAX METHOD)-------------------------
 		@RequestMapping(value = "/getRegSpecialCkById", method = RequestMethod.GET)
-		public @ResponseBody Item getSpecialCkById(@RequestParam(value = "id", required = true) int id) throws Exception{
+		public @ResponseBody Item getSpecialCkById(@RequestParam(value = "id", required = true) int id,
+				HttpServletRequest request, HttpServletResponse response) throws Exception{
 			System.err.println("In /getRegSpecialCkById"+id);
 			List<GetRegularSpCkItem> regularSpCkItems=new ArrayList<GetRegularSpCkItem>();
 		   // regularSpCkItems=regularSpCkItemList.getGetRegularSpCkItems();
 		    /*GetRegularSpCkItem getRegularSpCkItem=new GetRegularSpCkItem();*/
 		    Item item=new Item();
-
+HttpSession session=request.getSession();
 		     for(Item selItem:itemList)
 		     {
 		    	 if(selItem.getId()==id)
 		    	 {
 		    		 item=selItem;
 		    	 }
-		     
+		    	 SetOrderDataCommon orderData=new SetOrderDataCommon();
+		    	  menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
+		    	  item= orderData.setItemRateMRP(item, menuList.get(globalIndex), request);
+	 			    
 		}
 		     System.err.println("Item is"+item);
 				return item;
@@ -506,7 +513,10 @@ public class RegularSpCakeController {
 			regularSpCakeOrder.setRspCustName(rspCustName);
 			regularSpCakeOrder.setRspDeliveryDt(rspDeliveryDt);
 			regularSpCakeOrder.setOrderDate(convertedOrderDate);
-			regularSpCakeOrder.setRspEvents(rspEvents);
+			
+			 FrMenu menu=menuList.get(globalIndex);
+			 
+			regularSpCakeOrder.setRspEvents(""+menu.getDiscPer());//new field set Sachin 5-3-2021
 			regularSpCakeOrder.setRspSubCat(rspSubCat);
 			regularSpCakeOrder.setRspSubTotal(rspSubTotal);
 			regularSpCakeOrder.setRspRemainingAmt(rspRemainingAmt);

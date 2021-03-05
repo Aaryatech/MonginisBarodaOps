@@ -12,6 +12,15 @@ public class Shape {
 	private Integer extInt1,extInt2;
 	
 	private String extVar1,extVar2;
+	private int delStatus;
+
+	public int getDelStatus() {
+		return delStatus;
+	}
+
+	public void setDelStatus(int delStatus) {
+		this.delStatus = delStatus;
+	}
 
 	public int getShapeId() {
 		return shapeId;
@@ -72,7 +81,8 @@ public class Shape {
 	@Override
 	public String toString() {
 		return "Shape [shapeId=" + shapeId + ", shapeName=" + shapeName + ", shapeDesc=" + shapeDesc + ", extInt1="
-				+ extInt1 + ", extInt2=" + extInt2 + ", extVar1=" + extVar1 + ", extVar2=" + extVar2 + "]";
+				+ extInt1 + ", extInt2=" + extInt2 + ", extVar1=" + extVar1 + ", extVar2=" + extVar2 + ", delStatus="
+				+ delStatus + "]";
 	}
 	
 	

@@ -785,9 +785,14 @@ select {
 					<div class="priceRight"><input name="sp_ex_charges" id="sp_ex_charges"  type="text"  value="0" oninput="chChange()"  style="width:75px;border-radius:20px;text-align:center;height: 27px;"></div>
 				</li>
 				<li>
+					<div class="priceLeft">Company DISC(Rs) </div>
+					<div class="priceRight"><input name="menu_disc_rs" id="menu_disc_rs"  type="text" readonly value="0"    style="width:75px;border-radius:20px;text-align:center;height: 27px;"></div>
+				</li>
+				<li>
 					<div class="priceLeft">Discount(%) </div>
 					<div class="priceRight"><input name="sp_disc" id="sp_disc"  type="text"  value="0"  oninput="chChange()" style="width:75px;border-radius:20px;text-align:center;height: 27px;"></div>
 				</li>
+				
 				<li>
 					<div class="priceLeft">Discount(Rs) </div>
 					<div class="priceRight"><input name="sp_disc_rs" id="sp_disc_rs"  type="text"  value="0"  oninput="chChange()" style="width:75px;border-radius:20px;text-align:center;height: 27px;"></div>
@@ -879,6 +884,9 @@ select {
 								value="0">
 								<input type="hidden" id="profPer" name="profPer"
 								value="0">
+								<input type="hidden" id="menu_disc_per" name="menu_disc_per"
+								value="0">
+								
 </form>
 <!--rightForm-->
 
@@ -1134,6 +1142,8 @@ $(document).ready(function() {
 																		var flavourAdonRate=$("#flvAdRate").val();
 																		var mrp=$("#mrp").val();
 																		var profitPer=$("#profPer").val();
+																		document .getElementById("menu_disc_per").value=data.menuDiscPer;
+
 																		setData(flavourAdonRate,mrp,profitPer);
 																		
 																		if(1==2){
@@ -2323,24 +2333,35 @@ function setData(flavourAdonRate,mrp,profitPer) {
 	
 	//tc
 	var disc_amt_entered=document.getElementById("sp_disc_rs").value;
+	var menu_disc_per=document.getElementById("menu_disc_per").value;
+	
+	var discAmt1;
 	//alert(disc_amt_entered);
-	if(parseFloat(sp_disc)>0){
+	if(parseFloat(sp_disc)>0 || parseFloat(menu_disc_per)>0){
 		//alert("A")
-		discAmt=spSubTotal*(sp_disc/100);
+		var tot_disc_per=parseFloat(menu_disc_per)+parseFloat(sp_disc);
+		discAmt=spSubTotal*(tot_disc_per/100);
+		discAmt1=spSubTotal*(menu_disc_per/100);
+		discAmt2=spSubTotal*(sp_disc/100);
 		//document.getElementById("sp_disc_rs").value=discAmt;;
 		document.getElementById("sp_disc_rs").setAttribute('value',
-				discAmt.toFixed(2));
+				discAmt2.toFixed(2));
+		document.getElementById("menu_disc_rs").setAttribute('value',
+				discAmt1.toFixed(2));
+		//alert("A1")
 	}if(parseFloat(disc_amt_entered)>0){
 		//alert("B")
+		discAmt=disc_amt_entered;
 		var discPer=parseFloat(disc_amt_entered)/(parseFloat(spSubTotal)/100);
-		//alert("sp_disc" +sp_disc)
+		
+		//alert("discPer" +discPer)
 		sp_disc=discPer;
 		// document.getElementById('sp_disc').value=sp_disc;
 		 document.getElementById("sp_disc").setAttribute('value',
-				 sp_disc.toFixed(2));
+				 discPer.toFixed(2));
+		 //alert("B1")
 	}
 	
-
 	
 	var spGrandTot=(spTotAddonRate+spPrice+sp_ex_charges)-discAmt;
 	var taxableAmt=(spGrandTot*100)/100+tax3;

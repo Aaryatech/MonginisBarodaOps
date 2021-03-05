@@ -1172,6 +1172,8 @@ public class SpCakeController {
 		spCakeOrder.setSpMaxWeight(Float.valueOf(spMaxWeight));
 		spCakeOrder.setSpMinWeight(Float.valueOf(spMinWeight));
 		spCakeOrder.setSpSelectedWeight(spWeight);
+		
+		spCakeOrder.setSpMinWeight(specialCake.getMenuDiscPer());//NEW SET ON 05-03-2021
 
 		String spNo = "";
 		try {

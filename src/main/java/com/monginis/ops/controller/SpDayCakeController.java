@@ -41,6 +41,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.monginis.ops.common.Common;
+import com.monginis.ops.common.SetOrderDataCommon;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.ConfiguredSpDayCkResponse;
 import com.monginis.ops.model.DateResponse;
@@ -219,6 +220,22 @@ public class SpDayCakeController {
 			frItemList = responseEntity.getBody();
 			prevFrItemList = responseEntity.getBody();
 			System.out.println("Fr Item List " + frItemList.toString());
+			
+			FrMenu menu=new  FrMenu();
+			
+			for(int i=0;i<menuList.size();i++) {
+				if(menuList.get(i).getMenuId()==spDayCk.getMenuId()) {
+					menu=menuList.get(i);
+					break;
+				}
+			}
+			
+			for (int i = 0; i < frItemList.size(); i++) {
+				//Sachin Logic
+				SetOrderDataCommon orderData=new SetOrderDataCommon();
+				GetFrItem item =orderData.setFrItemRateMRP(frItemList.get(i),menu,request);
+				frItemList.set(i, item);
+			}
 			
 			model.addObject("frDetails", frDetails);
 			model.addObject("itemList", frItemList);
@@ -463,7 +480,13 @@ public class SpDayCakeController {
 					order.setOrderRate(frItem.getItemRate3());
 
 				}
-				
+
+				//Sachin 5-3-21
+				order.setOrderMrp(frItem.getOrderMrp());
+				order.setOrderRate(frItem.getOrderRate());
+				order.setGrnType(frItem.getGrnPer());
+				order.setIsPositive(frItem.getMenuDiscPer());// set discPer
+				//Sachin 5-3-21 End
 				orders.add(order);
 
 			}

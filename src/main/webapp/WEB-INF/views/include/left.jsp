@@ -548,7 +548,7 @@ abbr:hover {cursor: pointer;}
 			%>
 
 
-			<%-- Non Applicable menu by time comment Sachin 03Mar21 <li>
+			<li>
 
 				<div class="listareaBox" style="background-color: #eedfdf;">
 
@@ -572,7 +572,7 @@ abbr:hover {cursor: pointer;}
 					</a>
 				</div>
 
-			</li> --%>
+			</li>
 			<%
 				}
 			%>

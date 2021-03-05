@@ -37,10 +37,28 @@ public class GetFrItem  {
 	//NEw field added Sachin 04-03-2021
 		private double orderRate;
 		private double orderMrp;
+		private int grnPer;
+		private float menuDiscPer;
 		
 		
 		
 	
+	public int getGrnPer() {
+			return grnPer;
+		}
+
+		public void setGrnPer(int grnPer) {
+			this.grnPer = grnPer;
+		}
+
+		public float getMenuDiscPer() {
+			return menuDiscPer;
+		}
+
+		public void setMenuDiscPer(float menuDiscPer) {
+			this.menuDiscPer = menuDiscPer;
+		}
+
 	public double getOrderRate() {
 			return orderRate;
 		}

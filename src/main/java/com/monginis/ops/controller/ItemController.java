@@ -348,23 +348,19 @@ public class ItemController {
 		FrMenu menu=menuList.get(globalIndex);
 		for (int i = 0; i < frItemList.size(); i++) {
 			//Sachin Logic
-			
-			int rateCat = menu.getRateSettingType();
-			float mrp = 0;
-			float profitPer = 0;
-
-			if (rateCat == 1) {
-				mrp = (float) frItemList.get(i).getItemMrp1();
-			} else if (rateCat == 2) {
-				mrp = (float) frItemList.get(i).getItemMrp2();
-			} else {
-				mrp = (float) frItemList.get(i).getItemMrp3();
-			}
-			profitPer = menu.getProfitPer();
-			float rate = (mrp - (mrp * profitPer) / 100);
-			
-			frItemList.get(i).setOrderMrp(mrp);
-			frItemList.get(i).setOrderRate(rate);
+			SetOrderDataCommon orderData=new SetOrderDataCommon();
+			GetFrItem item =orderData.setFrItemRateMRP(frItemList.get(i),menu,request);
+			frItemList.set(i, item);
+			/*
+			 * int rateCat = menu.getRateSettingType(); float mrp = 0; float profitPer = 0;
+			 * 
+			 * if (rateCat == 1) { mrp = (float) frItemList.get(i).getItemMrp1(); } else if
+			 * (rateCat == 2) { mrp = (float) frItemList.get(i).getItemMrp2(); } else { mrp
+			 * = (float) frItemList.get(i).getItemMrp3(); } profitPer = menu.getProfitPer();
+			 * float rate = (mrp - (mrp * profitPer) / 100);
+			 * 
+			 * frItemList.get(i).setOrderMrp(mrp); frItemList.get(i).setOrderRate(rate);
+			 */
 			grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getOrderRate());
 
 			//Sachin Logic End
