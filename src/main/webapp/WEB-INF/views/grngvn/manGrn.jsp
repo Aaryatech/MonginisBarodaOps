@@ -174,7 +174,9 @@ table, th, td {
 														
 												<td class="col-md-2" style="text-align: center;font-size: 16px;"><c:out
 														value="${grnConfList.itemName}"></c:out></td>
-												<c:choose>
+														<td class="col-md-1" style="text-align: center;"><c:out
+																value="${grnConfList.grnType}"></c:out></td>
+												<%-- <c:choose>
 													<c:when test="${grnConfList.grnType==0}">
 														<td class="col-md-1" style="text-align: center;font-size: 16px;"><c:out
 																value="GRN 1(85%)"></c:out></td>
@@ -200,7 +202,7 @@ table, th, td {
 														<c:out value="No GRN"></c:out>
 													</c:otherwise>
 
-												</c:choose>
+												</c:choose> --%>
 
 												<td class="col-md-1" style="text-align: center;font-size: 16px;"><c:out
 														value="${grnConfList.billQty}"></c:out> <input
@@ -395,76 +397,29 @@ table, th, td {
 			document.getElementById("row"+detailId).style.backgroundColor="white";
 			//calcGrn(grnType,rate,itemId,sgstPer,cgstPer,autoQty)
 		}else{
-		
-		if(grnType==0){
-			
-		
-			/* $("#hidden_auto_qty"+itemId).html(grnQty);
-
-			var hidden=$("#hidden_auto_qty"+itemId).val();
-			alert(hidden); */
-			
 			var grnRate=$("#grn_rate"+detailId).text();
-			
+			grnBaseRate = baseRate * grnType / 100;
+			 grnRate=(parseFloat(rate) * parseFloat(grnType)) / 100;
+		/* if(grnType==0){
+			var grnRate=$("#grn_rate"+detailId).text();
 			grnBaseRate = baseRate * 85 / 100;
-			 
 			 grnRate=(rate * 85) / 100;
-			
-			//var grnAmt=parseFloat(grnQty)*parseFloat(grnRate);
-			//grnAmt=grnAmt*85/100;	
-			//$("#grn_amt"+itemId).html(grnAmt.toFixed(2));
-		
 		}
 	 if(grnType==1){
-
-		// var grnQty=$("#grnqtyauto"+itemId).val();
-			/* $("#hidden_auto_qty"+itemId).html(grnQty);
-
-			var hidden=$("#hidden_auto_qty"+itemId).val();
-			alert(hidden); */
-			
 			var grnRate=$("#grn_rate"+detailId).text();
-			
 			grnBaseRate = baseRate * 75 / 100;
-			
 			grnRate=(rate * 75) / 100;
-			
-			//var grnAmt=parseFloat(grnQty)*parseFloat(grnRate);
-			//grnAmt=grnAmt*75/100;	
-			//$("#grn_amt"+itemId).html(grnAmt.toFixed(2));
-		
 			}
 			if(grnType==2){
-			
-			
-			//var grnQty=$("#grnqtyauto"+itemId).val();
-			/* $("#hidden_auto_qty"+itemId).html(grnQty);
-			
-			var hidden=$("#hidden_auto_qty"+itemId).val();
-			
-			alert(hidden); */
-			
-			
 			var grnRate=$("#grn_rate"+detailId).text();
-			
 			grnBaseRate=baseRate;
 			grnRate=rate;
-			
-			   
-			//var grnAmt=parseFloat(grnQty)*parseFloat(grnRate);
-			
-			//$("#grn_amt"+itemId).html(grnAmt.toFixed(2));
-		
 			}
-			
 			if(grnType==4){
-				
-				//var grnQty=$("#grnqtyauto"+itemId).val();
 				var grnRate=$("#grn_rate"+detailId).text();
 				grnBaseRate=baseRate;
 				grnRate=rate;
-				
-				}
+				} */
 			
 		var totTaxPer=parseFloat(sgstPer)+parseFloat(cgstPer)+parseFloat(cessPer);
 			var taxableAmt=grnBaseRate*grnQty;

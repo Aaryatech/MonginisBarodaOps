@@ -141,7 +141,9 @@ table, th, td {
 														value="${grnConfList.invoiceNo}"></c:out></td>
 												<td class="col-md-3" style="text-align: center;"><c:out
 														value="${grnConfList.itemName}"></c:out></td>
-												<c:choose>
+														<td class="col-md-1" style="text-align: center;"><c:out
+																value="${grnConfList.grnType}"></c:out></td>
+												<%-- <c:choose>
 													<c:when test="${grnConfList.grnType==0}">
 														<td class="col-md-1" style="text-align: center;"><c:out
 																value="GRN 1(85%)"></c:out></td>
@@ -167,7 +169,7 @@ table, th, td {
 														<c:out value="No GRN"></c:out>
 													</c:otherwise>
 
-												</c:choose>
+												</c:choose> --%>
 
 												<td class="col-md-1" style="text-align: center;"><c:out
 														value="${grnConfList.autoGrnQty}"></c:out> <input
@@ -344,14 +346,13 @@ table, th, td {
 			document.getElementById("grnqtyauto"+billDetailNo).value=autoQty;
 			//calcGrn(grnType,rate,itemId,sgstPer,cgstPer,autoQty)
 		}else{
-		
-		if(grnType==0){
+			var grnRate=$("#grn_rate"+billDetailNo).text();
+			grnBaseRate = parseFloat(baseRate) *parseFloat(grnType) / 100;
+			grnRate=(rate * grnType) / 100;
+		/*if(grnType==0){
 			
 		
-			/* $("#hidden_auto_qty"+itemId).html(grnQty);
-
-			var hidden=$("#hidden_auto_qty"+itemId).val();
-			alert(hidden); */
+			
 			
 			var grnRate=$("#grn_rate"+billDetailNo).text();
 		
@@ -367,10 +368,7 @@ table, th, td {
 	 if(grnType==1){
 
 		// var grnQty=$("#grnqtyauto"+itemId).val();
-			/* $("#hidden_auto_qty"+itemId).html(grnQty);
-
-			var hidden=$("#hidden_auto_qty"+itemId).val();
-			alert(hidden); */
+			
 			
 			var grnRate=$("#grn_rate"+billDetailNo).text();
 			
@@ -387,11 +385,7 @@ table, th, td {
 			
 			
 			//var grnQty=$("#grnqtyauto"+itemId).val();
-			/* $("#hidden_auto_qty"+itemId).html(grnQty);
 			
-			var hidden=$("#hidden_auto_qty"+itemId).val();
-			
-			alert(hidden); */
 			
 			
 			var grnRate=$("#grn_rate"+billDetailNo).text();
@@ -413,7 +407,7 @@ table, th, td {
 				grnBaseRate=baseRate;
 				grnRate=rate;
 				
-				}
+				}*/
 			
 		    var totTaxPer=parseFloat(sgstPer)+parseFloat(cgstPer)+parseFloat(cessPer);
 			var taxableAmt=grnBaseRate*grnQty;
@@ -425,10 +419,7 @@ table, th, td {
 			var totalTax=taxableAmt*(cgstPer+sgstPer+cessPer)/100;
 			
 			var grandTotal=taxableAmt+totalTax;
-			/* alert(taxableAmt);
-			alert(totalTax);
-			alert(grandTotal);
-			 */
+			
 		//$("#grn_rate"+itemId).html(baseRate.toFixed(2));
 		$("#grn_amt"+billDetailNo).html(grandTotal.toFixed(2));
 

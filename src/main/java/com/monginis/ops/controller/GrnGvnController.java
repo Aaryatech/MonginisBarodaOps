@@ -80,6 +80,7 @@ import com.monginis.ops.model.grngvn.ShowGrnBean;
 import com.monginis.ops.model.grngvn.StockForAutoGrnGvn;
 import com.monginis.ops.model.remarks.GetAllRemarks;
 import com.monginis.ops.model.remarks.GetAllRemarksList;
+import com.monginis.ops.model.setting.NewSetting;
 
 @Controller
 @Scope("session")
@@ -595,24 +596,22 @@ public class GrnGvnController {
 					float grnBaseRate = 0.0f;
 
 					float grnRate = 0.0f;
-
-					if (objShowGrn.getGrnType() == 0) {
-						grnBaseRate = baseRate * 85 / 100;
-
-						grnRate = (baseRate * 85) / 100;
-					}
-
-					if (objShowGrn.getGrnType() == 1) {
-						grnBaseRate = baseRate * 75 / 100;
-
-						grnRate = (baseRate * 75) / 100;
-					}
-
-					if (objShowGrn.getGrnType() == 2 || objShowGrn.getGrnType() == 4) {
-
-						grnBaseRate = baseRate;
-						grnRate = baseRate;
-					}
+					grnBaseRate = baseRate * objShowGrn.getGrnType() / 100;
+					 
+					 grnRate = (baseRate * objShowGrn.getGrnType()) / 100;
+					/* SAC 06-03-2021
+					 * if (objShowGrn.getGrnType() == 0) { grnBaseRate = baseRate * 85 / 100;
+					 * 
+					 * grnRate = (baseRate * 85) / 100; }
+					 * 
+					 * if (objShowGrn.getGrnType() == 1) { grnBaseRate = baseRate * 75 / 100;
+					 * 
+					 * grnRate = (baseRate * 75) / 100; }
+					 * 
+					 * if (objShowGrn.getGrnType() == 2 || objShowGrn.getGrnType() == 4) {
+					 * 
+					 * grnBaseRate = baseRate; grnRate = baseRate; }
+					 */
 
 					float taxableAmt = grnRate * objShowGrn.getAutoGrnQty();
 					float discAmt = (taxableAmt * objShowGrn.getDiscPer() ) / 100;//4 Feb 2019
@@ -833,7 +832,13 @@ public class GrnGvnController {
 			float sumTotalAmt = 0;
 
 			String curDateTime = null;
-
+			//Sac03Feb2021
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("settingKey", "GRNGVN_INSERT_STATUS");
+			map.add("delStatus", 0);
+			NewSetting grnStatusValues=restTemplate.postForObject(Constant.URL + "getNewSettingByKey", map,
+					NewSetting.class);
+map = new LinkedMultiValueMap<String, Object>();
 			for (int i = 0; i < objShowGrnList.size(); i++) {
 
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -878,26 +883,26 @@ public class GrnGvnController {
 				float grnBaseRate = 0.0f;
 
 				float grnRate = 0.0f;
+				grnBaseRate = baseRate * objShowGrnList.get(i).getGrnType() / 100;
 
-				if (objShowGrnList.get(i).getGrnType() == 0) {
-					grnBaseRate = baseRate * 85 / 100;
-
-					grnRate = (objShowGrnList.get(i).getRate() * 85) / 100;
-					// postGrnGvn.setGrnGvnAmt(roundUp(grnAmt));
-				}
-
-				if (objShowGrnList.get(i).getGrnType() == 1) {
-					grnBaseRate = baseRate * 75 / 100;
-					grnRate = (objShowGrnList.get(i).getRate() * 75) / 100;
-					// postGrnGvn.setGrnGvnAmt(roundUp(grnAmt));
-				}
-
-				if (objShowGrnList.get(i).getGrnType() == 2 || objShowGrnList.get(i).getGrnType() == 4) {
-					// postGrnGvn.setGrnGvnAmt(roundUp(grnAmt));
-
-					grnBaseRate = baseRate;
-					grnRate = objShowGrnList.get(i).getRate();
-				}
+				grnRate = (objShowGrnList.get(i).getRate() * objShowGrnList.get(i).getGrnType()) / 100;
+					/*SAC 06-03-2021
+					 * if (objShowGrnList.get(i).getGrnType() == 0) { grnBaseRate = baseRate * 85 /
+					 * 100;
+					 * 
+					 * grnRate = (objShowGrnList.get(i).getRate() * 85) / 100; //
+					 * postGrnGvn.setGrnGvnAmt(roundUp(grnAmt)); }
+					 * 
+					 * if (objShowGrnList.get(i).getGrnType() == 1) { grnBaseRate = baseRate * 75 /
+					 * 100; grnRate = (objShowGrnList.get(i).getRate() * 75) / 100; //
+					 * postGrnGvn.setGrnGvnAmt(roundUp(grnAmt)); }
+					 * 
+					 * if (objShowGrnList.get(i).getGrnType() == 2 ||
+					 * objShowGrnList.get(i).getGrnType() == 4) { //
+					 * postGrnGvn.setGrnGvnAmt(roundUp(grnAmt));
+					 * 
+					 * grnBaseRate = baseRate; grnRate = objShowGrnList.get(i).getRate(); }
+					 */
 
 				float taxableAmt = grnBaseRate * grnQty;
 
@@ -949,7 +954,15 @@ public class GrnGvnController {
 				postGrnGvn.setFrGrnGvnRemark(frGrnRemark);
 				postGrnGvn.setGvnPhotoUpload1("grn:no photo");
 				postGrnGvn.setGvnPhotoUpload2("grn:no photo");
-				postGrnGvn.setGrnGvnStatus(2);//changed to 2 from 1 on May 9 Sachin
+
+				//SAC 06-03-2021
+				//postGrnGvn.setGrnGvnStatus(2);//changed to 2 from 1 on May 9 Sachin
+				try {
+					postGrnGvn.setGrnGvnStatus(Integer.parseInt(grnStatusValues.getSettingValue2()));
+				}catch (Exception e) {
+					postGrnGvn.setGrnGvnStatus(1);
+				}
+				
 				postGrnGvn.setApprovedLoginGate(0);
 				postGrnGvn.setApproveimedDateTimeGate(dateFormat.format(cal.getTime()));
 				postGrnGvn.setApprovedRemarkGate(" ");
@@ -1035,6 +1048,13 @@ public class GrnGvnController {
 			grnHeader.setGrngvnDate(new SimpleDateFormat("dd-MM-yyyy").format(grnGvnDate));
 			grnHeader.setGrngvnSrno(getGrnGvnSrNo(request, response));
 			grnHeader.setGrngvnStatus(2);//changed to 2 from 1 on May 9 Sachin
+			//SAC 06-03-2021
+			try {
+				grnHeader.setGrngvnStatus(Integer.parseInt(grnStatusValues.getSettingValue2()));
+			}catch (Exception e) {
+				grnHeader.setGrngvnStatus(1);
+			}
+			
 			grnHeader.setIsCreditNote(0);
 			grnHeader.setIsGrn(1);
 			grnHeader.setApporvedAmt(0);
@@ -1685,6 +1705,7 @@ public class GrnGvnController {
 		ModelAndView modelAndView = new ModelAndView("grngvn/proceedGvn");
 
 		ModelAndView model = null;
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 		try {
 
@@ -1709,6 +1730,14 @@ public class GrnGvnController {
 			float sumTotalAmt = 0;
 			String curDateTime = null;
 			boolean isCustComplaint = false;
+			//Sac03feb2021
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("settingKey", "GRNGVN_INSERT_STATUS");
+			map.add("delStatus", 0);
+			NewSetting gvnStatusValues=restTemplate.postForObject(Constant.URL + "getNewSettingByKey", map,
+					NewSetting.class);
+map = new LinkedMultiValueMap<String, Object>();
+
 			for (int i = 0; i < gvnList.size(); i++) {
 
 				// String strGvnQty = request.getParameter("gvn_qty" +
@@ -1789,7 +1818,14 @@ public class GrnGvnController {
 					postGrnGvn.setIsGrn(0);// 10 postGrnGvn.setIsGrnEdit(0);// 11
 					postGrnGvn.setGrnGvnEntryDateTime(dateFormat.format(cal.getTime()));// 12
 					postGrnGvn.setFrGrnGvnRemark(frGvnRemark);// 13
+					
 					postGrnGvn.setGrnGvnStatus(4);//changed to 2 from 1 on May 9 By Sachin // 16 postGrnGvn.setApprovedLoginGate(0);// 17
+					try {
+						postGrnGvn.setGrnGvnStatus(Integer.parseInt(gvnStatusValues.getSettingValue2()));// 16 postGrnGvn.setApprovedLoginGate(0);// 17
+					}
+					catch (Exception e) {
+						postGrnGvn.setGrnGvnStatus(1);// 16 postGrnGvn.setApprovedLoginGate(0);// 17
+					}
 					postGrnGvn.setApproveimedDateTimeGate(dateFormat.format(cal.getTime()));// 18
 					postGrnGvn.setApprovedRemarkGate("");// 19
 					curDateTime = dateFormat.format(cal.getTime());
@@ -1893,6 +1929,14 @@ public class GrnGvnController {
 			grnHeader.setGrngvnDate(new SimpleDateFormat("dd-MM-yyyy").format(grnGvnDate));
 			grnHeader.setGrngvnSrno(getGrnGvnSrNo(request, response));
 			grnHeader.setGrngvnStatus(4);//changed to 2 from 1 on May 9 Sachin
+			
+			try {
+				grnHeader.setGrngvnStatus(Integer.parseInt(gvnStatusValues.getSettingValue2()));// 16 postGrnGvn.setApprovedLoginGate(0);// 17
+			}
+			catch (Exception e) {
+				grnHeader.setGrngvnStatus(1);// 16 postGrnGvn.setApprovedLoginGate(0);// 17
+			}
+			
 			grnHeader.setIsCreditNote(0);
 			// grnHeader.setIsGrn(0);
 			grnHeader.setApporvedAmt(0);
@@ -1914,7 +1958,7 @@ public class GrnGvnController {
 			}
 
 			if (insertGvn.getError() == false) {
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				 map = new LinkedMultiValueMap<String, Object>();
 
 				map = new LinkedMultiValueMap<String, Object>();
 
@@ -1959,7 +2003,7 @@ public class GrnGvnController {
 
 			model = new ModelAndView("grngvn/viewGvn");
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map = new LinkedMultiValueMap<String, Object>();
 			int frId = frDetails.getFrId();
 
 			java.util.Date grnDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
@@ -2115,19 +2159,22 @@ public class GrnGvnController {
 			grnDetailList = ab.getGrnGvnDetails();
 
 			for (int i = 0; i < grnDetailList.size(); i++) {
-				float refRate = 0;
-				if (grnDetailList.get(i).getGrnType() == 0) {
+				//float refRate = 0;
+				//SAC 06-03-2021
+				float refRate = grnDetailList.get(i).getItemRate() * grnDetailList.get(i).getGrnType() / 100;
 
-					refRate = grnDetailList.get(i).getItemRate() * 85 / 100;
-				}
-				if (grnDetailList.get(i).getGrnType() == 1) {
-
-					refRate = grnDetailList.get(i).getItemRate() * 75 / 100;
-				}
-				if (grnDetailList.get(i).getGrnType() == 2 || grnDetailList.get(i).getGrnType() == 4) {
-
-					refRate = grnDetailList.get(i).getItemRate();
-				}
+				/*
+				 * if (grnDetailList.get(i).getGrnType() == 0) {
+				 * 
+				 * refRate = grnDetailList.get(i).getItemRate() * 85 / 100; } if
+				 * (grnDetailList.get(i).getGrnType() == 1) {
+				 * 
+				 * refRate = grnDetailList.get(i).getItemRate() * 75 / 100; } if
+				 * (grnDetailList.get(i).getGrnType() == 2 || grnDetailList.get(i).getGrnType()
+				 * == 4) {
+				 * 
+				 * refRate = grnDetailList.get(i).getItemRate(); }
+				 */
 
 				grnDetailList.get(i).setBaseRate(refRate);
 			}

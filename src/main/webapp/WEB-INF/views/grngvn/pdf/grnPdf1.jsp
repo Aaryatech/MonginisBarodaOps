@@ -92,7 +92,7 @@
 				</td>
 				<td
 					style="padding: 7px; font-family: Calibri; text-align: center; font-size: 11px; color: #000000; font-weight: bold; border: 1px solid; border-left-color: #000000; border-right-color: #000000; border-top-color: #000000; border-bottom-color: #000000;">
-					<nobr>GFPL INV</nobr>
+					<nobr>FACTORY INV</nobr>
 				</td>
 				<td
 					style="padding: 7px; font-family: Calibri; text-align: center; font-size: 11px; color: #000000; font-weight: bold; border: 1px solid; border-left-color: #000000; border-right-color: #000000; border-top-color: #000000; border-bottom-color: #000000;">

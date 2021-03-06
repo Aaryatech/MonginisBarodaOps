@@ -101,8 +101,9 @@
 										<tr class="${color}">
 											<td class="col-md-1"><c:out value="${grnList.invoiceNo}" /></td>
 											<td class="col-md-1"><c:out value="${grnList.itemName}" /></td>
+													<td class="col-md-1"><c:out value="${grnList.grnType}"></c:out></td>
 
-											<c:choose>
+											<%-- <c:choose>
 												<c:when test="${grnList.grnType==0}">
 													<td class="col-md-1"><c:out value="GRN 1"></c:out></td>
 												</c:when>
@@ -118,7 +119,7 @@
 												<c:when test="${grnList.grnType==4}">
 													<td class="col-md-1"><c:out value="GRN 3"></c:out></td>
 												</c:when>
-											</c:choose>
+											</c:choose> --%>
 
 											<td class="col-md-1"><c:out value="${grnList.itemRate}" /></td>
 
@@ -223,7 +224,8 @@
 
 					var grnType;
 					var grnStatus;
-					if (grndata.grnType == 0)
+					var grnType=grndata.grnType;
+					/* if (grndata.grnType == 0)
 						grnType = "GRN 1";
 					if (grndata.grnType == 1)
 						grnType = "GRN 2";
@@ -232,7 +234,7 @@
 					if (grndata.grnType == 3)
 						grnType = "No GRN";
 					if (grndata.grnType == 4)
-						grnType = "GRN 4";
+						grnType = "GRN 4"; */
 
 					if (grndata.grnGvnStatus == 1)
 						grnStatus = "Pending";

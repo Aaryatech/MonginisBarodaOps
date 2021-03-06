@@ -160,8 +160,20 @@
 													<td><p style="font-size: 10px">${detail.itemHsncd}</p>
 														<p style="font-size: 10px">${detail.itemName}</p></td>
 													<c:set var="rate" value="aa"></c:set>
-
+													
 													<c:choose>
+														<c:when test="${detail.isGrn==0}">
+															<c:set var="type" value="GVN ${detail.grnType}"></c:set>
+															<c:set var="rate" value="${detail.itemRate}"></c:set>
+														</c:when>
+														<c:otherwise>
+															<c:set var="type" value="GRN ${detail.grnType}"></c:set>
+																<c:set var="rate" value="${detail.baseRate*detail.grnType}"></c:set>
+														</c:otherwise>
+													</c:choose>
+													
+
+													<%-- <c:choose>
 														<c:when test="${detail.isGrn==0}">
 															<c:set var="type" value="GVN"></c:set>
 															<c:set var="rate" value="${detail.itemRate}"></c:set>
@@ -185,7 +197,7 @@
 																</c:when>
 															</c:choose>
 														</c:otherwise>
-													</c:choose>
+													</c:choose> --%>
 
 													<td align="center"><p style="font-size: 10px">${type}-${detail.invoiceNo}</p></td>
 													<td align="center"><p style="font-size: 10px"><fmt:formatNumber
