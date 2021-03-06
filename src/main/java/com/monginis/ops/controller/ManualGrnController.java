@@ -44,6 +44,7 @@ import com.monginis.ops.model.grngvn.PostGrnGvnList;
 import com.monginis.ops.model.grngvn.ShowGrnBean;
 import com.monginis.ops.model.remarks.GetAllRemarks;
 import com.monginis.ops.model.remarks.GetAllRemarksList;
+import com.monginis.ops.model.setting.NewSetting;
 
 @Controller
 @Scope("session")
@@ -164,21 +165,21 @@ public class ManualGrnController {
 					float grnBaseRate = 0.0f;
 
 					float grnRate = 0.0f;
+					
+					grnBaseRate = baseRate * objShowGrn.getGrnType() / 100;
+					grnRate = (baseRate * objShowGrn.getGrnType()) / 100;
+					
 
-					if (objShowGrn.getGrnType() == 0) {
-						grnBaseRate = baseRate * 85 / 100;
-						grnRate = (baseRate * 85) / 100;
-					}
-
-					if (objShowGrn.getGrnType() == 1) {
-						grnBaseRate = baseRate * 75 / 100;
-						grnRate = (baseRate * 75) / 100;
-					}
-
-					if (objShowGrn.getGrnType() == 2 || objShowGrn.getGrnType() == 4) {
-						grnBaseRate = baseRate;
-						grnRate = baseRate;
-					}
+				/*
+				 * if (objShowGrn.getGrnType() == 0) { grnBaseRate = baseRate * 85 / 100;
+				 * grnRate = (baseRate * 85) / 100; }
+				 * 
+				 * if (objShowGrn.getGrnType() == 1) { grnBaseRate = baseRate * 75 / 100;
+				 * grnRate = (baseRate * 75) / 100; }
+				 * 
+				 * if (objShowGrn.getGrnType() == 2 || objShowGrn.getGrnType() == 4) {
+				 * grnBaseRate = baseRate; grnRate = baseRate; }
+				 */
 
 					float taxableAmt = grnRate * objShowGrn.getAutoGrnQty();
 					float discAmt=(taxableAmt*objShowGrn.getDiscPer()/100);
@@ -323,7 +324,12 @@ System.err.println("Inside Manual Grn POST method ");
 			}
 			
 			System.err.println("show List objShowGrnList new  " +objShowGrnList.toString());
-
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("settingKey", "GRNGVN_INSERT_STATUS");
+			map.add("delStatus", 0);
+			NewSetting grnStatusValues=restTemplate.postForObject(Constant.URL + "getNewSettingByKey", map,
+					NewSetting.class);
+map = new LinkedMultiValueMap<String, Object>();
 			for (int i = 0; i < objShowGrnList.size(); i++) {
 
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -366,26 +372,25 @@ System.err.println("Inside Manual Grn POST method ");
 				float grnBaseRate = 0.0f;
 
 				float grnRate = 0.0f;
-
-				if (objShowGrnList.get(i).getGrnType() == 0) {
-					grnBaseRate = baseRate * 85 / 100;
-
-					grnRate = (objShowGrnList.get(i).getRate() * 85) / 100;
-					// postGrnGvn.setGrnGvnAmt(roundUp(grnAmt));
-				}
-
-				if (objShowGrnList.get(i).getGrnType() == 1) {
-					grnBaseRate = baseRate * 75 / 100;
-					grnRate = (objShowGrnList.get(i).getRate() * 75) / 100;
-					// postGrnGvn.setGrnGvnAmt(roundUp(grnAmt));
-				}
-
-				if (objShowGrnList.get(i).getGrnType() == 2 || objShowGrnList.get(i).getGrnType() == 4) {
-					// postGrnGvn.setGrnGvnAmt(roundUp(grnAmt));
-
-					grnBaseRate = baseRate;
-					grnRate = objShowGrnList.get(i).getRate();
-				}
+				grnBaseRate = baseRate * objShowGrnList.get(i).getGrnType() / 100;
+				grnRate = (objShowGrnList.get(i).getRate() * objShowGrnList.get(i).getGrnType()) / 100;
+						/*
+						 * if (objShowGrnList.get(i).getGrnType() == 0) { grnBaseRate = baseRate * 85 /
+						 * 100;
+						 * 
+						 * grnRate = (objShowGrnList.get(i).getRate() * 85) / 100; //
+						 * postGrnGvn.setGrnGvnAmt(roundUp(grnAmt)); }
+						 * 
+						 * if (objShowGrnList.get(i).getGrnType() == 1) { grnBaseRate = baseRate * 75 /
+						 * 100; grnRate = (objShowGrnList.get(i).getRate() * 75) / 100; //
+						 * postGrnGvn.setGrnGvnAmt(roundUp(grnAmt)); }
+						 * 
+						 * if (objShowGrnList.get(i).getGrnType() == 2 ||
+						 * objShowGrnList.get(i).getGrnType() == 4) { //
+						 * postGrnGvn.setGrnGvnAmt(roundUp(grnAmt));
+						 * 
+						 * grnBaseRate = baseRate; grnRate = objShowGrnList.get(i).getRate(); }
+						 */
 
 				float taxableAmt = grnBaseRate * grnQty;
 				float discAmt=(taxableAmt*objShowGrnList.get(i).getDiscPer()/100);
@@ -438,6 +443,14 @@ System.err.println("Inside Manual Grn POST method ");
 					postGrnGvn.setGvnPhotoUpload1("grn:no photo");
 					postGrnGvn.setGvnPhotoUpload2("grn:no photo");
 					postGrnGvn.setGrnGvnStatus(2);//Changed on May 9 By Sachin
+					
+					//Sac03Feb2021
+					try {
+						postGrnGvn.setGrnGvnStatus(Integer.parseInt(grnStatusValues.getSettingValue2()));
+					}catch (Exception e) {
+						postGrnGvn.setGrnGvnStatus(1);
+					}
+					
 					postGrnGvn.setApprovedLoginGate(0);
 					postGrnGvn.setApproveimedDateTimeGate(dateFormat.format(cal.getTime()));
 					postGrnGvn.setApprovedRemarkGate(" ");
@@ -510,6 +523,14 @@ System.err.println("Inside Manual Grn POST method ");
 			grnHeader.setGrngvnDate(new SimpleDateFormat("dd-MM-yyyy").format(grnGvnDate));
 			grnHeader.setGrngvnSrno(getGrnGvnSrNo(request, response,frDetails.getFrCode()));
 			grnHeader.setGrngvnStatus(2);//Changed on May 9 By Sachin 1 with 2
+			
+			//Sac03Feb2021
+			try {
+				grnHeader.setGrngvnStatus(Integer.parseInt(grnStatusValues.getSettingValue1()));
+			}catch (Exception e) {
+				grnHeader.setGrngvnStatus(1);
+			}
+			
 			grnHeader.setIsCreditNote(0);
 			grnHeader.setIsGrn(1);
 			grnHeader.setApporvedAmt(0);
