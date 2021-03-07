@@ -364,11 +364,12 @@ a:hover {
 																	<td class="col-md-1" style="text-align: center;"><c:out
 																			value='${items.orderMrp}' /></td>
 
-
-																	<td class="col-md-1" style="text-align: center;"><c:out
-																			value='${items.orderRate}' /></td>
 																	<c:set var="rate" value="${items.orderRate}" />
 																	<c:set var="qty" value="${items.itemQty}" />
+																	<td class="col-md-1" style="text-align: center;"><fmt:formatNumber
+																			type="number" minFractionDigits="2"
+																			maxFractionDigits="2" value="${rate}" /></td>
+																
 																	<td class="col-md-1" id="total${items.id}"
 																		style="text-align: center;"><fmt:formatNumber
 																			type="number" minFractionDigits="2"
