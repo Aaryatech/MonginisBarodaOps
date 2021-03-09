@@ -17,7 +17,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
 
 <!--rightNav-->
-   
+   <link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/dropdownmultiple/bootstrap-chosen.css">
  
 <!--rightNav-->
 
@@ -33,7 +34,8 @@ jQuery(document).ready(function(){
 	                         });
 });
 </script>
-
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/loader.css">
 <style type="text/css">
 select {
           width: 130px;
@@ -663,18 +665,31 @@ System.out.print("incr " +incr +" menuDeliveryDays " +menuDeliveryDays);
 	</div>
 	
 	
+	<style>
+	.chosen-container{
+	width: 88% !important; margin: 0 2% 0 0;}
+	</style>
 	<div class="colOuter">
 	    <div class="col1"><div class="col1title">Customer Name</div></div>
 		<div class="col2full">
 		<select id="sp_cust_id"  class="chosen-select" name="sp_cust_id" onchange="showEmpInfo(this.value)" required style="width: 80%;">
 			  <option>Select Customer</option>	
 			  	<c:forEach items="${customerList}" var="customerList">
-							
-					<option value="${customerList.custId}"style="text-align: left;">
+							<c:choose>
+							<c:when test="${customerList.phoneNumber eq 0000000000}">
+							<option selected value="${customerList.custId}"style="text-align: left;">
 					${customerList.custName} &nbsp;${customerList.phoneNumber}</option>	
+							</c:when>
+							<c:otherwise>
+							<option value="${customerList.custId}"style="text-align: left;">
+					${customerList.custName} &nbsp;${customerList.phoneNumber}</option>	
+							</c:otherwise>
+							</c:choose>
+					
 					
 				</c:forEach>
 			  </select>
+			  
 			  <button class="plus_btn addcust_open" type="button"
 						onclick="openNewCustPopUp()">
 				<i class="fa fa-plus" aria-hidden="true"></i>
@@ -687,7 +702,7 @@ System.out.print("incr " +incr +" menuDeliveryDays " +menuDeliveryDays);
  
  
 	<div class="colOuter">
-	<div class="col1"><div class="col1title">DOB</div></div>
+	<div class="col1"><div class="col1title">DOB11</div></div>
 		
 		<div class="col2full"><input id="dob" class="texboxitemcode texboxcal" autocomplete="off" placeholder="<%=fDate %>" name="dob" type="text"required></div>
       </div>
@@ -1767,7 +1782,7 @@ function validate() {
     var isCustChCake=document.getElementById('isCustChoiceCk').value;
     var spPhoUpload=document.getElementById('spPhoUpload').value;
 
- 
+ //alert("spCustName " +spCustName);
     var isValid=true;
     
     if (spCode == "") {
@@ -2360,6 +2375,22 @@ function setData(flavourAdonRate,mrp,profitPer) {
 			<span class="close" onclick="closeNewCustPopUp()" style="opacity: 2;">&times;</span>
 
 			<h3 class="pageTitle">Add Customer</h3>
+			<div class="row">
+					<div class="col-md-12">
+
+						<div align="center" id="loader" style="display: none;">
+
+							<span>
+								<h4>
+									<font color="#343690">Loading</font>
+								</h4>
+							</span> <span class="l-1"></span> <span class="l-2"></span> <span
+								class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
+							<span class="l-6"></span>
+						</div>
+
+					</div>
+				</div>
 			
 			<div>
 				<div class="row">
@@ -2452,7 +2483,7 @@ function setData(flavourAdonRate,mrp,profitPer) {
 								<div class="profilefildset">DOB</div>
 								<div class="profileinput">
 									<input name="dateOfBirth" type="date" class="texboxitemcode"
-										id="dateOfBirth" placeholder="Date Of Birth"/>
+										id="dateOfBirth" value="" placeholder="Date Of Birth"/>
 								</div>
 							</div>
 							
@@ -2599,7 +2630,7 @@ function checkGST(g){
 <script type="text/javascript">
 function addCustomer() {
 	
-	document.getElementById("saveCust").disabled = true;
+	
 	var phNo="";
 	//$('#addcust').modal('hide');
 	//$('#addcust').popup('hide'); //for close popup;
@@ -2630,6 +2661,7 @@ function addCustomer() {
 				document.getElementById("mobileNo").value = "";
 				document.getElementById("mobileNo").focus();
 		}else{
+			
 	var gender = 2;
 	if (document.getElementById('moption').checked) {
 		gender = 1;
@@ -2678,7 +2710,8 @@ function addCustomer() {
 	}
 	
 	if (flag == 0) {
-		
+		document.getElementById("saveCust").disabled = true;
+		$('#loader').show();
 		$
 				.post(
 						'${saveCustomerFromBill}',
@@ -2719,6 +2752,11 @@ function addCustomer() {
 												+ '&nbsp;'
 												+ data.customerList[i].phoneNumber
 												+ '</option>';
+												document.getElementById("sp_cust_name").value=""+data.customerList[i].custName;
+												document.getElementById("sp_cust_mobile_no").value=""+data.customerList[i].phoneNumber;
+												//document.getElementById("dateOfBirth").value=""+data.customerList[i].custDob;
+												document.getElementById("dob").value = data.customerList[i].custDob;
+												showEmpInfo(data.addCustomerId);
 									} else {
 										html += '<option value="' + data.customerList[i].custId + '">'
 												+ data.customerList[i].custName
@@ -2728,12 +2766,12 @@ function addCustomer() {
 									}
 
 								}
-
+								$('#loader').hide();
 								$('#sp_cust_id').html(html);
 
 								$("#sp_cust_id").trigger("chosen:updated");
-								$('.chosen-select').trigger(
-										'chosen:updated');
+								/* $('.chosen-select').trigger(
+										'chosen:updated'); */
 								
 								document.getElementById("pincode").value = "";
 								document.getElementById("remark").value = "";
@@ -2758,7 +2796,7 @@ function addCustomer() {
 								
 								alert("Customer Added Successfully");
 								
-								$("#sp_cust_id").trigger("chosen:updated");
+								//$("#sp_cust_id").trigger("chosen:updated");
 					
 								closeNewCustPopUp(); 
 							} else {
@@ -2774,6 +2812,11 @@ function addCustomer() {
 
 		
 	</script>
-
+<!-- chosen JS
+		============================================ -->
+	<script
+		src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen.jquery.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen-active.js"></script>
 </body>
 </html>

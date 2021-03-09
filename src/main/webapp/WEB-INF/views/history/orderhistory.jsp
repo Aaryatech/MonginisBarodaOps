@@ -382,6 +382,7 @@ jQuery(document).ready(function(){
 								<input name="" class="buttonsaveorder" value="Search"
 									type="submit" onclick="Print()">
 							</div>
+							
 						</div>
 					</form>
 
