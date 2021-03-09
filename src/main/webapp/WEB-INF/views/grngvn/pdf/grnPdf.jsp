@@ -43,7 +43,7 @@
 </head>
 <body>
 
-	<table width="250" border="0" cellspacing="0" cellpadding="0"
+	<%-- <table width="250" border="0" cellspacing="0" cellpadding="0"
 		style="padding: 5px; font-family: verdana; font-size: 10px; border: 1px solid #E7E7E7;">
 
 		<tbody>
@@ -82,7 +82,7 @@
 						
                 GSTIN:<strong>${sessionScope.frDetails.frGstNo}</strong><br/>
                  Phone:<strong>${sessionScope.frDetails.frMob}</strong><br/>
-           <%--   </c:when>
+             </c:when>
         </c:choose>
        
           Phone:<strong>${sessionScope.frDetails.frMob}</strong><br/>
@@ -97,7 +97,7 @@
           COLLECT TAX ON SUPPLIES        </span>
           
           </c:when>
-        </c:choose>  --%>
+        </c:choose> 
 			</tr>
 			
 			<tr>
@@ -123,11 +123,11 @@
 
 								<td style="font-size: 10px"><b>${grnPdf.date}</b></td>
 							</tr>
-							<%--  <tr>
+							 <tr>
       <td>Det No</td>
       <td colspan="3">${exBill.sellBillDetailNo}</td>
      
-      </tr>  --%>
+      </tr> 
 							<tr>
 								<td colspan="4"><table width="100%" border="0"
 										cellspacing="0" cellpadding="1" class="tbl-inner"><!--cellpading was 5   -->
@@ -178,7 +178,7 @@
 																	<c:set var="rate" value="${detail.baseRate*detail.grnType}"></c:set>
 														</c:otherwise>
 														</c:choose>
-													<%-- <c:choose>
+													<c:choose>
 														<c:when test="${detail.isGrn==0}">
 															<c:set var="type" value="GVN"></c:set>
 															<c:set var="rate" value="${detail.itemRate}"></c:set>
@@ -202,7 +202,7 @@
 																</c:when>
 															</c:choose>
 														</c:otherwise>
-													</c:choose> --%>
+													</c:choose>
 
 													<td align="center"><p style="font-size: 10px">${type}-${detail.invoiceNo}</p></td>
 													<td align="center"><p style="font-size: 10px">
@@ -279,7 +279,7 @@
 					</table>
 				</td>
 			</tr>
-			<%-- 			<c:choose>
+						<c:choose>
 				<c:when test="${frGstType==10000000 }">
 					<tr>
 						<td colspan="2"><table width="100%" border="0"
@@ -346,7 +346,7 @@
 							</table></td>
 					</tr>
 				</c:when>
-			</c:choose> --%>
+			</c:choose>
 			<tr>
 
 				<td style="border-top: 1px solid #E7E7E7; padding: 5px 7px;"
@@ -367,9 +367,9 @@
 					style="border-top: 1px solid #E7E7E7; padding: 20px 7px 2px 0px;">Authorised
 					Sign</span>
 				</td>
-				<%-- <td width="100" align="center"
+				<td width="100" align="center"
 					style="border-top: 1px solid #E7E7E7; padding: 5px 7px;"><strong>For
-						${sessionScope.frDetails.frName}</strong></td> --%>
+						${sessionScope.frDetails.frName}</strong></td>
 
 
 				<td
@@ -377,7 +377,176 @@
 				</td>
 			</tr>
 		</tbody>
+	</table> --%>
+	
+			<table width="250" border="0" cellspacing="0" cellpadding="0" style="padding: 2px; font-family: verdana; font-size: 12px; border: 1px solid #E7E7E7;">
+		<tbody>
+			<tr>
+			
+			<c:choose>
+					<c:when test="${grnPdf.type==1}">
+						<td colspan="2" align="center" style="padding: 0px;"><span>Goods
+								Return Note (DEBIT)</span></td>
+
+					</c:when>
+					<c:otherwise>
+						<td colspan="2" align="center" style="padding: 0px;"><span>Goods
+								Variation Note (DEBIT)</span></td>
+					</c:otherwise>
+				</c:choose>
+				
+			</tr>
+			<tr>
+				<td colspan="2" align="center" style="padding: 0px; border-top: 1px solid #E7E7E7;"><span><b>${grnPdf.frName}</b><br>
+					<span style="font-size: 10px; font-family: Arial;">(The
+							Monginis Cake Shop)</span></span> <br> <span style="font-size: 10px;">GSTIN:<b>
+							${sessionScope.frDetails.frGstNo}</b>
+				</span> <br> <span style="font-size: 10px;">Phone No:<b>
+						${sessionScope.frDetails.frGstNo}</b>
+				</span></td>
+			</tr>
+			
+			<tr>
+				<td colspan="2" align="center" style="padding: 2px; font-family: Arial; border-bottom: 1px solid #E7E7E7; font-size: 9px;"><span>${sessionScope.frDetails.frAddress}
+</span>
+			</td>
+		</tr>
+		<tr>
+				<td colspan="2" align="center" style="padding: 0px; border-top: 1px solid #E7E7E7; border-bottom: 1px solid #E7E7E7; "><span><b>${Constant.FACTORYNAME}</b><br>
+					<span style="font-size: 10px; font-family: Arial;  font-size: 9px;"">${Constant.FACTORYADDRESS}</span></span> </td>
+			</tr>
+		
+			<tr>
+				<td colspan="2">
+					<table width="100%" border="0" cellspacing="0" cellpadding="2">
+						<tbody>
+							<tr>
+								<td align="left" style="font-size: 10px;">Invoice No:</td>
+								<td align="left" style="font-size: 10px;">${grnPdf.srNo}
+								</td>
+								
+								<td style="font-size: 10px;">${grnPdf.date}</td>
+							</tr>
+							<tr>
+								<td style="font-size: 10px;"></td>
+								<td colspan="3" style="font-size: 10px;"></td>
+
+							</tr>
+							<!-- <tr>
+								<td style="font-size: 10px;">GST NO:</td>
+								<td colspan="3" style="font-size: 10px;">10FFPPS3659Q3ZG</td>
+							</tr> -->
+							<tr>
+								<td colspan="4"><table width="100%" border="0" cellspacing="0" cellpadding="3" class="tbl-inner">
+										<tbody>
+											<tr>
+												<th width="43%" align="left" bgcolor="#ECECEC">Item</th>
+												<th width="8%" bgcolor="#ECECEC">Qty</th>
+												<th width="13%" bgcolor="#ECECEC">Rate</th>
+												<th width="29%" align="center" bgcolor="#ECECEC">Amt</th>
+											</tr>
+											
+											
+											<c:forEach items="${grnPdf.detail}" var="detail"
+												varStatus="count">
+												<c:set var="totalAmt" value="${totalAmt+detail.grnGvnAmt}" ></c:set>
+												<tr>
+													<td><span style="font-size: 11px">${detail.itemName}</span><br>
+														<span style="font-size: 10px">${detail.invoiceNo}(${detail.grnType}%)</span></td>
+													<td align="center"><span style="font-size: 11px">${detail.grnGvnQty}</span></td>
+													
+													<td align="center"><span style="font-size: 11px"><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${detail.grnGvnAmt/detail.grnGvnQty}" /></span></td>
+													<td align="right"><span style="font-size: 11px"><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${detail.grnGvnAmt}" />
+												</span>
+													
+													</td>
+												</tr>
+											</c:forEach>
+												
+											
+												
+											
+												
+											
+												
+											
+												
+											
+												
+											
+											<tr>
+												<td rowspan="3">&nbsp;</td>
+												<td colspan="2" align="right"><span class="style5"><strong>Total
+															:</strong></span></td>
+
+
+												<td align="right"><span class="style5"><strong>
+												<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${totalAmt}" />
+															
+																	
+																
+															 </strong></span></td>
+											</tr>
+											
+											<tr>
+												<td colspan="2" align="right"><span class="style7">Bill
+														Total:</span></td>
+												<td align="right"><span class="style7">
+															
+														<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${totalAmt}" />
+													
+														
+															
+														</span></td>
+											</tr>
+										</tbody>
+									</table></td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<table width="100%" border="0" cellspacing="0" cellpadding="2">
+
+
+						<tbody>
+					<tr>
+							<td style="border-top: 1px solid #E7E7E7; padding: 7px; font-size: 9px;">Goods Recived By
+							
+							</td>
+						</tr>
+					</tbody></table>
+				</td>
+			</tr>
+			
+			<tr>
+				<td  style="border-top: 1px solid #E7E7E7; padding: 7px; font-size: 9px;"><span>
+						Goods Checked By </span></td>
+			</tr>
+
+
+			<tr>
+				<td  style="border-top: 1px solid #E7E7E7; padding: 20px 7px 2px 0px;"><span>
+						Authorised Sign</span></td>
+						<td style="border-top: 1px solid #E7E7E7; padding: 20px 0px 2px 7px;"><span>${grnPdf.frName}</span>
+				</td>
+			</tr>
+
+
+
+		</tbody>
 	</table>
+			
+			
+			
+			
+			 
+	
+	
+	
+	
 </body><!-- 
 <body onload="directPrint()">
 	<script>

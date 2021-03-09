@@ -21,7 +21,7 @@
        <input type="hidden" id="target" value="${sessionScope.fraTarget}">
         <div class="logoBarRight">
        
-        <a href="#" class="signout"><i class="fa fa-power-off" aria-hidden="true"></i></a>
+        <a  href="${pageContext.request.contextPath}/logout" class="signout"><i class="fa fa-power-off" aria-hidden="true"></i></a>
       
         <div id="menuzord" class="menuzord red menuzord-responsive">
 <!--            <div id="chart_div" style="width: 120px;height: 70px;  float: left;margin-right: 20px;"></div>

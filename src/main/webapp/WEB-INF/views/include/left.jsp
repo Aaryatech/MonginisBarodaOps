@@ -49,7 +49,7 @@ abbr:hover {cursor: pointer;}
 						<c:set var="flag" value="${1}"></c:set>
 					</c:when>
 
-
+goods
 				</c:choose>
 			</c:forEach>
 			<c:if test="${flag==1}">
@@ -614,9 +614,9 @@ abbr:hover {cursor: pointer;}
 								class="fa fa-plus-circle icon"></i> GRN Based on Expiry of
 								Product </a>
 							<div class="clearfix"></div>
-							<a href="${pageContext.request.contextPath}/showGrn"><i
+							<%-- <a href="${pageContext.request.contextPath}/showGrn"><i
 								class="fa fa-plus-circle icon"></i> GRN Based on Stock FIFO
-								Method </a>
+								Method </a> --%>
 							<div class="clearfix"></div>
 							<a href="${pageContext.request.contextPath}/displayGrn"><i
 								class="fa fa-search-plus icon"></i> View GRN </a>

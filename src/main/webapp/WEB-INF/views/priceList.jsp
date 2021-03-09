@@ -9,6 +9,34 @@
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
 <html>
 <head>
+<style type="text/css">
+ table {
+	border-collapse: collapse;
+	font-size: 10;
+	width:100%;
+page-break-inside: auto !important 
+
+} 
+p  {
+    color: black;
+    font-family: arial;
+    font-size: 60%;
+	margin-top: 0;
+	padding: 0;
+
+}
+h6  {
+    color: black;
+    font-family: arial;
+    font-size: 80%;
+}
+
+th {
+	background-color: #EA3291;
+	color: white;
+	
+}
+</style>
 <style>
 table, th, td {
 	border: 1px solid #9da88d;
@@ -280,11 +308,11 @@ jQuery(document).ready(function(){
 						<input type="hidden" name="mod_ser" id="mod_ser"
 							value="search_result">
 						<div class="colOuter">
-							<div class="col-md-1">
-								<div class="col1title">Category</div>
+							<div class="col-md-2">
+								<div class="col1title" style="font-weight: bold;font-size: 15px;" >Select Category</div>
 							</div>
 							<div class="col-md-2">
-								<select name="orderType" id="orderType" class="form-control"
+								<select name="orderType" id="orderType" 
 									required ">
 									<option selected>Select Category</option>
 
@@ -298,8 +326,8 @@ jQuery(document).ready(function(){
 								</select>
 							</div>
 
-							<div class="col-md-1">
-								<div class="col1title">Sub-Category</div>
+							<div class="col-md-2">
+								<div class="col1title"  style="font-weight: bold;font-size: 15px;" >Sub-Category</div>
 							</div>
 							<div class="col-md-3">
 								<!-- class="chosen-select"  -->
@@ -670,12 +698,12 @@ function searchCall() {
 				$.each(data,function(key, item) {
 					var tr = $('<tr ></tr>');
 					//alert(JSON.stringify(item))
-							tr.append($('<td ></td>').html(
+							tr.append($('<td width="27" style="width:  28px;" align="left" id="sr" ></td>').html(
 									key+1));
-							tr.append($('<td ></td>').html(
+							tr.append($('<td width="100" align="left" id="fr" ></td>').html(
 									item.itemName));
 					
-							tr.append($('<td ></td>').html(
+							tr.append($('<td width="101" align="left" id="menu" ></td>').html(
 									item.itemMrp1));
 							
 						
@@ -737,7 +765,7 @@ function exportToExcel()
 																    .find('option')
 																    .remove()
 																    .end()
-																	 $("#item_grp2").append($("<option></option>").attr( "value",-1).text("ALL"));
+																	// $("#item_grp2").append($("<option></option>").attr( "value",-1).text("ALL"));
 
 																	for ( var i = 0; i < len; i++) {
 													    
