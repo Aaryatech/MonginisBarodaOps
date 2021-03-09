@@ -561,57 +561,63 @@ map = new LinkedMultiValueMap<String, Object>();
 
 				map = new LinkedMultiValueMap<String, Object>();
 
-				map.add("frId", frDetails.getFrId());
+				//map.add("frId", frDetails.getFrId());
 
-				SellBillDataCommon sellBillResponse = restTemplate
-						.postForObject(Constant.URL + "/showNotDayClosedRecord", map, SellBillDataCommon.class);
+			//	SellBillDataCommon sellBillResponse = restTemplate
+						//.postForObject(Constant.URL + "/showNotDayClosedRecord", map, SellBillDataCommon.class);
 
-				if (!sellBillResponse.getSellBillHeaderList().isEmpty()) {
-                System.err.println("Inside sellBillResponse != null");
-					List<SellBillHeader> sellBillHeaderList = sellBillResponse.getSellBillHeaderList();
-
-					int count = sellBillHeaderList.size();
-					SellBillHeader billHeader = sellBillResponse.getSellBillHeaderList().get(0);
-
-					map = new LinkedMultiValueMap<String, Object>();
-
-					map.add("billNo", billHeader.getSellBillNo());
-
-					SellBillDetailList sellBillDetailList = restTemplate
-							.postForObject(Constant.URL + "/getSellBillDetails", map, SellBillDetailList.class);
-
-					List<SellBillDetail> sellBillDetails = sellBillDetailList.getSellBillDetailList();
-
-					for (int x = 0; x < sellBillDetails.size(); x++) {
-
-						billHeader.setTaxableAmt(billHeader.getTaxableAmt() + sellBillDetails.get(x).getTaxableAmt());
-
-						billHeader.setTotalTax(billHeader.getTotalTax() + sellBillDetails.get(x).getTotalTax());
-						billHeader.setGrandTotal(sellBillDetails.get(x).getGrandTotal() + billHeader.getGrandTotal());
-
-						// billHeader.setBillDate(billHeader.getBillDate());
-
-						billHeader.setDiscountPer(billHeader.getDiscountPer());
-
-					}
-
-					billHeader.setGrandTotal(Math.round(billHeader.getGrandTotal()));
-					billHeader.setPaidAmt(billHeader.getGrandTotal());
-					billHeader.setPayableAmt(billHeader.getGrandTotal());
-					
-					String start_dt =billHeader.getBillDate();
-					DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy"); 
-					java.util.Date date = (java.util.Date)formatter.parse(start_dt);
-				
-					SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd");
-					String finalString = newFormat.format(date);
-					billHeader.setBillDate(finalString);
-					billHeader = restTemplate.postForObject(Constant.URL + "saveSellBillHeader", billHeader,
-							SellBillHeader.class);
-
-					System.out.println("Bill Header Response " + billHeader.toString());
-
-				} // end of if ex bill not null
+						/*
+						 * if (!sellBillResponse.getSellBillHeaderList().isEmpty()) {
+						 * System.err.println("Inside sellBillResponse != null"); List<SellBillHeader>
+						 * sellBillHeaderList = sellBillResponse.getSellBillHeaderList();
+						 * 
+						 * int count = sellBillHeaderList.size(); SellBillHeader billHeader =
+						 * sellBillResponse.getSellBillHeaderList().get(0);
+						 * 
+						 * map = new LinkedMultiValueMap<String, Object>();
+						 * 
+						 * map.add("billNo", billHeader.getSellBillNo());
+						 * 
+						 * SellBillDetailList sellBillDetailList = restTemplate
+						 * .postForObject(Constant.URL + "/getSellBillDetails", map,
+						 * SellBillDetailList.class);
+						 * 
+						 * List<SellBillDetail> sellBillDetails =
+						 * sellBillDetailList.getSellBillDetailList();
+						 * 
+						 * for (int x = 0; x < sellBillDetails.size(); x++) {
+						 * 
+						 * billHeader.setTaxableAmt(billHeader.getTaxableAmt() +
+						 * sellBillDetails.get(x).getTaxableAmt());
+						 * 
+						 * billHeader.setTotalTax(billHeader.getTotalTax() +
+						 * sellBillDetails.get(x).getTotalTax());
+						 * billHeader.setGrandTotal(sellBillDetails.get(x).getGrandTotal() +
+						 * billHeader.getGrandTotal());
+						 * 
+						 * // billHeader.setBillDate(billHeader.getBillDate());
+						 * 
+						 * billHeader.setDiscountPer(billHeader.getDiscountPer());
+						 * 
+						 * }
+						 * 
+						 * billHeader.setGrandTotal(Math.round(billHeader.getGrandTotal()));
+						 * billHeader.setPaidAmt(billHeader.getGrandTotal());
+						 * billHeader.setPayableAmt(billHeader.getGrandTotal());
+						 * 
+						 * String start_dt =billHeader.getBillDate(); DateFormat formatter = new
+						 * SimpleDateFormat("dd-MM-yyyy"); java.util.Date date =
+						 * (java.util.Date)formatter.parse(start_dt);
+						 * 
+						 * SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd"); String
+						 * finalString = newFormat.format(date); billHeader.setBillDate(finalString);
+						 * billHeader = restTemplate.postForObject(Constant.URL + "saveSellBillHeader",
+						 * billHeader, SellBillHeader.class);
+						 * 
+						 * System.out.println("Bill Header Response " + billHeader.toString());
+						 * 
+						 * }
+						 */ // end of if ex bill not null
 
 				postGrnList = new PostGrnGvnList();
 
