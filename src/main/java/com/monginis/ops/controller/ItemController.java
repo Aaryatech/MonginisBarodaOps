@@ -280,7 +280,32 @@ public class ItemController {
 			productionDate = DateConvertor.convertToYMD(prevDate);
 		}
 		System.out.println("PREV DATE AS Production date: " + productionDate);
+		FrMenu menu=menuList.get(globalIndex);
+		//SACHIN Del Date from Menu 08-03-2021
+		
+		//ZoneId z = ZoneId.of("Asia/Calcutta");
+		LocalTime now = LocalTime.now(z); // Explicitly specify the desired/expected time zone.
 
+		LocalTime fromTimeLocalTime = LocalTime.parse(fromTime);
+		LocalTime toTimeLocalTIme = LocalTime.parse(toTime);
+		if (fromTimeLocalTime.isBefore(toTimeLocalTIme)) {
+			orderDate = todaysDate;
+			// productionDate = todaysDate;
+			productionDate = incrementDate(todaysDate, menu.getProdDays());
+			deliveryDate = incrementDate(todaysDate, menu.getDelDays());
+		} else {
+			if (now.isAfter(fromTimeLocalTime)) {
+				orderDate = todaysDate;
+				productionDate = incrementDate(todaysDate, menu.getProdDays() + 1);
+				deliveryDate = incrementDate(todaysDate, menu.getDelDays() + 1);
+			} else {
+				orderDate = todaysDate;
+				productionDate = incrementDate(todaysDate, menu.getProdDays());
+				deliveryDate = incrementDate(todaysDate, menu.getDelDays());
+			}
+		}
+		//SACHIN Del Date from Menu 08-03-2021 End
+	
 		frItemList = new ArrayList<GetFrItem>();
 		prevFrItemList = new ArrayList<GetFrItem>();
 		List<GetOrder> orderList = new ArrayList<GetOrder>();
@@ -321,7 +346,16 @@ public class ItemController {
 
 			map.add("items", menuList.get(index).getItemShow());
 			map.add("frId", frDetails.getFrId());
-			map.add("date", productionDate);
+			//map.add("date", productionDate);
+		
+			if (prevDate != null) {
+				System.err.println("In Prev Date SELECTED");
+				productionDate = DateConvertor.convertToYMD(prevDate);
+				map.add("date", productionDate);
+			}else {
+				System.err.println("In Prev Date Null");
+				map.add("date", deliveryDate);
+			}
 			map.add("menuId", menuList.get(index).getMenuId());
 			map.add("isSameDayApplicable", isSameDayApplicable);
 
@@ -345,7 +379,7 @@ public class ItemController {
 		double grandTotal = 0;
 
 		System.err.println("RATE CAT = " + frDetails.getFrRateCat());
-		FrMenu menu=menuList.get(globalIndex);
+	
 		for (int i = 0; i < frItemList.size(); i++) {
 			//Sachin Logic
 			SetOrderDataCommon orderData=new SetOrderDataCommon();
@@ -495,6 +529,7 @@ public class ItemController {
 		model.addObject("deliveryDate", strDeliveryDate);
 		model.addObject("menuTitle", menuTitle);
 		model.addObject("menuIdFc", menuList.get(index).getMenuId());
+		model.addObject("menuDiscPer", menuList.get(index).getDiscPer());
 		model.addObject("menuIdShow", settingValue.getSettingValue1());
 		System.out.println("isSameDayApplicable" + isSameDayApplicable);
 		model.addObject("isSameDayApplicable", isSameDayApplicable);
@@ -503,8 +538,10 @@ public class ItemController {
 
 		if (prevDate == null) {
 			model.addObject("prevDate", strOrderDate);
+			model.addObject("prevDateFlag", 0);
 		} else {
 			model.addObject("prevDate", prevDate);
+			model.addObject("prevDateFlag", 1);
 		}
 
 		try {
@@ -760,13 +797,14 @@ public class ItemController {
 			if (isValidQty) {
 				frItemList = new ArrayList<GetFrItem>();
 
-//				map = new LinkedMultiValueMap<String, Object>();
-//
-//				map.add("items", menuList.get(index).getItemShow());
-//				map.add("frId", frDetails.getFrId());
-//				map.add("date", productionDate);
-//				map.add("menuId", menuList.get(index).getMenuId());
-//				map.add("isSameDayApplicable", isSameDayApplicable);
+				map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("items", menuList.get(globalIndex).getItemShow());
+				map.add("frId", frDetails.getFrId());
+				//map.add("date", productionDate);
+				map.add("date", deliveryDate);
+				map.add("menuId", menuList.get(globalIndex).getMenuId());
+				map.add("isSameDayApplicable", isSameDayApplicable);
 
 				ParameterizedTypeReference<List<GetFrItem>> typeRef = new ParameterizedTypeReference<List<GetFrItem>>() {
 				};

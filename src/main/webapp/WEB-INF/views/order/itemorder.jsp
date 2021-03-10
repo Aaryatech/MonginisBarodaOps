@@ -26,7 +26,8 @@ jQuery(document).ready(function(){
 	$(function() {
 		
 		var today = new Date();
-		today.setDate(today.getDate() -1);
+		//today.setDate(today.getDate() -1);SaChin Comment 08-03-2021
+		today.setDate(today.getDate());
 		var dd = String(today.getDate()).padStart(2, '0');
 		var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 		var yyyy = today.getFullYear();
@@ -150,13 +151,22 @@ a:hover {
 					<form
 						action="${pageContext.request.contextPath}/showSavouries/${con_index}"
 						name="form2" method="get">
+						<c:if test="${prevDateFlag==1}">
+							<c:set var="prev_ord_del_date" value="${prevDate}">	</c:set>
+						</c:if>
+						
+						<c:if test="${prevDateFlag==0}">
+							<c:set var="prev_ord_del_date" value="${deliveryDate}">	</c:set>
+						</c:if>
+					
+					
 						<h3 class="pageTitle2">
-							Previous Order : <input id="prevdatepicker" autocomplete="off"
+							Previous Delivery Date: <input id="prevdatepicker" autocomplete="off"
 								style="width: 30%" placeholder="Previous Order Date"
 								name="prevdatepicker" type="text"
-								class="texboxitemcode texboxcal" value="${prevDate}"
+								class="texboxitemcode texboxcal" value="${prev_ord_del_date}"
 								onchange="onChangePrevOrderDate(this.value,${con_index});"
-								min="${prevDate}"> <input type="submit" vlaue="submit">
+								min="${prev_ord_del_date}"> <input type="submit" vlaue="submit">
 						</h3>
 
 
@@ -286,7 +296,9 @@ a:hover {
 														Name</th>
 													<!-- <th class="col-md-1" style="text-align: center;">Shelf
 														Life</th> -->
-													<th class="col-md-1" style="text-align: center;">Min
+													<th class="col-md-1" style="text-align: center;">Min/Mul
+														Quantity</th>
+														<th class="col-md-1" style="text-align: center;">Max
 														Quantity</th>
 													<!-- <th class="col-md-1" style="text-align: right;">Current
 														Stock</th> -->
@@ -315,7 +327,9 @@ a:hover {
 														Name</th>
 													<!-- <th class="col-md-1" style="text-align: center;">Shelf
 														Life</th> -->
-													<th class="col-md-1" style="text-align: center;">Min
+													<th class="col-md-1" style="text-align: center;">Min/Mul
+														Quantity</th>
+															<th class="col-md-1" style="text-align: center;">Max
 														Quantity</th>
 													<!-- <th class="col-md-1" style="text-align: right;">Current
 														Stock</th> -->
@@ -342,16 +356,23 @@ a:hover {
 																			<c:when test="${items.itemImage!=''}">
 																				<a href="${url}${items.itemImage}"
 																					data-lightbox="image-1" tabindex="-1"
-																					style="color: #000000;">${items.itemName}</a>
+																					style="color: #000000;">${items.itemName} <c:if test="${menuDiscPer!=0}">
+																	(Disc: ${menuDiscPer} %)
+																	</c:if> </a>
 																			</c:when>
 																			<c:otherwise>
-																	${items.itemName}
+																	${items.itemName} <c:if test="${menuDiscPer!=0}">
+																	(Disc: ${menuDiscPer} %)
+																	</c:if> 
 																	</c:otherwise>
 																		</c:choose></td>
 
 																	<td class="col-md-1" style="text-align: center;"><c:out
 																			value='${items.minQty}' /></td>
-
+												
+														<td class="col-md-1" style="text-align: center;"><c:out
+																			value='${items.itemGrp3}' /></td>
+												
 																	<td class="col-md-1" style="text-align: center;"><input
 																		name='${items.id}' id='${items.id}'
 																		value='${items.itemQty}' class="tableInput"

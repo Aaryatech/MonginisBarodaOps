@@ -139,7 +139,8 @@ public class SpCakeController {
 			System.out.println("MenuList" + currentMenuId);
 			globalIndex = index;
 			menuTitle = menuList.get(index).getMenuTitle();
-
+			int menuDelDays = menuList.get(globalIndex).getDelDays();
+			model.addObject("menuDelDays", menuDelDays);// newSAC 08-03-2021
 			SpCakeResponse spCakeResponse = restTemplate.getForObject(Constant.URL + "/showSpecialCakeList",
 					SpCakeResponse.class);
 
@@ -376,7 +377,8 @@ public class SpCakeController {
 					return model;
 
 				}
-
+				int menuDelDays = menuList.get(globalIndex).getDelDays();
+				model.addObject("menuDelDays", menuDelDays);// newSAC 08-03-2021
 				float sprRate;
 				float spBackendRate;
 

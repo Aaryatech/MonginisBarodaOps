@@ -339,12 +339,14 @@ select {
 
 									<c:set var="increment" value="${spBookb4}"></c:set>
                                     <c:set var="menuId" value="${menuId}"></c:set>
+                                      <c:set var="menuDelDay" value="${menuDelDays}"></c:set>
 									<%
+										int menuDeliveryDays = (int) pageContext.getAttribute("menuDelDay");
 										int incr = (int) pageContext.getAttribute("increment");
 									    int menuId = (int) pageContext.getAttribute("menuId");
 										// Create a Calendar object
 										Calendar calendar = Calendar.getInstance();
-
+System.out.print("incr " +incr +" menuDeliveryDays " +menuDeliveryDays);
 										// Get current day from calendar
 										int day = calendar.get(Calendar.DATE);
 										// Get current month from calendar
@@ -359,14 +361,14 @@ select {
 
 										Calendar cal = Calendar.getInstance();
 										cal.setTime(new Date()); // Now use today date.
-										if(menuId!=68 && menuId!=88){
+										if(menuDeliveryDays>0){
 										cal.add(Calendar.DATE, incr); // Adding 1 days
 										}
 										Date date = cal.getTime();
 										SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
 										String fDate = formatter.format(date);
-										System.out.println("" + fDate);
+										System.out.println("delDate " + fDate);
 										SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-yyyy");
 
 										String fDate1 = formatter1.format(date);
@@ -635,7 +637,7 @@ select {
 	
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Delivery Date</div></div>
-		<div class="col2"><c:choose><c:when test="${menuId==68 || menuId==88}">
+		<div class="col2"><c:choose><c:when test="${menuDelDays<1}">
 			<input id="date" class="texboxitemcode texboxcal" value="<%=fDate %>"  name="datepicker" type="text" readonly>
 			<input id="datepicker" class="texboxitemcode texboxcal" value="<%=fDate %>"  name="datepicker" type="hidden" />
 
@@ -664,7 +666,7 @@ select {
 	<div class="colOuter">
 	    <div class="col1"><div class="col1title">Customer Name</div></div>
 		<div class="col2full">
-		<select id="sp_cust_id" class="form-control chosen-select" name="sp_cust_id" onchange="showEmpInfo(this.value)" required style="width: 80%;">
+		<select id="sp_cust_id"  class="chosen-select" name="sp_cust_id" onchange="showEmpInfo(this.value)" required style="width: 80%;">
 			  <option>Select Customer</option>	
 			  	<c:forEach items="${customerList}" var="customerList">
 							
@@ -1847,14 +1849,16 @@ function validate() {
 		 if(noOfChars>0)
 	     {
 			 if (ctype.length < noOfChars  || ctype.length > noOfChars) {
-				    alert('please enter '+noOfChars+' characters for Aplhabetical Type Cake');
+				   // alert('please enter '+noOfChars+' characters for Aplhabetical Type Cake');
+				    alert('Please select shape');
 				    return false;
 				} else if(ctype.match(alphaExp))
 		          {
 					  isValid= true;  
 		          }
 		          else{
-		              alert("Please only enter characters  for Aplhabetical Type");
+		              //alert("Please only enter characters  for Aplhabetical Type");
+		              alert('Please select shape');
 		              isValid= false;  
 		          }
 	     }else{
@@ -1863,7 +1867,8 @@ function validate() {
 			  isValid= true;  
           }
           else{
-              alert("Please only enter characters  for Aplhabetical Type");
+             // alert("Please only enter characters  for Aplhabetical Type");
+              alert('Please select shape');
               isValid= false;  
           }
 	     }
