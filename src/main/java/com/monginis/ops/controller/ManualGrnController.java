@@ -325,11 +325,14 @@ System.err.println("Inside Manual Grn POST method ");
 			
 			System.err.println("show List objShowGrnList new  " +objShowGrnList.toString());
 			map = new LinkedMultiValueMap<String, Object>();
-			map.add("settingKey", "GRNGVN_INSERT_STATUS");
+			map.add("settingKey", "MAN_GRN_INSERT_STATUS");
 			map.add("delStatus", 0);
 			NewSetting grnStatusValues=restTemplate.postForObject(Constant.URL + "getNewSettingByKey", map,
 					NewSetting.class);
 map = new LinkedMultiValueMap<String, Object>();
+float aprSgstRsSum=0;float aprCgstRsSum=0;float aprIgstRsSum=0;float aprCessRsSum=0;
+float aprGrandTotalSum=0; float aprROffSum=0;
+
 			for (int i = 0; i < objShowGrnList.size(); i++) {
 
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -502,13 +505,52 @@ map = new LinkedMultiValueMap<String, Object>();
 					postGrnGvn.setAprROff(0);
 					postGrnGvn.setIsSameState(frDetails.getIsSameState());
 
-					System.out.println("post grn ref inv date " + postGrnGvn.getRefInvoiceDate());
+					//System.out.println("post grn ref inv date " + postGrnGvn.getRefInvoiceDate());
+					
+					//SACHIN NEW FIELD SET 10-March 21-SUMIT SIR POINT
+					postGrnGvn.setAprQtyStore(grnQty);
+					postGrnGvn.setAprQtyAcc(grnQty);
+					postGrnGvn.setAprTaxableAmt(taxableAmt);
+					postGrnGvn.setAprTotalTax(totalTax);
+					float aprSgstRs=0;float aprCgstRs=0;float aprIgstRs=0;float aprCessRs=0;
+					
+					if (frDetails.getIsSameState() == 1) {
+						aprSgstRs=(taxableAmt * (postGrnGvn.getSgstPer()/100));
+						aprCgstRs=(taxableAmt * (postGrnGvn.getCgstPer()/100));
+					} else {
+						aprIgstRs=(taxableAmt * (postGrnGvn.getIgstPer()/100));
+					}
+					
+					postGrnGvn.setAprSgstRs(roundUp(aprSgstRs));
+					postGrnGvn.setAprCgstRs(roundUp(aprCgstRs));
+					postGrnGvn.setAprIgstRs(roundUp(aprIgstRs));
+					
+					aprCessRs=(taxableAmt * (postGrnGvn.getCessPer()/100));
+					postGrnGvn.setAprCessRs(aprCessRs);
+					
+					aprSgstRsSum=aprSgstRsSum+aprSgstRs;
+					aprCgstRsSum=aprCgstRsSum+aprCgstRs;
+					aprIgstRsSum=aprIgstRsSum+aprIgstRs;
+					aprCessRsSum=aprCessRsSum+aprCessRs;
+					
+					postGrnGvn.setCessPer(postGrnGvn.getCessPer());
+					postGrnGvn.setAprROff(postGrnGvn.getRoundUpAmt());
+					postGrnGvn.setAprGrandTotal(grandTotal);
+					
+					
+					
+					//END SACHIN 10MArch 21 SUMIT SIR POINT
 
 					// 15 Feb
 					sumTaxableAmt = sumTaxableAmt + postGrnGvn.getTaxableAmt();
 					sumTaxAmt = sumTaxAmt + postGrnGvn.getTotalTax();
 					sumTotalAmt = sumTotalAmt + postGrnGvn.getGrnGvnAmt();
 
+					//Sac 10 march
+					aprGrandTotalSum=aprGrandTotalSum+sumTotalAmt;
+					aprROffSum=aprROffSum+roundUpAmt;
+					//Sac 10 march
+					
 					postGrnGvnList.add(postGrnGvn);
 
 				} // end of if checking for grnQty
@@ -547,7 +589,21 @@ map = new LinkedMultiValueMap<String, Object>();
 			System.out.println("****postGrnGvnList size*******-- " + postGrnGvnList.size());
 
 			// postGrnList.setGrnGvn(postGrnGvnList);
-
+			//SAC 10 March 21 SUMIT SIR POINT
+			grnHeader.setApporvedAmt(roundUp(sumTotalAmt));
+			grnHeader.setAprTaxableAmt(roundUp(sumTaxableAmt));
+			grnHeader.setAprTotalTax(roundUp(sumTaxAmt));
+			
+			grnHeader.setAprSgstRs(roundUp(aprSgstRsSum));
+			grnHeader.setAprCgstRs(roundUp(aprCgstRsSum));
+			grnHeader.setAprIgstRs(roundUp(aprIgstRsSum));
+			grnHeader.setAprGrandTotal(roundUp(aprGrandTotalSum));
+			grnHeader.setAprROff(roundUp(aprROffSum));
+			grnHeader.setAprCessRs(roundUp(aprCessRsSum));
+			
+			
+			//End SAC 10 March 21 SUMIT SIR POINT
+			
 			postGrnList.setGrnGvnHeader(grnHeader);
 			System.out.println("post grn for rest----- " + postGrnList.toString());
 			// System.out.println("post grn for rest size " +

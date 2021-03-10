@@ -834,11 +834,14 @@ public class GrnGvnController {
 			String curDateTime = null;
 			//Sac03Feb2021
 			map = new LinkedMultiValueMap<String, Object>();
-			map.add("settingKey", "GRNGVN_INSERT_STATUS");
+			map.add("settingKey", "GRN_INSERT_STATUS");
 			map.add("delStatus", 0);
 			NewSetting grnStatusValues=restTemplate.postForObject(Constant.URL + "getNewSettingByKey", map,
 					NewSetting.class);
-map = new LinkedMultiValueMap<String, Object>();
+			map = new LinkedMultiValueMap<String, Object>();
+			
+			float aprSgstRsSum=0;float aprCgstRsSum=0;float aprIgstRsSum=0;float aprCessRsSum=0;
+			float aprGrandTotalSum=0; float aprROffSum=0;
 			for (int i = 0; i < objShowGrnList.size(); i++) {
 
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -961,7 +964,7 @@ map = new LinkedMultiValueMap<String, Object>();
 					postGrnGvn.setGrnGvnStatus(Integer.parseInt(grnStatusValues.getSettingValue2()));
 				}catch (Exception e) {
 					postGrnGvn.setGrnGvnStatus(1);
-				}
+				}//END SAC 6-3-21
 				
 				postGrnGvn.setApprovedLoginGate(0);
 				postGrnGvn.setApproveimedDateTimeGate(dateFormat.format(cal.getTime()));
@@ -1014,12 +1017,49 @@ map = new LinkedMultiValueMap<String, Object>();
 				postGrnGvn.setIsSameState(frDetails.getIsSameState());
 
 				System.out.println("post grn ref inv date " + postGrnGvn.getRefInvoiceDate());
-
+			
+				//SACHIN NEW FIELD SET 10-March 21-SUMIT SIR POINT
+				postGrnGvn.setAprQtyStore(Integer.parseInt(tempGrnQty));
+				postGrnGvn.setAprQtyAcc(Integer.parseInt(tempGrnQty));
+				postGrnGvn.setAprTaxableAmt(taxableAmt);
+				postGrnGvn.setAprTotalTax(totalTax);
+				float aprSgstRs=0;float aprCgstRs=0;float aprIgstRs=0;float aprCessRs=0;
+				
+				if (frDetails.getIsSameState() == 1) {
+					aprSgstRs=(taxableAmt * (postGrnGvn.getSgstPer()/100));
+					aprCgstRs=(taxableAmt * (postGrnGvn.getCgstPer()/100));
+				} else {
+					aprIgstRs=(taxableAmt * (postGrnGvn.getIgstPer()/100));
+				}
+				
+				postGrnGvn.setAprSgstRs(roundUp(aprSgstRs));
+				postGrnGvn.setAprCgstRs(roundUp(aprCgstRs));
+				postGrnGvn.setAprIgstRs(roundUp(aprIgstRs));
+				
+				aprCessRs=(taxableAmt * (postGrnGvn.getCessPer()/100));
+				postGrnGvn.setAprCessRs(aprCessRs);
+				
+				aprSgstRsSum=aprSgstRsSum+aprSgstRs;
+				aprCgstRsSum=aprCgstRsSum+aprCgstRs;
+				aprIgstRsSum=aprIgstRsSum+aprIgstRs;
+				aprCessRsSum=aprCessRsSum+aprCessRs;
+				
+				postGrnGvn.setCessPer(postGrnGvn.getCessPer());
+				postGrnGvn.setAprROff(postGrnGvn.getRoundUpAmt());
+				postGrnGvn.setAprGrandTotal(grandTotal);
+				
+				
+				
+				//END SACHIN 10MArch 21 SUMIT SIR POINT
 				// 15 Feb
 				sumTaxableAmt = sumTaxableAmt + postGrnGvn.getTaxableAmt();
 				sumTaxAmt = sumTaxAmt + postGrnGvn.getTotalTax();
 				sumTotalAmt = sumTotalAmt + postGrnGvn.getGrnGvnAmt();
-
+				//Sac 10 march
+				aprGrandTotalSum=aprGrandTotalSum+sumTotalAmt;
+				aprROffSum=aprROffSum+roundUpAmt;
+				//Sac 10 march
+				
 				postGrnGvnList.add(postGrnGvn);
 
 				if (objShowGrnList.get(i).getAutoGrnQty() - postGrnGvn.getGrnGvnQty() > 0) {
@@ -1037,7 +1077,7 @@ map = new LinkedMultiValueMap<String, Object>();
 
 				// } // end of if checking for grnQty
 			} // end of for
-			System.err.println("Selll Bill Data " + sellBillData.toString());
+			//System.err.println("Selll Bill Data " + sellBillData.toString());
 
 			grnHeader.setGrnGvn(postGrnGvnList);
 
@@ -1050,10 +1090,10 @@ map = new LinkedMultiValueMap<String, Object>();
 			grnHeader.setGrngvnStatus(2);//changed to 2 from 1 on May 9 Sachin
 			//SAC 06-03-2021
 			try {
-				grnHeader.setGrngvnStatus(Integer.parseInt(grnStatusValues.getSettingValue2()));
+				grnHeader.setGrngvnStatus(Integer.parseInt(grnStatusValues.getSettingValue1()));
 			}catch (Exception e) {
 				grnHeader.setGrngvnStatus(1);
-			}
+			}//END SAC 6-3-21
 			
 			grnHeader.setIsCreditNote(0);
 			grnHeader.setIsGrn(1);
@@ -1062,6 +1102,21 @@ map = new LinkedMultiValueMap<String, Object>();
 			grnHeader.setTaxableAmt(roundUp(sumTaxableAmt));
 			grnHeader.setTaxAmt(roundUp(sumTaxAmt));
 			grnHeader.setTotalAmt(roundUp(sumTotalAmt));
+			
+			//SAC 10 March 21 SUMIT SIR POINT
+			grnHeader.setApporvedAmt(roundUp(sumTotalAmt));
+			grnHeader.setAprTaxableAmt(roundUp(sumTaxableAmt));
+			grnHeader.setAprTotalTax(roundUp(sumTaxAmt));
+			
+			grnHeader.setAprSgstRs(roundUp(aprSgstRsSum));
+			grnHeader.setAprCgstRs(roundUp(aprCgstRsSum));
+			grnHeader.setAprIgstRs(roundUp(aprIgstRsSum));
+			grnHeader.setAprGrandTotal(roundUp(aprGrandTotalSum));
+			grnHeader.setAprROff(roundUp(aprROffSum));
+			grnHeader.setAprCessRs(roundUp(aprCessRsSum));
+			
+			
+			//End SAC 10 March 21 SUMIT SIR POINT
 			grnHeader.setGrnGvn(postGrnGvnList);
 
 			modelAndView.addObject("grnConfList", objShowGrnList);
@@ -1108,93 +1163,97 @@ map = new LinkedMultiValueMap<String, Object>();
 
 				map = new LinkedMultiValueMap<String, Object>();
 
-				map.add("frId", frDetails.getFrId());
+				//map.add("frId", frDetails.getFrId());
 
-				SellBillDataCommon sellBillResponse = restTemplate
-						.postForObject(Constant.URL + "/showNotDayClosedRecord", map, SellBillDataCommon.class);
+				//SellBillDataCommon sellBillResponse = restTemplate
+						//.postForObject(Constant.URL + "/showNotDayClosedRecord", map, SellBillDataCommon.class);
 
-				if (!sellBillResponse.getSellBillHeaderList().isEmpty()) {
-
-					List<SellBillHeader> sellBillHeaderList = sellBillResponse.getSellBillHeaderList();
-
-					int count = sellBillHeaderList.size();
-					SellBillHeader billHeader = sellBillResponse.getSellBillHeaderList().get(0);
-
-					map = new LinkedMultiValueMap<String, Object>();
-
-					map.add("billNo", billHeader.getSellBillNo());
-
-					SellBillDetailList sellBillDetailList = restTemplate
-							.postForObject(Constant.URL + "/getSellBillDetails", map, SellBillDetailList.class);
-
-					List<SellBillDetail> sellBillDetails = sellBillDetailList.getSellBillDetailList();
-					if (sellBillDetails.size() > 0) {
-
-						for (int x = 0; x < sellBillDetails.size(); x++) {
-
-							billHeader
-									.setTaxableAmt(billHeader.getTaxableAmt() + sellBillDetails.get(x).getTaxableAmt());
-
-							billHeader.setTotalTax(billHeader.getTotalTax() + sellBillDetails.get(x).getTotalTax());
-							billHeader
-									.setGrandTotal(sellBillDetails.get(x).getGrandTotal() + billHeader.getGrandTotal());
-
-							// billHeader.setBillDate(billHeader.getBillDate());
-
-							billHeader.setDiscountPer(billHeader.getDiscountPer());
-
-						}
-						billHeader.setGrandTotal(Math.round(billHeader.getGrandTotal()));
-						billHeader.setPaidAmt(billHeader.getGrandTotal());
-						billHeader.setPayableAmt(billHeader.getGrandTotal());
-						System.err.println("bill Header data for Day close " + billHeader.toString());
-
-						String start_dt = billHeader.getBillDate();
-						DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-						java.util.Date date = (java.util.Date) formatter.parse(start_dt);
-
-						SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd");
-						String finalString = newFormat.format(date);
-						billHeader.setBillDate(finalString);
-
-						billHeader = restTemplate.postForObject(Constant.URL + "saveSellBillHeader", billHeader,
-								SellBillHeader.class);
-
-						System.out.println("Bill Header Response " + billHeader.toString());
-
-					} else {
-
-						// update time
-
-						map = new LinkedMultiValueMap<String, Object>();
-
-						DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-						Calendar cal = Calendar.getInstance();
-
-						map.add("sellBillNo", billHeader.getSellBillNo());
-
-						java.util.Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(curDateTime);
-
-						Calendar caleInstance = Calendar.getInstance();
-
-						caleInstance.setTime(date);
-						caleInstance.set(Calendar.SECOND, (caleInstance.get(Calendar.SECOND) + 5));
-
-						String incTime = dateFormat.format(caleInstance.getTime());
-
-						System.out.println("*****Calender Gettime == " + caleInstance.getTime());
-
-						System.out.println("*****Inc time Gettime == " + incTime);
-
-						map.add("timeStamp", incTime);
-
-						Info info = restTemplate.postForObject(Constant.URL + "updateSellBillTimeStamp", map,
-								Info.class);
-
-					}
-
-				} // end of if ex bill not null
-
+					/*
+					 * if (!sellBillResponse.getSellBillHeaderList().isEmpty()) {
+					 * 
+					 * List<SellBillHeader> sellBillHeaderList =
+					 * sellBillResponse.getSellBillHeaderList();
+					 * 
+					 * int count = sellBillHeaderList.size(); SellBillHeader billHeader =
+					 * sellBillResponse.getSellBillHeaderList().get(0);
+					 * 
+					 * map = new LinkedMultiValueMap<String, Object>();
+					 * 
+					 * map.add("billNo", billHeader.getSellBillNo());
+					 * 
+					 * SellBillDetailList sellBillDetailList = restTemplate
+					 * .postForObject(Constant.URL + "/getSellBillDetails", map,
+					 * SellBillDetailList.class);
+					 * 
+					 * List<SellBillDetail> sellBillDetails =
+					 * sellBillDetailList.getSellBillDetailList(); if (sellBillDetails.size() > 0) {
+					 * 
+					 * for (int x = 0; x < sellBillDetails.size(); x++) {
+					 * 
+					 * billHeader .setTaxableAmt(billHeader.getTaxableAmt() +
+					 * sellBillDetails.get(x).getTaxableAmt());
+					 * 
+					 * billHeader.setTotalTax(billHeader.getTotalTax() +
+					 * sellBillDetails.get(x).getTotalTax()); billHeader
+					 * .setGrandTotal(sellBillDetails.get(x).getGrandTotal() +
+					 * billHeader.getGrandTotal());
+					 * 
+					 * // billHeader.setBillDate(billHeader.getBillDate());
+					 * 
+					 * billHeader.setDiscountPer(billHeader.getDiscountPer());
+					 * 
+					 * } billHeader.setGrandTotal(Math.round(billHeader.getGrandTotal()));
+					 * billHeader.setPaidAmt(billHeader.getGrandTotal());
+					 * billHeader.setPayableAmt(billHeader.getGrandTotal());
+					 * System.err.println("bill Header data for Day close " +
+					 * billHeader.toString());
+					 * 
+					 * String start_dt = billHeader.getBillDate(); DateFormat formatter = new
+					 * SimpleDateFormat("dd-MM-yyyy"); java.util.Date date = (java.util.Date)
+					 * formatter.parse(start_dt);
+					 * 
+					 * SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd"); String
+					 * finalString = newFormat.format(date); billHeader.setBillDate(finalString);
+					 * 
+					 * billHeader = restTemplate.postForObject(Constant.URL + "saveSellBillHeader",
+					 * billHeader, SellBillHeader.class);
+					 * 
+					 * System.out.println("Bill Header Response " + billHeader.toString());
+					 * 
+					 * } else {
+					 * 
+					 * // update time
+					 * 
+					 * map = new LinkedMultiValueMap<String, Object>();
+					 * 
+					 * DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); Calendar
+					 * cal = Calendar.getInstance();
+					 * 
+					 * map.add("sellBillNo", billHeader.getSellBillNo());
+					 * 
+					 * java.util.Date date = new
+					 * SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(curDateTime);
+					 * 
+					 * Calendar caleInstance = Calendar.getInstance();
+					 * 
+					 * caleInstance.setTime(date); caleInstance.set(Calendar.SECOND,
+					 * (caleInstance.get(Calendar.SECOND) + 5));
+					 * 
+					 * String incTime = dateFormat.format(caleInstance.getTime());
+					 * 
+					 * System.out.println("*****Calender Gettime == " + caleInstance.getTime());
+					 * 
+					 * System.out.println("*****Inc time Gettime == " + incTime);
+					 * 
+					 * map.add("timeStamp", incTime);
+					 * 
+					 * Info info = restTemplate.postForObject(Constant.URL +
+					 * "updateSellBillTimeStamp", map, Info.class);
+					 * 
+					 * }
+					 * 
+					 * } // end of if ex bill not null
+					 */
 				postGrnList = new PostGrnGvnList();
 
 				// insert Into Sell Bill Table as Bill Type 'G'
@@ -1207,155 +1266,140 @@ map = new LinkedMultiValueMap<String, Object>();
 				SellBillHeader sellBillHeaderRes = null;
 				SellBillHeader sellBillHeader = null;
 
-				if (sellBillData.size() > 0) {
-
-					System.err.println("inside if sellBillData.size() > 0");
-
-					sellBillHeader = new SellBillHeader();
-
-					sellBillHeader.setFrId(frDetails.getFrId());
-					sellBillHeader.setFrCode(frDetails.getFrCode());
-					sellBillHeader.setDelStatus(0);
-					sellBillHeader.setUserName("dummy");
-					sellBillHeader.setBillDate(dtf.format(localDate));
-
-					sellBillHeader.setInvoiceNo(getInvoiceNo(request, response));
-
-					sellBillHeader.setPaymentMode(1);
-
-					sellBillHeader.setBillType('G');
-
-					sellBillHeader.setSellBillNo(0);
-
-					sellBillHeader.setUserGstNo("");
-
-					sellBillHeader.setUserPhone("");
-
-					List<SellBillDetail> sellBillDetailList = new ArrayList<SellBillDetail>();
-
-					float sumTaxableAmt1 = 0, sumTotalTax = 0, sumGrandTotal = 0, sumMrp = 0;
-
-					for (int i = 0; i < sellBillData.size(); i++) {
-
-						System.err.println("sellBillData for loop ");
-
-						System.err.println("sell Bill Data at index " + i + sellBillData.get(i).toString());
-
-						SellBillDetail sellBillDetail = new SellBillDetail();
-
-						Float rate = (float) sellBillData.get(i).getMrp();
-
-						float tax1 = sellBillData.get(i).getSgstPer();
-						float tax2 = sellBillData.get(i).getCgstPer();
-						float tax3 = sellBillData.get(i).getIgstPer();
-
-						int qty = sellBillData.get(i).getAutoGrnQty();
-
-						Float mrpBaseRate = (rate * 100) / (100 + (tax1 + tax2));
-						mrpBaseRate = roundUp(mrpBaseRate);
-
-						System.out.println("Mrp: " + rate);
-						System.out.println("Tax1 : " + tax1);
-						System.out.println("tax2 : " + tax2);
-
-						Float taxableAmt = (float) (mrpBaseRate * qty);
-						taxableAmt = roundUp(taxableAmt);
-
-						float discAmt = 0;
-						taxableAmt = taxableAmt - discAmt;
-
-						float sgstRs = (taxableAmt * tax1) / 100;
-						float cgstRs = (taxableAmt * tax2) / 100;
-						float igstRs = (taxableAmt * tax3) / 100;
-
-						sgstRs = roundUp(sgstRs);
-						cgstRs = roundUp(cgstRs);
-						igstRs = roundUp(igstRs);
-
-						Float totalTax = sgstRs + cgstRs;
-						totalTax = roundUp(totalTax);
-
-						Float grandTotal = totalTax + taxableAmt;
-						grandTotal = roundUp(grandTotal);
-
-						sellBillDetail.setCatId(sellBillData.get(i).getCatId());
-						sellBillDetail.setSgstPer(tax1);
-						if (frDetails.getIsSameState() == 1) {
-							sellBillDetail.setSgstRs(sgstRs);
-							sellBillDetail.setCgstRs(cgstRs);
-
-						} else {
-							sellBillDetail.setIgstRs(igstRs);
-						}
-
-						sellBillDetail.setCgstPer(tax2);
-
-						sellBillDetail.setIgstPer(tax3);
-
-						sellBillDetail.setDelStatus(0);
-						sellBillDetail.setGrandTotal(grandTotal);
-						sellBillDetail.setItemId(sellBillData.get(i).getItemId());
-						sellBillDetail.setMrp(rate);
-						sellBillDetail.setMrpBaseRate(mrpBaseRate);
-						sellBillDetail.setQty(sellBillData.get(i).getAutoGrnQty());
-						sellBillDetail.setRemark(sellBillData.get(i).getHsnCode());//new Hsn  change
-						sellBillDetail.setSellBillDetailNo(0);
-						sellBillDetail.setSellBillNo(0);
-						sellBillDetail.setBillStockType(1);
-
-						sumMrp = sumMrp + (rate * qty);
-						sumTaxableAmt1 = sumTaxableAmt1 + taxableAmt;
-						sumTotalTax = sumTotalTax + totalTax;
-						sumGrandTotal = sumGrandTotal + grandTotal;
-
-						sellBillDetail.setTaxableAmt(taxableAmt);
-						sellBillDetail.setTotalTax(totalTax);
-
-						sellBillDetailList.add(sellBillDetail);
-
-					}
-					sellBillHeader.setTaxableAmt(sumTaxableAmt1);
-					sellBillHeader.setDiscountPer(0);
-
-					float payableAmt = sumGrandTotal;
-
-					payableAmt = roundUp(payableAmt);
-
-					sellBillHeader.setDiscountAmt(0);
-
-					System.out.println("Payable amt  : " + payableAmt);
-					sellBillHeader.setTotalTax(sumTotalTax);
-					sellBillHeader.setGrandTotal(Math.round(sumGrandTotal));
-					sellBillHeader.setPayableAmt(Math.round(sumGrandTotal));
-
-					sellBillHeader.setPaidAmt(Math.round(sumGrandTotal));
-					sellBillHeader.setSellBillDetailsList(sellBillDetailList);
-
-					sellBillHeaderRes = restTemplate.postForObject(Constant.URL + "insertSellBillData", sellBillHeader,
-							SellBillHeader.class);
-				} // end of if sellBillData size>0
-
-				if (sellBillHeaderRes != null) {
-
-					map = new LinkedMultiValueMap<String, Object>();
-
-					map.add("frId", frDetails.getFrId());
-					FrSetting frSetting1 = restTemplate.postForObject(Constant.URL + "getFrSettingValue", map,
-							FrSetting.class);
-
-					int sellBillNo = frSetting1.getSellBillNo();
-
-					sellBillNo = sellBillNo + 1;
-
-					map = new LinkedMultiValueMap<String, Object>();
-
-					map.add("frId", frDetails.getFrId());
-					map.add("sellBillNo", sellBillNo);
-
-					Info info = restTemplate.postForObject(Constant.URL + "updateFrSettingBillNo", map, Info.class);
-
-				}
-
+					/*
+					 * if (sellBillData.size() > 0) {
+					 * 
+					 * System.err.println("inside if sellBillData.size() > 0");
+					 * 
+					 * sellBillHeader = new SellBillHeader();
+					 * 
+					 * sellBillHeader.setFrId(frDetails.getFrId());
+					 * sellBillHeader.setFrCode(frDetails.getFrCode());
+					 * sellBillHeader.setDelStatus(0); sellBillHeader.setUserName("dummy");
+					 * sellBillHeader.setBillDate(dtf.format(localDate));
+					 * 
+					 * sellBillHeader.setInvoiceNo(getInvoiceNo(request, response));
+					 * 
+					 * sellBillHeader.setPaymentMode(1);
+					 * 
+					 * sellBillHeader.setBillType('G');
+					 * 
+					 * sellBillHeader.setSellBillNo(0);
+					 * 
+					 * sellBillHeader.setUserGstNo("");
+					 * 
+					 * sellBillHeader.setUserPhone("");
+					 * 
+					 * List<SellBillDetail> sellBillDetailList = new ArrayList<SellBillDetail>();
+					 * 
+					 * float sumTaxableAmt1 = 0, sumTotalTax = 0, sumGrandTotal = 0, sumMrp = 0;
+					 * 
+					 * for (int i = 0; i < sellBillData.size(); i++) {
+					 * 
+					 * System.err.println("sellBillData for loop ");
+					 * 
+					 * System.err.println("sell Bill Data at index " + i +
+					 * sellBillData.get(i).toString());
+					 * 
+					 * SellBillDetail sellBillDetail = new SellBillDetail();
+					 * 
+					 * Float rate = (float) sellBillData.get(i).getMrp();
+					 * 
+					 * float tax1 = sellBillData.get(i).getSgstPer(); float tax2 =
+					 * sellBillData.get(i).getCgstPer(); float tax3 =
+					 * sellBillData.get(i).getIgstPer();
+					 * 
+					 * int qty = sellBillData.get(i).getAutoGrnQty();
+					 * 
+					 * Float mrpBaseRate = (rate * 100) / (100 + (tax1 + tax2)); mrpBaseRate =
+					 * roundUp(mrpBaseRate);
+					 * 
+					 * System.out.println("Mrp: " + rate); System.out.println("Tax1 : " + tax1);
+					 * System.out.println("tax2 : " + tax2);
+					 * 
+					 * Float taxableAmt = (float) (mrpBaseRate * qty); taxableAmt =
+					 * roundUp(taxableAmt);
+					 * 
+					 * float discAmt = 0; taxableAmt = taxableAmt - discAmt;
+					 * 
+					 * float sgstRs = (taxableAmt * tax1) / 100; float cgstRs = (taxableAmt * tax2)
+					 * / 100; float igstRs = (taxableAmt * tax3) / 100;
+					 * 
+					 * sgstRs = roundUp(sgstRs); cgstRs = roundUp(cgstRs); igstRs = roundUp(igstRs);
+					 * 
+					 * Float totalTax = sgstRs + cgstRs; totalTax = roundUp(totalTax);
+					 * 
+					 * Float grandTotal = totalTax + taxableAmt; grandTotal = roundUp(grandTotal);
+					 * 
+					 * sellBillDetail.setCatId(sellBillData.get(i).getCatId());
+					 * sellBillDetail.setSgstPer(tax1); if (frDetails.getIsSameState() == 1) {
+					 * sellBillDetail.setSgstRs(sgstRs); sellBillDetail.setCgstRs(cgstRs);
+					 * 
+					 * } else { sellBillDetail.setIgstRs(igstRs); }
+					 * 
+					 * sellBillDetail.setCgstPer(tax2);
+					 * 
+					 * sellBillDetail.setIgstPer(tax3);
+					 * 
+					 * sellBillDetail.setDelStatus(0); sellBillDetail.setGrandTotal(grandTotal);
+					 * sellBillDetail.setItemId(sellBillData.get(i).getItemId());
+					 * sellBillDetail.setMrp(rate); sellBillDetail.setMrpBaseRate(mrpBaseRate);
+					 * sellBillDetail.setQty(sellBillData.get(i).getAutoGrnQty());
+					 * sellBillDetail.setRemark(sellBillData.get(i).getHsnCode());//new Hsn change
+					 * sellBillDetail.setSellBillDetailNo(0); sellBillDetail.setSellBillNo(0);
+					 * sellBillDetail.setBillStockType(1);
+					 * 
+					 * sumMrp = sumMrp + (rate * qty); sumTaxableAmt1 = sumTaxableAmt1 + taxableAmt;
+					 * sumTotalTax = sumTotalTax + totalTax; sumGrandTotal = sumGrandTotal +
+					 * grandTotal;
+					 * 
+					 * sellBillDetail.setTaxableAmt(taxableAmt);
+					 * sellBillDetail.setTotalTax(totalTax);
+					 * 
+					 * sellBillDetailList.add(sellBillDetail);
+					 * 
+					 * } sellBillHeader.setTaxableAmt(sumTaxableAmt1);
+					 * sellBillHeader.setDiscountPer(0);
+					 * 
+					 * float payableAmt = sumGrandTotal;
+					 * 
+					 * payableAmt = roundUp(payableAmt);
+					 * 
+					 * sellBillHeader.setDiscountAmt(0);
+					 * 
+					 * System.out.println("Payable amt  : " + payableAmt);
+					 * sellBillHeader.setTotalTax(sumTotalTax);
+					 * sellBillHeader.setGrandTotal(Math.round(sumGrandTotal));
+					 * sellBillHeader.setPayableAmt(Math.round(sumGrandTotal));
+					 * 
+					 * sellBillHeader.setPaidAmt(Math.round(sumGrandTotal));
+					 * sellBillHeader.setSellBillDetailsList(sellBillDetailList);
+					 * 
+					 * sellBillHeaderRes = restTemplate.postForObject(Constant.URL +
+					 * "insertSellBillData", sellBillHeader, SellBillHeader.class); } // end of if
+					 * sellBillData size>0
+					 * 
+					 * if (sellBillHeaderRes != null) {
+					 * 
+					 * map = new LinkedMultiValueMap<String, Object>();
+					 * 
+					 * map.add("frId", frDetails.getFrId()); FrSetting frSetting1 =
+					 * restTemplate.postForObject(Constant.URL + "getFrSettingValue", map,
+					 * FrSetting.class);
+					 * 
+					 * int sellBillNo = frSetting1.getSellBillNo();
+					 * 
+					 * sellBillNo = sellBillNo + 1;
+					 * 
+					 * map = new LinkedMultiValueMap<String, Object>();
+					 * 
+					 * map.add("frId", frDetails.getFrId()); map.add("sellBillNo", sellBillNo);
+					 * 
+					 * Info info = restTemplate.postForObject(Constant.URL +
+					 * "updateFrSettingBillNo", map, Info.class);
+					 * 
+					 * }
+					 */
 				// System.out.println("info :" + sellBillHeaderRes.toString());
 
 				// update frSetting value for frGrnGvnSrNo
@@ -1732,11 +1776,13 @@ map = new LinkedMultiValueMap<String, Object>();
 			boolean isCustComplaint = false;
 			//Sac03feb2021
 			map = new LinkedMultiValueMap<String, Object>();
-			map.add("settingKey", "GRNGVN_INSERT_STATUS");
+			map.add("settingKey", "GVN_INSERT_STATUS");
 			map.add("delStatus", 0);
 			NewSetting gvnStatusValues=restTemplate.postForObject(Constant.URL + "getNewSettingByKey", map,
 					NewSetting.class);
 map = new LinkedMultiValueMap<String, Object>();
+float aprSgstRsSum=0;float aprCgstRsSum=0;float aprIgstRsSum=0;float aprCessRsSum=0;
+float aprGrandTotalSum=0; float aprROffSum=0;
 
 			for (int i = 0; i < gvnList.size(); i++) {
 
@@ -1905,6 +1951,38 @@ map = new LinkedMultiValueMap<String, Object>();
 					postGrnGvn.setAprGrandTotal(0);
 					postGrnGvn.setAprROff(0);
 					postGrnGvn.setIsSameState(frDetails.getIsSameState());
+					
+					//SACHIN NEW FIELD SET 10-March 21-SUMIT SIR POINT
+					postGrnGvn.setAprQtyStore( gvnQty);
+					postGrnGvn.setAprQtyAcc(gvnQty);
+					postGrnGvn.setAprTaxableAmt(taxableAmt);
+					postGrnGvn.setAprTotalTax(totalTax);
+					float aprSgstRs=0;float aprCgstRs=0;float aprIgstRs=0;float aprCessRs=0;
+					
+					if (frDetails.getIsSameState() == 1) {
+						aprSgstRs=(taxableAmt * (postGrnGvn.getSgstPer()/100));
+						aprCgstRs=(taxableAmt * (postGrnGvn.getCgstPer()/100));
+					} else {
+						aprIgstRs=(taxableAmt * (postGrnGvn.getIgstPer()/100));
+					}
+					
+					postGrnGvn.setAprSgstRs(roundUp(aprSgstRs));
+					postGrnGvn.setAprCgstRs(roundUp(aprCgstRs));
+					postGrnGvn.setAprIgstRs(roundUp(aprIgstRs));
+					
+					aprCessRs=(taxableAmt * (postGrnGvn.getCessPer()/100));
+					postGrnGvn.setAprCessRs(aprCessRs);
+					
+					aprSgstRsSum=aprSgstRsSum+aprSgstRs;
+					aprCgstRsSum=aprCgstRsSum+aprCgstRs;
+					aprIgstRsSum=aprIgstRsSum+aprIgstRs;
+					aprCessRsSum=aprCessRsSum+aprCessRs;
+					
+					postGrnGvn.setCessPer(postGrnGvn.getCessPer());
+					postGrnGvn.setAprROff(postGrnGvn.getRoundUpAmt());
+					postGrnGvn.setAprGrandTotal(grandTotal);
+					
+					//END SACHIN 10MArch 21 SUMIT SIR POINT
 
 					//
 
@@ -1912,6 +1990,10 @@ map = new LinkedMultiValueMap<String, Object>();
 					sumTaxAmt = sumTaxAmt + postGrnGvn.getTotalTax();
 					sumTotalAmt = sumTotalAmt + postGrnGvn.getGrnGvnAmt();
 
+					//SAC 10March
+					aprGrandTotalSum=aprGrandTotalSum+sumTotalAmt;
+					aprROffSum=aprROffSum+roundUpAmt;
+					//SAC 10March end
 					postGrnGvnList.add(postGrnGvn);
 
 				} // end of if
@@ -1931,7 +2013,7 @@ map = new LinkedMultiValueMap<String, Object>();
 			grnHeader.setGrngvnStatus(4);//changed to 2 from 1 on May 9 Sachin
 			
 			try {
-				grnHeader.setGrngvnStatus(Integer.parseInt(gvnStatusValues.getSettingValue2()));// 16 postGrnGvn.setApprovedLoginGate(0);// 17
+				grnHeader.setGrngvnStatus(Integer.parseInt(gvnStatusValues.getSettingValue1()));// 16 postGrnGvn.setApprovedLoginGate(0);// 17
 			}
 			catch (Exception e) {
 				grnHeader.setGrngvnStatus(1);// 16 postGrnGvn.setApprovedLoginGate(0);// 17
@@ -1945,6 +2027,22 @@ map = new LinkedMultiValueMap<String, Object>();
 			grnHeader.setTaxAmt(roundUp(sumTaxAmt));
 			grnHeader.setTotalAmt(roundUp(sumTotalAmt));
 
+			
+			//SAC 10 March 21 SUMIT SIR POINT
+			grnHeader.setApporvedAmt(roundUp(sumTotalAmt));
+			grnHeader.setAprTaxableAmt(roundUp(sumTaxableAmt));
+			grnHeader.setAprTotalTax(roundUp(sumTaxAmt));
+			
+			grnHeader.setAprSgstRs(roundUp(aprSgstRsSum));
+			grnHeader.setAprCgstRs(roundUp(aprCgstRsSum));
+			grnHeader.setAprIgstRs(roundUp(aprIgstRsSum));
+			grnHeader.setAprGrandTotal(roundUp(aprGrandTotalSum));
+			grnHeader.setAprROff(roundUp(aprROffSum));
+			grnHeader.setAprCessRs(roundUp(aprCessRsSum));
+			
+			
+			//End SAC 10 March 21 SUMIT SIR POINT
+			
 			postGrnList.setGrnGvnHeader(grnHeader);
 
 			System.out.println("post grn for rest----- " + postGrnList.toString());
