@@ -2295,12 +2295,15 @@ function setData(flavourAdonRate,mrp,profitPer) {
 		//alert("AFTER sp_disc1 " +sp_disc1);
 		 //alert("B1")
 	}
+	//alert(discAmt);
 	
-	
-	var spGrandTot=(spTotAddonRate+spPrice+sp_ex_charges)-discAmt;
+	var spGrandTot=(parseFloat(spTotAddonRate)+parseFloat(spPrice)+parseFloat(sp_ex_charges))-parseFloat(discAmt);
+	//alert(spGrandTot);
 	var taxableAmt=(spGrandTot*100)/100+tax3;
-
-	var mrpBaseRate = parseFloat((spSubTotal * 100) / (tax3 + 100));
+	//alert(taxableAmt);
+	var spSubTotalTemp=parseFloat(spSubTotal)-discAmt
+	var mrpBaseRate = parseFloat((spSubTotalTemp * 100) / (tax3 + 100));
+	//var mrpBaseRate = parseFloat((spSubTotal * 100) / (tax3 + 100));
 
 	var gstInRs = 0;
 	var taxPerPerc1 = 0;
