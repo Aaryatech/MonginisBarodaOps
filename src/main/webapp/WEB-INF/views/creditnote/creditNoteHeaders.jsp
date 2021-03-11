@@ -157,10 +157,9 @@ table, th, td {
 
 					</div>
 					<!--table end-->
-					<br>
+					
 					<div class="col-md-12 controls">
-						<input type="button" value="PDF"
-							onclick="genPdf()" class="btn additem_btn">
+						<input type="button" value="PDF" onclick="genPdf()" class="btn additem_btn" style="margin: 0;">
 					</div>
 				</div>
 			</div>

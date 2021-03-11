@@ -107,54 +107,61 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">HSN Wise Summery Report</h2>
+						<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> HSN Wise Summary Report</h2>
 					</div>
 				</div>
 
 				<div class="row">
 					<input type="hidden" name="frId" id="frId" value="${frId}">
-
-					<div class="col-md-1 from_date">
-						<h4 class="pull-left">From</h4>
-					</div>
-					<div class="col-md-2 ">
-						<input id="fromdatepicker" autocomplete="off"
+					
+					<div class="form-quarter">
+							<div class="form_text">From</div>
+							<div class="form_input">
+								<input id="fromdatepicker" autocomplete="off"
 							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 							name="fromDate" type="text" value="${todaysDate}">
-					</div>
-					<div class="col-md-1">
-						<h4 class="pull-left">To </h4>
-					</div>
-					<div class="col-md-2 ">
-						<input id="todatepicker" autocomplete="off"
+							</div>
+						</div>
+						
+					<div class="form-quarter">
+							<div class="form_text">To</div>
+							<div class="form_input">
+								<input id="todatepicker" autocomplete="off"
 							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 							name="toDate" type="text" value="${todaysDate}">
-					</div>
-
-			<!-- 	</div>
-				<br>
-				<div class="row">
-					<div class="form-group"> -->
-						<label class="col-md-2">Select
-							Type</label>
-						<div class="col-sm-2 col-lg-2  controls">
-
-							<select data-placeholder="Select Type"
+							</div>
+						</div>
+						
+					<div class="form-quarter">
+							<div class="form_text">Type</div>
+							<div class="form_input">
+								<select data-placeholder="Select Type"
 								class="form-control chosen" id="type" name="type" required>
 								<option value="">Select Type</option>
 								<option value="1">Bill wise</option>
 								<option value="2">Credit Note Wise</option>
 								<option value="3">Consolidated</option>
 							</select>
-						</div>
+							</div>
+						</div>	
+						
+					
+						
+					<div class="form-quarter last center">
+						<button class="btn additem_btn" onclick="searchReport()" style="margin: 0;">Search </button>
+						<button class="btn additem_btn" value="PDF" id="PDFButton" onclick="genPdf()" style="margin: 0;">PDF</button>
+					</div>		
+
+					
+					
+
+			
+						
 
 
 
 						<div class="col-md-2">
-							<button class="btn btn-info" onclick="searchReport()">Search
-								</button>
-							<button class="btn btn-primary" value="PDF" id="PDFButton"
-								onclick="genPdf()">PDF</button>
+							
 
 						</div>
 
@@ -174,18 +181,18 @@ jQuery(document).ready(function(){
 								<thead>
 									<tr class="bgpink">
 
-										<th>Sr.No.</th>
-										<th>HSN</th>
-										<th>TAX %</th>
-										<th>MANUF</th>
-										<th>RET</th>
-										<th>TOTAL</th>
-										<th>TAXABLE AMT</th>
-										<th>CGST</th>
-										<th>CGST AMT</th>
-										<th>SGST</th>
-										<th>SGST AMT</th>
-										<th>Total</th>
+										<th style="white-space: nowrap;">Sr.No.</th>
+										<th style="white-space: nowrap;">HSN</th>
+										<th style="white-space: nowrap;">TAX %</th>
+										<th style="white-space: nowrap;">MANUF</th>
+										<th style="white-space: nowrap;">RET</th>
+										<th style="white-space: nowrap;">TOTAL</th>
+										<th style="white-space: nowrap;">TAXABLE AMT</th>
+										<th style="white-space: nowrap;">CGST</th>
+										<th style="white-space: nowrap;">CGST AMT</th>
+										<th style="white-space: nowrap;">SGST</th>
+										<th style="white-space: nowrap;">SGST AMT</th>
+										<th style="white-space: nowrap;">Total</th>
 									</tr>
 
 
@@ -198,18 +205,18 @@ jQuery(document).ready(function(){
 								<thead>
 									<tr class="bgpink">
 
-										<th>Sr.No.</th>
-										<th>HSN</th>
-										<th>TAX %</th>
-										<th>MANUF</th>
-										<th>RET</th>
-										<th>TOTAL</th>
-										<th>TAXABLE AMT</th>
-										<th>CGST</th>
-										<th>CGST AMT</th>
-										<th>SGST</th>
-										<th>SGST AMT</th>
-										<th>Total</th>
+										<th style="white-space: nowrap;">Sr.No.</th>
+										<th style="white-space: nowrap;">HSN</th>
+										<th style="white-space: nowrap;">TAX %</th>
+										<th style="white-space: nowrap;">MANUF</th>
+										<th style="white-space: nowrap;">RET</th>
+										<th style="white-space: nowrap;">TOTAL</th>
+										<th style="white-space: nowrap;">TAXABLE AMT</th>
+										<th style="white-space: nowrap;">CGST</th>
+										<th style="white-space: nowrap;">CGST AMT</th>
+										<th style="white-space: nowrap;">SGST</th>
+										<th style="white-space: nowrap;">SGST AMT</th>
+										<th style="white-space: nowrap;">Total</th>
 									</tr>
 
 
@@ -223,10 +230,9 @@ jQuery(document).ready(function(){
 					</div>
 					<!--table end-->
 					<br>
-					<div class="form-group" id="range">
-						<div class="col-sm-3  controls">
-							<input type="button" id="expExcel" class="btn btn-primary"
-								value="EXPORT TO Excel" onclick="exportToExcel();">
+					<div class="form-group" id="range" style="text-align: center;">
+						<div class="controls" >
+							<input type="button" id="expExcel" class="btn additem_btn" style="margin: 0;" value="EXPORT TO Excel" onclick="exportToExcel();">
 						</div>
 					</div>
 				</div>
@@ -292,19 +298,19 @@ jQuery(document).ready(function(){
 
 				var tr = $('<tr></tr>');
 
-				tr.append($('<td></td>').html(key + 1));
+				tr.append($('<td style="white-space: nowrap;"></td>').html(key + 1));
 
-				tr.append($('<td></td>').html(report.itemHsncd));
+				tr.append($('<td style="white-space: nowrap;"></td>').html(report.itemHsncd));
 
-				tr.append($('<td></td>')
+				tr.append($('<td style="white-space: nowrap;"></td>')
 						.html(report.itemTax1 + report.itemTax2));
 
-				tr.append($('<td  style="text-align:right;"></td>').html(
+				tr.append($('<td  style="text-align:right; white-space: nowrap;"></td>').html(
 						report.billQty));
 
-				tr.append($('<td  style="text-align:right;"></td>').html(
+				tr.append($('<td  style="text-align:right; white-space: nowrap;"></td>').html(
 						report.grnGvnQty));
-				tr.append($('<td  style="text-align:right;"></td>').html(
+				tr.append($('<td  style="text-align:right; white-space: nowrap;"></td>').html(
 						report.billQty - report.grnGvnQty));
 
 				totalTaxableAmt = totalTaxableAmt + report.taxableAmt;
@@ -315,17 +321,17 @@ jQuery(document).ready(function(){
 				totalFinal = totalFinal + report.cgstRs + report.sgstRs
 						+ report.taxableAmt;
 
-				tr.append($('<td style="text-align:right;"></td>').html(
+				tr.append($('<td style="text-align:right; white-space: nowrap;"></td>').html(
 						report.taxableAmt.toFixed(2)));
-				tr.append($('<td style="text-align:right;"></td>').html(
+				tr.append($('<td style="text-align:right; white-space: nowrap;"></td>').html(
 						report.itemTax1));
-				tr.append($('<td style="text-align:right;"></td>').html(
+				tr.append($('<td style="text-align:right; white-space: nowrap;"></td>').html(
 						report.cgstRs.toFixed(2)));
-				tr.append($('<td style="text-align:right;"></td>').html(
+				tr.append($('<td style="text-align:right; white-space: nowrap;"></td>').html(
 						report.itemTax2));
-				tr.append($('<td style="text-align:right;"></td>').html(
+				tr.append($('<td style="text-align:right; white-space: nowrap;"></td>').html(
 						report.sgstRs.toFixed(2)));
-				tr.append($('<td style="text-align:right;"></td>').html(
+				tr.append($('<td style="text-align:right; white-space: nowrap;"></td>').html(
 						(report.cgstRs + report.sgstRs + report.taxableAmt)
 								.toFixed(2)));
 
@@ -335,22 +341,22 @@ jQuery(document).ready(function(){
 
 			var tr = $('<tr></tr>');
 
-			tr.append($('<td></td>').html(""));
-			tr.append($('<td></td>').html(""));
-			tr.append($('<td></td>').html(""));
-			tr.append($('<td></td>').html(""));
-			tr.append($('<td></td>').html(""));
-			tr.append($('<td style="font-weight:bold;"></td>').html("Total"));
-			tr.append($('<td style="text-align:right;"></td>').html(
+			tr.append($('<td style="white-space: nowrap;"></td>').html(""));
+			tr.append($('<td style="white-space: nowrap;"></td>').html(""));
+			tr.append($('<td style="white-space: nowrap;"></td>').html(""));
+			tr.append($('<td style="white-space: nowrap;"></td>').html(""));
+			tr.append($('<td style="white-space: nowrap;"></td>').html(""));
+			tr.append($('<td style="white-space: nowrap;"></td>').html("Total"));
+			tr.append($('<td style="text-align:right; white-space: nowrap;"></td>').html(
 					totalTaxableAmt.toFixed(2)));
 			tr.append($('<td></td>').html(""));
-			tr.append($('<td style="text-align:right;"></td>').html(
+			tr.append($('<td style="text-align:right; white-space: nowrap;"></td>').html(
 					totalCgst.toFixed(2)));
-			tr.append($('<td></td>').html(""));
-			tr.append($('<td style="text-align:right;"></td>').html(
+			tr.append($('<td style="white-space: nowrap;"></td>').html(""));
+			tr.append($('<td style="text-align:right; white-space: nowrap;"></td>').html(
 					totalSgst.toFixed(2)));
 
-			tr.append($('<td style="text-align:right;"></td>').html(
+			tr.append($('<td style="text-align:right; white-space: nowrap;"></td>').html(
 					totalFinal.toFixed(2)));
 
 			$('#table_grid tbody').append(tr);

@@ -182,7 +182,7 @@ a.saveOrder:hover{background:#343690;}
 .cackright{ width:50%; float:left; color:#222;}
 .fullform{ margin-bottom:15px; font-size:15px; width:100%; float:left;}
 .cackimg{ width:100%; float:left; position:relative; text-align:left; padding-left:7px; margin-top:7px;}
-.cackimg img{ max-width:100%; width:144px; height:144px;}
+.cackimg img{ /* max-width:100%;  */width:150px; /* height:144px; */ object-fit: cover;}
 .cackimglable{ position:absolute; top:-5px; left:0px;}
 .cackimglable img{ max-width:100%; width:77px!important; height:75px !important;}
 
@@ -273,7 +273,7 @@ color:#fff; font-size:16px; font-weight:bold; display:inline-block; vertical-ali
 .sidenav {
     
     width: 0;
-     position:absolute; height:100%;
+     position:/* absolute */ fixed; height:100%;
     z-index:999;
     top: 0; bottom:0px;
     left:0; color:#000;overflow:auto;
@@ -700,6 +700,9 @@ min-height:330px /* 500px */;}
 .form_text{float: left; font-size: 14px; color: #333; margin:7px 10px 0 0;}
 .form_input{float: left; width: 78%;}
 .signlerow{display: inline-block; width: 100%; text-align: center;}
+.form-quarter.last{float: left; width: 25%; padding: 0 15px 0 0; text-align: left; margin:0 0 15px 0;}
+.marg_bttm{margin-bottom: 15px;}
+.frm_l_one.two_btn{width: 38%;}
 
 /*--css-divices--*/
 @media screen and (max-width:1366px){
@@ -737,6 +740,7 @@ min-height:330px /* 500px */;}
 .four_txt{width: 25%; margin: 5px 0;}
 .form-quarter{width: 33.333%; margin: 0 0 15px 0;}
 .form-quarter.signlerow{float: none; width: 100%; text-align: center;}
+.form-quarter.last{float: none; width: 100%; display: inline-block; text-align: center;}
 }
 
 @media screen and (max-width:800px){

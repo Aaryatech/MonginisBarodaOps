@@ -169,8 +169,7 @@ table, th, td {
 					<br>
 					<div class="form-group" id="range" style="text-align: center;">
 						<div class="controls">
-							<input type="button" id="expExcel" class="btn additem_btn"
-								value="EXPORT TO Excel" onclick="exportToExcel();">
+							<input type="button" id="expExcel" class="btn additem_btn" style="margin: 0;" value="EXPORT TO Excel" onclick="exportToExcel();">
 						</div>
 					</div>
 				</div>

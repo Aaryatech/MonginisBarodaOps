@@ -211,8 +211,8 @@ font-size: 16px;
 
 }
 
-.sidenav {
-    top: 58px /* 62px */;
+.sidenav {top:0;
+    /*top: 58px /* 62px */;*/
     left: 0px;
 }
 

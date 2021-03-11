@@ -113,8 +113,7 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> Itemwise-Billwise-Datewise Purchase
-							Report</h2>
+						<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> Itemwise-Billwise-Datewise Purchase Report</h2>
 					</div>
 				</div>
 
@@ -181,7 +180,7 @@ jQuery(document).ready(function(){
 							</div>
 						</div>
 						
-				<div class="form-quarter signlerow center">
+				<div class="form-quarter center">
 							<button class="btn additem_btn"
 							onclick="itemWiseTaxReport()" style="margin: 0;">Search</button>
 						

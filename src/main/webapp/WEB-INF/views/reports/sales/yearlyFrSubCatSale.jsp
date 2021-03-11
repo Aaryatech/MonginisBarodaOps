@@ -97,55 +97,37 @@ table, th, td {
 
 						<div class="row">
 							<div class="col-md-12">
-								<h2 class="pageTitle" style="margin: 0; padding:0;"><i class="fa fa-pie-chart" aria-hidden="true"></i> Sub-Category Month Wise Report</h2>
+								<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> Sub-Category Month Wise Report</h2>
 							</div>
 						</div>
 
 
 						<input type="hidden" name="frId" id="frId" value="${frId}">
-						
-						<br> <br>
-
-						<!-- <div class="row">
-
-						<div align="center">
-							<button class="btn search_btn" onclick="monthWisePurchase()">HTML
-								View</button>
-							<button class="btn search_btn" onclick="showChart()">Graph</button>
-
-							<button class="btn btn-primary" value="PDF" id="PDFButton"
-								onclick="genPdf()">PDF</button>
-						</div>
-
-					</div> -->
-
-
 
 						<div class="row">
 
-
-							
-								<div class="col-md-1" style="margin: 10px 0 0 0;">From Date</div>
-								<div class="col-md-2 controls date_select">
+							<div class="form-quarter">
+								<div class="form_text">From</div>
+								<div class="form_input">
 									<input class="texboxitemcode texboxcal" autocomplete="off"
 										placeholder="DD-MM-YYYY" id="fromDate" name="fromDate"
 										size="30" type="text" value="${todaysDate}" />
 								</div>
-
-								<!-- </div>
-
-					<div class="form-group  "> -->
-
-								<div class="col-md-1" style="margin: 10px 0 0 0;">To Date</div>
-								<div class="col-md-2 controls date_select">
+						   </div>
+						   
+						   <div class="form-quarter">
+								<div class="form_text">To</div>
+								<div class="form_input">
 									<input class="texboxitemcode texboxcal" autocomplete="off"
 										placeholder="DD-MM-YYYY" id="toDate" name="toDate" size="30"
 										type="text" value="${todaysDate}" />
 								</div>
-							
-							
-							<div class="col-md-1" style="margin: 10px 0 0 0;">Select Category</div>
-							<div class="col-md-2"><select data-placeholder="Select Group"
+						   </div>
+						   
+						   <div class="form-quarter">
+								<div class="form_text">Cat.</div>
+								<div class="form_input">
+									<select data-placeholder="Select Group"
 									class="chosen-select" name="item_grp1" tabindex="-1"
 									onchange="getSubCategoriesByCatId()" id="item_grp1"
 									data-rule-required="true" multiple="multiple">
@@ -157,24 +139,25 @@ table, th, td {
 									</c:forEach>
 
 
-								</select></div>
-							
-							<div class="col-md-1" style="margin: 10px 0 0 0;">Sub Category</div>
-							<div class="col-md-2"><select data-placeholder="Select Sub Category"
+								</select>
+								</div>
+						   </div>
+						   
+						   <div class="form-quarter">
+								<div class="form_text">Sub Cat.</div>
+								<div class="form_input">
+									<select data-placeholder="Select Sub Category"
 									multiple="multiple" class="chosen-select"
 									name="item_grp2" id="item_grp2" tabindex="-1"
 									data-rule-required="true">
-
-								</select></div>
-
-						</div>
-
-						
-						<div style="margin: 20px 0 40px 0">
-						<div class="row">
-						
-							<div class="col-md-1" style="margin: 10px 0 0 0;">Report Type</div>
-							<div class="col-md-2 controls"><select data-placeholder="Choose Type"
+								</select>
+								</div>
+						   </div>
+						   
+						   <div class="form-quarter">
+								<div class="form_text">Report</div>
+								<div class="form_input">
+									<select data-placeholder="Choose Type"
 										class="form-control chosen" id="typeId" name="typeId">
 
 										<option value="1">Consolidated</option>
@@ -182,18 +165,19 @@ table, th, td {
 										<option value="3">Amount</option>
 										<option value="4">Taxable Amount</option>
 
-									</select></div>
-									
-									
-						
-								<div class="col-sm-2" style="text-align: left;">
-									<input type="button" id="submit" class="btn additem_btn"
+									</select>
+								</div>
+						   </div>
+						   
+						   <div class="form-quarter center">
+						   <input type="button" id="submit" class="btn additem_btn"
 										value="Search Report" onclick="searchReport()" style="margin:0;">
-								</div>			
-						
-							
+										
+						</div>	
+
 						</div>
-</div>
+
+						
 						
 
 					</form>
@@ -217,27 +201,29 @@ table, th, td {
 
 
 						<div class="row">
-
-
-							
-								<div class="col-md-1" style="margin: 10px 0 0 0;">From Date</div>
-								<div class="col-md-2 controls date_select">
+						
+						<div class="form-quarter">
+								<div class="form_text">From</div>
+								<div class="form_input">
 									<input class="texboxitemcode texboxcal"
 										placeholder="DD-MM-YYYY" id="fromDateItem" name="fromDateItem"
 										size="30" type="text" value="${todaysDate}" />
 								</div>
-
-								
-								<div class="col-md-1" style="margin: 10px 0 0 0;">To Date</div>
-								<div class="col-md-2 controls date_select">
+						   </div>
+						   
+						  <div class="form-quarter">
+								<div class="form_text">To</div>
+								<div class="form_input date_select">
 									<input class="texboxitemcode texboxcal"
 										placeholder="DD-MM-YYYY" id="toDateItem" name="toDateItem" size="30"
 										type="text" value="${todaysDate}" />
 								</div>
-								
-								<div class="col-md-1" style="margin: 10px 0 0 0;">Select Category</div>
-							<div class="col-md-2" style="text-align: left;">
-								<select data-placeholder="Select Group"
+						   </div>
+						   
+						   <div class="form-quarter">
+								<div class="form_text">Cat.</div>
+								<div class="form_input">
+									<select data-placeholder="Select Group"
 									class="chosen-select" name="item_grp1Item" tabindex="-1"
 									 id="item_grp1Item"
 									data-rule-required="true" multiple="multiple">
@@ -250,11 +236,13 @@ table, th, td {
 
 
 								</select>
-							</div>
-
-							<div class="col-md-1" style="margin: 10px 0 0 0;">Report Type</div>
-							<div class="col-md-2 controls date_select">
-								<select data-placeholder="Choose Type"
+								</div>
+						   </div> 
+						   
+						    <div class="form-quarter">
+								<div class="form_text">Report</div>
+								<div class="form_input date_select">
+									<select data-placeholder="Choose Type"
 									class="form-control chosen" id="typeIdItem" name="typeIdItem">
 
 									<option value="1">Consolidated</option>
@@ -263,23 +251,29 @@ table, th, td {
 									<option value="4">Taxable Amount</option>
 
 								</select>
-							</div>
-							
-
-						</div>
-
-						<div class="row">
-							
-
-
-								<div class="col-sm-12 " style="text-align: center; margin: 15px 0 0 0;">
-									<input type="button" id="submitItem" class="btn additem_btn"
-										value="Search Report" onclick="searchItemReport()">
 								</div>
+						   </div> 
+						   
+						   <div class="signlerow center">
+								<input type="button" id="submitItem" class="btn additem_btn" style="margin: 0;"
+										value="Search Report" onclick="searchItemReport()">
+						   </div> 
+
 
 							
+								
+
+								
+								
+								
+								
+
+							
+							
+
 						</div>
-<br> <br>
+
+				
 
 					</form>
 

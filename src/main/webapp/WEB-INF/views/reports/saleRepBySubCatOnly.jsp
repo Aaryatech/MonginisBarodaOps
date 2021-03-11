@@ -87,7 +87,7 @@
 							</div>
 						</div>
 						
-						<div class="form-quarter signlerow center">
+						<div class="form-quarter center">
 							<button class="btn additem_btn" onclick="searchReport()" style="margin: 0;">Search</button>
 							<button class="btn additem_btn" value="PDF" id="PDFButton" onclick="genPdf()" style="margin: 0;">PDF</button>
 						</div>

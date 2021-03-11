@@ -60,49 +60,56 @@
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Purchase Billwise Tax (Input) Report</h2>
+						<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> Purchase Billwise Tax (Input) Report</h2>
 					</div>
 				</div>
 					<input type="hidden" name="factoryName" id="factoryName" value="${Constant.FACTORYNAME}">
+					
+					
 
 				<div class="row">
 					<input type="hidden" name="frId" id="frId" value="${frId}">
-					<div class="col-md-1 from_date">
-						<h4 class="pull-left">From</h4>
-					</div>
-					<div class="col-md-2 ">
-						<input id="fromdatepicker" autocomplete="off" 
+					
+					<div class="form-quarter">
+							<div class="form_text">From</div>
+							<div class="form_input">
+								<input id="fromdatepicker" autocomplete="off" 
 							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 							name="fromDate" type="text">
-					</div>
-					<div class="col-md-1">
-						<h4 class="pull-left">To </h4>
-					</div>
-					<div class="col-md-2 ">
-						<input id="todatepicker" autocomplete="off"
+							</div>
+						</div>
+						
+					<div class="form-quarter">
+							<div class="form_text">To</div>
+							<div class="form_input">
+								<input id="todatepicker" autocomplete="off"
 							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 							name="toDate" type="text">
-					</div>
-					
-					<div class="col-md-1 ">Select :</div>
-					<div class="col-md-2 ">
-						<select id="typeId" name="typeId" class="form-control">
+							</div>
+						</div>
+						
+					<div class="form-quarter">
+							<div class="form_text">Select</div>
+							<div class="form_input">
+								<select id="typeId" name="typeId" class="form-control">
 							<option value="">Select</option>
 							<option value="1">Purchase</option>
 							<option value="2">GRN</option>
 							<option value="3">Cumulative</option>
 						</select>
+							</div>
+						</div>		
+					
+					<div class="form-quarter last center">						
+						<button class="btn additem_btn" onclick="billWiseTaxReport()" style="margin: 0;">Search</button>
+						<button class="btn additem_btn" value="PDF" id="PDFButton" onclick="genPdf()" style="margin: 0;">PDF</button>
 					</div>
 					
-					<div class="col-md-2" >
-						<button class="btn search_btn pull-left"
-							onclick="billWiseTaxReport()">Search</button>
-						<%-- 		  &nbsp;&nbsp;&nbsp;  <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseTaxBillwiseReportPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
- --%>
-						<button class="btn btn-primary" value="PDF" id="PDFButton"
-							onclick="genPdf()">PDF</button>
-					</div>
-
+					
+					
+					
+					
+					
 				</div>
 
 				<div class="row">
@@ -143,19 +150,15 @@
 										<tr class="bgpink">
 
 
-											<th class="col-md-1">Sr. NO.</th>
-											<th class="col-md-1">Party Name</th>
-											<!-- <th class="col-md-1">GSTIN</th> -->
-											<!-- <th class="col-md-1">Bill No</th>
-											<th class="col-md-1">Bill Date</th> -->
-
-											<th class="col-md-1">Taxable Amt</th>
-											<th class="col-md-1">Tax Rate</th>
-											<th class="col-md-1">IGST</th>
-											<th class="col-md-1">CGST</th>
-											<th class="col-md-1">SGST</th>
-											<th class="col-md-1">Bill Amount</th>
-											<th class="col-md-1">CESS</th>
+											<th style="white-space: nowrap;">Sr. NO.</th>
+											<th style="white-space: nowrap;">Party Name</th>
+											<th style="white-space: nowrap;">Taxable Amt</th>
+											<th style="white-space: nowrap;">Tax Rate</th>
+											<th style="white-space: nowrap;">IGST</th>
+											<th style="white-space: nowrap;">CGST</th>
+											<th style="white-space: nowrap;">SGST</th>
+											<th style="white-space: nowrap;">Bill Amount</th>
+											<th style="white-space: nowrap;">CESS</th>
 										</tr>
 
 									</thead>
@@ -164,14 +167,10 @@
 
 							</div>
 							<br>
-							<div class="form-group" style="display: none;" id="range">
-
-
-
-								<div class="col-sm-3  controls">
-									<input type="button" id="expExcel" class="btn btn-primary"
-										value="EXPORT TO Excel" onclick="exportToExcel();"
-										disabled="disabled">
+							<div class="form-group" style="display: none; text-align: center;" id="range">
+								<div class="controls">
+									<input type="button" id="expExcel" class="btn btn-primary" style="margin: 0;"
+										value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
 								</div>
 							</div>
 						</div>
@@ -259,13 +258,13 @@
 
 													tr
 															.append($(
-																	'<td class="col-md-1"></td>')
+																	'<td style="white-space: nowrap;"></td>')
 																	.html(
 																			key + 1));
 
 													tr
 															.append($(
-																	'<td class="col-md-1"></td>')
+																	'<td style="white-space: nowrap;"></td>')
 																	.html(
 																			partyname));
 
@@ -288,43 +287,43 @@
  */
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right;"></td>')
+																	'<td style="text-align:right; white-space: nowrap;"></td>')
 																	.html(
 																			(billWiseTaxData.taxableAmt).toFixed(2)));
 
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right;"></td>')
+																	'<td style="text-align:right; white-space: nowrap;"></td>')
 																	.html(
 																			(billWiseTaxData.taxRate).toFixed(2)));
 
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right;"></td>')
+																	'<td style="text-align:right; white-space: nowrap;"></td>')
 																	.html(
 																			(billWiseTaxData.igstRs).toFixed(2)));
 
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right;"></td>')
+																	'<td style="text-align:right; white-space: nowrap;"></td>')
 																	.html(
 																			(billWiseTaxData.cgstRs).toFixed(2)));
 
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right;"></td>')
+																	'<td style="text-align:right; white-space: nowrap;"></td>')
 																	.html(
 																			(billWiseTaxData.sgstRs).toFixed(2)));
 
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right;"></td>')
+																	'<td style="text-align:right; white-space: nowrap;"></td>')
 																	.html(
 																			(billWiseTaxData.grandTotal).toFixed(2)));
 
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right;"></td>')
+																	'<td style="text-align:right; white-space: nowrap;"></td>')
 																	.html(
 																			billWiseTaxData.cess));
 
@@ -350,12 +349,12 @@
 
 								var tr = $('<tr></tr>');
 
-								tr.append($('<td class="col-md-1"></td>').html(
+								tr.append($('<td style="white-space: nowrap;"></td>').html(
 										""));
 
 								tr
 										.append($(
-												'<td class="col-md-1" style="font-weight:bold;"></td>')
+												'<td style="font-weight:bold; white-space: nowrap;"></td>')
 												.html("Total"));
 								/* tr.append($('<td class="col-md-1"></td>').html(
 										""));
@@ -366,34 +365,34 @@
 
 								tr
 										.append($(
-												'<td class="col-md-1" style="text-align:right"></td>')
+												'<td style="text-align:right"></td>')
 												.html((taxTotal).toFixed(2)));
-								tr.append($('<td class="col-md-1"></td>').html(
+								tr.append($('<td style="white-space: nowrap;"></td>').html(
 										""));
 
 								tr
 										.append($(
-												'<td class="col-md-1" style="text-align:right"></td>')
+												'<td style="text-align:right; white-space: nowrap;"></td>')
 												.html(igstTotal.toFixed(2)));
 
 								tr
 										.append($(
-												'<td class="col-md-1" style="text-align:right"></td>')
+												'<td style="text-align:right;white-space: nowrap;"></td>')
 												.html(cgstTotal.toFixed(2)));
 
 								tr
 										.append($(
-												'<td class="col-md-1" style="text-align:right"></td>')
+												'<td style="text-align:right; white-space: nowrap;"></td>')
 												.html(sgstTotal.toFixed(2)));
 
 								tr
 										.append($(
-												'<td class="col-md-1" style="text-align:right"></td>')
+												'<td style="text-align:right; white-space: nowrap;"></td>')
 												.html(billTotal.toFixed(2)));
 
 								tr
 										.append($(
-												'<td class="col-md-1" style="text-align:right"></td>')
+												'<td style="text-align:right; white-space: nowrap;"></td>')
 												.html(cessTotal.toFixed(2)));
 
 								$('#table_grid tbody').append(tr);

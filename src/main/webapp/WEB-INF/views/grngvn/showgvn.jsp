@@ -39,7 +39,7 @@ table, th, td {
 	</jsp:include>
 
 	<!--topHeader-->
-
+ 
 	<!--rightContainer-->
 	<div class="fullGrid center">
 		<!--fullGrid-->
@@ -58,53 +58,30 @@ table, th, td {
 
 			<!-- Place Actual content of page inside this div -->
 			<div class="sidebarright">
-
-				<div class="row">
-					<div class="col-md-2">
-						<h2 class="pageTitle"><i class="fa fa-refresh" aria-hidden="true"></i> Request GVN <!-- Request GVN --></h2>
+			
+				<div class="title_row">
+					<div class="title_l high">
+						<h2 class="pageTitle"><i class="fa fa-refresh" aria-hidden="true"></i> Request GVN<!-- Request GVN --></h2>
 					</div>
-                   
-
-					<div class="col-md-3">
+					<div class="title_r high">
+						<div class="frm_l_one two_btn marg_bttm">
 						<select name="view_opt" id="view_opt" class="form-control"
 							style="background-color: white;" onchange="showDate()">
 							<option value="0">Select From Bill</option>
 							<option value="1">Select From Date</option>
 
 						</select>
-					</div>
-
-					
-
-
-					<div class="col-md-2">
-						<input id="datepicker" class="texboxitemcode texboxcal" value="${curDate}" class="form-control"
+						</div>
+						<div class="frm_l_one two_btn">
+							<input id="datepicker" class="texboxitemcode texboxcal" value="${curDate}" class="form-control"
 							name="bill_date" type="text" style="display: none;">
-					</div>
-
-
-					<div class="col-md-2">
-
-						<button type="button" class="btn additem_btn" style="display: none; margin:0px;" id='searchButton'							onclick="getViewOption()" style="width: 100px; height: 40px">Search
-							</button>
-						<!--<button type="button" class="btn">Cancel</button>-->
-
-					</div>
-					
-					
-					
-					
-					
-					
-					<div class="col-md-6">
-						<!--table-->
+						</div>
+						
 						<form
 							action="${pageContext.request.contextPath}/getGvnBillDetails"
 							name="grn" id="grn" method="get">
-
-							<div class="row" id="byBillNo">
-								<div class="col-md-6">
-									<select name="bill_no" id="bill_no" class="form-control"
+						<div class="frm_l_one two_btn marg_bttm" id="byBillNo">
+							<select name="bill_no" id="bill_no" class="form-control"
 										style="background-color: white;">
 									
 
@@ -123,28 +100,22 @@ table, th, td {
 										</c:forEach>
 
 									</select>
-
-								</div>
-
-								<!-- <div class="form-group"> -->
-									<div class="col-sm-2 col-sm-offset-1 col-lg-1 col-lg-offset-0">
-
-										<button type="submit" class="btn additem_btn"
-											style="margin:0;">Bill Detail</button>
-										<!--<button type="button" class="btn">Cancel</button>-->
-
-									</div>
-
-								<!-- </div> -->
-							</div>
+						</div>
+						<div class="frm_single">
+							<button type="submit" class="btn additem_btn" style="margin:0 0 0 10px; float: left;">Bill Detail</button>
+							<button type="button" class="btn additem_btn" style="display: none; margin:0 0 0 10px;  float: left;" id='searchButton' onclick="getViewOption()">Search</button>
+						</div>
 						</form>
+						
+						<div class="frm_single">
+							
+						</div>
 					</div>
-					
-					
-
+					<div class="clr"></div>
 				</div>
+			
 
-				<br />
+				
 
 				<div class="row">
 					<div class="col-md-12">
@@ -199,14 +170,14 @@ table, th, td {
 											<th class="col-md-1">Bill No</th>
 											<th class="col-md-1">Date</th> -->
 
-											<th class="col-md-1" style="text-align: center;">Select</th>
-											<th class="col-md-3" style="text-align: center;">Item Name</th>
-											<th class="col-md-2" style="text-align: center;">Purchase</th>
+											<th style="text-align: center; white-space: nowrap;">Select</th>
+											<th style="text-align: center; white-space: nowrap;">Item Name</th>
+											<th style="text-align: center; white-space: nowrap;">Purchase</th>
 
-											<th class="col-md-1" style="text-align: center;">GVN Qty</th>
-											<th class="col-md-1" style="text-align: center;">Rate</th>
-											<th class="col-md-2" style="text-align: center;">Tax %</th>
-											<th class="col-md-2" style="text-align: center;">Amount</th>
+											<th style="text-align: center; white-space: nowrap;">GVN Qty</th>
+											<th style="text-align: center; white-space: nowrap;">Rate</th>
+											<th style="text-align: center; white-space: nowrap;">Tax %</th>
+											<th style="text-align: center; white-space: nowrap;">Amount</th>
 
 										</tr>
 										
@@ -220,23 +191,23 @@ table, th, td {
 												value="${gvnConfList.billQty}" />
 
 											<tr id="row${gvnConfList.billDetailNo}">
-												<td class="col-md-1" style="text-align: center;"><input type="checkbox" 
+												<td style="text-align: center; white-space: nowrap;"><input type="checkbox" 
 													name="select_to_gvn" id="${gvnConfList.billDetailNo}"
 													value="${gvnConfList.billDetailNo}"  /></td>
 
-												<td class="col-md-3">${gvnConfList.itemName}</td>
-												<td class="col-md-2" style="text-align: right;">${gvnConfList.billQty}</td>
-												<td class="col-md-1" style="text-align: center;"><input type="text"
+												<td style="white-space: nowrap;">${gvnConfList.itemName}</td>
+												<td style="text-align: right; white-space: nowrap;">${gvnConfList.billQty}</td>
+												<td style="text-align: center; white-space: nowrap;"><input type="text"
 													name="gvn_qty${gvnConfList.billDetailNo}"
 													id='gvn_qty${gvnConfList.billDetailNo}' size="5" value="0"  onkeypress='return event.charCode >= 48 && event.charCode <= 57'
 													onkeyup="calcGvn(${gvnConfList.calcBaseRate},${gvnConfList.itemId},${gvnConfList.sgstPer},${gvnConfList.cgstPer},${gvnConfList.cessPer},${gvnConfList.billDetailNo})" /></td>
 
-												<td class="col-md-1" style="text-align: right;">${gvnConfList.rate}</td>
+												<td style="text-align: right; white-space: nowrap;">${gvnConfList.rate}</td>
 
-												<td class="col-md-1" id="tax_per${gvnConfList.billDetailNo}" style="text-align: right;"><c:out
+												<td id="tax_per${gvnConfList.billDetailNo}" style="text-align: right; white-space: nowrap;"><c:out
 														value="00"></c:out></td>
 
-												<td class="col-md-2" id="gvn_amt${gvnConfList.billDetailNo}" style="text-align: right;"><c:out
+												<td id="gvn_amt${gvnConfList.billDetailNo}" style="text-align: right; white-space: nowrap;"><c:out
 														value="00"></c:out></td>
 
 											</tr>
@@ -252,7 +223,7 @@ table, th, td {
                         <br>
 						<div class="form-group">
 
-							<button type="button" class="btn additem_btn" onclick="checkAnyRecordSelected()">
+							<button type="button" class="btn additem_btn" onclick="checkAnyRecordSelected()" style="margin:0;">
 								Proceed
 							</button>
 							<!--<button type="button" class="btn">Cancel</button>-->

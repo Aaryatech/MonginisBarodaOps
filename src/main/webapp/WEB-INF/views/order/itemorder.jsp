@@ -292,20 +292,13 @@ a:hover {
 										<table id="table_grid" class="main-table">
 											<thead>
 												<tr class="bgpink">
-													<th class="col-md-2" style="text-align: center;">Item
-														Name</th>
-													<!-- <th class="col-md-1" style="text-align: center;">Shelf
-														Life</th> -->
-													<th class="col-md-1" style="text-align: center;">Min/Mul
-														Quantity</th>
-														<th class="col-md-1" style="text-align: center;">Max
-														Quantity</th>
-													<!-- <th class="col-md-1" style="text-align: right;">Current
-														Stock</th> -->
-													<th class="col-md-1" style="text-align: center;">Quantity</th>
-													<th class="col-md-1" style="text-align: center;">MRP</th>
-													<th class="col-md-1" style="text-align: center;">Rate</th>
-													<th class="col-md-1" style="text-align: center;">Total</th>
+													<th style="text-align: center; white-space: nowrap;">Item Name</th>													
+													<th style="text-align: center; white-space: nowrap;">Min/Mul Quantity</th>
+													<th style="text-align: center; white-space: nowrap;">Max Quantity</th>
+													<th style="text-align: center; white-space: nowrap;">Quantity</th>
+													<th style="text-align: center; white-space: nowrap;">MRP</th>
+													<th style="text-align: center; white-space: nowrap;">Rate</th>
+													<th style="text-align: center; white-space: nowrap;">Total</th>
 													<c:choose>
 														<c:when test="${menuIdFc eq menuIdShow}">
 															<th class="col-md-1">Order1</th>
@@ -323,23 +316,16 @@ a:hover {
 											<!--   class="main-table" -->
 											<thead>
 												<tr class="bgpink">
-													<th class="col-md-2" style="text-align: center;">Item
-														Name</th>
-													<!-- <th class="col-md-1" style="text-align: center;">Shelf
-														Life</th> -->
-													<th class="col-md-1" style="text-align: center;">Min/Mul
-														Quantity</th>
-															<th class="col-md-1" style="text-align: center;">Max
-														Quantity</th>
-													<!-- <th class="col-md-1" style="text-align: right;">Current
-														Stock</th> -->
-													<th class="col-md-1" style="text-align: center;">Quantity</th>
-													<th class="col-md-1" style="text-align: center;">MRP</th>
-													<th class="col-md-1" style="text-align: center;">Rate</th>
-													<th class="col-md-1" style="text-align: center;">Total</th>
+													<th style="text-align: center; white-space: nowrap;">Item Name</th>
+													<th style="text-align: center; white-space: nowrap;">Min/Mul Quantity</th>
+													<th style="text-align: center; white-space: nowrap;">Max Quantity</th>
+													<th style="text-align: center; white-space: nowrap;">Quantity</th>
+													<th style="text-align: center; white-space: nowrap;">MRP</th>
+													<th style="text-align: center; white-space: nowrap;">Rate</th>
+													<th style="text-align: center; white-space: nowrap;">Total</th>
 													<c:choose>
 														<c:when test=" ${menuIdFc eq menuIdShow}">
-															<th class="col-md-1">Order1</th>
+															<th style="white-space: nowrap;">Order1</th>
 														</c:when>
 													</c:choose>
 												</tr>
@@ -352,7 +338,7 @@ a:hover {
 													
 																<tr>
 
-																	<td class="col-md-2" style="text-align: left;"><c:choose>
+																	<td style="text-align: left; white-space: nowrap;"><c:choose>
 																			<c:when test="${items.itemImage!=''}">
 																				<a href="${url}${items.itemImage}"
 																					data-lightbox="image-1" tabindex="-1"
@@ -367,13 +353,13 @@ a:hover {
 																	</c:otherwise>
 																		</c:choose></td>
 
-																	<td class="col-md-1" style="text-align: center;"><c:out
+																	<td style="text-align: center; white-space: nowrap;"><c:out
 																			value='${items.minQty}' /></td>
 												
-														<td class="col-md-1" style="text-align: center;"><c:out
+														<td style="text-align: center; white-space: nowrap;"><c:out
 																			value='${items.itemGrp3}' /></td>
 												
-																	<td class="col-md-1" style="text-align: center;"><input
+																	<td style="text-align: center; white-space: nowrap;"><input
 																		name='${items.id}' id='${items.id}'
 																		value='${items.itemQty}' class="tableInput"
 																		type="text" onkeydown="myFunction()"
@@ -382,16 +368,16 @@ a:hover {
 
 																		<input type="hidden" value="${items.minQty}"
 																		id="minqty${items.id}" /></td>
-																	<td class="col-md-1" style="text-align: center;"><c:out
+																	<td style="text-align: center; white-space: nowrap;"><c:out
 																			value='${items.orderMrp}' /></td>
 
 																	<c:set var="rate" value="${items.orderRate}" />
 																	<c:set var="qty" value="${items.itemQty}" />
-																	<td class="col-md-1" style="text-align: center;"><fmt:formatNumber
+																	<td style="text-align: center; white-space: nowrap;"><fmt:formatNumber
 																			type="number" minFractionDigits="2"
 																			maxFractionDigits="2" value="${rate}" /></td>
 																
-																	<td class="col-md-1" id="total${items.id}"
+																	<td id="total${items.id}" style="white-space: nowrap;"
 																		style="text-align: center;"><fmt:formatNumber
 																			type="number" minFractionDigits="2"
 																			maxFractionDigits="2" value="${rate * qty}" /></td>
@@ -414,10 +400,10 @@ a:hover {
 																						</c:choose>
 
 																					</c:forEach>
-																					<td class="col-md-1">A ${orderQty}</td>
+																					<td style="white-space: nowrap;">A ${orderQty}</td>
 																				</c:when>
 																				<c:otherwise>
-																					<td class="col-md-1">A 0</td>
+																					<td style="white-space: nowrap;">A 0</td>
 																				</c:otherwise>
 																			</c:choose>
 																		</c:when>
@@ -735,9 +721,7 @@ a:hover {
 					<!--<div class="order-btn"><a href="#" class="saveOrder">SAVE ORDER</a></div>-->
 					<div class="order-btn textcenter">
 
-						<input name="" id="subm" class="btn additem_btn"
-							value="SAVE ORDER" type="button" ONCLICK="button1()"
-							style="margin: 0;">
+						<input name="" id="subm" class="btn additem_btn" value="SAVE ORDER" type="button" ONCLICK="button1()" style="margin:0;" >
 					</div>
 
 

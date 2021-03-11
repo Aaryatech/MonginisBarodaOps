@@ -143,7 +143,7 @@ jQuery(document).ready(function(){
 							</div>
 						</div>
 						
-						<div class="form-quarter signlerow center">
+						<div class="form-quarter center">
 							<button class="btn additem_btn" onclick="monthWisePurchase()" style="margin: 0;">View</button>
 							<button class="btn additem_btn" value="PDF" id="PDFButton" onclick="genPdf()" style="margin:0;">PDF</button>
 							<button class="btn additem_btn" onclick="showChart()" style="margin: 0;">Graph</button>

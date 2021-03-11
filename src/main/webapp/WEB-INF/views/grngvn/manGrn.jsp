@@ -77,7 +77,8 @@ table, th, td {
 						name="grn_add" id="grn_add" method="post">
 
 						<div class="col-md-9">
-							<h6 class="pageTitle" style="margin: 0; padding:0;"><i class="fa fa-refresh" aria-hidden="true"></i>GRN Based on Expiry of Product</h6>
+							<h6 class="pageTitle" style="margin: 0; padding:0;">
+							<i class="fa fa-refresh" aria-hidden="true"></i>GRN Based on Expiry of Product</h6>
 						</div>
 						<label for="search" class="col-md-3" id="search" style="margin:-10px 0 0 0 ;"> <i
 							class="fa fa-search" style="font-size: 20px"></i> <input
@@ -130,23 +131,21 @@ table, th, td {
 											<!-- 	<th class="col-md-1">Sr No.</th>
 											<th class="col-md-1">Bill No</th>
 											<th class="col-md-1">Date</th> -->
-											<th >Select </th>
-											<th style="text-align: center;">Invoice
-												No</th>
-											<th style="text-align: center;">Invoice
-												Date</th>
-											<th style="text-align: center;">Name</th>
-											<th style="text-align: center;">Type</th>
-											<th style="text-align: center;">Pur Qty</th>
-											<th style="text-align: center;">Rate</th>
+											<th style=" white-space: nowrap;">Select </th>
+											<th style="text-align: center; white-space: nowrap;">Invoice No</th>
+											<th style="text-align: center;  white-space: nowrap;">Invoice Date</th>
+											<th style="text-align: center; white-space: nowrap;">Name</th>
+											<th style="text-align: center; white-space: nowrap;">Type</th>
+											<th style="text-align: center; white-space: nowrap;">Pur Qty</th>
+											<th style="text-align: center; white-space: nowrap;">Rate</th>
 											<!-- 	<th class="col-md-1">Grn Rate</th> -->
-											<th cstyle="text-align: center;">Qty</th>
+											<th cstyle="text-align: center; white-space: nowrap;">Qty</th>
 											<!-- <th class="col-md-1" style="text-align: center;">Tax %</th>
 											<th class="col-md-2" style="text-align: center;">Taxable
 												Amt</th>
 											<th class="col-md-1" style="text-align: center;">Tax Amt</th> -->
-											<th width="50" style="text-align: center;">Amount</th>
-											<th style="text-align: center;">Remark</th>
+											<th width="50" style="text-align: center; white-space: nowrap;">Amount</th>
+											<th style="text-align: center;  white-space: nowrap;">Remark</th>
 
 										</tr>
 
