@@ -1,7 +1,7 @@
 package com.monginis.ops.model;
 
 import java.util.List;
-
+   
 public class AddCustemerResponse {
 	
 	private int addCustomerId;
