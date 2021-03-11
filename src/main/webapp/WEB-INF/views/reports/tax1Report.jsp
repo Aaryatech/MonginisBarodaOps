@@ -115,34 +115,40 @@ jQuery(document).ready(function(){
 				<div class="box-content">
 					<form action="${pageContext.request.contextPath}/showTaxReport"
 						class="form-horizontal" method="get" id="validation-form">
-						<div class="row">
+						
 							<div class="row">
 								<input type="hidden" name="frId" id="frId" value="${frId}">
-
-								<div class="col-md-2 from_date">
-									<h4 class="pull-left">From</h4>
-								</div>
-								<div class="col-md-2 ">
-									<input id="fromdatepicker" autocomplete="off"
+								
+								
+								<div class="form-quarter">
+							<div class="form_text">From</div>
+							<div class="form_input">
+								<input id="fromdatepicker" autocomplete="off"
 										value="${fromDate}" class="texboxitemcode texboxcal"
 										placeholder="DD-MM-YYYY" name="fromDate" type="text">
-								</div>
-								<div class="col-md-1">
-									<h4 class="pull-left">To</h4>
-								</div>
-								<div class="col-md-2 ">
-									<input id="todatepicker" autocomplete="off" value="${toDate}"
-										class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
-										name="toDate" type="text">
-								</div>
-								<div class="col-md-2">
-									<button class="btn additem_btn"
-										onclick="searchReport()">Search</button>
-
-								</div>
-
 							</div>
 						</div>
+						
+						<div class="form-quarter">
+							<div class="form_text">To</div>
+							<div class="form_input">
+								<input id="todatepicker" autocomplete="off" value="${toDate}"
+										class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
+										name="toDate" type="text">
+							</div>
+						</div>
+							
+							
+							<div class="form-quarter center">
+						<button class="btn additem_btn" onclick="searchReport()" style="margin:0;">Search</button>
+						</div>	
+
+								
+								
+								
+
+							</div>
+					
 					</form>
 
 					<div class="row">
@@ -155,19 +161,19 @@ jQuery(document).ready(function(){
 									<thead>
 										<tr class="bgpink">
 
-											<th style="text-align: center;">Sr.No.</th>
-											<th style="text-align: center;">Invoice No</th>
-											<th style="text-align: center;">Bill No.</th>
-											<th style="text-align: center;">Bill Date</th>
+											<th style="text-align: center; white-space: nowrap;">Sr.No.</th>
+											<th style="text-align: center; white-space: nowrap;">Invoice No</th>
+											<th style="text-align: center; white-space: nowrap;">Bill No.</th>
+											<th style="text-align: center; white-space: nowrap;">Bill Date</th>
 											<!-- <th>Franchise</th>
 											<th>GSTIN</th> -->
-											<th style="text-align: center;">CGST %</th>
-											<th style="text-align: center;">SGST %</th>
-											<th style="text-align: center;">CGST Amt</th>
-											<th style="text-align: center;">SGST Amt</th>
-											<th style="text-align: center;">Taxable Amt</th>
-											<th style="text-align: center;">Total Tax</th>
-											<th style="text-align: center;">Grand Total</th>
+											<th style="text-align: center; white-space: nowrap;">CGST %</th>
+											<th style="text-align: center; white-space: nowrap;">SGST %</th>
+											<th style="text-align: center; white-space: nowrap;">CGST Amt</th>
+											<th style="text-align: center; white-space: nowrap;">SGST Amt</th>
+											<th style="text-align: center; white-space: nowrap;">Taxable Amt</th>
+											<th style="text-align: center; white-space: nowrap;">Total Tax</th>
+											<th style="text-align: center; white-space: nowrap;">Grand Total</th>
 										</tr>
 
 									</thead>
@@ -179,19 +185,19 @@ jQuery(document).ready(function(){
 									<thead>
 										<tr class="bgpink">
 
-											<th style="text-align: center;">Sr.No.</th>
-											<th style="text-align: center;">Invoice No</th>
-											<th style="text-align: center;">Bill No.</th>
-											<th style="text-align: center;">Bill Date</th>
+											<th style="text-align: center; white-space: nowrap;">Sr.No.</th>
+											<th style="text-align: center; white-space: nowrap;">Invoice No</th>
+											<th style="text-align: center; white-space: nowrap;">Bill No.</th>
+											<th style="text-align: center; white-space: nowrap;">Bill Date</th>
 											<!-- <th>Franchise</th>
 											<th>GSTIN</th> -->
-											<th style="text-align: center;">CGST %</th>
-											<th style="text-align: center;">SGST %</th>
-											<th style="text-align: center;">CGST Amt</th>
-											<th style="text-align: center;">SGST Amt</th>
-											<th style="text-align: center;">Taxable Amt</th>
-											<th style="text-align: center;">Total Tax</th>
-											<th style="text-align: center;">Grand Total</th>
+											<th style="text-align: center; white-space: nowrap;">CGST %</th>
+											<th style="text-align: center; white-space: nowrap;">SGST %</th>
+											<th style="text-align: center; white-space: nowrap;">CGST Amt</th>
+											<th style="text-align: center; white-space: nowrap;">SGST Amt</th>
+											<th style="text-align: center; white-space: nowrap;">Taxable Amt</th>
+											<th style="text-align: center; white-space: nowrap;">Total Tax</th>
+											<th style="text-align: center; white-space: nowrap;">Grand Total</th>
 										</tr>
 
 
@@ -216,26 +222,26 @@ jQuery(document).ready(function(){
 													value="${totalGrandTotal+taxList.grandTotal}" />
 
 
-												<td><c:out value="${count.index+1}" /></td>
-												<td><c:out value="${taxList.invoiceNo}" /></td>
-												<td><c:out value="${taxList.billNo}" /></td>
-												<td><c:out value="${taxList.billDate}" /></td>
+												<td style=" white-space: nowrap;"><c:out value="${count.index+1}" /></td>
+												<td style=" white-space: nowrap;"><c:out value="${taxList.invoiceNo}" /></td>
+												<td style=" white-space: nowrap;"><c:out value="${taxList.billNo}" /></td>
+												<td style=" white-space: nowrap;"><c:out value="${taxList.billDate}" /></td>
 											<%-- 	<td><c:out value="${taxList.frName}" /></td>
 
-												<td><c:out value="${taxList.frGstNo}" /></td> --%>
-												<td style="text-align: right;"><c:out
+												<td style=" white-space: nowrap;"><c:out value="${taxList.frGstNo}" /></td> --%>
+												<td style="text-align: right; white-space: nowrap;"><c:out
 														value="${taxList.cgstPer}" /></td>
-												<td style="text-align: right;"><c:out
+												<td style="text-align: right; white-space: nowrap;"><c:out
 														value="${taxList.sgstPer}" /></td>
-												<td style="text-align: right;"><c:out
+												<td style="text-align: right; white-space: nowrap;"><c:out
 														value="${taxList.cgstAmt}" /></td>
-												<td style="text-align: right;"><c:out
+												<td style="text-align: right; white-space: nowrap;"><c:out
 														value="${taxList.sgstAmt}" /></td>
-												<td style="text-align: right;"><c:out
+												<td style="text-align: right; white-space: nowrap;"><c:out
 														value="${taxList.taxableAmt}" /></td>
-												<td style="text-align: right;"><c:out
+												<td style="text-align: right; white-space: nowrap;"><c:out
 														value="${taxList.totalTax}" /></td>
-												<td style="text-align: right;"><c:out
+												<td style="text-align: right; white-space: nowrap;"><c:out
 														value="${taxList.grandTotal}" /></td>
 
 											</tr>
@@ -243,7 +249,7 @@ jQuery(document).ready(function(){
 
 										<tr>
 											<td></td>
-											<td style="text-align: left;">Total</td>
+											<td style="text-align: left; white-space: nowrap;">Total</td>
 											<td></td>
 											<td></td>
 											<td></td>
@@ -282,8 +288,8 @@ jQuery(document).ready(function(){
 						<!--table end-->
 						<br>
 						<div class="form-group" id="range">
-							<div class="col-sm-3  controls">
-								<input type="button" id="expExcel" class="btn additem_btn"
+							<div controls" style="text-align: center;">
+								<input type="button" id="expExcel" class="btn additem_btn" 
 									value="EXPORT TO Excel" onclick="exportToExcel();">
 							</div>
 						</div>

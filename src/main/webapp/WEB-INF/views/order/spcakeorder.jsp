@@ -259,7 +259,7 @@ select {
 <!--rightSidebar-->
 <div class="sidebarright">
 <div class="order-left">
-<h2 class="pageTitle">${menuTitle}</h2>
+<h2 class="pageTitle"><i class="fa fa-birthday-cake" aria-hidden="true"></i> ${menuTitle}</h2>
 
 </div>
  <!--formBox-->
@@ -273,7 +273,7 @@ select {
 								<div class="fullform">
 									<div class="cackleft2">Item Code</div>
 									<div class="cackrighttexbox">
-										<input class="texboxitemcode" id="sp_code"
+										<input class="texboxitemcode " id="sp_code"
 											value="${specialCake.spCode}" name="sp_code" type="text"  
 											autocomplete="off" list="categories" required   oninvalid="this.setCustomValidity('Please Enter valid Item Code')">
 
@@ -300,7 +300,8 @@ select {
 
 
 							<div class="fullform">
-								<div class="cackimg">
+								<div class="cackleft">&nbsp;</div>
+								<div class="cackright">
 									<div class="cackimglable"></div>
 									<img src="${url}${specialCake.spImage}"
 									 onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';">
@@ -667,7 +668,7 @@ System.out.print("incr " +incr +" menuDeliveryDays " +menuDeliveryDays);
 	
 	<style>
 	.chosen-container{
-	width: 88% !important; margin: 0 2% 0 0;}
+	width: 86% !important; margin: 0 2% 0 0;}
 	</style>
 	<div class="colOuter">
 	    <div class="col1"><div class="col1title">Customer Name</div></div>

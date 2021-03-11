@@ -114,41 +114,42 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<input type="hidden" name="frId" id="frId" value="${frId}">
-
-					<div class="col-md-1">
-						<h4 class="pull-left">From :-</h4>
-					</div>
-					<div class="col-md-2">
-						<input type='text' placeholder="Select From Month" id='txtDate' class="texboxitemcode texboxcal"
+					
+					<div class="form-quarter">
+							<div class="form_text">From</div>
+							<div class="form_input">
+								<input type='text' placeholder="Select From Month" id='txtDate' class="texboxitemcode texboxcal"
 							autocomplete="off" name="from_stockdate" required size="25" />
-					</div>
-					<div class="col-md-1">
-						<h4 class="pull-left">To:-</h4>
-					</div>
-					<div class="col-md-2 ">
-						<input type='text' placeholder="Select To Month" id='txtDateto' class="texboxitemcode texboxcal"
+							</div>
+						</div>
+						
+						<div class="form-quarter">
+							<div class="form_text">To</div>
+							<div class="form_input">
+								<input type='text' placeholder="Select To Month" id='txtDateto' class="texboxitemcode texboxcal"
 							autocomplete="off" name="to_stockdate" required size="25" />
-					</div>
-					<div class="col-md-1 "><h4 class="pull-left">Select :</h4></div>
-					<div class="col-md-2 ">
-						<select id="typeId" name="typeId" class="form-control">
+							</div>
+						</div>
+						
+						<div class="form-quarter">
+							<div class="form_text">Select</div>
+							<div class="form_input">
+								<select id="typeId" name="typeId" class="form-control">
 							<option value="">Select</option>
 							<option value="1">Purchase</option>
 							<option value="2">GRN</option>
 							<option value="3">Cumulative</option>
 						</select>
-					</div>
+							</div>
+						</div>
+						
+						<div class="form-quarter signlerow center">
+							<button class="btn additem_btn" onclick="monthWisePurchase()" style="margin: 0;">View</button>
+							<button class="btn additem_btn" value="PDF" id="PDFButton" onclick="genPdf()" style="margin:0;">PDF</button>
+							<button class="btn additem_btn" onclick="showChart()" style="margin: 0;">Graph</button>
+							<!-- <button class="btn additem_btn" value="PDF" id="PDFButton" onclick="genPdf()" style="margin: 0;">PDF</button> -->
+						</div>
 					
-					<div class="col-md-3" align="left" style="margin-top:3px;">
-						<button class="btn additem_btn" onclick="monthWisePurchase()" style="margin: 0;">
-							View</button>
-						<button class="btn additem_btn" onclick="showChart()" style="margin: 0;">Graph</button>
-
-						<%-- 		   &nbsp;&nbsp;&nbsp; <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseMonthwiseReportPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
- --%>
-						<button class="btn additem_btn" value="PDF" id="PDFButton"
-							onclick="genPdf()" style="margin: 0;">PDF</button>
-					</div>
 
 				</div>
 
@@ -164,20 +165,14 @@ jQuery(document).ready(function(){
 									<table id="table_grid" class="main-table">
 										<thead>
 											<tr class="bgpink">
-
-
-
-												<th class="col-md-1" style="text-align: center;">Sr.No.</th>
-												<th class="col-md-1" style="text-align: center;">MONTH</th>
-												<th class="col-md-1" style="text-align: center;">Taxable
-													Amt</th>
-												<th class="col-md-1" style="text-align: center;">IGST</th>
-												<th class="col-md-1" style="text-align: center;">CGST</th>
-												<th class="col-md-1" style="text-align: center;">SGST</th>
-												<th class="col-md-1" style="text-align: center;">CESS</th>
-												<!-- 	<th class="col-md-1" style="text-align: center;">ROFF</th> -->
-												<th class="col-md-1" style="text-align: center;">TOTAL</th>
-
+												<th style="text-align: center; white-space: nowrap;">Sr.No.</th>
+												<th style="text-align: center; white-space: nowrap;">MONTH</th>
+												<th style="text-align: center; white-space: nowrap;">Taxable Amt</th>
+												<th style="text-align: center; white-space: nowrap;">IGST</th>
+												<th style="text-align: center; white-space: nowrap;">CGST</th>
+												<th style="text-align: center; white-space: nowrap;">SGST</th>
+												<th style="text-align: center; white-space: nowrap;">CESS</th>												
+												<th style="text-align: center; white-space: nowrap;">TOTAL</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -190,20 +185,14 @@ jQuery(document).ready(function(){
 								<table id="table_grid"  class="responsive-table">
 									<thead>
 										<tr class="bgpink">
-
-
-
-											<th class="col-md-1" style="text-align: center;">Sr.No.</th>
-											<th class="col-md-1" style="text-align: center;">MONTH</th>
-											<th class="col-md-1" style="text-align: center;">Taxable
-												Amt</th>
-											<th class="col-md-1" style="text-align: center;">IGST</th>
-											<th class="col-md-1" style="text-align: center;">CGST</th>
-											<th class="col-md-1" style="text-align: center;">SGST</th>
-											<th class="col-md-1" style="text-align: center;">CESS</th>
-											<!-- <th class="col-md-1" style="text-align: center;">ROFF</th> -->
-											<th class="col-md-1" style="text-align: center;">TOTAL</th>
-
+											<th style="text-align: center; white-space: nowrap;">Sr.No.</th>
+											<th style="text-align: center; white-space: nowrap;">MONTH</th>
+											<th style="text-align: center; white-space: nowrap;">Taxable Amt</th>
+											<th style="text-align: center; white-space: nowrap;">IGST</th>
+											<th style="text-align: center; white-space: nowrap;">CGST</th>
+											<th  style="text-align: center; white-space: nowrap;">SGST</th>
+											<th style="text-align: center; white-space: nowrap;">CESS</th>
+											<th style="text-align: center; white-space: nowrap;">TOTAL</th>
 										</tr>
 									</thead>
 									<tbody>

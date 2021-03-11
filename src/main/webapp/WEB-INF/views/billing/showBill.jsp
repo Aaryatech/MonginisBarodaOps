@@ -108,37 +108,61 @@ table, th, td {
 					action="${pageContext.request.contextPath}/showBillProcess">
 					<input type="hidden" name="mod_ser" id="mod_ser"
 						value="search_result">
+						
+						
+						<div class="title_row">
+					<div class="title_l">
+							<h2 class="pageTitle" style="margin:0; padding: 0;"><i class="fa fa-money "></i> Purchase Bill Details</h2>
+					</div>
+					<div class="title_r">
+						<form id="validation-form">
+ <input type="hidden" value="${gstType}" name="type" id="type"/>
 
-					
-						<div class="col-md -3">
-							
-								<h2 class="pageTitle" align="left"><i class="fa fa-money "></i> Purchase Bill Details</h2>
-						</div>
 					<div class="colOuter">
-						<div class="col-md-1">
-							<div class="col1title">From Date</div>
-						</div>
-						<div class="col-md-3">
+						<!-- copy div kalpesh -->
+
+						<div class="frm_l_one">
+						<div class="frm_l">From </div>
+						<div class="frm_r_one">
 							<input id="fromdatepicker" class="texboxitemcode texboxcal"
 								placeholder="From Date" name="from_datepicker"  autocomplete="off" type="text" value="${fromDate}">
-
 						</div>
-
-
-						<div class="col-md-1">
-							<div class="col1title">To Date</div>
 						</div>
-						<div class="col-md-3">
+						
+						<div class="frm_l_one">
+						<div class="frm_l">To </div>
+						<div class="frm_r_one">
 							<input id="todatepicker" class="texboxitemcode texboxcal"
 								placeholder="To Date" name="to_datepicker" autocomplete="off" type="text" value="${toDate}">
+						</div>
+						</div>
+						
+						
+
+
+
+						
+						
+						<div class="frm_single">
+						<input name="" class="btn additem_btn" value="Search"
+								type="submit" align="center" style="margin: 0;">
+								
+						
+								
+							
 
 						</div>
 
-						<div align="left">
-							<input name="" class="btn additem_btn" value="Search"
-								type="submit" align="center" style="margin: 1px 0 0 0;">
-						</div>
 					</div>
+					</div>
+					<div class="clr"></div>
+				</div>
+						
+						
+
+					
+						
+					
 
 				</form>
 
@@ -160,21 +184,21 @@ table, th, td {
 				<div id="table-scroll" >
 					<!-- <div id="faux-table" class="faux-table" aria="hidden"></div> -->
 					<div> <!-- class="table-wrap"> -->
-						<table id="table_grid"  class="responsive-table"><!-- class="main-table" -->
+						<table id="table_grid"  class="responsive-table" style="margin: 0;"><!-- class="main-table" -->
 
 							<thead>
 								<tr class="bgpink">
 								
-									<th class="col-sm-1" style="text-align: center;">Invoice No</th>
-									<th class="col-md-1" style="text-align: center;">Date</th>
+									<th style="text-align: center; white-space: nowrap;">Invoice No</th>
+									<th style="text-align: center; white-space: nowrap;">Date</th>
 
-									<th class="col-md-1" style="text-align: center;">Taxable Amt</th>
-									<th class="col-md-1" style="text-align: center;">Tax Amt</th>
-									<th class="col-md-1" style="text-align: center;"> Total</th>
+									<th style="text-align: center; white-space: nowrap;">Taxable Amt</th>
+									<th style="text-align: center; white-space: nowrap;">Tax Amt</th>
+									<th style="text-align: center; white-space: nowrap;"> Total</th>
 
-									<th class="col-md-1" style="text-align: center;">Status</th>
-									<th class="col-md-1" style="text-align: center;">Date & Time</th>
-									<th class="col-md-1" style="text-align: center;">Action</th>
+									<th style="text-align: center; white-space: nowrap;">Status</th>
+									<th style="text-align: center; white-space: nowrap;">Date & Time</th>
+									<th style="text-align: center; white-space: nowrap;">Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -183,59 +207,59 @@ table, th, td {
 									varStatus="count">
 									<tr>
 									<%-- 	<td class="col-sm-1"><c:out value="${billHeader.billNo}" /></td> --%>
-										<td class="col-sm-1"style="text-align: center;"><c:out value="${billHeader.invoiceNo}" /></td>
-										<td class="col-md-1" style="text-align: left;"><c:out
+										<td style="text-align: center; white-space: nowrap;"><c:out value="${billHeader.invoiceNo}" /></td>
+										<td style="text-align: left; white-space: nowrap;"><c:out
 												value="${billHeader.billDate}" /></td>
-										<td class="col-md-1" style="text-align: right;"><c:out
+										<td style="text-align: right; white-space: nowrap;"><c:out
 												value="${billHeader.taxableAmt}" /></td>
-										<td class="col-md-1" style="text-align: right;"><c:out
+										<td style="text-align: right; white-space: nowrap;"><c:out
 												value="${billHeader.totalTax}" /></td>
-										<td class="col-md-1" style="text-align: right;"><c:out
+										<td style="text-align: right; white-space: nowrap;"><c:out
 												value="${billHeader.grandTotal}" /></td>
 										<%-- 	<td><c:out value="${billHeader.status}" /></td> --%>
 										<c:choose>
 											<c:when test="${billHeader.status==1}">
-												<td class="col-md-1" style=" text-align: center; ">
+												<td style=" text-align: center; white-space: nowrap; ">
 												<span class="label label-danger"style="font-size: 14px;padding-top: 3px;">
 												<c:out value="Pending"></c:out></span></td>
 											</c:when>
 											<c:when test="${billHeader.status==2}">
-												<td style=" text-align: center; ">
+												<td style=" text-align: center; white-space: nowrap; ">
 												<span class="label label-success"style="font-size: 14px;padding-top: 3px;">
 												<c:out value="Received"></c:out></span></td>
 											</c:when>
 											<c:when test="${billHeader.status==3}">
-												<td class="col-md-1" style=" text-align: center; ">
+												<td style=" text-align: center; white-space: nowrap; ">
 												<span class="label label-default"style="font-size: 14px;padding-top: 3px;">
 												<c:out value="GVN Apply"></c:out></span></td>
 											</c:when>
 											<c:when test="${billHeader.status==4}">
-												<td class="col-md-1" style=" text-align: center; ">
+												<td style=" text-align: center; white-space: nowrap; ">
 												<span class="label label-primary"style="font-size: 14px;padding-top: 3px;">
 												<c:out value="GVN Approve"></c:out></span></td>
 											</c:when>
 											<c:when test="${billHeader.status==5}">
-												<td class="col-md-1" style=" text-align: center; ">
+												<td style=" text-align: center; white-space: nowrap; ">
 												<span class="label label-info"style="font-size: 14px;padding-top: 3px;">
 												<c:out value="GRN Apply"></c:out></span></td>
 											</c:when>
 											<c:when test="${billHeader.status==6}">
-												<td class="col-md-1" style=" text-align: center; ">
+												<td style=" text-align: center; white-space: nowrap; ">
 												<span class="label label-warning"style="font-size: 14px;padding-top: 3px;">
 												<c:out value="GRN Approve"></c:out></span></td>
 											</c:when>
 											<c:when test="${billHeader.status==7}">
-												<td class="col-md-1" style=" text-align: center; ">
+												<td style=" text-align: center; white-space: nowrap; ">
 												<span class="label label-default"style="font-size: 14px;padding-top: 3px;">
 												<c:out value="Closed"></c:out></span></td>
 											</c:when>
 
 										</c:choose>
-										<td class="col-md-1" style="text-align: left;">
+										<td style="text-align: left; white-space: nowrap;">
 										<fmt:parseDate var="parsedDate" value="${billHeader.remark}" pattern="yyyy-MM-dd HH:mm:ss"/>
                                        <fmt:formatDate var="newFormattedDateString" value="${parsedDate}" pattern="dd-MM-yyyy hh:mm a"/>
 										<c:out value="${newFormattedDateString}" /></td>
-										<td class="col-md-1" style="text-align: center;">
+										<td style="text-align: center; white-space: nowrap;">
 												<a
 													href="${pageContext.request.contextPath}/showBillDetailProcess/?billNo=${billHeader.billNo}&billDate=${billHeader.billDate}&billStatus=${billHeader.status}&grandTotal=${billHeader.grandTotal}&Inv=${billHeader.invoiceNo}" target="_blank"
 													class="fa fa-info"></a>&nbsp;&nbsp;

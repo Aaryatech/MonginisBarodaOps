@@ -299,20 +299,24 @@ jQuery(document).ready(function(){
 
 				<!--rightSidebar-->
 				<div class="sidebarright">
-					<div class="order-left">
-						<h2 class="pageTitle"><i class="fa fa-file-text-o"></i> Price List </h2>
-						<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
+				
+					<div class="title_row">
+					<div class="title_l high">
+						<div class="order-left">
+							<h2 class="pageTitle" style="margin:0; padding: 0;"><i class="fa fa-file-text-o"></i> Price List</h2>
+						</div>
 					</div>
-
-					
+					<div class="title_r high">
 						<input type="hidden" name="mod_ser" id="mod_ser"
 							value="search_result">
-						<div class="colOuter">
-							<div class="col-md-2">
-								<div class="col1title" style="font-weight: bold;font-size: 15px;" >Select Category</div>
-							</div>
-							<div class="col-md-2">
-								<select name="orderType" id="orderType" 
+
+					<div class="colOuter">
+						<!-- copy div kalpesh -->
+
+						<div class="frm_l_one">
+						<div class="frm_l high">Select Category </div>
+						<div class="frm_r_one high">
+							<select name="orderType" id="orderType" 
 									required ">
 									<option selected>Select Category</option>
 
@@ -324,38 +328,57 @@ jQuery(document).ready(function(){
 																</c:forEach>
 
 								</select>
-							</div>
-
-							<div class="col-md-2">
-								<div class="col1title"  style="font-weight: bold;font-size: 15px;" >Sub-Category</div>
-							</div>
-							<div class="col-md-3">
-								<!-- class="chosen-select"  -->
-								<select multiple="multiple" name="item_grp2" id="item_grp2"
+						</div>
+						</div>
+						
+						<div class="frm_l_one">
+						<div class="frm_l high">Sub-Category </div>
+						<div class="frm_r_one high">
+							<select multiple="multiple" name="item_grp2" id="item_grp2"
 									data-placeholder="Choose Subcategory" class="chosen-select"
 									style="text-align: left;" tabindex="6" required>
 									
 
 								
 								</select>
-							</div>
-							
-							<input type="hidden" id="Mrp" name="Mrp" value="1">
-							
-							<!-- 	</div> -->
-
-							<!-- <div class="colOuter"> -->
-							
-							
-							<!-- </div> -->
-
-							<!-- <div class="colOuter">
- -->
-							<div class="col-md-1">
-								<input name="" class="buttonsaveorder" value="Search"
-									type="submit" onclick="searchCall()">
-							</div>
 						</div>
+						</div>
+						
+						
+
+
+
+						<!-- <div class="col-sm-2">
+							<label>OR GRN Sr No</label>
+							<input type="checkbox" class="form-control" id="headerCheckBox"
+						 name="headerCheckBox" id="headerCheckBox"
+							/>
+						</div> -->
+						<div class="frm_single">
+							<input type="hidden" id="Mrp" name="Mrp" value="1">
+						</div>
+						
+						<div class="frm_single">
+						<input name="" class="btn additem_btn" value="Search" style="margin: 0;"
+									type="submit" onclick="searchCall()">
+								
+							
+
+						</div>
+
+					</div>
+					</div>
+					<div class="clr"></div>
+				</div>
+					
+				
+				
+				
+					
+
+					
+						
+						
 					
 
 					<!--tabNavigation-->
@@ -376,13 +399,12 @@ jQuery(document).ready(function(){
 								<div id="table-scroll" class="table-scroll">
 									<div id="faux-table" class="faux-table" aria="hidden"></div>
 									<div class="table-wrap">
-										<table id="table1" class="main-table">
+										<table id="table1" class="main-table"  style="margin:0;">
 											<thead>
 												<tr class="bgpink">
-													<th class="col-md-1" style="text-align: center;">Sr No</th>
-													<th class="col-md-2" style="text-align: center;">Item
-														Name</th>
-													<th class="col-md-1" style="text-align: center;">MRP</th>
+													<th style="text-align: center; white-space: nowrap;">Sr No</th>
+													<th style="text-align: center; white-space: nowrap;">Item Name</th>
+													<th style="text-align: center; white-space: nowrap;">MRP</th>
 													
 												</tr>
 											</thead>
@@ -393,19 +415,19 @@ jQuery(document).ready(function(){
 															varStatus="count">
 
 															<tr>
-																<td class="col-md-1">${count.index+1}</td>
-																<td class="col-md-2"><c:out
+																<td style="white-space: nowrap;">${count.index+1}</td>
+																<td style="white-space: nowrap;"><c:out
 																		value="${orderList.itemName}" /></td>
-																<td class="col-md-1" style="text-align: right;"><c:out
+																<td style="text-align: right; white-space: nowrap;"><c:out
 																		value="${orderList.rate}" /></td>
-																<td style="text-align: center;" class="col-sm-1"><c:out
+																<td style="text-align: center;white-space: nowrap;"><c:out
 																		value="${orderList.qty}" /></td>
 
-																<td class="col-md-1" style="text-align: right;"><fmt:formatNumber
+																<td style="text-align: right;white-space: nowrap;"><fmt:formatNumber
 																		type="number" maxFractionDigits="2"
 																		minFractionDigits="2" groupingUsed="false"
 																		value="${orderList.qty * orderList.rate}" /></td>
-																<td class="col-md-1" style="text-align: center;"><a
+																<td style="text-align: center;white-space: nowrap;"><a
 																	href="${pageContext.request.contextPath}/showRegCakeOrderHisPDF/${orderList.rspId}"
 																	target="_blank"><abbr title="PDF"><i
 																			class="fa fa-file-pdf-o"></i></abbr></a></td>
@@ -419,18 +441,18 @@ jQuery(document).ready(function(){
 															varStatus="count">
 
 															<tr>
-																<td class="col-md-1">${count.index+1}</td>
-																<td class="col-md-2"><c:out
+																<td style="white-space: nowrap;">${count.index+1}</td>
+																<td style="white-space: nowrap;"><c:out
 																		value="${orderList.itemName}" /></td>
-																<td class="col-md-1" style="text-align: right;"><c:out
+																<td style="text-align: right; white-space: nowrap;"><c:out
 																		value="${orderList.orderMrp}" /></td>
-																<td style="text-align: center;" class="col-sm-1"><c:out
+																<td style="text-align: center; white-space: nowrap;" ><c:out
 																		value="${orderList.orderQty}" /></td>
-																<td class="col-md-1" style="text-align: right;"><fmt:formatNumber
+																<td style="text-align: right; white-space: nowrap;"><fmt:formatNumber
 																		type="number" maxFractionDigits="2"
 																		minFractionDigits="2" groupingUsed="false"
 																		value="${orderList.orderRate}" />
-																<td class="col-md-1" style="text-align: right;"><fmt:formatNumber
+																<td style="text-align: right; white-space: nowrap;"><fmt:formatNumber
 																		type="number" maxFractionDigits="2"
 																		minFractionDigits="2" groupingUsed="false"
 																		value="${orderList.orderQty * orderList.orderRate}" />
@@ -492,14 +514,13 @@ jQuery(document).ready(function(){
 										</div>
 										<!-- 					<div class="table-wrap">
  -->
-										<table id="table1" class="responsive-table">
+										<table id="table1" class="responsive-table" style="margin: 0;">
 											<!-- class="main-table" -->
 											<thead>
 												<tr class="bgpink">
-													<th class="col-md-1" style="text-align: center;">Sr No</th>
-													<th class="col-md-2" style="text-align: center;">Item
-														Name</th>
-													<th class="col-md-1" style="text-align: center;">MRP
+													<th style="text-align: center; white-space: nowrap;">Sr No</th>
+													<th style="text-align: center; white-space: nowrap;">Item Name</th>
+													<th style="text-align: center; white-space: nowrap;">MRP
 														</th>
 													
 
@@ -509,7 +530,7 @@ jQuery(document).ready(function(){
 												<c:forEach items="${orderHistory}" var="orderList"
 													varStatus="count">
 													<tr>
-														<td class="col-md-1">${count.index+1}<c:choose>
+														<td style="white-space: nowrap;">${count.index+1}<c:choose>
 																<c:when test="${fn:length(orderList.spBookForMobNo)==1}">
 																	<%-- <button class="btn btn-info" value="Generate"
 																		id="genBill${orderList.spOrderNo}"
@@ -523,7 +544,7 @@ jQuery(document).ready(function(){
 																</c:otherwise>
 															</c:choose>
 														</td>
-														<td class="col-md-2">&nbsp;&nbsp;&nbsp;&nbsp; <c:out
+														<td>&nbsp;&nbsp;&nbsp;&nbsp; <c:out
 																value="${orderList.spName}" /> <c:choose>
 																<c:when test="${orderList.isBillGenerated==0}">
 												&nbsp;&nbsp;<a href="editSpOrder/${orderList.spOrderNo}"><span
@@ -536,33 +557,33 @@ jQuery(document).ready(function(){
 																</c:otherwise>
 															</c:choose>
 														</td>
-														<td class="col-md-1"><c:out
+														<td><c:out
 																value="${orderList.spDeliveryDate}" /></td>
-														<td class="col-md-1"><c:out
+														<td><c:out
 																value="${orderList.spfName}" /></td>
-														<td class="col-md-1" style="font-size: 14px;"><c:out
+														<td style="font-size: 14px;white-space: nowrap;"><c:out
 																value="${orderList.spEvents} - ${orderList.spEventsName}" /></td>
 														<c:set var="price"
 															value="${orderList.spGrandTotal-orderList.spTotalAddRate}"></c:set>
-														<td class="col-md-1" style="font-size: 14px;"><c:out
+														<td style="font-size: 14px;white-space: nowrap;"><c:out
 																value="${orderList.spInstructions}" /></td>
 
-														<td class="col-md-1" style="text-align: right;"><c:out
+														<td  style="text-align: right; white-space: nowrap;"><c:out
 																value="${orderList.spSelectedWeight}" /></td>
 														<%-- 	<td class="col-md-1" style="text-align: right;"><fmt:formatNumber type = "number" maxFractionDigits = "2" minFractionDigits = "2"  groupingUsed = "false" value = "${price}" /></td> --%>
 														<%-- <td class="col-md-1"style="text-align: right;"><c:out
 														value="${orderList.spTotalAddRate}" /></td> --%>
-														<td class="col-md-1" style="text-align: right;"><fmt:formatNumber
+														<td  style="text-align: right; white-space: nowrap;"><fmt:formatNumber
 																type="number" maxFractionDigits="2"
 																minFractionDigits="2" groupingUsed="false"
 																value="${orderList.spGrandTotal}" /></td>
-														<td class="col-md-1" style="text-align: right;"><c:out
+														<td style="text-align: right; white-space: nowrap;"><c:out
 																value="${orderList.spAdvance}" /></td>
-														<td class="col-md-1" style="text-align: right;"><fmt:formatNumber
+														<td style="text-align: right; white-space: nowrap;" ><fmt:formatNumber
 																type="number" maxFractionDigits="2"
 																minFractionDigits="2" groupingUsed="false"
 																value="${orderList.spGrandTotal-orderList.spAdvance}" /></td>
-														<td class="col-md-1" style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														<td  style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															<a
 															href="${pageContext.request.contextPath}/showSpCakeOrderHisPDF/${orderList.spOrderNo}"
 															target="_blank"> <abbr title="Order Memo"><i

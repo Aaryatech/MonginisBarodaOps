@@ -121,14 +121,11 @@ jQuery(document).ready(function(){
 
 
 				<div class="row">
-
-
-					<div class="col-md-1 pull-left">
-						<h4 class="pull-left">Group:-</h4>
-					</div>
-
-					<div class="col-md-2">
-						<select name="catId" id="catId" class="form-control chosen"
+				
+				<div class="form-quarter">
+							<div class="form_text">Group</div>
+							<div class="form_input">
+								<select name="catId" id="catId" class="form-control chosen"
 							required onchange="getSubCategoriesByCatId()">
 							<option value="" selected>Select Group</option>
 
@@ -136,43 +133,73 @@ jQuery(document).ready(function(){
 								<option value="${catList.catId}">${catList.catName}</option>
 							</c:forEach>
 						</select>
-					</div>
-
-
-					<div class="col-md-1 pull-left">
-						<h4 class="pull-left">Sub-Cat:-</h4>
-					</div>
-					<div class="col-md-2">
-						<select name="item_grp2" id="item_grp2"
+							</div>
+						</div>
+						
+				<div class="form-quarter">
+							<div class="form_text">Sub-Cat</div>
+							<div class="form_input">
+								<select name="item_grp2" id="item_grp2"
 							data-placeholder="Choose Items..." class="chosen-select"
 							style="text-align: left;" required onchange="getItemList()">
 
 						</select>
-					</div>
-
-					<div class="col-md-1 pull-left">
-						<h4 class="pull-left">Items:-</h4>
-					</div>
-					<div class="col-md-2">
-						<select name="itemId" id="itemId"
+							</div>
+						</div>
+						
+				<div class="form-quarter">
+							<div class="form_text">Items</div>
+							<div class="form_input">
+								<select name="itemId" id="itemId"
 							data-placeholder="Choose Items..." class="chosen-select"
 							style="text-align: left;" required multiple="multiple">
 
 						</select>
-					</div>
+							</div>
+						</div>	
 					
 					
 					<input type="hidden" name="frId" id="frId" value="${frId}">
 					<input type="hidden" name="factoryName" id="factoryName"
 						value="${Constant.FACTORYNAME}">
-					<div class="col-md-1 from_date">
-						<h4 class="pull-left">From:-</h4>
-					</div>
-					<div class="col-md-2">
-						<input id="fromdatepicker" class="texboxitemcode texboxcal"
+							
+				<div class="form-quarter">
+							<div class="form_text">From</div>
+							<div class="form_input">
+								<input id="fromdatepicker" class="texboxitemcode texboxcal"
 							autocomplete="off" placeholder="From Date" name="fromDate"
 							type="text">
-					</div>
+							</div>
+						</div>
+						
+				<div class="form-quarter">
+							<div class="form_text">To</div>
+							<div class="form_input">
+								<input id="todatepicker" class="texboxitemcode texboxcal"
+							autocomplete="off" placeholder="To Date" name="toDate"
+							type="text">
+							</div>
+						</div>
+						
+				<div class="form-quarter signlerow center">
+							<button class="btn additem_btn"
+							onclick="itemWiseTaxReport()" style="margin: 0;">Search</button>
+						
+						<button class="btn additem_btn" value="PDF" id="PDFButton"
+							onclick="genPdf()" style="margin: 0;">PDF</button>
+						</div>										
+
+
+					
+
+
+					
+
+					
+					
+					
+					
+					
 					
 					
 				</div>
@@ -181,26 +208,7 @@ jQuery(document).ready(function(){
 
 
 
-				<div class="row">
-					
-					<div class="col-md-1">
-						<h4 class="pull-left">To</h4>
-					</div>
-					<div class="col-md-2 ">
-						<input id="todatepicker" class="texboxitemcode texboxcal"
-							autocomplete="off" placeholder="To Date" name="toDate"
-							type="text">
-					</div>
-					<div class="col-md-2" style="text-align: left;">
-						<button class="btn additem_btn"
-							onclick="itemWiseTaxReport()" style="margin: 0;">Search</button>
-						<%-- 		   &nbsp;&nbsp;&nbsp; <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseItemwiseDetailPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
- --%>
-						<button class="btn additem_btn" value="PDF" id="PDFButton"
-							onclick="genPdf()" style="margin: 0;">PDF</button>
-					</div>
-
-				</div>
+				
 
 				<div class="row">
 					<div class="col-md-12">
@@ -215,25 +223,15 @@ jQuery(document).ready(function(){
 								<table id="table_grid" class="responsive-table">
 									<thead>
 										<tr class="bgpink">
-
-
-
-											<th class="col-md-1" style="text-align: center;">Sr.No.</th>
-											<th class="col-md-1" style="text-align: center;">Bill
-												Date</th>
-											<th class="col-md-1" style="text-align: center;">Bill No</th>
-											<!-- <th class="col-md-1" style="text-align: center;">Party
-												Name</th> -->
-											<th class="col-md-2" style="text-align: center;">Item
-												Name</th>
-											<th class="col-md-1" style="text-align: center;">Expiry
-												Date</th>
-											<th class="col-md-1" style="text-align: center;">Qty</th>
-											<th class="col-md-1" style="text-align: center;">Rate</th>
-											<th class="col-md-1" style="text-align: center;">Amount</th>
-											<th class="col-md-1" style="text-align: center;">GRN
-												TYPE</th>
-
+											<th style="text-align: center; white-space: nowrap;">Sr.No.</th>
+											<th style="text-align: center; white-space: nowrap;">Bill Date</th>
+											<th style="text-align: center; white-space: nowrap;">Bill No</th>
+											<th style="text-align: center; white-space: nowrap;">Item Name</th>
+											<th style="text-align: center; white-space: nowrap;">Expiry Date</th>
+											<th style="text-align: center; white-space: nowrap;">Qty</th>
+											<th style="text-align: center; white-space: nowrap;">Rate</th>
+											<th style="text-align: center; white-space: nowrap;">Amount</th>
+											<th style="text-align: center; white-space: nowrap;">GRN TYPE</th>
 										</tr>
 
 									</thead>
@@ -434,17 +432,17 @@ jQuery(document).ready(function(){
 
 													tr
 															.append($(
-																	'<td  class="col-md-1"></td>')
+																	'<td ></td>')
 																	.html(
 																			key + 1));
 													tr
 															.append($(
-																	'<td  class="col-md-1"></td>')
+																	'<td ></td>')
 																	.html(
 																			itemWiseTaxData.billDate));
 													tr
 															.append($(
-																	'<td  class="col-md-1"></td>')
+																	'<td ></td>')
 																	.html(
 																			itemWiseTaxData.billNo));
 
@@ -455,39 +453,39 @@ jQuery(document).ready(function(){
 																			partyname)); */
 													tr
 															.append($(
-																	'<td  class="col-md-2"  style="text-align:left;"></td>')
+																	'<td style="text-align:left;  white-space: nowrap;"></td>')
 																	.html(
 																			itemWiseTaxData.itemName));
 													tr
 															.append($(
-																	'<td  class="col-md-1"></td>')
+																	'<td style=" white-space: nowrap;"></td>')
 																	.html(
 																			itemWiseTaxData.expiryDate));
 
 													tr
 															.append($(
-																	'<td  class="col-md-1" style="text-align:right;"></td>')
+																	'<td style="text-align:right; white-space: nowrap;"></td>')
 																	.html(
 																			(itemWiseTaxData.qty)
 																					.toFixed(2)));
 
 													tr
 															.append($(
-																	'<td  class="col-md-1" style="text-align:right;"></td>')
+																	'<td style="text-align:right; white-space: nowrap;"></td>')
 																	.html(
 																			(itemWiseTaxData.rate)
 																					.toFixed(2)));
 
 													tr
 															.append($(
-																	'<td  class="col-md-1" style="text-align:right;"></td>')
+																	'<td style="text-align:right; white-space: nowrap;"></td>')
 																	.html(
 																			(itemWiseTaxData.total)
 																					.toFixed(2)));
 
 													tr
 															.append($(
-																	'<td  class="col-md-1" style="text-align:center;"></td>')
+																	'<td style="text-align:center; white-space: nowrap;"></td>')
 																	.html(
 																			grnType));
 
@@ -505,31 +503,31 @@ jQuery(document).ready(function(){
 
 								tr
 										.append($(
-												'<td class="col-md-1" style="font-weight:bold;"></td>')
+												'<td style="font-weight:bold; white-space: nowrap;"></td>')
 												.html("Total"));
 
-								tr.append($('<td  class="col-md-1"></td>')
+								tr.append($('<td style=" white-space: nowrap;"></td>')
 										.html(""));
-								tr.append($('<td  class="col-md-1"></td>')
+								tr.append($('<td style=" white-space: nowrap;"></td>')
 										.html(""));
-								tr.append($('<td  class="col-md-1"></td>')
+								tr.append($('<td style=" white-space: nowrap;"></td>')
 										.html(""));
-								tr.append($('<td  class="col-md-1"></td>')
+								tr.append($('<td style=" white-space: nowrap;"></td>')
 										.html(""));
 
 								tr
 										.append($(
-												'<td  class="col-md-1" style="text-align:right;"></td>')
+												'<td style="text-align:right; white-space: nowrap;"></td>')
 												.html(qtyTotal.toFixed(2)));
 
-								tr.append($('<td  class="col-md-1"></td>')
+								tr.append($('<td style="white-space: nowrap;"></td>')
 										.html(""));
 
 								tr
 										.append($(
-												'<td  class="col-md-1" style="text-align:right;"></td>')
+												'<td style="text-align:right;white-space: nowrap;"></td>')
 												.html(amtTotal.toFixed(2)));
-								tr.append($('<td  class="col-md-1"></td>')
+								tr.append($('<td style="white-space: nowrap;"></td>')
 										.html(""));
 								$('#table_grid tbody').append(tr);
 							}

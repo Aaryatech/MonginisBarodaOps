@@ -115,29 +115,32 @@ jQuery(document).ready(function(){
 					<input type="hidden" name="frId" id="frId" value="${frId}">
 					<input type="hidden" name="factoryName" id="factoryName"
 						value="${Constant.FACTORYNAME}">
-					<div class="col-md-1 from_date">
-						<h4 class="pull-left">From</h4>
-					</div>
-					<div class="col-md-2 ">
-						<input id="fromdatepicker" autocomplete="off"
+					
+					<div class="form-quarter">
+							<div class="form_text">From</div>
+							<div class="form_input">
+								<input id="fromdatepicker" autocomplete="off"
 							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 							name="fromDate" type="text">
-					</div>
-					<div class="col-md-1">
-						<h4 class="pull-left">To</h4>
-					</div>
-					<div class="col-md-2 ">
-						<input id="todatepicker" autocomplete="off"
+							</div>
+						</div>
+						
+					<div class="form-quarter">
+							<div class="form_text">To</div>
+							<div class="form_input">
+								<input id="todatepicker" autocomplete="off"
 							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 							name="toDate" type="text">
-					</div>
-					<div class="col-md-2" style="text-align: left;">
-						<button class="btn additem_btn" onclick="searchReport()" style="margin:0;">Search</button>
-							<button class="btn additem_btn" value="PDF" id="PDFButton"
-							onclick="genPdf()" style="margin:0;">PDF</button>
-
-					</div>
-
+							</div>
+						</div>		
+						
+					<div class="form-quarter signlerow center">
+							<button class="btn additem_btn" onclick="searchReport()" style="margin:0;">Search</button>
+							<button class="btn additem_btn" value="PDF" id="PDFButton" onclick="genPdf()" style="margin:0;">PDF</button>
+						</div>	
+					
+					
+					
 				</div>
 
 				<div class="row">
@@ -152,15 +155,14 @@ jQuery(document).ready(function(){
 									<thead>
 										<tr class="bgpink">
 
-											<th class="col-sm-1" style="text-align: center;">Sr.No.</th>
-											<th class="col-sm-1" style="text-align: center;">Date</th>
-											<th class="col-sm-1" style="text-align: center;">Type</th>
-											<th class="col-sm-1" style="text-align: center;">Invoice
-												No</th>
-											<th class="col-md-2" style="text-align: center;">Document</th>
-											<th class="col-md-1" style="text-align: center;">Dr Amt</th>
-											<th class="col-md-1" style="text-align: center;">Cr Amt</th>
-											<th class="col-md-1" style="text-align: center;">Balance</th>
+											<th style="text-align: center; white-space: nowrap;" >Sr.No.</th>
+											<th style="text-align: center; white-space: nowrap;">Date</th>
+											<th style="text-align: center; white-space: nowrap;">Type</th>
+											<th style="text-align: center; white-space: nowrap;">Invoice No</th>
+											<th style="text-align: center; white-space: nowrap;">Document</th>
+											<th style="text-align: center; white-space: nowrap;">Dr Amt</th>
+											<th style="text-align: center; white-space: nowrap;">Cr Amt</th>
+											<th style="text-align: center; white-space: nowrap;">Balance</th>
 										</tr>
 
 									</thead>
@@ -173,17 +175,14 @@ jQuery(document).ready(function(){
 							<table id="table_grid" class="responsive-table">
 								<thead>
 									<tr class="bgpink">
-
-										<th class="col-sm-1" style="text-align: center;">Sr.No.</th>
-										<th class="col-md-1" style="text-align: center;">Date</th>
-										<th class="col-sm-1" style="text-align: center;">Type</th>
-										<th class="col-md-2" style="text-align: center;">Invoice
-											No</th>
-										<th style="text-align: center;">Document</th>
-										<th class="col-md-1" style="text-align: center;">Dr Amt</th>
-										<th class="col-md-1" style="text-align: center;">Cr Amt</th>
-										<th class="col-md-1" style="text-align: center;">Balance</th>
-
+										<th style="text-align: center; white-space: nowrap;">Sr.No.</th>
+										<th style="text-align: center; white-space: nowrap;">Date</th>
+										<th style="text-align: center; white-space: nowrap;">Type</th>
+										<th style="text-align: center; white-space: nowrap;">Invoice No</th>
+										<th style="text-align: center; white-space: nowrap;">Document</th>
+										<th style="text-align: center; white-space: nowrap;">Dr Amt</th>
+										<th style="text-align: center; white-space: nowrap;">Cr Amt</th>
+										<th style="text-align: center; white-space: nowrap;">Balance</th>
 									</tr>
 
 								</thead>

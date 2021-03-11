@@ -66,33 +66,41 @@ table, th, td {
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Credit Note HSNwise Report</h2>
+						<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> Credit Note HSNwise Report </h2>
 					</div>
 				</div>
 
 				<div class="row">
 					<input type="hidden" name="frId" id="frId" value="${frId}">
-
-					<div class="col-md-2 from_date">
-						<h4 class="pull-left">From Date:-</h4>
-					</div>
-					<div class="col-md-2 ">
-						<input id="fromdatepicker" autocomplete="off"
+					
+					<div class="form-quarter">
+							<div class="form_text">From</div>
+							<div class="form_input">
+								<input id="fromdatepicker" autocomplete="off"
 							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 							name="fromDate" type="text" value="${todaysDate}">
-					</div>
-					<div class="col-md-1">
-						<h4 class="pull-left">To </h4>
-					</div>
-					<div class="col-md-2 ">
-						<input id="todatepicker" autocomplete="off"
+							</div>
+						</div>
+						
+					<div class="form-quarter">
+							<div class="form_text">To</div>
+							<div class="form_input">
+								<input id="todatepicker" autocomplete="off"
 							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 							name="toDate" type="text" value="${todaysDate}">
-					</div>
+							</div>
+						</div>	
+
+					<div class="form-quarter center">
+						
+						
+						<button class="btn additem_btn" onclick="searchReport()" style="margin: 0;">Search</button>
+						<button class="btn additem_btn" value="PDF" id="PDFButton" onclick="genPdf()" disabled="disabled" style="margin: 0;">PDF</button>
+						
+						</div>
+					
 					<div class="col-md-2">
-						<button class="btn search_btn pull-left" onclick="searchReport()">Search</button>
-						<button class="btn btn-primary" value="PDF" id="PDFButton"
-							onclick="genPdf()" disabled="disabled">PDF</button>
+						
 
 
 					</div>
@@ -109,21 +117,19 @@ table, th, td {
 								<thead>
 									<tr class="bgpink">
 
-										<th>Sr</th>
-										<th>CRN No</th>
-										<th>CRN Date</th>
-										<th>Invoice No</th>
-										<th>Invoice Date</th>
-										<th>Party Name</th>
-										<th>GST No</th>
-										<th>Tax Rate</th>
-										<th>Crn Qty</th>
-										<th>Taxable Amt</th>
-
-										<th>Cgst Amt</th>
-
-										<th>Sgst Amt</th>
-										<th>Crn Amt</th>
+										<th style="white-space: nowrap;">Sr</th>
+										<th style="white-space: nowrap;">CRN No</th>
+										<th style="white-space: nowrap;">CRN Date</th>
+										<th style="white-space: nowrap;">Invoice No</th>
+										<th style="white-space: nowrap;">Invoice Date</th>
+										<th style="white-space: nowrap;">Party Name</th>
+										<th style="white-space: nowrap;">GST No</th>
+										<th style="white-space: nowrap;">Tax Rate</th>
+										<th style="white-space: nowrap;">Crn Qty</th>
+										<th style="white-space: nowrap;">Taxable Amt</th>
+										<th style="white-space: nowrap;">Cgst Amt</th>
+										<th style="white-space: nowrap;">Sgst Amt</th>
+										<th style="white-space: nowrap;">Crn Amt</th>
 									</tr>
 
 
@@ -137,21 +143,19 @@ table, th, td {
 								<thead>
 									<tr class="bgpink">
 
-										<th>Sr</th>
-										<th>CRN No</th>
-										<th>CRN Date</th>
-										<th>Invoice No</th>
-										<th>Invoice Date</th>
-										<th>Party Name</th>
-										<th>GST No</th>
-										<th>Tax Rate</th>
-										<th>Crn Qty</th>
-										<th>Taxable Amt</th>
-
-										<th>Cgst Amt</th>
-
-										<th>Sgst Amt</th>
-										<th>Crn Amt</th>
+										<th style="white-space: nowrap;">Sr</th>
+										<th style="white-space: nowrap;">CRN No</th>
+										<th style="white-space: nowrap;">CRN Date</th>
+										<th style="white-space: nowrap;">Invoice No</th>
+										<th style="white-space: nowrap;">Invoice Date</th>
+										<th style="white-space: nowrap;">Party Name</th>
+										<th style="white-space: nowrap;">GST No</th>
+										<th style="white-space: nowrap;">Tax Rate</th>
+										<th style="white-space: nowrap;">Crn Qty</th>
+										<th style="white-space: nowrap;">Taxable Amt</th>
+										<th style="white-space: nowrap;">Cgst Amt</th>
+										<th style="white-space: nowrap;">Sgst Amt</th>
+										<th style="white-space: nowrap;">Crn Amt</th>
 									</tr>
 
 								</thead>
@@ -163,9 +167,9 @@ table, th, td {
 					</div>
 					<!--table end-->
 					<br>
-					<div class="form-group" id="range">
-						<div class="col-sm-3  controls">
-							<input type="button" id="expExcel" class="btn btn-primary"
+					<div class="form-group" id="range" style="text-align: center;">
+						<div class="controls">
+							<input type="button" id="expExcel" class="btn additem_btn"
 								value="EXPORT TO Excel" onclick="exportToExcel();">
 						</div>
 					</div>

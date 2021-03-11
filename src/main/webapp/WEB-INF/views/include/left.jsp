@@ -550,7 +550,7 @@ goods
 
 			<li>
 
-				<div class="listareaBox" style="background-color: #eedfdf;">
+				<div class="listareaBox" style="background-color: #FFFFFF;">
 
 					<a class="listareaBoximg"> <img
 						src="${pageContext.request.contextPath}/resources/images/${menu.menuImage}"
@@ -560,10 +560,10 @@ goods
 					</a>
 
 
-					<h2 style="color: grey;">
+					<h2 style="color: #333333;">
 						<c:out value='${menu.menuTitle}' />
 					</h2>
-					<h3 style="color: grey;">
+					<h3 style="color: #333333;">
 						Booking -
 						<c:out value='${fromTime}' />
 						To

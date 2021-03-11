@@ -75,13 +75,11 @@ table, th, td {
 
 
 				<div class="row">
-
-
-					<div class="col-md-1 from_date">
-						<h4 class="pull-left">Group</h4>
-					</div>
-					<div class="col-md-2">
-						<select name="catId" id="catId" class="form-control chosen"
+					
+					<div class="form-quarter">
+							<div class="form_text">Group</div>
+							<div class="form_input">
+								<select name="catId" id="catId" class="form-control chosen"
 							required>
 							<option value="" selected>Select Group</option>
 
@@ -89,57 +87,59 @@ table, th, td {
 								<option value="${catList.catId}" selected>${catList.catName}</option>
 							</c:forEach>
 						</select>
-					</div>
-					<div class="col-md-1 from_date">
-						<h4 class="pull-left">Select</h4>
-					</div>
-
-					<div class="col-md-2 ">
-						<select id="typeId" name="typeId" class="form-control">
+							</div>
+						</div>
+						
+					<div class="form-quarter">
+							<div class="form_text">Select</div>
+							<div class="form_input">
+								<select id="typeId" name="typeId" class="form-control">
 							<option value="">Select</option>
 							<option value="1">Purchase</option>
 							<option value="2">GRN</option>
 							<option value="3">Cumulative</option>
 						</select>
-					</div>
-					
-					
-					<input type="hidden" name="frId" id="frId" value="${frId}">
+							</div>
+						</div>
+						
+						<input type="hidden" name="frId" id="frId" value="${frId}">
 					<input type="hidden" name="factoryName" id="factoryName"
 						value="${Constant.FACTORYNAME}">
-
-					<div class="col-md-1 from_date">
-						<h4 class="pull-left">From</h4>
-					</div>
-					<div class="col-md-2 ">
-						<input id="fromdatepicker" class="texboxitemcode texboxcal"
+						<div class="form-quarter">
+							<div class="form_text">From</div>
+							<div class="form_input">
+								<input id="fromdatepicker" class="texboxitemcode texboxcal"
 							autocomplete="off" placeholder="DD-MM-YYYY" name="fromDate"
 							type="text">
-					</div>
-					<div class="col-md-1">
-						<h4 class="pull-left">To</h4>
-					</div>
-					<div class="col-md-2 ">
-						<input id="todatepicker" class="texboxitemcode texboxcal"
+							</div>
+						</div>
+						
+						<div class="form-quarter">
+							<div class="form_text">To</div>
+							<div class="form_input">
+								<input id="todatepicker" class="texboxitemcode texboxcal"
 							autocomplete="off" placeholder="DD-MM-YYYY" name="toDate"
 							type="text">
-					</div>
+							</div>
+						</div>	
+						
+						<div class="signlerow">
+							<button class="btn additem_btn" onclick="itemWiseReport()" style="margin:15px 0 0 0;">Search</button>				
+						<button class="btn additem_btn" value="PDF" id="PDFButton" onclick="genPdf()" style="margin:15px 0 0 0;" >PDF</button>
+						</div>	
+
+					
+					
+					
+					
+					
+
+					
+					
 					
 				</div>
 
 				
-
-
-				<div class="row">
-					
-					<div class="col-md-12">
-						<button class="btn additem_btn"
-							onclick="itemWiseReport()" style="margin:15px 0 0 0;">Search</button>				
-						<button class="btn additem_btn" value="PDF" id="PDFButton"
-							onclick="genPdf()" style="margin:15px 0 0 0;" >PDF</button>
-					</div>
-
-				</div>
 
 				<div class="row">
 					<div class="col-md-12">

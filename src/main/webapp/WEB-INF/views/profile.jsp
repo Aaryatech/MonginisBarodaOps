@@ -163,9 +163,26 @@
 
 				<!--rightSidebar-->
 				<div class="sidebarright">
+				
+					<div class="title_row">
+					<div class="title_l">
+						<div class="order-left">
+							<h2 class="pageTitle" style="margin:0; padding: 0;"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Profile</h2>
+						</div>
+					</div>
+					<div class="title_r">
+						<div class="order-right"
+								style="float: right;">
+								<a href="#" class="btn additem_btn addcust_open" style="margin: 0;" onclick="openAddEmpPopup()">Add Employee</a> 
+								<a href="#" class="btn additem_btn slide_open" onclick="getData()"  style="margin: 0;">Employee List</a>
+							</div>
+					</div>
+					<div class="clr"></div>
+				</div>
+				
 
 					<h2 class="pageTitle">
-						<i class="fa fa-pencil" aria-hidden="true"></i> Edit Profile
+						
 					</h2>
 
 
@@ -201,13 +218,7 @@
 					<div class="topSlide">
 						<div class="textcen">
 
-							<div class="order-right"
-								style="padding-top: 10px; padding-bottom: 5px; float: right;">
-								<a href="#" class="btn additem_btn addcust_open"
-									onclick="openAddEmpPopup()">Add Employee</a> <a href="#"
-									class="btn additem_btn slide_open" onclick="getData()">Employee
-									List</a>
-							</div>
+							
 
 
 							<div class="profileinsite">
@@ -434,7 +445,7 @@
 
 												<input name="" class="btn additem_btn"
 													value="Change Admin Password" type="button" id="changePwd1"
-													onclick="showDiv()" style="margin: 0; padding: 6px 7px">
+													onclick="showDiv()" style="margin: 0; padding: 5px 4px">
 
 											</div>
 											<div class="update FormAlert" id="divCheckPasswordMatch">

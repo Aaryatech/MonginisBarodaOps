@@ -82,6 +82,11 @@ However, delay the fade out process for 2.5 seconds */
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
 }
+
+th, td {
+    border-left: 1px solid #9da88d; border-bottom: 1px solid #9da88d; color: #333;
+    font-size: 15px;
+}
 </style>
 <!--new css added by kalpesh -->
 	<link href="${pageContext.request.contextPath}/resources/css/style.css"
@@ -131,50 +136,51 @@ However, delay the fade out process for 2.5 seconds */
 		
 		
 		<div class="row">
-			<div class="col-md-2">
-		    <h2 class=" pull-left flt_one">Invoice No:-  <b>
-		    ${invoiceNo}</b></h2>
+			<div class="four_txt">
+		    <h2 class=" pull-left flt_one">Invoice No:-  <span style="color:#ec268f;"> ${invoiceNo}</span></h2>
 		</div>
 	
-		<div class="col-md-2">
-		    <h2 class="pull-left flt_one">Bill Date:- <b> ${billDate}</b></h2>
+		<div class="four_txt" >
+		    <h2 class="pull-left flt_one">Bill Date:- <span style="color:#ec268f;"> ${billDate}</span></h2>
 		</div>
-			<div class="col-md-3">
-		    <h2 class="pull-left flt_one">Grand Total:- <b> ${grandTotal}</b></h2>
+			<div class="four_txt" >
+		    <h2 class="pull-left flt_one">Grand Total:- <span style="color:#ec268f;"> ${grandTotal}</span></h2>
 		</div>
-		<div class="col-md-4 ">
+		<div class="four_txt" >
 			  <h2 class="pull-left flt_one">Bill Status:-<input type="hidden" value="${billStatus}" name="billstatus" id="billstatus"> <c:choose>
 																	<c:when test="${billStatus==1}">
-																		<b><label  id="status1">Pending</label></b>
+																		<span style="color:#ec268f;"><label  id="status1">Pending</label></span>
 																	</c:when>
 																	<c:when test="${billStatus==2}">
-																		<b><label  id="status2">Received</label></b>
+																		<span style="color:#ec268f;"><label  id="status2">Received</label></span>
 																		
 																	</c:when>
 																	<c:when test="${billStatus== 3}">
-																		<b><label  id="status3">GVN Apply</label></b>
+																		<span style="color:#ec268f;"><label  id="status3">GVN Apply</label></span>
 																	</c:when>
 																	<c:when test="${billStatus== 4}">
-																		<b><label  id="status4">GVN Approve</label></b>
+																		<span style="color:#ec268f;"><label  id="status4">GVN Approve</label></span>
 																	</c:when>
 																	<c:when test="${billStatus== 5}">
-																		<b><label  id="status5">GRN Apply</label></b>
+																		<span style="color:#ec268f;"><label  id="status5">GRN Apply</label></span>
 																	</c:when>
 																		<c:when test="${billStatus== 6}">
-																		<b><label  id="status6">GRN Approve</label></b>
+																		<span style="color:#ec268f;"><label  id="status6">GRN Approve</label></span>
 																	</c:when>
 																		<c:when test="${billStatus== 7}">
-							 									<b><label  id="status7">Closed</label></b>
+							 									<span style="color:#ec268f;"><label  id="status7">Closed</label></span>
 																	</c:when>
 
 																</c:choose></h2>
 		</div>
 		
-		 <div class="col-md-2 ">
-								<input name="" class="buttonsaveorder" value="Received"
+		 
+		 			<div class="four_txt">
+								<input name="" class="btn additem_btn" value="Received" style="margin: 0; border:none;"
 									type="button" id="updateStatus" onclick="updateStatus(${billNo})">
+					</div>				
 							</div>
-		</div>
+		
 		
 		
    
@@ -189,29 +195,24 @@ However, delay the fade out process for 2.5 seconds */
 
 
 				<div id="table-scroll" class="table-scroll" style="margin:0 0 20px 0;">
-					<div id="faux-table" class="faux-table" aria="hidden">
-<!-- 					<div class="table-wrap">
- -->						 </div>
+					
 							<div class="table-wrap">
-						<table id="table_grid" class="main-table" >
+						<table id="table_grid" class="main-table" border="0">
 							<thead>
 								
 											<tr class="bgpink">
-												<th width="138" style="width: 18px" align="left">No</th>
-													<th class="col-md-1">Item Name</th>
-													<th class="col-md-1">Group</th>
-													<th class="col-md-1">Order Qty</th>
-													<th class="col-md-1">Billed Qty</th>
-												
-													<th class="col-md-1">MRP</th>
-														<th class="col-md-1">Rate</th>
-														<th class="col-md-1">Taxable Amt</th>
-													<th class="col-md-1">GST %</th>
-													
-													<th class="col-md-1">Tax Amt</th>
-													<th class="col-md-1">Total</th>
-													
-													<th class="col-md-1">GRN Type</th>
+												<th style="width: 18px; white-space: nowrap;" align="left">No</th>
+												<th style="white-space: nowrap;">Item Name</th>
+												<th style="white-space: nowrap;">Group</th>
+												<th style="white-space: nowrap;">Order Qty</th>
+												<th style="white-space: nowrap;">Billed Qty</th>												
+												<th style="white-space: nowrap;">MRP</th>
+												<th style="white-space: nowrap;">Rate</th>
+												<th style="white-space: nowrap;">Taxable Amt</th>
+												<th style="white-space: nowrap;">GST %</th>													
+												<th style="white-space: nowrap;">Tax Amt</th>
+												<th style="white-space: nowrap;">Total</th>													
+												<th style="white-space: nowrap;">GRN Type</th>
 											</tr>
 											</thead>				
 											
@@ -220,35 +221,35 @@ However, delay the fade out process for 2.5 seconds */
 													
 											<c:forEach items="${billDetailsList}" var="billDetailsList" varStatus="count">
 												<tr>
-													<td class="col-md-1" align="right"><c:out value="${count.index+1}" /></td>
-													<td class="col-md-1" align="right"><c:out value="${billDetailsList.itemName}" /></td>
-													<td class="col-md-1" align="right"><c:out value="${billDetailsList.catName}" /></td>
-													<td class="col-md-1" align="right"><c:out value="${billDetailsList.orderQty}" /></td>
-													<td class="col-md-1" align="right"><c:out value="${billDetailsList.billQty}" /></td>
+													<td align="right" style="white-space: nowrap;"><c:out value="${count.index+1}" /></td>
+													<td align="right" style="white-space: nowrap;"><c:out value="${billDetailsList.itemName}" /></td>
+													<td align="right" style="white-space: nowrap;"><c:out value="${billDetailsList.catName}" /></td>
+													<td align="right" style="white-space: nowrap;"><c:out value="${billDetailsList.orderQty}" /></td>
+													<td align="right" style="white-space: nowrap;"><c:out value="${billDetailsList.billQty}" /></td>
 <fmt:formatNumber var="formattedmrp" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.mrp}" />
 <c:set var="formattedmrp" value="${formattedmrp}" />
-													<td class="col-md-1"align="right"><c:out value="${formattedmrp}" /></td>
+													<td align="right" style="white-space: nowrap;"><c:out value="${formattedmrp}" /></td>
 <fmt:formatNumber var="formattedrate" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.baseRate}" />
 <c:set var="formattedrate" value="${formattedrate}" />													
-													<td class="col-md-1"align="right"><c:out value="${formattedrate}" /></td>
+													<td align="right" style="white-space: nowrap;"><c:out value="${formattedrate}" /></td>
 <fmt:formatNumber var="formattedtaxableAmt" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.taxableAmt}" />
 <c:set var="formattedtaxableAmt" value="${formattedtaxableAmt}" />														
-													<td class="col-md-1"align="right"><c:out value="${formattedtaxableAmt}" /></td>
+													<td align="right" style="white-space: nowrap;"><c:out value="${formattedtaxableAmt}" /></td>
 <fmt:formatNumber var="formattedsgstper" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.sgstPer}" />
 <c:set var="formattedsgstper" value="${formattedsgstper}" />															
 													<c:set var="sgstPer" value="${formattedsgstper}"/>
 <fmt:formatNumber var="formattedcgstPer" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.cgstPer}" />
 <c:set var="formattedcgstPer" value="${formattedcgstPer}" />													
 													<c:set var="cgstPer" value="${formattedcgstPer}"/>
-													<td class="col-md-1"align="right"><c:out value="${sgstPer+cgstPer}" /></td>
+													<td align="right"><c:out value="${sgstPer+cgstPer}" /></td>
 <fmt:formatNumber var="formattedtotalTax" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.totalTax}" />
 <c:set var="formattedtotalTax" value="${formattedtotalTax}" />															
-													<td class="col-md-1" align="right"><c:out value="${formattedtotalTax}" /></td>
+													<td align="right" style="white-space: nowrap;"><c:out value="${formattedtotalTax}" /></td>
 <fmt:formatNumber var="formattedgrandTotal" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.grandTotal}" />
 <c:set var="formattedgrandTotal" value="${formattedgrandTotal}" />														
-													<td class="col-md-1" align="right"><c:out value="${formattedgrandTotal}" /></td>
+													<td align="right" style="white-space: nowrap;"><c:out value="${formattedgrandTotal}" /></td>
 													
-													<td class="col-md-1"align="left">
+													<td align="left" style="white-space: nowrap;">
 											<c:choose>
 											<c:when test="${billDetailsList.grnType==0}">
 										     <c:out value="GRN-1" />

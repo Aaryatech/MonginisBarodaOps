@@ -126,27 +126,27 @@ table, th, td {
 							<div class="table-wrap">
 								<table id="table_grid" class="responsive-table" style="font-size: 16px;">
 									<thead>
-										<tr class="bgpink" style="font-size: 16px;">
+										<tr class="bgpink" style="font-size: 15px;">
 											<!-- 	<th class="col-md-1">Sr No.</th>
 											<th class="col-md-1">Bill No</th>
 											<th class="col-md-1">Date</th> -->
-											<th class="col-md-1">Select</th>
-											<th class="col-md-1" style="text-align: center;">Invoice
+											<th >Select </th>
+											<th style="text-align: center;">Invoice
 												No</th>
-											<th class="col-md-2" style="text-align: center;">Invoice
+											<th style="text-align: center;">Invoice
 												Date</th>
-											<th class="col-md-2" style="text-align: center;">Name</th>
-											<th class="col-md-1" style="text-align: center;">Type</th>
-											<th class="col-md-2" style="text-align: center;">Pur Qty</th>
-											<th class="col-md-1" style="text-align: center;">Rate</th>
+											<th style="text-align: center;">Name</th>
+											<th style="text-align: center;">Type</th>
+											<th style="text-align: center;">Pur Qty</th>
+											<th style="text-align: center;">Rate</th>
 											<!-- 	<th class="col-md-1">Grn Rate</th> -->
-											<th class="col-md-1" style="text-align: center;">Qty</th>
+											<th cstyle="text-align: center;">Qty</th>
 											<!-- <th class="col-md-1" style="text-align: center;">Tax %</th>
 											<th class="col-md-2" style="text-align: center;">Taxable
 												Amt</th>
 											<th class="col-md-1" style="text-align: center;">Tax Amt</th> -->
-											<th class="col-md-2" style="text-align: center;">Amount</th>
-											<th class="col-md-1" style="text-align: center;">Remark</th>
+											<th width="50" style="text-align: center;">Amount</th>
+											<th style="text-align: center;">Remark</th>
 
 										</tr>
 
@@ -159,22 +159,22 @@ table, th, td {
 											
 											<tr id="row${grnConfList.billDetailNo}">
 
-												<td class="col-md-1" style="text-align: center;"><input
+												<td style="text-align: center; white-space: nowrap;"><input
 													type="checkbox" name="select_to_grn"
 													id="${grnConfList.billDetailNo}"
 													value="${grnConfList.billDetailNo}" /></td>
 													
-												<td class="col-md-1" style="text-align: center;font-size: 16px;"><c:out
+												<td style="text-align: center;font-size: 15px;  white-space: nowrap;"><c:out
 														value="${grnConfList.invoiceNo}"></c:out></td>
 													
-												<td class="col-md-2" style="text-align: center;font-size: 16px;"><fmt:formatDate
+												<td style="text-align: center;font-size: 15px;  white-space: nowrap;"><fmt:formatDate
 														pattern="dd-MM-yyyy" value="${grnConfList.billDate}" /></td>
 												
 												
 														
-												<td class="col-md-2" style="text-align: center;font-size: 16px;"><c:out
+												<td style="text-align: center;font-size: 15px;  white-space: nowrap;"><c:out
 														value="${grnConfList.itemName}"></c:out></td>
-														<td class="col-md-1" style="text-align: center;"><c:out
+														<td style="text-align: center;  white-space: nowrap;"><c:out
 																value="${grnConfList.grnType}"></c:out></td>
 												<%-- <c:choose>
 													<c:when test="${grnConfList.grnType==0}">
@@ -204,18 +204,18 @@ table, th, td {
 
 												</c:choose> --%>
 
-												<td class="col-md-1" style="text-align: center;font-size: 16px;"><c:out
+												<td style="text-align: center;font-size: 15px;  white-space: nowrap;"><c:out
 														value="${grnConfList.billQty}"></c:out> <input
 													type="hidden" name="grnqty${grnConfList.billDetailNo}"
 													id="grnqty${grnConfList.billDetailNo}" size="3"
 													readonly="readonly" value="${grnConfList.autoGrnQty}" /></td>
 
-												<td class="col-md-1" style="text-align: center;font-size: 16px;"
+												<td style="text-align: center;font-size: 15px;  white-space: nowrap;"
 													id="grn_rate${grnConfList.billDetailNo}"><c:out
 														value="${grnConfList.rate}"></c:out></td>
 
 
-												<td class="col-md-1" style="font-size: 16px;"><input type="text"
+												<td style="font-size: 15px;  white-space: nowrap;" ><input type="text"
 													name="grnqtyauto${grnConfList.billDetailNo}" value="0"
 													id='grnqtyauto${grnConfList.billDetailNo}' size="3"
 													style="text-align: center;" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
@@ -249,12 +249,12 @@ table, th, td {
 
 												<c:set var="grnAmt" value="${grnAmt}" />
 
-												<td style="font-size: 16px;" class="col-md-2" id="grn_amt${grnConfList.billDetailNo}"><c:out
+												<td style="font-size: 15px; width:80px; white-space: nowrap; " id="grn_amt${grnConfList.billDetailNo}"><c:out
 														value="${grnAmt}"></c:out></td>
 
-												<td class="col-md-1" style="font-size: 16px;"><select
+												<td style="font-size: 15px; white-space: nowrap;"><select
 													name="grn_remark${grnConfList.billDetailNo}"
-													style="width: 200px" required="required"
+													style="" required="required"
 													id="grn_remark${grnConfList.billDetailNo}"
 													class="form-control"
 													onchange="changeQty(${grnConfList.billDetailNo},${grnConfList.autoGrnQty})">
@@ -282,7 +282,7 @@ table, th, td {
 
 								</c:when>
 								<c:otherwise>
-									<button type="submit" class="buttonsaveorder">
+									<button type="submit" class="btn additem_btn">
 										<i class="fa fa-check"></i> Save
 									</button>
 								</c:otherwise>

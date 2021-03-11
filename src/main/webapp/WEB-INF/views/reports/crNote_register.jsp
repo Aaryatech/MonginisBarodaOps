@@ -113,32 +113,33 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<input type="hidden" name="frId" id="frId" value="${frId}">
-
-					<div class="col-md-2 from_date">
-						<h4 class="pull-left">From Date</h4>
-					</div>
-					<div class="col-md-2 ">
-						<input id="fromdatepicker" autocomplete="off"
+					
+					<div class="form-quarter">
+							<div class="form_text">From</div>
+							<div class="form_input">
+								<input id="fromdatepicker" autocomplete="off"
 							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 							name="fromDate" type="text" value="${todaysDate}">
-					</div>
-					<div class="col-md-1">
-						<h4 class="pull-left">To</h4>
-					</div>
-					<div class="col-md-2 ">
-						<input id="todatepicker" autocomplete="off"
+							</div>
+						</div>
+						
+					<div class="form-quarter">
+							<div class="form_text">To</div>
+							<div class="form_input">
+								<input id="todatepicker" autocomplete="off"
 							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 							name="toDate" type="text" value="${todaysDate}">
-					</div>
-					<div class="col-md-2">
-						<button class="btn additem_btn" onclick="searchReport()">Search</button>
-						<button class="btn additem_btn" value="PDF" id="PDFButton"
-							onclick="genPdf()" disabled="disabled">PDF</button>
-						<%-- 		  &nbsp;&nbsp;&nbsp;   <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseBillwiseReportPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
- --%>
+							</div>
+						</div>	
+						
+					<div class="form-quarter center">
+						<button class="btn additem_btn" onclick="searchReport()" style="margin: 0;">Search</button>
+						<button class="btn additem_btn" value="PDF" id="PDFButton" onclick="genPdf()" disabled="disabled" style="margin: 0;">PDF</button>
+						</div>	
 
-
-					</div>
+					
+					
+					
 
 				</div>
 
@@ -152,21 +153,21 @@ jQuery(document).ready(function(){
 								<thead>
 									<tr class="bgpink">
 
-										<th style="text-align: center;">Sr No.</th>
-										<th style="text-align: center;">CRN No.</th>
-										<th style="text-align: center;">CRN Date</th>
-										<th style="text-align: center;">Invoice No</th>
-										<th style="text-align: center;">Invoice Date</th>
+										<th style="text-align: center; white-space: nowrap;">Sr No.</th>
+										<th style="text-align: center; white-space: nowrap;">CRN No.</th>
+										<th style="text-align: center; white-space: nowrap;">CRN Date</th>
+										<th style="text-align: center; white-space: nowrap;">Invoice No</th>
+										<th style="text-align: center; white-space: nowrap;">Invoice Date</th>
 										<!-- <th>Party Name</th>
 										<th>GST No</th>
 										<th>HSN Code</th> -->
-										<th style="text-align: center;">CRN Qty</th>
-										<th style="text-align: center;">Taxable Amt</th>
-										<th style="text-align: center;">Cgst %</th>
-										<th style="text-align: center;">Cgst Amt</th>
-										<th style="text-align: center;">Sgst %</th>
-										<th style="text-align: center;">Sgst Amt</th>
-										<th style="text-align: center;">CRN Amt</th>
+										<th style="text-align: center; white-space: nowrap;">CRN Qty</th>
+										<th style="text-align: center; white-space: nowrap;">Taxable Amt</th>
+										<th style="text-align: center; white-space: nowrap;">Cgst %</th>
+										<th style="text-align: center; white-space: nowrap;">Cgst Amt</th>
+										<th style="text-align: center; white-space: nowrap;">Sgst %</th>
+										<th style="text-align: center; white-space: nowrap;">Sgst Amt</th>
+										<th style="text-align: center; white-space: nowrap;">CRN Amt</th>
 									</tr>
 
 
@@ -179,21 +180,21 @@ jQuery(document).ready(function(){
 								<thead>
 									<tr class="bgpink">
 
-										<th style="text-align: center;">Sr No.</th>
-										<th style="text-align: center;">CRN No.</th>
-										<th style="text-align: center;">CRN Date</th>
-										<th style="text-align: center;">Invoice No</th>
-										<th style="text-align: center;">Invoice Date</th>
+										<th style="text-align: center; white-space: nowrap;">Sr No.</th>
+										<th style="text-align: center; white-space: nowrap;">CRN No.</th>
+										<th style="text-align: center; white-space: nowrap;">CRN Date</th>
+										<th style="text-align: center; white-space: nowrap;">Invoice No</th>
+										<th style="text-align: center; white-space: nowrap;">Invoice Date</th>
 										<!-- <th>Party Name</th>
 										<th>GST No</th>
 										<th>HSN Code</th> -->
-										<th style="text-align: center;">CRN Qty.</th>
-										<th style="text-align: center;">Taxable Amt</th>
-										<th style="text-align: center;">CGST %</th>
-										<th style="text-align: center;">CGST Amt</th>
-										<th style="text-align: center;">SGST %</th>
-										<th style="text-align: center;">SGST Amt</th>
-										<th style="text-align: center;">CRN Amt</th>
+										<th style="text-align: center; white-space: nowrap;">CRN Qty.</th>
+										<th style="text-align: center; white-space: nowrap;">Taxable Amt</th>
+										<th style="text-align: center; white-space: nowrap;">CGST %</th>
+										<th style="text-align: center; white-space: nowrap;">CGST Amt</th>
+										<th style="text-align: center; white-space: nowrap;">SGST %</th>
+										<th style="text-align: center; white-space: nowrap;">SGST Amt</th>
+										<th style="text-align: center; white-space: nowrap;">CRN Amt</th>
 									</tr>
 
 
@@ -208,7 +209,7 @@ jQuery(document).ready(function(){
 					<!--table end-->
 					<br>
 					<div class="form-group" id="range">
-						<div class="col-sm-3  controls">
+						<div class="controls" style="text-align: center;">
 							<input type="button" id="expExcel" class="btn additem_btn"
 								value="EXPORT TO Excel" onclick="exportToExcel();">
 						</div>

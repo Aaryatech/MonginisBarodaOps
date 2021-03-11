@@ -68,27 +68,29 @@
 
 				<div class="row">
 					<input type="hidden" name="frId" id="frId" value="${frId}">
-					<div class="col-md-1 from_date">
-						<h4 class="pull-left">From Date:-</h4>
-					</div>
-					<div class="col-md-2 ">
-						<input id="fromdatepicker" autocomplete="off"
+					
+					<div class="form-quarter">
+							<div class="form_text">From</div>
+							<div class="form_input">
+								<input id="fromdatepicker" autocomplete="off"
 							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 							name="fromDate" type="text">
-					</div>
-					<div class="col-md-1">
-						<h4 class="pull-left">To:-</h4>
-					</div>
-					<div class="col-md-2 ">
-						<input id="todatepicker" autocomplete="off"
+							</div>
+						</div>
+						
+						<div class="form-quarter">
+							<div class="form_text">To</div>
+							<div class="form_input">
+								<input id="todatepicker" autocomplete="off"
 							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 							name="toDate" type="text">
-					</div>
-					<div class="col-md-2" style="text-align: left;">
-						<button class="btn additem_btn" onclick="searchReport()" style="margin: 0;">Search</button>
-							<button class="btn additem_btn" value="PDF" id="PDFButton"
-							onclick="genPdf()" style="margin: 0;">PDF</button>
-					</div>
+							</div>
+						</div>
+						
+						<div class="form-quarter signlerow center">
+							<button class="btn additem_btn" onclick="searchReport()" style="margin: 0;">Search</button>
+							<button class="btn additem_btn" value="PDF" id="PDFButton" onclick="genPdf()" style="margin: 0;">PDF</button>
+						</div>
 
 				</div>
 
@@ -130,17 +132,17 @@
 									<thead>
 										<tr class="bgpink">
 
-											<th>Sr.No.</th>
-											<th>Sub Category Name</th>
-											<th>Pur Qty</th>
-											<th>Pur Amt</th>
-											<th>Var Qty</th>
-											<th>Var Amt</th>
-											<th>Ret Qty</th>
-											<th>Ret Amt</th>
-											<th>Net Qty</th>
-											<th>Net Amt</th>
-											<th>Ret Amt</th>
+											<th style="white-space: nowrap;">Sr.No.</th>
+											<th style="white-space: nowrap;">Sub Category Name</th>
+											<th style="white-space: nowrap;">Pur Qty</th>
+											<th style="white-space: nowrap;">Pur Amt</th>
+											<th style="white-space: nowrap;">Var Qty</th>
+											<th style="white-space: nowrap;">Var Amt</th>
+											<th style="white-space: nowrap;">Ret Qty</th>
+											<th style="white-space: nowrap;">Ret Amt</th>
+											<th style="white-space: nowrap;">Net Qty</th>
+											<th style="white-space: nowrap;">Net Amt</th>
+											<th style="white-space: nowrap;">Ret Amt</th>
 										</tr>
 
 									</thead>

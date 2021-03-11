@@ -166,7 +166,7 @@ a:hover {
 								name="prevdatepicker" type="text"
 								class="texboxitemcode texboxcal" value="${prev_ord_del_date}"
 								onchange="onChangePrevOrderDate(this.value,${con_index});"
-								min="${prev_ord_del_date}"> <input type="submit" vlaue="submit">
+								min="${prev_ord_del_date}"> <input type="submit" vlaue="submit" class="btn additem_btn">
 						</h3>
 
 

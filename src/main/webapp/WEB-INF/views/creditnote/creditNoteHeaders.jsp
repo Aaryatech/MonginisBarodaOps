@@ -70,30 +70,32 @@ table, th, td {
 				<div class="row">
 					<form action="" class="form-horizontal" method="get"
 						id="validation-form">
-
-						<div class="col-md-1 from_date">
-							<h4 class="pull-left">From</h4>
-						</div>
-						<div class="col-md-2 ">
-							<input id="fromdatepicker" autocomplete="off"
+						
+						<div class="form-quarter">
+							<div class="form_text">From</div>
+							<div class="form_input">
+								<input id="fromdatepicker" autocomplete="off"
 								class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 								name="fromDate" type="text">
+							</div>
 						</div>
-						<div class="col-md-1">
-							<h4 class="pull-left">To</h4>
-						</div>
-						<div class="col-md-2 ">
-							<input id="todatepicker" autocomplete="off"
+						
+						<div class="form-quarter">
+							<div class="form_text">To</div>
+							<div class="form_input">
+								<input id="todatepicker" autocomplete="off"
 								class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 								name="toDate" type="text">
+							</div>
 						</div>
-						<div class="col-md-2" style="text-align: left;">
-							
+					
+					<div class="form-quarter center">
 							<input type="button" value="Search" onclick="searchReport()"
 								class="btn additem_btn" style="margin: 0;">
-							
-
-						</div>
+						</div>	
+						
+						
+						
 					</form>
 
 				</div>
@@ -133,18 +135,18 @@ table, th, td {
 								<thead>
 									<tr class="bgpink">
 
-										<th class="col-sm-1"><input type="checkbox" onClick="selectBillNo(this)" /></th>
-										<th class="col-sm-1" style="text-align: center;">Sr No.</th>
-										<th class="col-md-2" style="text-align: center;">Date</th>
-										<th class="col-md-2" style="text-align: center;">CRN No.</th>
-										<th class="col-md-2" style="text-align: center;">Invoice No.
+										<th style=" white-space: nowrap;"><input type="checkbox" onClick="selectBillNo(this)" /></th>
+										<th style="text-align: center; white-space: nowrap;">Sr No.</th>
+										<th style="text-align: center; white-space: nowrap;">Date</th>
+										<th style="text-align: center; white-space: nowrap;">CRN No.</th>
+										<th style="text-align: center; white-space: nowrap;">Invoice No.
 										</th>
 										<!-- <th class="col-md-3" style="text-align: center;">Franchise</th>
 										<th class="col-md-1" style="text-align: center;">Taxable
 											Amt</th>
 										<th class="col-md-1" style="text-align: center;">Tax Amt</th> -->
-										<th class="col-md-2" style="text-align: center;">Amount</th>
-										<th class="col-sm-1" style="text-align: center;">Action</th>
+										<th style="text-align: center; white-space: nowrap;">Amount</th>
+										<th style="text-align: center; white-space: nowrap;">Action</th>
 									</tr>
 
 								</thead>
@@ -277,26 +279,26 @@ function selectBillNo(source) {
 													var tr = $('<tr></tr>');
 
 													tr
-															.append($('<td class="col-sm-1"><input class="chk" type=checkbox name="select_to_agree" id="select_to_agree'+key+'"  value='+headers.crnId+'></td>'));
+															.append($('<td style=" white-space: nowrap;"><input class="chk" type=checkbox name="select_to_agree" id="select_to_agree'+key+'"  value='+headers.crnId+'></td>'));
 													tr
 															.append($(
-																	'<td class="col-sm-1"></td>')
+																	'<td style=" white-space: nowrap;"></td>')
 																	.html(
 																			key + 1));
 													tr
 															.append($(
-																	'<td class="col-md-2" style="text-align:center"></td>')
+																	'<td style="text-align:center; white-space: nowrap;"></td>')
 																	.html(
 																			headers.crnDate));
 
 													tr
 															.append($(
-																	'<td  class="col-md-2" style="text-align:center"></td>')
+																	'<td style="text-align:center; white-space: nowrap;"></td>')
 																	.html(
 																			headers.crnNo));
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:center"></td>')
+																	'<td style="text-align:center; white-space: nowrap;"></td>')
 																	.html(
 																			headers.exVarchar1));//inv no
 
@@ -322,13 +324,13 @@ function selectBillNo(source) {
 
 													tr
 															.append($(
-																	'<td class="col-md-1"  style="text-align:right"></td>')
+																	'<td style="text-align:right;white-space: nowrap;"></td>')
 																	.html(
 																			(headers.crnGrandTotal)
 																					.toFixed(2)));
 
 													tr
-															.append($('<td class="col-md-2" style="text-align:center"><a href="#" class="action_btn" onclick="getCrnDetail('
+															.append($('<td style="text-align:center; white-space: nowrap;"><a href="#" class="action_btn" onclick="getCrnDetail('
 																	+ headers.crnId
 																	+ ')"><abbr title="Detail"><i class="fa fa-list"></i></abbr></a> &nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="genPdfSingle('
 																	+ headers.crnId

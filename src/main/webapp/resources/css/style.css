@@ -154,10 +154,10 @@ font-size: 16px;
 }
 
 .table-scroll th, .table-scroll td {
-	padding:8px 10px /* 8px 3px */;
+	padding:5px 10px /* 8px 10px */  /* 8px 3px */;
 	vertical-align: top;
 	text-align: left;
-	font-size: 16px /* 18px */;
+	font-size: 15px /* 18px */;
 	
 }
 .faux-table table {
@@ -326,7 +326,7 @@ font-size: 18px !important;
 }
 
 .main-table tr:nth-child(2n+1) {
-    background: #e1e1e1;
+    background: #f5f5f5 /* #e1e1e1 */;
 }
 
 .sidebarhome ul {

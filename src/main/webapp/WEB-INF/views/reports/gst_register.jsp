@@ -106,37 +106,39 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i>Billwise HSN Register Report</h2>
+						<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> Billwise HSN Register Report</h2>
 					</div>
 				</div>
 
 				<div class="row">
 					<input type="hidden" name="frId" id="frId" value="${frId}">
-
-					<div class="col-md-2 from_date">
-						<h4 class="pull-left">From</h4>
-					</div>
-					<div class="col-md-2 ">
-						<input id="fromdatepicker" autocomplete="off"
+					
+					<div class="form-quarter">
+							<div class="form_text">From</div>
+							<div class="form_input">
+								<input id="fromdatepicker" autocomplete="off"
 							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 							name="fromDate" type="text">
-					</div>
-					<div class="col-md-1">
-						<h4 class="pull-left">To</h4>
-					</div>
-					<div class="col-md-2 ">
-						<input id="todatepicker" autocomplete="off"
+							</div>
+						</div>
+						
+					<div class="form-quarter">
+							<div class="form_text">To</div>
+							<div class="form_input">
+								<input id="todatepicker" autocomplete="off"
 							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 							name="toDate" type="text">
-					</div>
-					<div class="col-md-2">
-						<button class="btn additem_btn" onclick="searchReport()">Search</button>
-						<%-- 		  &nbsp;&nbsp;&nbsp;   <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseBillwiseReportPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
- --%>
-						<button class="btn additem_btn" value="PDF" id="PDFButton"
-							onclick="genPdf()">PDF</button>
+							</div>
+						</div>	
 
-					</div>
+					
+					<div class="form-quarter center">
+						<button class="btn additem_btn" onclick="searchReport()" style="margin: 0;">Search</button>
+						<button class="btn additem_btn" value="PDF" id="PDFButton" onclick="genPdf()" style="margin: 0;">PDF</button>
+						
+						</div>
+						
+					
 
 				</div>
 
@@ -150,25 +152,20 @@ jQuery(document).ready(function(){
 								<thead>
 									<tr class="bgpink">
 
-										<th class="col-sm-1">Sr.No.</th>
-
-										<th class="col-sm-1" style="text-align: center;">Invoice
-											No</th>
-										<th class="col-md-2" style="text-align: center;">Invoice
-											Date</th>
+										<th style=" white-space: nowrap;">Sr.No.</th>										
+										<th style="text-align: center; white-space: nowrap;">Invoice No</th>
+										<th style="text-align: center; white-space: nowrap;">Invoice Date</th>
 										<!-- <th class="col-sm-1" style="text-align: center;">Party
 											Name</th>
 										<th class="col-md-1" style="text-align: center;">GST No</th> -->
-										<th class="col-md-1" style="text-align: center;">HSN Code</th>
-										<th class="col-md-1" style="text-align: center;">Billed
-											Qty</th>
-										<th class="col-md-1" style="text-align: center;">Taxable
-											Amt</th>
-										<th class="col-md-1" style="text-align: center;">Cgst %</th>
-										<th class="col-md-1" style="text-align: center;">Cgst Amt</th>
-										<th class="col-md-1" style="text-align: center;">Sgst %</th>
-										<th class="col-md-1" style="text-align: center;">Sgst Amt</th>
-										<th class="col-md-1" style="text-align: center;">Bill Amt</th>
+										<th style="text-align: center; white-space: nowrap;">HSN Code</th>
+										<th style="text-align: center; white-space: nowrap;">Billed Qty</th>
+										<th style="text-align: center; white-space: nowrap;">Taxable Amt</th>
+										<th style="text-align: center; white-space: nowrap;">Cgst %</th>
+										<th style="text-align: center; white-space: nowrap;">Cgst Amt</th>
+										<th style="text-align: center; white-space: nowrap;">Sgst %</th>
+										<th style="text-align: center; white-space: nowrap;">Sgst Amt</th>
+										<th style="text-align: center; white-space: nowrap;">Bill Amt</th>
 									</tr>
 
 								</thead>
@@ -180,25 +177,20 @@ jQuery(document).ready(function(){
 								<thead>
 									<tr class="bgpink">
 
-										<th class="col-sm-1">Sr.No.</th>
-
-										<th class="col-sm-1" style="text-align: center;">Invoice
-											No</th>
-										<th class="col-md-2" style="text-align: center;">Invoice
-											Date</th>
+										<th>Sr.No.</th>
+										<th style="text-align: center; white-space: nowrap;">Invoice No</th>
+										<th style="text-align: center; white-space: nowrap;">Invoice Date</th>
 										<!-- <th class="col-sm-1" style="text-align: center;">Party
 											Name</th>
 										<th class="col-md-1" style="text-align: center;">GST No</th> -->
-										<th class="col-md-1" style="text-align: center;">HSN Code</th>
-										<th class="col-md-1" style="text-align: center;">Billed
-											Qty</th>
-										<th class="col-md-1" style="text-align: center;">Taxable
-											Amt</th>
-										<th class="col-md-1" style="text-align: center;">CGST %</th>
-										<th class="col-md-1" style="text-align: center;">CGST Amt</th>
-										<th class="col-md-1" style="text-align: center;">SGST %</th>
-										<th class="col-md-1" style="text-align: center;">SGST Amt</th>
-										<th class="col-md-1" style="text-align: center;">Bill Amt</th>
+										<th style="text-align: center; white-space: nowrap;">HSN Code</th>
+										<th style="text-align: center; white-space: nowrap;">Billed Qty</th>
+										<th style="text-align: center; white-space: nowrap;">Taxable Amt</th>
+										<th style="text-align: center; white-space: nowrap;">CGST %</th>
+										<th style="text-align: center; white-space: nowrap;">CGST Amt</th>
+										<th style="text-align: center; white-space: nowrap;">SGST %</th>
+										<th style="text-align: center; white-space: nowrap;">SGST Amt</th>
+										<th style="text-align: center; white-space: nowrap;">Bill Amt</th>
 									</tr>
 
 
@@ -211,8 +203,8 @@ jQuery(document).ready(function(){
 					</div>
 					<!--table end-->
 					<br>
-					<div class="form-group" style="display: none;" id="range">
-						<div class="col-sm-3  controls">
+					<div class="form-group" style="display: none; text-align: center;" id="range">
+						<div class="controls">
 							<input type="button" id="expExcel" class="btn additem_btn"
 								value="EXPORT TO Excel" onclick="exportToExcel();"
 								disabled="disabled">

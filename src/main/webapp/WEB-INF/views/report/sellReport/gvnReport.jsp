@@ -66,24 +66,39 @@
 				</div>
 				
 				<div class="row">
-					<div class="col-md-1" style="margin:10px 0 0 0;">From</div>
-					<div class="col-md-2"><input
-									id="fromdatepicker" autocomplete="off" class="texboxitemcode texboxcal "
-									placeholder="From Date" name="from_Date" type="text"></div>
 					
-					<div class="col-md-1" style="margin:10px 0 0 0;">To</div>
-					<div class="col-md-2"><input id="todatepicker"class="texboxitemcode texboxcal"
+					<div class="form-quarter">
+							<div class="form_text">From</div>
+							<div class="form_input">
+								<input
+									id="fromdatepicker" autocomplete="off" class="texboxitemcode texboxcal "
+									placeholder="From Date" name="from_Date" type="text">
+							</div>
+						</div>
+						
+					<div class="form-quarter">
+							<div class="form_text">To</div>
+							<div class="form_input">
+								<input id="todatepicker"class="texboxitemcode texboxcal"
 									autocomplete="off" placeholder="To Date" name="to_Date"
-									type="text" > </div>
+									type="text" >
+							</div>
+						</div>	
+				
+				
+					
+					
+					
 					
 					<input type="hidden" name="frId" id="frId" value="${frId}">
 						<input type="hidden" name="frName" id="frName" value="${frName}">
 						
-					<div class="col-md-2" style="text-align: left;">
+						<div class="form-quarter center">
 						<button class="btn additem_btn" onclick="searchSellBill()" style="margin:0;">View</button>
-						<button class="btn additem_btn" value="PDF" id="PDFButton"
-							onclick="genPdf()" style="margin:0;">PDF</button>	
-					</div>
+						<button class="btn additem_btn" value="PDF" id="PDFButton" onclick="genPdf()" style="margin:0;">PDF</button>
+						</div>
+						
+					
 				</div>
 
 				
@@ -129,27 +144,24 @@
 
 
 
-											<th class="col-sm-1" style="text-align: center;">Sr.No.</th>
-											<th class="col-md-2" style="text-align: center;">Grn Gvn
-												Date</th>
-											<th class="col-md-2" style="text-align: center;">Item Name</th>
+											<th style="text-align: center; white-space: nowrap;">Sr.No.</th>
+											<th style="text-align: center; white-space: nowrap;">Grn Gvn Date</th>
+											<th style="text-align: center; white-space: nowrap;">Item Name</th>
 											<!-- <th class="col-md-1" style="text-align: center;">Tax
 												Rate</th>
 											<th class="col-md-1" style="text-align: center;">Taxable
 												Amt</th>
 											<th class="col-md-1" style="text-align: center;">Total
 												Tax</th> -->
-											<th class="col-md-2" style="text-align: center;">GVN
-												Amt</th>
-											<th class="col-md-2" style="text-align: center;">Aprv.
-												Taxable Amt</th>
+											<th style="text-align: center; white-space: nowrap;">GVN Amt</th>
+											<th style="text-align: center; white-space: nowrap;">Aprv. Taxable Amt</th>
 											<!-- <th class="col-md-1" style="text-align: center;">Aprv.
 												CGST Amt</th>
 											<th class="col-md-1" style="text-align: center;">Aprv.
 												SGST Amt</th>
 											<th class="col-md-1" style="text-align: center;">Aprv.
 												IGST Amt</th> -->
-											<th class="col-md-2" style="text-align: center;">Aprv. GVN Total</th>
+											<th style="text-align: center; white-space: nowrap;">Aprv. GVN Total</th>
 										</tr>
 									</thead>
 
@@ -247,17 +259,17 @@
 
 													tr
 															.append($(
-																	'<td class="col-md-1"></td>')
+																	'<td style=" white-space: nowrap;"></td>')
 																	.html(
 																			key + 1));
 													tr
 															.append($(
-																	'<td class="col-md-1" style="font-size:14px;"></td>')
+																	'<td style="font-size:14px; white-space: nowrap;"></td>')
 																	.html(
 																			list.grnGvnDate));
 													tr
 															.append($(
-																	'<td class="col-md-1"></td>')
+																	'<td style=" white-space: nowrap;"></td>')
 																	.html(
 																			list.itemName));
 													/* tr
@@ -283,7 +295,7 @@
 															+ list.totalTax; */
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right"></td>')
+																	'<td style="text-align:right;  white-space: nowrap;"></td>')
 																	.html(
 																			list.grnGvnAmt
 																					.toFixed(2)));
@@ -291,7 +303,7 @@
 															+ list.grnGvnAmt;
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right"></td>')
+																	'<td style="text-align:right;  white-space: nowrap;"></td>')
 																	.html(
 																			list.aprTaxableAmt
 																					.toFixed(2)));
@@ -323,7 +335,7 @@
 															+ list.aprIgstRs; */
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right"></td>')
+																	'<td style="text-align:right;  white-space: nowrap;"></td>')
 																	.html(
 																			list.aprGrandTotal
 																					.toFixed(2)));

@@ -116,30 +116,44 @@ jQuery(document).ready(function(){
 					<input type="hidden" name="factoryName" id="factoryName"
 						value="${Constant.FACTORYNAME}">
 						
-					<div class="col-md-1 from_date">
-						<h4 class="pull-left">From Date:-</h4>
-					</div>
-					<div class="col-md-2 ">
-						<input id="fromdatepicker" autocomplete="off"
+						
+						<div class="form-quarter">
+							<div class="form_text">From</div>
+							<div class="form_input">
+								<input id="fromdatepicker" autocomplete="off"
 							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 							name="fromDate" type="text">
-					</div>
-					<div class="col-md-1">
-						<h4 class="pull-left">To:-</h4>
-					</div>
-					<div class="col-md-2 ">
-						<input id="todatepicker" autocomplete="off"
+							</div>
+						</div>
+						
+						<div class="form-quarter">
+							<div class="form_text">To</div>
+							<div class="form_input">
+								<input id="todatepicker" autocomplete="off"
 							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 							name="toDate" type="text">
-					</div>
-					<div class="col-md-2" style="text-align: left;">
-						<button class="btn additem_btn"
+							</div>
+						</div>
+						
+						<!-- <div class="form-quarter">
+							<div class="form_text">Search :</div>
+							<div class="form_input">
+								<input id="todatepicker" autocomplete="off"
+							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
+							name="toDate" type="text">
+							</div>
+						</div> -->
+						<div class="form-quarter center">
+							<button class="btn additem_btn"
 							onclick="billWisePurchaseReport()" style="margin:0;">Search</button>
 					
 						<button class="btn additem_btn" value="PDF" id="PDFButton"
 							onclick="genPdf()" style="margin:0;">PDF</button>
-
-					</div>
+						</div>
+						
+					
+					
+					
 
 				</div>
 
@@ -154,26 +168,26 @@ jQuery(document).ready(function(){
 									<thead>
 										<tr class="bgpink">
 
-											<th class="col-sm-1">Sr.No.</th>
+											<th style="text-align: center; white-space: nowrap;">Sr.No.</th>
 											<!-- <th class="col-md-1">Party Name</th> -->
 											<!-- 									<th class="col-md-1">GSTIN</th>
  -->
-											<th class="col-sm-2" style="text-align: center;">Invoice
+											<th style="text-align: center; white-space: nowrap;">Invoice
 												No</th>
-											<th class="col-sm-1" style="text-align: center;">Bill
+											<th style="text-align: center; white-space: nowrap;">Bill
 												Date</th>
-											<th class="col-md-1" style="text-align: center;">Taxable
+											<th style="text-align: center; white-space: nowrap;">Taxable
 												Amt</th>
-											<th class="col-md-1" style="text-align: center;">IGST
+											<th style="text-align: center; white-space: nowrap;">IGST
 												Amt</th>
-											<th class="col-md-1" style="text-align: center;">CGST
+											<th style="text-align: center; white-space: nowrap;">CGST
 												Amt</th>
-											<th class="col-md-1" style="text-align: center;">SGST
+											<th style="text-align: center; white-space: nowrap;">SGST
 												Amt</th>
 											<!-- <th class="col-md-1" style="text-align: center;">R.off</th> -->
-											<th class="col-md-2" style="text-align: center;">Bill
+											<th style="text-align: center; white-space: nowrap;">Bill
 												Amount</th>
-											<th class="col-md-1" style="text-align: center;" >Action</th>
+											<th style="text-align: center; white-space: nowrap;" >Action</th>
 										</tr>
 
 									</thead>
@@ -186,24 +200,15 @@ jQuery(document).ready(function(){
 							<table id="table_grid" class="responsive-table" border="1"><!-- class="main-table" -->
 								<thead>
 									<tr class="bgpink">
-
-										<th class="col-sm-1" style="text-align: center;">Sr.No.</th>
-										<!-- <th class="col-md-1">Party Name</th> -->
-										<!-- 									<th class="col-md-1">GSTIN</th>
- -->
-										<th class="col-sm-2" style="text-align: center;">Invoice
-											No</th>
-										<th class="col-sm-2" style="text-align: center;">Bill
-											Date</th>
-										<th class="col-md-1" style="text-align: center;">Taxable
-											Amt</th>
-										<th class="col-md-1" style="text-align: center;">IGST Amt</th>
-										<th class="col-md-1" style="text-align: center;">CGST Amt</th>
-										<th class="col-md-1" style="text-align: center;">SGST Amt</th>
-										<!-- 	<th class="col-md-1" style="text-align: center;">R.off</th> -->
-										<th class="col-md-2" style="text-align: center;">Bill
-											Amount</th>
-										<th class="col-md-1" style="text-align: center;" >Action</th>
+										<th style="text-align: center; white-space: nowrap;">Sr.No.</th>
+										<th style="text-align: center; white-space: nowrap;">Invoice No</th>
+										<th style="text-align: center; white-space: nowrap;">Bill Date</th>
+										<th style="text-align: center; white-space: nowrap;">Taxable Amt</th>
+										<th style="text-align: center; white-space: nowrap;">IGST Amt</th>
+										<th style="text-align: center; white-space: nowrap;">CGST Amt</th>
+										<th style="text-align: center; white-space: nowrap;">SGST Amt</th>
+										<th style="text-align: center; white-space: nowrap;">Bill Amount</th>
+										<th style="text-align: center; white-space: nowrap;" >Action</th>
 									</tr>
 
 								</thead>
