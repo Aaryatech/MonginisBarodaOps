@@ -394,10 +394,13 @@ public class SpCakeController {
 					currentWt = currentWt + 0.5f;
 					weightList.add(currentWt);
 				}
-
+				if(specialCake.getSpRate2()>0) {
+					
 				while (currentWt < maxWt) {
 					currentWt = currentWt + specialCake.getSpRate2();
 					weightList.add(currentWt);
+				}
+				
 				}
 
 				/******************************
@@ -524,6 +527,7 @@ public class SpCakeController {
 
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			model = new ModelAndView("order/spcakeorder");
 
 			System.out.println("search  Sp Cake  Excep: " + e.getMessage());
