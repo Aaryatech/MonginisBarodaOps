@@ -16,7 +16,7 @@ public class GrnGvn {
 
 	private float itemRate;
 
-	private float itemMrp;
+	private float itemMrp;  // Used For Menu Discount %
 
 	private int grnGvnQty;
 

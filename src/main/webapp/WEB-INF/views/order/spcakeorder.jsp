@@ -723,9 +723,22 @@ System.out.print("incr " +incr +" menuDeliveryDays " +menuDeliveryDays);
 		<div class="col2full" >
                 <select name="ctype"  tabindex="-1"  id="ctype" required>
                   <option value="">Select Shape</option>
+                  <c:choose>
+                  <c:when test="${selectedShapesLength==1}">
                    <c:forEach items="${selectedShapes}" var="shape">
+                     <option selected="selected" value="${shape.shapeName}">${shape.shapeName}</option>
+                   </c:forEach>
+                 </c:when>
+                 <c:otherwise>
+                  <c:forEach items="${selectedShapes}" var="shape">
                      <option value="${shape.shapeName}">${shape.shapeName}</option>
                    </c:forEach>
+                 </c:otherwise>
+                  
+                  </c:choose>
+                  
+                  
+                  
                   
                  </select>
         </div>
