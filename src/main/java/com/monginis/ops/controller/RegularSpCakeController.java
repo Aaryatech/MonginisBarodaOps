@@ -370,12 +370,12 @@ HttpSession session=request.getSession();
 		    	 if(selItem.getId()==id)
 		    	 {
 		    		 item=selItem;
+		    		 break;
 		    	 }
-		    	 SetOrderDataCommon orderData=new SetOrderDataCommon();
-		    	  menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
-		    	  item= orderData.setItemRateMRP(item, menuList.get(globalIndex), request);
-	 			    
 		}
+		     SetOrderDataCommon orderData=new SetOrderDataCommon();
+	    	  menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
+	    	  item= orderData.setItemRateMRP(item, menuList.get(globalIndex), request);
 		     System.err.println("Item is"+item);
 				return item;
 		}
