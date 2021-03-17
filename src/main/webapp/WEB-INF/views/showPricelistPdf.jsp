@@ -51,6 +51,8 @@ th {
 <body onload="myFunction()">
 <h3 align="center">${FACTORYNAME}</h3>
 <p align="center">${FACTORYADDRESS}</p>
+<h4 align="center">${frName}</h4>
+<h5 align="center">${toDate}</h5>
 	
 <div align="center"> <h5> Price List&nbsp;&nbsp;&nbsp;&nbsp; <%-- From &nbsp; ${fromDate}  &nbsp;To &nbsp; ${toDate} --%></h5></div>
 	<table id="table1" class="table table-advance" border="1">

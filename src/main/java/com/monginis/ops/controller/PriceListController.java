@@ -29,6 +29,7 @@ import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.CategoryListResponse;
 import com.monginis.ops.model.ExportToExcel;
 import com.monginis.ops.model.FrMenu;
+import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.Item;
 import com.monginis.ops.model.MCategoryList;
 import com.monginis.ops.model.SubCategory;
@@ -37,7 +38,7 @@ import com.monginis.ops.model.SubCategory;
 @Scope("session")
 public class PriceListController {
 	
-	
+	List<MCategoryList> CatList=  new ArrayList<MCategoryList>();
 
 	public static List<MCategoryList> mCategoryList = null;
 	
@@ -47,7 +48,7 @@ public class PriceListController {
 		System.err.println("In /showPriceList");
 		ModelAndView model = new ModelAndView("priceList");
 		RestTemplate restTemplate=new RestTemplate();
-		List<MCategoryList> CatList=  new ArrayList<MCategoryList>();
+	
 	    try {
     		  HttpSession session = request.getSession();
     			CategoryListResponse catResp 	= restTemplate.getForObject(Constant.URL + "showAllCategory", CategoryListResponse.class);
@@ -66,6 +67,13 @@ public class PriceListController {
 		}
 		    return model;
 
+	}
+	
+	
+	@RequestMapping(value="/getAllCategoery",method=RequestMethod.GET)
+	public @ResponseBody 	List<MCategoryList> getAllCategoery(){
+		System.err.println("In /getAllCategoery");
+		return CatList;
 	}
 	
 	
@@ -106,6 +114,10 @@ public class PriceListController {
 		MultiValueMap<String, Object> map=new LinkedMultiValueMap<>();
 		RestTemplate restTemplate=new RestTemplate();
 		HttpSession session = request.getSession();
+		
+		
+		
+		
 		try {
 			String selectedCat=request.getParameter("subcatIds");
 			Integer mrp =Integer.parseInt(request.getParameter("mrpType"));
@@ -168,10 +180,14 @@ public class PriceListController {
 		System.err.println("In /showPricelistPdf");
 		 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd ");  
 		   LocalDateTime now = LocalDateTime.now();  
-		  
+		 
+		   HttpSession session = request.getSession();
+		   
+		   Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		ModelAndView model = new ModelAndView("showPricelistPdf"); 
 		//model.addObject("fromDate", );
 
+		model.addObject("frName",frDetails.getFrName() );
 		model.addObject("toDate",dtf.format(now) );
 		model.addObject("FACTORYNAME", Constant.FACTORYNAME);
 		model.addObject("FACTORYADDRESS", Constant.FACTORYADDRESS);

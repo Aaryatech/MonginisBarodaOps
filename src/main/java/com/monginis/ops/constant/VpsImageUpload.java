@@ -22,6 +22,7 @@ public class VpsImageUpload {
 	 * "/opt/apache-tomcat-8.5.37/webapps/uploadspune/GVN/";
 	 */
 	public static final String fileUploadPath = "/opt/cpanel/ea-tomcat85/webapps/uploads/baroda/";
+	//public static final String fileUploadPath = "/opt/cpanel/ea-tomcat85/webapps/uploads/baroda/";
 	private static final String FR_FOLDER = fileUploadPath + "FR/";
 	private static final String SP_CAKE_FOLDER = fileUploadPath + "SPCAKE/";
 	private static final String CUST_CHOICE_PHOTO_CAKE_FOLDER = fileUploadPath + "CUSTCHOICEPHOTOCAKE/";

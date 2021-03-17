@@ -112,6 +112,7 @@ table, th, td {
 						
 									<th class="col-md-1">Invoice No</th>
 									<th class="col-md-2">Item Name</th>
+									<th class="col-md-1">Disc.%</th>
 									<th class="col-md-1">Bill Rate</th>
 									<th class="col-md-1">Refund Rate</th>
 									<th class="col-md-1">Gvn Qty</th>
@@ -148,7 +149,9 @@ table, th, td {
 
 
 										<td class="col-md-1"><c:out value="${gvnList.invoiceNo}" /></td>
+										
 										<td class="col-md-2"><c:out value="${gvnList.itemName}" /></td>
+										<td class="col-md-1"><c:out value="${gvnList.itemMrp}" /></td>
 										<td class="col-md-1"><c:out value="${gvnList.itemRate}" /></td>
 										<td class="col-md-1"><c:out value="${gvnList.itemRate}" /></td>
 

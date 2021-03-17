@@ -272,7 +272,7 @@ public class SpCakeController {
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 		String arraySp[] = spCode.split("~~~");
-		map.add("spCode", arraySp[0]);
+		map.add("spCode", arraySp[1]);
 		try {
 			SearchSpCakeResponse searchSpCakeResponse = restTemplate.postForObject(Constant.URL + "/searchSpecialCake",
 					map, SearchSpCakeResponse.class);
@@ -297,6 +297,8 @@ public class SpCakeController {
 			}
 
 			model.addObject("selectedShapes", selShapes);
+			
+			model.addObject("selectedShapesLength", selShapes.size());
 
 			System.err.println("Selected  Shapes====" + selShapes);
 

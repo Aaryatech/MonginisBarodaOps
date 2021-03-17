@@ -292,10 +292,11 @@ a:hover {
 										<table id="table_grid" class="main-table">
 											<thead>
 												<tr class="bgpink">
-													<th style="text-align: center; white-space: nowrap;">Item Name</th>													
+													<th style="text-align: center; white-space: nowrap; width: 40%;">Item Name</th>	
+													<th style="text-align: center; white-space: nowrap;">Quantity</th>												
 													<th style="text-align: center; white-space: nowrap;">Min/Mul Quantity</th>
 													<th style="text-align: center; white-space: nowrap;">Max Quantity</th>
-													<th style="text-align: center; white-space: nowrap;">Quantity</th>
+													
 													<th style="text-align: center; white-space: nowrap;">MRP</th>
 													<th style="text-align: center; white-space: nowrap;">Rate</th>
 													<th style="text-align: center; white-space: nowrap;">Total</th>
@@ -316,10 +317,11 @@ a:hover {
 											<!--   class="main-table" -->
 											<thead>
 												<tr class="bgpink">
-													<th style="text-align: center; white-space: nowrap;">Item Name</th>
+													<th style="text-align: center; white-space: nowrap;  width: 40%;">Item Name</th>
+													<th style="text-align: center; white-space: nowrap;">Quantity</th>
 													<th style="text-align: center; white-space: nowrap;">Min/Mul Quantity</th>
 													<th style="text-align: center; white-space: nowrap;">Max Quantity</th>
-													<th style="text-align: center; white-space: nowrap;">Quantity</th>
+													
 													<th style="text-align: center; white-space: nowrap;">MRP</th>
 													<th style="text-align: center; white-space: nowrap;">Rate</th>
 													<th style="text-align: center; white-space: nowrap;">Total</th>
@@ -338,7 +340,9 @@ a:hover {
 													
 																<tr>
 
-																	<td style="text-align: left; white-space: nowrap;"><c:choose>
+																	<td style="text-align: left; max-width: 140px; white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;">
+  	
+  <c:choose>
 																			<c:when test="${items.itemImage!=''}">
 																				<a href="${url}${items.itemImage}"
 																					data-lightbox="image-1" tabindex="-1"
@@ -352,14 +356,8 @@ a:hover {
 																	</c:if> 
 																	</c:otherwise>
 																		</c:choose></td>
-
-																	<td style="text-align: center; white-space: nowrap;"><c:out
-																			value='${items.minQty}' /></td>
-												
-														<td style="text-align: center; white-space: nowrap;"><c:out
-																			value='${items.itemGrp3}' /></td>
-												
-																	<td style="text-align: center; white-space: nowrap;"><input
+																		
+																		<td style="text-align: center; white-space: nowrap;"><input
 																		name='${items.id}' id='${items.id}'
 																		value='${items.itemQty}' class="tableInput"
 																		type="text" onkeydown="myFunction()"
@@ -368,6 +366,14 @@ a:hover {
 
 																		<input type="hidden" value="${items.minQty}"
 																		id="minqty${items.id}" /></td>
+
+																	<td style="text-align: center; white-space: nowrap;"><c:out
+																			value='${items.minQty}' /></td>
+												
+														<td style="text-align: center; white-space: nowrap;"><c:out
+																			value='${items.itemGrp3}' /></td>
+												
+																	
 																	<td style="text-align: center; white-space: nowrap;"><c:out
 																			value='${items.orderMrp}' /></td>
 
@@ -383,7 +389,7 @@ a:hover {
 																			maxFractionDigits="2" value="${rate * qty}" /></td>
 
 
-																	<c:choose>
+																	<%-- <c:choose>
 																		<c:when test="${menuIdFc eq menuIdShow}">
 
 																			<c:choose>
@@ -407,7 +413,7 @@ a:hover {
 																				</c:otherwise>
 																			</c:choose>
 																		</c:when>
-																	</c:choose>
+																	</c:choose> --%>
 
 																</tr>
 														

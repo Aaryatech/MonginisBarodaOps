@@ -76,6 +76,7 @@
 										<th class="col-md-1">Invoice No</th>
 										<th class="col-md-2">Item Name</th>
 										<th class="col-md-1">Type</th>
+										<th class="col-md-1">Disc.%</th>
 										<th class="col-md-1">Bill Rate</th>
 										<th class="col-md-1">Refund Rate</th>
 										<th class="col-md-1">Qty</th>
@@ -102,6 +103,7 @@
 											<td class="col-md-1"><c:out value="${grnList.invoiceNo}" /></td>
 											<td class="col-md-1"><c:out value="${grnList.itemName}" /></td>
 													<td class="col-md-1"><c:out value="${grnList.grnType}"></c:out></td>
+													<td class="col-md-1"><c:out value="${grnList.itemMrp}"></c:out></td>
 
 											<%-- <c:choose>
 												<c:when test="${grnList.grnType==0}">
