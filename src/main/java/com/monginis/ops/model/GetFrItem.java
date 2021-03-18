@@ -42,6 +42,15 @@ public class GetFrItem  {
 		
 		
 		
+		//Akhilesh 2021-03-17 
+		private int minQuantity;
+		
+		private int maxQuantity;
+		
+		private int reoderQuantity;
+		
+		
+		
 	
 	public int getGrnPer() {
 			return grnPer;
@@ -280,6 +289,30 @@ public class GetFrItem  {
 		this.itemMrp3 = itemMrp3;
 	}
 
+	public int getMinQuantity() {
+		return minQuantity;
+	}
+
+	public void setMinQuantity(int minQuantity) {
+		this.minQuantity = minQuantity;
+	}
+
+	public int getMaxQuantity() {
+		return maxQuantity;
+	}
+
+	public void setMaxQuantity(int maxQuantity) {
+		this.maxQuantity = maxQuantity;
+	}
+
+	public int getReoderQuantity() {
+		return reoderQuantity;
+	}
+
+	public void setReoderQuantity(int reoderQuantity) {
+		this.reoderQuantity = reoderQuantity;
+	}
+
 	@Override
 	public String toString() {
 		return "GetFrItem [id=" + id + ", itemId=" + itemId + ", itemName=" + itemName + ", itemGrp1=" + itemGrp1
@@ -289,7 +322,14 @@ public class GetFrItem  {
 				+ itemTax2 + ", itemTax3=" + itemTax3 + ", itemIsUsed=" + itemIsUsed + ", itemSortId=" + itemSortId
 				+ ", grnTwo=" + grnTwo + ", itemQty=" + itemQty + ", delStatus=" + delStatus + ", subCatName="
 				+ subCatName + ", menuId=" + menuId + ", minQty=" + minQty + ", discPer=" + discPer + ", orderRate="
-				+ orderRate + ", orderMrp=" + orderMrp + "]";
+				+ orderRate + ", orderMrp=" + orderMrp + ", grnPer=" + grnPer + ", menuDiscPer=" + menuDiscPer
+				+ ", minQuantity=" + minQuantity + ", maxQuantity=" + maxQuantity + ", reoderQuantity=" + reoderQuantity
+				+ "]";
 	}
+
+	
+	
+	
+	
      
 }

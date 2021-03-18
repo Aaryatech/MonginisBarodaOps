@@ -21,13 +21,15 @@ public class VpsImageUpload {
 	 * static final String GVN_PHOTO_FOLDER =
 	 * "/opt/apache-tomcat-8.5.37/webapps/uploadspune/GVN/";
 	 */
-	public static final String fileUploadPath = "/opt/cpanel/ea-tomcat85/webapps/uploads/baroda/";
+	//public static final String fileUploadPath = "/opt/cpanel/ea-tomcat85/webapps/uploads/kolhapur/";
+	//public static final String fileUploadPath = "/home/lenovo/AkhileshWorkspace/MOBILEUPLOADS/";
 	//public static final String fileUploadPath = "/opt/cpanel/ea-tomcat85/webapps/uploads/baroda/";
-	private static final String FR_FOLDER = fileUploadPath + "FR/";
-	private static final String SP_CAKE_FOLDER = fileUploadPath + "SPCAKE/";
-	private static final String CUST_CHOICE_PHOTO_CAKE_FOLDER = fileUploadPath + "CUSTCHOICEPHOTOCAKE/";
 	
-	private static final String GVN_PHOTO_FOLDER = fileUploadPath + "GVN/";
+	private static final String FR_FOLDER = Constant.fileUploadPath + "FR/";
+	private static final String SP_CAKE_FOLDER = Constant.fileUploadPath + "SPCAKE/";
+	private static final String CUST_CHOICE_PHOTO_CAKE_FOLDER = Constant.fileUploadPath + "CUSTCHOICEPHOTOCAKE/";
+	
+	private static final String GVN_PHOTO_FOLDER = Constant.fileUploadPath + "GVN/";
 
 	public void saveUploadedFiles(List<MultipartFile> files, int imageType, String imageName) throws IOException {
 

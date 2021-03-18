@@ -356,18 +356,21 @@ a:hover {
 																	</c:if> 
 																	</c:otherwise>
 																		</c:choose></td>
-																		
-																		<td style="text-align: center; white-space: nowrap;"><input
-																		name='${items.id}' id='${items.id}'
-																		value='${items.itemQty}' class="tableInput"
-																		type="text" onkeydown="myFunction()"
-																		onkeypress='return event.charCode >= 48 && event.charCode <= 57'
-																		onchange="onChange('${items.orderRate}',${items.id},'${items.itemGrp3}')">
 
-																		<input type="hidden" value="${items.minQty}"
-																		id="minqty${items.id}" /></td>
+															<td style="text-align: center; white-space: nowrap;"><input
+																name='${items.id}' id='${items.id}'
+																value='${items.itemQty}' class="tableInput" type="text"
+																onkeydown="myFunction()"
+																onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+																onchange="onChange('${items.orderRate}',${items.id},'${items.itemGrp3}')">
 
-																	<td style="text-align: center; white-space: nowrap;"><c:out
+																<input type="hidden" value="${items.minQty}"
+																id="multipleqty${items.id}" />
+																<input type="hidden" value="${items.minQuantity}"
+																id="minqty${items.id}" />
+															</td>
+
+															<td style="text-align: center; white-space: nowrap;"><c:out
 																			value='${items.minQty}' /></td>
 												
 														<td style="text-align: center; white-space: nowrap;"><c:out
@@ -844,19 +847,17 @@ a:hover {
 
 			//calculate total value  
 			var qty = $('#'+id).val();
-			if(parseInt(qty)>parseInt(ordLimit)){
-				var total =0;
-				 
-				alert("Order Qty Limit Exceeds");
-				$('#'+id).val('0');
-				
-				$('#total'+id).html(total);
-				$('#'+id).focus();
-			}
+			//alert(qty)
+		
+			
 			
 			var minqty = $('#minqty'+id).val();
+			var multipleqty = $('#multipleqty'+id).val();
 			
-			if(qty % minqty==0){
+			//alert("Qty"+qty)
+			//alert("min Qty"+minqty)
+			//alert("Multiple"+multipleqty)
+			if(qty % multipleqty==0){
 			    var total = rate * qty;
 			
 			   $('#total'+id).html(total.toFixed(2));
@@ -870,6 +871,36 @@ a:hover {
 				$('#total'+id).html(total);
 				$('#'+id).focus();
 			}
+			
+			
+			
+			if(parseInt(qty)>parseInt(ordLimit)){
+				var total =0;
+				alert("Order Qty Limit Exceeds");
+				$('#'+id).val('0');
+			
+				$('#total'+id).html(total);
+				
+				$('#'+id).focus();
+				
+			}
+			
+			
+		 if(parseInt(minqty) > parseInt(qty)){
+				
+				var total =0;
+				alert("Plase Enter Minimum Order Qty");
+				$('#'+id).val('0');
+			
+				$('#total'+id).html(total);
+				
+				$('#'+id).focus();
+				
+			} 
+			
+			
+			
+			
 		}
 	</script>
 
