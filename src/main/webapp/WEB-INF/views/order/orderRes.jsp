@@ -302,6 +302,7 @@ jQuery(document).ready(function(){
 							<div class="cackright">${specialCake.spEvents} -
 								${specialCake.spEventsName}</div>
 						</div>
+						
 						<c:choose>
 							<c:when test="${isCustCh=='1'}">
 								<div class="fullform">

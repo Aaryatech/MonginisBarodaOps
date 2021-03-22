@@ -650,7 +650,7 @@ System.out.print("incr " +incr +" menuDeliveryDays " +menuDeliveryDays);
 		</c:otherwise>
 		</c:choose>
 		</div><div class="col2"> 
-        <c:if test = "${specialCake.isSlotUsed=='1'}"> <span class="cakename"id="slotUsedSpan">Check Slots availability</span> </c:if></div>
+        <%-- <c:if test = "${specialCake.isSlotUsed=='1'}"> <span class="cakename"id="slotUsedSpan">Check Slots availability</span> </c:if> --%></div>
 	<!-- </div>
 	
 	
@@ -1795,6 +1795,7 @@ function validate() {
     image1 = document.getElementById('image');
     var isCustChCake=document.getElementById('isCustChoiceCk').value;
     var spPhoUpload=document.getElementById('spPhoUpload').value;
+    var isSlotUsed=document.getElementById('isSlotUsed').value;
 
  //alert("spCustName " +spCustName);
     var isValid=true;
@@ -1817,13 +1818,13 @@ function validate() {
   
         isValid=false;
     }  else
-    if((isCustChCake == 1 && (image1.getAttribute('src') == ""||image1.getAttribute('src') == null)))
+    if((isCustChCake == 1 && (image1.getAttribute('src') == ""||image1.getAttribute('src') == null && isSlotUsed==1 )))
     {
     	alert("Please upload Photo Cake 1 !!");
         
         isValid=false;
     } else
-    if((spPhoUpload == 1 && (image1.getAttribute('src') == ""||image1.getAttribute('src') == null)))
+    if((spPhoUpload == 1 && (image1.getAttribute('src') == ""||image1.getAttribute('src') == null  && isSlotUsed==1 )))
     {
     	alert("Please upload Photo Cake !!");
         
@@ -2028,13 +2029,13 @@ var min=new Date(todaysDate.setDate(todaysDate.getDate()+b4));
       				if(availableSlots>0)
       					{
       					
-      					$("#slotUsedSpan").html(availableSlots +' Slots Available');
+      					//$("#slotUsedSpan").html(availableSlots +' Slots Available');
       					
       					}
       				else
       					{
       				
-      					$("#slotUsedSpan").html('No Slots Available');
+      					//$("#slotUsedSpan").html('No Slots Available');
       				
       					
       					}
