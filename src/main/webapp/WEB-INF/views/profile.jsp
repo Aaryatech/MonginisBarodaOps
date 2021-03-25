@@ -760,8 +760,11 @@
 
 
 <script>
+$( document ).ready(function() {
+	$("#fr_emp_form").trigger("reset");
+});
 	function openAddEmpPopup() {
-
+			
 		var modal = document.getElementById("addEmpModal");
 		modal.style.display = "block";
 

@@ -117,9 +117,9 @@
 
 	<div id="overlay2">
 		<div id="text2">
-			<img
+			<%-- <img
 				src="${pageContext.request.contextPath}/resources/newpos/images/loader.gif"
-				alt="madhvi_logo">
+				alt="madhvi_logo"> --%>
 		</div>
 	</div>
 	<div class="container">
@@ -143,17 +143,17 @@
 
 					<div style="text-align: right;">
 						<i class="fa fa-times" class="modal-close" onclick="hideNumPad()"
-							style="color: #FD2549;"> </i>
+							style="color: #ec268f;"> </i>
 					</div>
 
 					<div class="items" style="border: 0px;">
 
 						<div class="icon-wrapper">
-							<i class="fa fa-user-o " style="color: #FD2549;"></i>
+							<i class="fa fa-user-o " style="color: #ec268f;"></i>
 						</div>
 
 						<div class="project-name">
-							<p id="selectedEmp" style="color: #FD2549;"></p>
+							<p id="selectedEmp" style="color: #ec268f;"></p>
 						</div>
 
 						<div class="project-name">

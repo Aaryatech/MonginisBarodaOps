@@ -475,7 +475,25 @@ public class HomeController {
 			model.addObject("frDetails", loginResponse.getFranchisee());
 			model.addObject("url", Constant.MESSAGE_IMAGE_URL);
 			model.addObject("info", loginResponse.getLoginInfo());
-			return "redirect:/home";
+		
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", loginResponse.getFranchisee().getFrId());
+			FrEmpMaster[] empArr = restTemplate.postForObject(Constant.URL + "/getAllFrEmpByFrid", map,
+					FrEmpMaster[].class);
+			List<FrEmpMaster> empList = new ArrayList<FrEmpMaster>(Arrays.asList(empArr));
+
+			if (empList.isEmpty()) {
+				logger.info("List is empty");
+
+				session.setAttribute("isEmpPresent", 0);
+
+				return "redirect:/home";
+			} else {
+				logger.info("List is not empty");
+				session.setAttribute("isEmpPresent", 1);
+				model = new ModelAndView("frlogin");
+				return "redirect:/frEmpLogin";
+			}
 			/**************************************************************/
 			//06-07-2020
 			
@@ -1119,5 +1137,17 @@ public class HomeController {
 		calendar.set(Calendar.SECOND, 59);
 		calendar.set(Calendar.MILLISECOND, 999);
 	}
+	
+	@RequestMapping(value = "/logoutEmp")
+	public String logoutEmp(HttpSession session, HttpServletRequest req, HttpServletResponse res) {
+		System.out.println("Logout Controller User Logout");
+		ModelAndView model = new ModelAndView("login");
 
+		session.removeAttribute("frEmpDetails");
+
+		// session.invalidate();
+
+		return "redirect:/frEmpLogin";
+		// return "redirect:/";
+	}
 }

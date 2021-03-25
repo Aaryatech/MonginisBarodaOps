@@ -13,7 +13,7 @@
 }
 table {
     border-collapse: collapse;
-    margin-bottom: 3em;
+    margin-bottom:0px /*3em*/;
     width: 100%;
     background: #fff;
 }
@@ -29,7 +29,7 @@ td, th {white-space: nowrap;
 		line-height: 1;
 	}
 th {
-    background-color: #ec268f;
+    background-color: #fd54a0;
     font-weight: bold;
     color: #fff;
     white-space: nowrap;

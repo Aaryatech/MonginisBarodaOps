@@ -221,9 +221,9 @@ label:before {
 
 			<header>
 				<div class="logo">
-					<img
+					<a href="${pageContext.request.contextPath}/home"><img
 						src="${pageContext.request.contextPath}/resources/images/minlogo.png"
-						alt="mini_logo">
+						alt="mini_logo"></a>
 						
 						<%-- <c:forEach>
 						
