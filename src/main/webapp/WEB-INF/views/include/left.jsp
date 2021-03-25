@@ -30,7 +30,7 @@ abbr:hover {cursor: pointer;}
 			<c:if
 				test="${(info.accessRight==1 or info.accessRight==2) && flag==1 }">
 				
-				<li style="border: 1px;"><a href="${pageContext.request.contextPath}/newPos/0"><div
+				<li style="border: 1px; border-bottom: 1px solid #c9206c;"><a href="${pageContext.request.contextPath}/newPos/0"><div
 							class="img">
 							<img
 								src="${pageContext.request.contextPath}/resources/newpos/images/icon4.png"
@@ -211,7 +211,14 @@ goods
 							View Purchase <span>Bills</span>
 						</div></a></li>
 			</c:if>
-
+			<li><a href="${pageContext.request.contextPath}/showExpenseList"><div
+							class="img">
+							<i class="fa fa-list icon"
+								style="font-size: 22px !important;"></i>
+						</div>
+						<div class="title">
+							Expense <span>Lists</span>
+						</div></a></li>
 
 			
 
