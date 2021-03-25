@@ -14,7 +14,7 @@ public class ItemListForCustomerBill {
 	private float total;
 	private String hsn;
 	
-	
+	private int uniqueNo;
 	
 	
 	public String getHsn() {
@@ -84,13 +84,19 @@ public class ItemListForCustomerBill {
 	public void setUom(String uom) {
 		this.uom = uom;
 	}
-	
-	
+	public int getUniqueNo() {
+		return uniqueNo;
+	}
+	public void setUniqueNo(int uniqueNo) {
+		this.uniqueNo = uniqueNo;
+	}
 	@Override
 	public String toString() {
 		return "ItemListForCustomerBill [itemId=" + itemId + ", orignalMrp=" + orignalMrp + ", qty=" + qty
 				+ ", itemName=" + itemName + ", uom=" + uom + ", isDecimal=" + isDecimal + ", taxPer=" + taxPer
-				+ ", taxableAmt=" + taxableAmt + ", taxAmt=" + taxAmt + ", total=" + total + ", hsn=" + hsn + "]";
+				+ ", taxableAmt=" + taxableAmt + ", taxAmt=" + taxAmt + ", total=" + total + ", hsn=" + hsn
+				+ ", uniqueNo=" + uniqueNo + "]";
 	}
+	
 	
 }

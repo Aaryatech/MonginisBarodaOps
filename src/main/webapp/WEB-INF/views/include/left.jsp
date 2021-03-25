@@ -29,6 +29,16 @@ abbr:hover {cursor: pointer;}
 			</c:forEach>
 			<c:if
 				test="${(info.accessRight==1 or info.accessRight==2) && flag==1 }">
+				
+				<li style="border: 1px;"><a href="${pageContext.request.contextPath}/newPos/0"><div
+							class="img">
+							<img
+								src="${pageContext.request.contextPath}/resources/newpos/images/icon4.png"
+								alt="img">
+						</div>
+						<div class="title">
+							<span>Pos</span>
+						</div></a></li>
 				<li><a href="#" onClick="openNav()">
 					 <!-- style="border: 1px;" -->
 				<div class="img">
