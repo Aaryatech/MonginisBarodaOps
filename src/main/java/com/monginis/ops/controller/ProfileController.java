@@ -44,7 +44,7 @@ import com.monginis.ops.model.pettycash.FrEmpMaster;
 @Scope("session")
 public class ProfileController {
 	
-	int empCodeKey = 52;
+	int empCodeKey = 54;
 
 	@RequestMapping(value = "/showeditprofile")
 	public ModelAndView displaySavouries(HttpServletRequest request,HttpServletResponse response) {

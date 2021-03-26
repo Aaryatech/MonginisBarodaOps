@@ -831,7 +831,7 @@ public class GrnGvnController {
 			float sumTaxAmt = 0;
 			float sumTotalAmt = 0;
 
-			String curDateTime = null;
+			String curDateTime = null;	
 			//Sac03Feb2021
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("settingKey", "GRN_INSERT_STATUS");

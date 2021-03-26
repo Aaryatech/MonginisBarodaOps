@@ -52,7 +52,7 @@
                 	<ul class="dropdown" style="margin: -16px 0px 0px 50px ">
                        
 						<li><a href="${pageContext.request.contextPath}/showeditprofile">Edit Profile</a></li>
-						<li><a href="${pageContext.request.contextPath}/logout">Log out</a></li>
+						<li><a href="${pageContext.request.contextPath}/logoutEmp">Log out</a></li>
 					</ul>
                 </li>
             </ul>

@@ -294,7 +294,9 @@ a:hover {
 												<tr class="bgpink">
 													<th style="text-align: center; white-space: nowrap; width: 40%;">Item Name</th>	
 													<th style="text-align: center; white-space: nowrap;">Quantity</th>												
-													<th style="text-align: center; white-space: nowrap;">Min/Mul Quantity</th>
+													<th style="text-align: center; white-space: nowrap;">Mul Quantity</th>
+													<th style="text-align: center; white-space: nowrap;">Min Quantity</th>
+													
 													<th style="text-align: center; white-space: nowrap;">Max Quantity</th>
 													
 													<th style="text-align: center; white-space: nowrap;">MRP</th>
@@ -319,7 +321,8 @@ a:hover {
 												<tr class="bgpink">
 													<th style="text-align: center; white-space: nowrap;  width: 40%;">Item Name</th>
 													<th style="text-align: center; white-space: nowrap;">Quantity</th>
-													<th style="text-align: center; white-space: nowrap;">Min/Mul Quantity</th>
+													<th style="text-align: center; white-space: nowrap;">Mul Quantity</th>
+													<th style="text-align: center; white-space: nowrap;">Min Quantity</th>
 													<th style="text-align: center; white-space: nowrap;">Max Quantity</th>
 													
 													<th style="text-align: center; white-space: nowrap;">MRP</th>
@@ -372,6 +375,8 @@ a:hover {
 
 															<td style="text-align: center; white-space: nowrap;"><c:out
 																			value='${items.minQty}' /></td>
+															<td style="text-align: center; white-space: nowrap;"><c:out
+																			value='${items.minQuantity}' /></td>
 												
 														<td style="text-align: center; white-space: nowrap;"><c:out
 																			value='${items.itemGrp3}' /></td>
@@ -865,7 +870,7 @@ a:hover {
 			{
 				 var total =0;
 				 
-				alert("Please Enter Qty Multiple of Minimum Qty");
+				alert("Please Enter Qty Multiple of"+multipleqty);
 				$('#'+id).val('0');
 				
 				$('#total'+id).html(total);

@@ -959,7 +959,11 @@ public class SpCakeController {
 		String orderPh = "";
 		Random random = new Random();
 		String photoNames = "";
-		if (isSpPhoUpload == 1) {
+		String seprator="<";
+		
+		
+		
+		/*	if (isSpPhoUpload == 1) {
 			System.out.println("A] isSpPhoUpload =1");
 			System.out.println("Empty image");
 			// orderPhoto1 = ImageS3Util.uploadPhotoCakeImage(orderPhoto);
@@ -982,7 +986,7 @@ public class SpCakeController {
 				e.printStackTrace();
 			}
 
-		}
+		}*/
 
 		if (isCustSpCk == 1) {
 			System.out.println("B] isCustSpCk =1");
@@ -1014,7 +1018,7 @@ public class SpCakeController {
 				} else {
 					custChCk = curTimeStamp + random.nextInt() + "" + custChoiceCk.get(0).getOriginalFilename();
 				}
-				photoNames = custChCk + "~" + photoNames;
+				photoNames = custChCk + seprator + photoNames;
 
 				upload.saveUploadedFiles(custChoiceCk, Constant.SPCAKE_IMAGE_TYPE, custChCk);
 
@@ -1029,7 +1033,7 @@ public class SpCakeController {
 
 					upload.saveUploadedFiles(pic3, Constant.SPCAKE_IMAGE_TYPE, orderPhoto1);
 					// System.out.println("upload method called " + orderPhoto.toString());
-					photoNames = orderPhoto1 + "~" + photoNames;
+					photoNames = orderPhoto1 + seprator + photoNames;
 				} catch (IOException e) {
 
 					System.out.println("Exce in File Upload In Sp Cake Photo Insert " + e.getMessage());
@@ -1047,7 +1051,7 @@ public class SpCakeController {
 
 					upload.saveUploadedFiles(pic4, Constant.SPCAKE_IMAGE_TYPE, orderPhoto1);
 					System.out.println("upload method called " + orderPhoto.toString());
-					photoNames = orderPhoto1 + "~" + photoNames;
+					photoNames = orderPhoto1 + seprator + photoNames;
 				} catch (IOException e) {
 
 					System.out.println("Exce in File Upload In Sp Cake Photo Insert " + e.getMessage());
@@ -1063,7 +1067,7 @@ public class SpCakeController {
 
 					upload.saveUploadedFiles(orderPhoto, Constant.SPCAKE_IMAGE_TYPE, orderPhoto1);
 					System.out.println("upload method called " + orderPhoto.toString());
-					photoNames = orderPhoto1 + "~" + photoNames;
+					photoNames = orderPhoto1 + seprator + photoNames;
 				} catch (IOException e) {
 
 					System.out.println("Exce in File Upload In Sp Cake Photo Insert " + e.getMessage());
@@ -1913,7 +1917,7 @@ public class SpCakeController {
 					mav.addObject("exCharges", exCharges);
 					mav.addObject("disc", disc);
 
-					String photoArray[] = spCake.getOrderPhoto().split("~");
+					String photoArray[] = spCake.getOrderPhoto().split("<");
 
 					mav.addObject("photoArray", photoArray);
 
