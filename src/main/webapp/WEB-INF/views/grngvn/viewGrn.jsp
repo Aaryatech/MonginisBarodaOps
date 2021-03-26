@@ -166,12 +166,26 @@ table, th, td {
 														value="${grnList.taxableAmt}" /></td>
 												<td style="text-align: center; white-space: nowrap;"><c:out value="${grnList.taxAmt}" /></td>
 												<td style="text-align: center; white-space: nowrap;"><c:out value="${grnList.totalAmt}" /></td>
-
-												<td style="text-align: center; white-space: nowrap;"><fmt:formatNumber type="number"
+													<c:choose>
+													<c:when test="${grnList.isCreditNote==1}">
+													<td style="text-align: center; white-space: nowrap;"><fmt:formatNumber type="number"
 														minFractionDigits="2" maxFractionDigits="2"
-														value="${grnList.aprGrandTotal}" /> <%-- <c:out value="${grnList.taxableAmt}" /> --%></td>
+														value="${grnList.aprGrandTotal}" /></td>
+													</c:when>
+													<c:otherwise>
+													<td style="text-align: center; white-space: nowrap;">-</td>
+													</c:otherwise>
+													</c:choose>
+												 <%-- <c:out value="${grnList.taxableAmt}" /> --%>
 												<c:set var="status" value="a"></c:set>
-												<c:choose>
+												<c:forEach items="${grStatusLst}" var="grnStatus">
+												<c:if test="${grnStatus.statusValue==grnList.grngvnStatus}">
+												<c:set var="status" value="${grnStatus.statusName}"></c:set>
+												
+												</c:if>
+												</c:forEach>
+												
+												<%-- <c:choose>
 													<c:when test="${grnList.grngvnStatus==1}">
 														<c:set var="status" value="Pending"></c:set>
 
@@ -204,7 +218,7 @@ table, th, td {
 														<c:set var="status" value="Partially Approved"></c:set>
 													</c:otherwise>
 
-												</c:choose>
+												</c:choose> --%>
 												<td style="text-align: center; white-space: nowrap;"><c:out value="${status}"></c:out></td>
 														<c:set var="isCredit" value="a"></c:set>
 

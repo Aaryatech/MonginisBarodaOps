@@ -83,8 +83,8 @@
 										<th class="col-md-1">Tot Refund Requested</th>
 										<th class="col-md-1">Approved Qty</th>
 										<th class="col-md-1">Approved Tot Refund</th>
-										<th class="col-md-1">Approved Base Rate</th>
-										<th class="col-md-1">Approved Tax Amt</th>
+									<!-- 	<th class="col-md-1">Approved Base Rate</th>
+										<th class="col-md-1">Approved Tax Amt</th> -->
 										<th class="col-md-1">Status</th>
 									</tr>
 								</thead>
@@ -130,16 +130,39 @@
 
 											<td class="col-md-1"><c:out value="${grnList.grnGvnAmt}" /></td>
 
-											<td class="col-md-1"><c:out value="${grnList.aprQtyAcc}" /></td>
+<c:choose>
+<c:when test="${grnList.isCreditNote==1}">
+<td class="col-md-1"><c:out value="${grnList.aprQtyAcc}" /></td>
 
 											<td class="col-md-1"><c:out
 													value="${grnList.aprGrandTotal}" /></td>
+</c:when>
+<c:otherwise>
+<td class="col-md-1"><c:out value="-" /></td>
 
 											<td class="col-md-1"><c:out
+													value="-" /></td>
+</c:otherwise>
+</c:choose>
+											<%-- <td class="col-md-1"><c:out value="${grnList.aprQtyAcc}" /></td>
+
+											<td class="col-md-1"><c:out
+													value="${grnList.aprGrandTotal}" /></td> --%>
+
+											<%-- <td class="col-md-1"><c:out
 													value="${grnList.aprTaxableAmt}" /></td>
 											<td class="col-md-1"><c:out
-													value="${grnList.aprTotalTax}" /></td>
-											<c:choose>
+													value="${grnList.aprTotalTax}" /></td> --%>
+													
+													
+													<c:set var="statusGRN" value="NA"></c:set>
+												<c:forEach items="${grStatusLst}" var="grnStatus">
+												<c:if test="${grnStatus.statusValue==grnList.grnGvnStatus}">
+												<c:set var="statusGRN" value="${grnStatus.statusName}"></c:set>
+												</c:if>
+												</c:forEach>
+												<td class="col-md-1"><c:out value="${statusGRN}"></c:out></td>
+											<%-- <c:choose>
 												<c:when test="${grnList.grnGvnStatus==1}">
 													<td class="col-md-1"><c:out value="Pending"></c:out></td>
 												</c:when>
@@ -169,7 +192,7 @@
 															value="Reject From Account"></c:out></td>
 												</c:when>
 
-											</c:choose>
+											</c:choose> --%>
 
 										</tr>
 									</c:forEach>

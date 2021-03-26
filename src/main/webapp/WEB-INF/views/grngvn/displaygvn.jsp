@@ -119,8 +119,8 @@ table, th, td {
 									<th class="col-md-2">Total Refund Requested</th>
 									<th class="col-md-1">Approved Qty</th>
 									<th class="col-md-1">Approved total Refund</th>
-									<th class="col-md-1">Approved Base Rate</th>
-									<th class="col-md-1">Approved Tax Amount</th>
+								<!-- 	<th class="col-md-1">Approved Base Rate</th>
+									<th class="col-md-1">Approved Tax Amount</th> -->
 									<th class="col-md-1">Photo 1</th>
 									<th class="col-md-1">Photo 2</th>
 									<th class="col-md-1">Status</th>
@@ -159,20 +159,36 @@ table, th, td {
 
 
 										<td class="col-md-2"><c:out value="${gvnList.grnGvnAmt}" /></td>
-										<td class="col-md-1"><c:out value="${gvnList.aprQtyAcc}" /></td>
+								<%-- 		<td class="col-md-1"><c:out value="${gvnList.aprQtyAcc}" /></td>
 										<td class="col-md-1"><c:out
-												value="${gvnList.aprGrandTotal}" /></td>
-										<td class="col-md-1"><c:out
+												value="${gvnList.aprGrandTotal}" /></td> --%>
+												
+												<c:choose>
+<c:when test="${gvnList.isCreditNote==1}">
+<td class="col-md-1"><c:out value="${gvnList.aprQtyAcc}" /></td>
+
+											<td class="col-md-1"><c:out
+													value="${gvnList.aprGrandTotal}" /></td>
+</c:when>
+<c:otherwise>
+<td class="col-md-1"><c:out value="-" /></td>
+
+											<td class="col-md-1"><c:out
+													value="-" /></td>
+</c:otherwise>
+</c:choose>
+
+								<%-- 		<td class="col-md-1"><c:out
 												value="${gvnList.aprTaxableAmt}" /></td>
 										<td class="col-md-1"><c:out
-												value="${gvnList.aprTotalTax}" /></td>
+												value="${gvnList.aprTotalTax}" /></td> --%>
 
 										<td class="col-md-1"><a href="${url}${gvnList.gvnPhotoUpload1}"
 											data-lightbox="image-1">Image 1</a></td>
 										<td class="col-md-1"><a href="${url}${gvnList.gvnPhotoUpload2}"
 											data-lightbox="image-2">Image 2</a></td>
 
-										<c:choose>
+								<%-- 		<c:choose>
 											<c:when test="${gvnList.grnGvnStatus==1}">
 												<c:set var="status" value="Pending"></c:set>
 											</c:when>
@@ -201,7 +217,16 @@ table, th, td {
 												<c:set var="status" value="Reject From Account"></c:set>
 											</c:when>
 										</c:choose>
-										<td class="col-md-1"><c:out value="${status}" /></td>
+										<td class="col-md-1"><c:out value="${status}" /></td> --%>
+										
+										<c:set var="statusGVN" value="NA"></c:set>
+												<c:forEach items="${gvStatusLst}" var="gvnStatus">
+												<c:if test="${gvnStatus.statusValue==gvnList.grnGvnStatus}">
+												<c:set var="statusGVN" value="${gvnStatus.statusName}"></c:set>
+												</c:if>
+												</c:forEach>
+												<td class="col-md-1"><c:out value="${statusGVN}"></c:out></td>
+												
 								</c:forEach>
 
 							</tbody>

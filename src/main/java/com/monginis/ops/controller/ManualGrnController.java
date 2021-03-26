@@ -510,8 +510,8 @@ float aprGrandTotalSum=0; float aprROffSum=0;
 					//SACHIN NEW FIELD SET 10-March 21-SUMIT SIR POINT
 					postGrnGvn.setAprQtyStore(grnQty);
 					postGrnGvn.setAprQtyAcc(grnQty);
-					postGrnGvn.setAprTaxableAmt(taxableAmt);
-					postGrnGvn.setAprTotalTax(totalTax);
+					postGrnGvn.setAprTaxableAmt(roundUp(taxableAmt));
+					postGrnGvn.setAprTotalTax(roundUp(totalTax));
 					float aprSgstRs=0;float aprCgstRs=0;float aprIgstRs=0;float aprCessRs=0;
 					
 					if (frDetails.getIsSameState() == 1) {
@@ -535,7 +535,7 @@ float aprGrandTotalSum=0; float aprROffSum=0;
 					
 					postGrnGvn.setCessPer(postGrnGvn.getCessPer());
 					postGrnGvn.setAprROff(postGrnGvn.getRoundUpAmt());
-					postGrnGvn.setAprGrandTotal(grandTotal);
+					postGrnGvn.setAprGrandTotal(roundUp(grandTotal));
 					
 					
 					
@@ -597,7 +597,7 @@ float aprGrandTotalSum=0; float aprROffSum=0;
 			grnHeader.setAprSgstRs(roundUp(aprSgstRsSum));
 			grnHeader.setAprCgstRs(roundUp(aprCgstRsSum));
 			grnHeader.setAprIgstRs(roundUp(aprIgstRsSum));
-			grnHeader.setAprGrandTotal(roundUp(aprGrandTotalSum));
+			grnHeader.setAprGrandTotal(roundUp(sumTotalAmt));
 			grnHeader.setAprROff(roundUp(aprROffSum));
 			grnHeader.setAprCessRs(roundUp(aprCessRsSum));
 			

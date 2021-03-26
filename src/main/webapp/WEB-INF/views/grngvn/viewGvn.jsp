@@ -60,7 +60,7 @@ table, th, td {
 						<!-- copy div kalpesh -->
 
 						<div class="frm_l_one">
-						<div class="frm_l">From </div>
+						<div class="frm_l">From</div>
 						<div class="frm_r_one">
 							<input id="datepicker" class="texboxitemcode texboxcal" autocomplete="off"
 								value="${cDate}" name="from_Date" type="text">
@@ -159,13 +159,30 @@ table, th, td {
 												<td style="text-align: center; white-space: nowrap;"><c:out value="${grnList.taxAmt}" /></td>
 
 												<td style="text-align: center; white-space: nowrap;"><c:out value="${grnList.totalAmt}" /></td>
-
+	<c:choose>
+													<c:when test="${grnList.isCreditNote==1}">
 												<td style="text-align: center; white-space: nowrap;"><fmt:formatNumber type="number"
 														minFractionDigits="2" maxFractionDigits="2"
 														value="${grnList.aprGrandTotal}" /></td>
+														</c:when>
+														<c:otherwise>
+														<td style="text-align: center; white-space: nowrap;">-</td>
+														</c:otherwise>
+														</c:choose>
 
 												<c:set var="status" value="a"></c:set>
-												<c:choose>
+									
+
+
+<c:set var="GVNstatus" value="aaa"></c:set>
+												<c:forEach items="${gvStatusLst}" var="gvnStat">
+												<c:if test="${gvnStat.statusValue==grnList.grngvnStatus}">
+												<c:set var="GVNstatus" value="${gvnStat.statusName}"></c:set>
+												</c:if>
+												</c:forEach>
+												
+												<td style="text-align: center; white-space: nowrap;"><c:out value="${GVNstatus}"></c:out></td>
+															<%-- <c:choose>
 													<c:when test="${grnList.grngvnStatus==1}">
 														<c:set var="status" value="Pending"></c:set>
 
@@ -198,10 +215,7 @@ table, th, td {
 														<c:set var="status" value="Partially Approved"></c:set>
 													</c:otherwise>
 
-												</c:choose>
-
-												<td style="text-align: center; white-space: nowrap;"><c:out value="${status}"></c:out></td>
-												
+												</c:choose> --%>
 												
 												<c:choose>
 													<c:when test="${grnList.isCreditNote==1}">

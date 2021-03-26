@@ -47,6 +47,7 @@ import com.monginis.ops.billing.SellBillDataCommon;
 import com.monginis.ops.billing.SellBillDetail;
 import com.monginis.ops.billing.SellBillHeader;
 import com.monginis.ops.common.Firebase;
+import com.monginis.ops.common.GgStatuses;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.constant.VpsImageUpload;
 import com.monginis.ops.model.CategoryList;
@@ -81,6 +82,10 @@ import com.monginis.ops.model.grngvn.StockForAutoGrnGvn;
 import com.monginis.ops.model.remarks.GetAllRemarks;
 import com.monginis.ops.model.remarks.GetAllRemarksList;
 import com.monginis.ops.model.setting.NewSetting;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 @Scope("session")
@@ -2036,7 +2041,7 @@ float aprGrandTotalSum=0; float aprROffSum=0;
 			grnHeader.setAprSgstRs(roundUp(aprSgstRsSum));
 			grnHeader.setAprCgstRs(roundUp(aprCgstRsSum));
 			grnHeader.setAprIgstRs(roundUp(aprIgstRsSum));
-			grnHeader.setAprGrandTotal(roundUp(aprGrandTotalSum));
+			grnHeader.setAprGrandTotal(roundUp(sumTotalAmt));
 			grnHeader.setAprROff(roundUp(aprROffSum));
 			grnHeader.setAprCessRs(roundUp(aprCessRsSum));
 			
@@ -2291,6 +2296,31 @@ float aprGrandTotalSum=0; float aprROffSum=0;
 		modelAndView.addObject("grnList", grnDetailList);
 		modelAndView.addObject("grnDate", grnDate);
 
+		map = new LinkedMultiValueMap<String, Object>();
+		map.add("settingKey", "GRN_STATUS_JSON");
+		map.add("delStatus", 0);
+		NewSetting grnStatusValues=restTemplate.postForObject(Constant.URL + "getNewSettingByKey", map,
+				NewSetting.class);
+		String json=grnStatusValues.getExVarchar1();
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		GgStatuses[] statusArray=null;
+		try {
+			 statusArray = objectMapper.readValue(json, GgStatuses[].class);
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		List<GgStatuses> statusList = Arrays.asList(statusArray);
+		System.err.println("Status List " +statusList);
+		modelAndView.addObject("grStatusLst", statusList);
+		
 		return modelAndView;
 
 	}
@@ -2344,7 +2374,30 @@ float aprGrandTotalSum=0; float aprROffSum=0;
 
 		modelAndView.addObject("cDate", fromDate);
 		modelAndView.addObject("cDate", toDate);
+		map = new LinkedMultiValueMap<String, Object>();
+		map.add("settingKey", "GRN_STATUS_JSON");
+		map.add("delStatus", 0);
+		NewSetting grnStatusValues=restTemplate.postForObject(Constant.URL + "getNewSettingByKey", map,
+				NewSetting.class);
+		String json=grnStatusValues.getExVarchar1();
 
+		ObjectMapper objectMapper = new ObjectMapper();
+		GgStatuses[] statusArray=null;
+		try {
+			 statusArray = objectMapper.readValue(json, GgStatuses[].class);
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		List<GgStatuses> statusList = Arrays.asList(statusArray);
+		System.err.println("Status List " +statusList);
+		modelAndView.addObject("grStatusLst", statusList);
 		return modelAndView;
 
 	}
@@ -2400,6 +2453,31 @@ float aprGrandTotalSum=0; float aprROffSum=0;
 			modelAndView.addObject("cDate", toDate);
 
 			modelAndView.addObject("gstType", frDetails.getFrGstType());
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("settingKey", "GVN_STATUS_JSON");
+			map.add("delStatus", 0);
+			NewSetting gvnStatusValues=restTemplate.postForObject(Constant.URL + "getNewSettingByKey", map,
+					NewSetting.class);
+			String json=gvnStatusValues.getExVarchar1();
+
+			ObjectMapper objectMapper = new ObjectMapper();
+			GgStatuses[] statusArray=null;
+			try {
+				 statusArray = objectMapper.readValue(json, GgStatuses[].class);
+			} catch (JsonParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			List<GgStatuses> statusList = Arrays.asList(statusArray);
+			System.err.println("Status List " +statusList);
+			modelAndView.addObject("gvStatusLst", statusList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -2595,6 +2673,31 @@ float aprGrandTotalSum=0; float aprROffSum=0;
 		modelAndView.addObject("gvnList", grnDetailList);
 		modelAndView.addObject("gvnDate", gvnDate);
 
+		map = new LinkedMultiValueMap<String, Object>();
+		map.add("settingKey", "GVN_STATUS_JSON");
+		map.add("delStatus", 0);
+		NewSetting gvnStatusValues=restTemplate.postForObject(Constant.URL + "getNewSettingByKey", map,
+				NewSetting.class);
+		String json=gvnStatusValues.getExVarchar1();
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		GgStatuses[] statusArray=null;
+		try {
+			 statusArray = objectMapper.readValue(json, GgStatuses[].class);
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		List<GgStatuses> statusList = Arrays.asList(statusArray);
+		System.err.println("Status List " +statusList);
+		modelAndView.addObject("gvStatusLst", statusList);
+		
 		return modelAndView;
 
 	}
