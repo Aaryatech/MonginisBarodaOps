@@ -208,7 +208,7 @@ label:before {
 	<c:url var="revertHoldBillOnCurrent" value="/revertHoldBillOnCurrent" />
 	<c:url var="getAllItemList" value="/getAllItemList" />
 	<c:url var="getSubCatByCatIdAjax" value="/getSubCatByCatIdAjax" />
-	
+
 	<div style="display: none;">
 		<a href="${pageContext.request.contextPath}/newPos" id="relod"></a>
 	</div>
@@ -224,64 +224,64 @@ label:before {
 					<a href="${pageContext.request.contextPath}/home"><img
 						src="${pageContext.request.contextPath}/resources/images/minlogo.png"
 						alt="mini_logo"></a>
-						
-						<%-- <c:forEach>
+
+					<%-- <c:forEach>
 						
 						</c:forEach> --%>
-						
+
 				</div>
-				
-				
+
+
 				<!-- top menu -->
 				<div class="scroll_center">
-				
-					<div id="demo1">
-								<div class="snap-scrolling-example"><!-- id="examples" --> 
-									<div id="content-2" class="horizontal-images">
-										
-										<div class="multi_menu">
-											<ul id="multi_cat_ul" class="multi_cat_ul">
-											<li onclick="getSubCat(0);" class="active_cat" id="catLi${0}"
-													value="All" id="1"><a href="javascript:void(0);" class="scroll_menu"
-													onclick="SlectedCat(this.innerHTML)">All</a></li>
-												
-												<c:forEach items="${categoryList}" var="cat"
-													varStatus="count">
-													<li class="active_cat" value="${count.index+2}" id="catLi${cat.catId}"><a href="javascript:void(0);" 
-														class="scroll_menu" onclick="getSubCat(${cat.catId})">${cat.catName}</a></li>
-												</c:forEach>
-											</ul>
-										</div>
-			
-									</div>
-								</div>
-							</div>
-					
-					
-										
-										
-										
-								
-					
-				</div>
-				
-				
-				
-				<div class="drop_menu">
-				
-				
-					<span class="top_switch">
-							<p class="onoff_btn"><i class="fa fa-envelope-o"
-							style="color: #fd54a0; font-size: 18px; margin: 2px 0 0 0;"> </i></p>  <label class="switch"> <input
-								type="checkbox" name='isSMS' id='isSMS' onchange="SliderAlert()" />
-								<span class="slider round"></span>
-						</label>
 
-						</span>
-				
-				
-				
-					<select name="holdBillNo" id="holdBillNo"
+					<div id="demo1">
+						<div class="snap-scrolling-example">
+							<!-- id="examples" -->
+							<div id="content-2" class="horizontal-images">
+
+								<div class="multi_menu">
+									<ul id="multi_cat_ul" class="multi_cat_ul">
+										<li onclick="getSubCat(0);" class="active_cat" id="catLi${0}"
+											value="All" id="1"><a href="javascript:void(0);"
+											class="scroll_menu" onclick="SlectedCat(this.innerHTML)">All</a></li>
+
+										<c:forEach items="${categoryList}" var="cat" varStatus="count">
+											<li class="active_cat" value="${count.index+2}"
+												id="catLi${cat.catId}"><a href="javascript:void(0);"
+												class="scroll_menu" onclick="getSubCat(${cat.catId})">${cat.catName}</a></li>
+										</c:forEach>
+									</ul>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+
+
+
+
+
+
+				</div>
+
+
+
+				<div class="drop_menu">
+
+
+					<span class="top_switch">
+						<p class="onoff_btn">
+							<i class="fa fa-envelope-o"
+								style="color: #fd54a0; font-size: 18px; margin: 2px 0 0 0;">
+							</i>
+						</p> <label class="switch"> <input type="checkbox"
+							name='isSMS' id='isSMS' onchange="SliderAlert()" /> <span
+							class="slider round"></span>
+					</label>
+
+					</span> <select name="holdBillNo" id="holdBillNo"
 						data-placeholder="Select Bill No" class="input_add chosen-select"
 						onchange="revertHoldBillOnCurrent()">
 						<option value="" disabled="disabled" selected>Select Bill
@@ -321,9 +321,10 @@ label:before {
 											<ul id="multi_ul">
 
 												<li onclick="selectBySubCatId(0);subCatForSrch(0);"
-													value="All" class="active" id="subCat${0}"><a href="javascript:void(0);" class="scroll_menu"
+													value="All" class="active" id="subCat${0}"><a
+													href="javascript:void(0);" class="scroll_menu"
 													onclick="SlectedCat(this.innerHTML)">All</a></li>
-												
+
 												<c:forEach items="${subCatList}" var="subCat"
 													varStatus="count">
 
@@ -347,7 +348,7 @@ label:before {
 
 						</div>
 						<div class="menu_search">
-							<input name ="myInput1" id="myInput1" type="text"
+							<input name="myInput1" id="myInput1" type="text"
 								class="input_cat" onkeyup="myFunction1()"
 								placeholder="Search Item..." autocomplete="off" />
 						</div>
@@ -355,7 +356,7 @@ label:before {
 					</div>
 					<div class="row">
 
-						
+
 
 						<c:choose>
 							<c:when test="${calStock==1}">
@@ -379,11 +380,11 @@ label:before {
 							</c:otherwise>
 						</c:choose>
 
-						 <div class="active_list" style="display: none;">
+						<div class="active_list" style="display: none;">
 							<span class="marquee_select" id="selected_subcat">All</span> <input
 								type="hidden" name="hiddenSelectedCatId"
 								id="hiddenSelectedCatId" value="0">
-						</div> 
+						</div>
 					</div>
 
 					<!--listing box start here-->
@@ -405,7 +406,8 @@ label:before {
 				<div class="cat_r">
 
 					<!--top-buttons row-->
-					<div> <!-- class="pending_row" -->
+					<div>
+						<!-- class="pending_row" -->
 						<!-- <a href="#" class="pending_btn initialism slide_open">Pending
 							Amt : <span>550.00000</span>
 						</a> -->
@@ -542,7 +544,7 @@ label:before {
 							</button>
 							<h3 class="pop_head">Add Customer</h3>
 
-							<div class="add_frm">
+							<!-- <div class="add_frm">
 								<div class="add_frm_one">
 									<div class="add_customer_one">Customer Name</div>
 									<div class="add_input">
@@ -572,13 +574,183 @@ label:before {
 										<input name="custGst" id="custGst" type="text"
 											class="input_add" />
 									</div>
-									<!-- <span id="gst_error" style="display: none; color: red"
+									<span id="gst_error" style="display: none; color: red"
 										class="text-danger">Please Enter Gst No.</span>
-									<div class="clr"></div> -->
+									<div class="clr"></div>
+								</div>
+
+							</div> -->
+							<div class="add_frm">
+								<div class="add_frm_one">
+									<div class="add_customer_one">Customer Name *</div>
+									<div class="add_input">
+										<input type="text" class="input_add"
+											placeholder="Enter Customer Name" name="customerName"
+											onchange="trim(this)" id="customerName" /> <input
+											type="hidden" name="custId" id="custIdEdit" value="0" />
+									</div>
+									<div class="clr"></div>
+								</div>
+
+
+
+								<div class="add_frm_one" style="display: none;">
+									<div class="add_customer_one">Pin Code</div>
+									<div class="add_input">
+
+										<input type="text" class="input_add"
+											placeholder="Enter Pin Code" value="0" name="pincode"
+											id="pincode" onchange="trim(this)" maxlength="6"
+											pattern="[0-9]" />
+									</div>
+									<div class="clr"></div>
+								</div>
+								<div class="add_frm_one" style="display: none;">
+									<div class="add_customer_one">Distance(In Kms)</div>
+									<div class="add_input">
+										<input placeholder="Enter distance in kms" name="kms" id="kms"
+											value="0" onchange="trim(this)" type="text" class="input_add" />
+									</div>
+									<div class="clr"></div>
+								</div>
+
+								<div class="add_frm_one">
+									<div class="add_customer_one">Mobile Number *</div>
+									<div class="add_input">
+										<input type="text" class="input_add"
+											placeholder="Enter Mobile Number" name="mobileNo"
+											id="mobileNo" onchange="trim(this)" maxlength="10"
+											oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" />
+									</div>
+									<div class="clr"></div>
+								</div>
+
+								<div class="add_frm_one">
+									<div class="add_customer_one">Gender *</div>
+									<div class="add_input">
+										<div class="radio_row popup_radio">
+											<ul>
+												<li><input type="radio" type="radio" name="gender"
+													id="moption" checked value="1"> <label
+													for="moption">M</label>
+													<div class="check"></div></li>
+												<li><input type="radio" id="foption" name="gender"
+													value="2"> <label for="foption">F </label>
+													<div class="check">
+														<div class="inside"></div>
+													</div></li>
+											</ul>
+										</div>
+									</div>
+									<div class="clr"></div>
+								</div>
+								<div class="add_frm_one" style="display: none;">
+									<div class="add_customer_one">Type</div>
+									<div class="add_input">
+										<select name="custType" id="custType"
+											data-placeholder="Customer Type" class="input_add"
+											style="text-align: left; font-size: 16px;" required>
+											<option value="0" style="text-align: left;">Select
+												Customer Type</option>
+											<option value="1">Owner</option>
+											<option value="2">Employee</option>
+											<option value="3" selected="selected">Customer</option>
+										</select>
+									</div>
+								</div>
+								<div class="add_frm_one">
+									<div class="add_customer_one">Age-Group *</div>
+									<div class="add_input">
+										<select name="ageRange" id="ageRange"
+											data-placeholder="Customer Age-Group" class="input_add"
+											style="text-align: left; font-size: 16px;" required>
+											<option value="0" style="text-align: left;">Customer
+												Age-Group</option>
+											<option value="14-21">14-21 Years</option>
+											<option value="22-28">22-28 Years</option>
+											<option value="29-35">29-35 Years</option>
+											<option value="36-42">36-42 Years</option>
+											<option value="43-49">43-49 Years</option>
+											<option value="50-56">50-56 Years</option>
+											<option value="57 & above">57 & above</option>
+
+										</select>
+									</div>
+								</div>
+								<div class="add_frm_one">
+									<div class="add_customer_one">DOB</div>
+									<div class="add_input">
+										<input autocomplete="off" placeholder="Date Of Birth"
+											name="dateOfBirth" id="dateOfBirth" type="date"
+											class="input_add" />
+									</div>
+									<div class="clr"></div>
+								</div>
+								<div class="add_frm_one">
+									<div class="add_customer_one">Business</div>
+									<div class="add_input">
+										<div class="radio_row popup_radio">
+											<ul>
+												<li><input type="radio" type="radio" name="selector"
+													id="y-option" onclick="isBuissness(1)"> <label
+													for="y-option">Yes</label>
+													<div class="check"></div></li>
+												<li><input type="radio" id="n-option" name="selector"
+													onclick="isBuissness(0)" checked> <label
+													for="n-option">No </label>
+													<div class="check">
+														<div class="inside"></div>
+													</div></li>
+											</ul>
+										</div>
+									</div>
+									<div class="clr"></div>
+								</div>
+								<div style="display: none;" id="isbuissnessdiv">
+									<div class="add_frm_one">
+										<div class="add_customer_one">Company Name *</div>
+										<div class="add_input">
+											<input placeholder="Enter Company Name" name="companyName"
+												onchange="trim(this)" id="companyName" type="text"
+												class="input_add" />
+										</div>
+										<div class="clr"></div>
+									</div>
+
+									<div class="add_frm_one">
+										<div class="add_customer_one">Address</div>
+										<div class="add_input">
+											<input placeholder="Enter Address" name="custAdd"
+												id="custAdd" onchange="trim(this)" type="text"
+												class="input_add" />
+										</div>
+										<div class="clr"></div>
+									</div>
+
+									<div class="add_frm_one">
+										<div class="add_customer_one">GST Number *</div>
+										<div class="add_input">
+											<input placeholder="Enter GST Number" name="gstNo" id="gstNo"
+												onchange="trim(this)" type="text" maxlength="15"
+												class="input_add" />
+										</div>
+										<div class="clr"></div>
+									</div>
+
+								</div>
+
+								<div class="add_frm_one">
+									<div class="add_customer_one">Remark</div>
+									<div class="add_input">
+
+										<input type="text" class="input_add"
+											placeholder="Enter Remark" name="remark" id="remark"
+											onchange="trim(this)" />
+									</div>
+									<div class="clr"></div>
 								</div>
 
 							</div>
-
 							<div class="pop_btns">
 								<div class="close_l">
 									<button class="addcust_close close_btn" id="clsAddCust">Close</button>
@@ -623,10 +795,63 @@ label:before {
 								</datalist> --%>
 
 								<select name="custId" id="custId"
-									data-placeholder="Select Bill No" style="width:100%%;"
+									data-placeholder="Select Bill No" style="width: 100%%;"
 									class="input_add chosen-select">
-									<option value="" disabled="disabled" selected>Select
-										Customer</option>
+									<option value="0">Select Customer</option>
+
+									<c:choose>
+										<c:when test="${key>0}">
+											<c:forEach items="${customerList}" var="customerList">
+												<c:choose>
+													<c:when test="${customerList.custId==holdBill.custId}">
+														<option value="${customerList.custId}"
+															style="text-align: left;" selected>${customerList.custName}
+															&nbsp;${customerList.phoneNumber}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${customerList.custId}"
+															style="text-align: left;">${customerList.custName}
+															&nbsp;${customerList.phoneNumber}</option>
+													</c:otherwise>
+												</c:choose>
+
+											</c:forEach>
+										</c:when>
+										<c:when test="${tempCust>0}">
+											<c:forEach items="${customerList}" var="customerList">
+												<c:choose>
+													<c:when test="${customerList.custId==tempCust}">
+														<option value="${customerList.custId}"
+															style="text-align: left;" selected>${customerList.custName}
+															&nbsp;${customerList.phoneNumber}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${customerList.custId}"
+															style="text-align: left;">${customerList.custName}
+															&nbsp;${customerList.phoneNumber}</option>
+													</c:otherwise>
+												</c:choose>
+
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											<c:forEach items="${customerList}" var="customerList">
+												<c:choose>
+													<c:when test="${customerList.custId==defaultCustomer}">
+														<option value="${customerList.custId}"
+															style="text-align: left;" selected>${customerList.custName}
+															&nbsp;${customerList.phoneNumber}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${customerList.custId}"
+															style="text-align: left;">${customerList.custName}
+															&nbsp;${customerList.phoneNumber}</option>
+													</c:otherwise>
+												</c:choose>
+
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
 
 
 								</select>
@@ -664,7 +889,7 @@ label:before {
 									<tbody>
 
 
-										<c:forEach items="${holdBill.itemList}" var="itemList"
+										<c:forEach items="${holdBill.itemBillList}" var="itemList"
 											varStatus="count">
 											<c:set var="totalItemCount" value="${totalItemCount+1}"></c:set>
 											<tr>
@@ -770,9 +995,13 @@ label:before {
 						</div>
 
 					</div>
-					
+
 					<div class="text_count">
-						Paid Amount : <p>0.00</p> <span>Return Amount : <p>0.00</p></span>
+						Paid Amount :
+						<p>0.00</p>
+						<span>Return Amount :
+							<p>0.00</p>
+						</span>
 					</div>
 
 
@@ -1131,7 +1360,7 @@ label:before {
 					});
 		})(jQuery);
 	</script>
-	
+
 	<script>
 		(function($) {
 			$(window).on(
@@ -1578,8 +1807,32 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 			}, function(data) {
 
 			//alert(data.length);
+			var html = '';
+			var len = data.length;
+										//alert(data.addCustomerId);
+										for (var i = 0; i < len; i++) {
 
-			$('#custId').find('option').remove().end()
+											if (data[i].custId == val) {
+												html += '<option value="' + data[i].custId + '" selected>'
+														+ data[i].custName
+														+ '&nbsp;'
+														+ data[i].phoneNumber
+														+ '</option>';
+											} else {
+												html += '<option value="' + data[i].custId + '">'
+														+ data[i].custName
+														+ '&nbsp;'
+														+ data[i].phoneNumber
+														+ '</option>';
+											}
+
+										}
+										$('#custId').html(html);
+
+										$("#custId").trigger("chosen:updated");
+										$('.chosen-select').trigger(
+												'chosen:updated');
+			/* $('#custId').find('option').remove().end()
 
 			for (var i = 0; i < data.length; i++) {
  
@@ -1592,7 +1845,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 				}
 				
 			}
-			$("#custId").trigger("chosen:updated");
+			$("#custId").trigger("chosen:updated"); */
 
 		});
 
@@ -1607,9 +1860,9 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
  }
  
  function addCust() {
-	var name=document.getElementById("custName").value;
+	/* var name=document.getElementById("custName").value;
 	var mob =document.getElementById("custMob").value;
-	/* var gst =document.getElementById("custGst").value; */
+	 
 	var isError=false;
 	
 	if(!name){
@@ -1635,24 +1888,85 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 			isError=false;
 			$('#mob_error2').hide();
 		}
-	}
-	/* if(!gst){
-		isError=true;
-		$('#gst_error').show()
-		
-	}else{
-		 
-		$('#gst_error').hide();
 	} */
 	
-	if(isError){
-		//alert("In If");
-	}else {	 
-		
+	var phNo=""; 
+	var custId = document.getElementById("custIdEdit").value;
+	var customerName = document.getElementById("customerName").value;
+	var mobileNo = document.getElementById("mobileNo").value;
+	var  kms= document.getElementById("kms").value;
+	phNo=mobileNo;
+	var dateOfBirth = document.getElementById("dateOfBirth").value;
+	var custType = document.getElementById("custType").value;
+	custType=3;
+	var ageRange = document.getElementById("ageRange").value;
+	
+	var gender = 2;
+	if (document.getElementById('moption').checked) {
+		gender = 1;
+	}
+	//var isBuissness = document.getElementById("isBuissness").value;
+	var buisness = 0;
+	if (document.getElementById('y-option').checked) {
+		buisness = 1;
+	}
+	var companyName = document.getElementById("companyName").value;
+	var gstNo = document.getElementById("gstNo").value;
+	var custAdd = document.getElementById("custAdd").value;
+	var pincode = document.getElementById("pincode").value;
+	var remark = document.getElementById("remark").value;
+
+	var flag = 0;
+
+	if (customerName == "") {
+		alert("Enter Customer Name");
+		flag = 1;
+	} 
+	 
+	else if (mobileNo == "" || !validateMobile(mobileNo)) {
+		alert("Enter Valid Mobile No");
+		flag = 1;
+	}  else if (ageRange == 0) {
+		alert("Please Select Age Group");
+		flag = 1;
+	} else if (buisness == 1) {
+
+		if (companyName == "") {
+			alert("Enter Company Name");
+			flag = 1;
+		} else if (gstNo == "") {
+			alert("Enter GST No");
+			flag = 1;
+		}else if(checkGST(gstNo)==false){
+			alert("Invalid GST No");
+			flag = 1;
+		}
+	}
+	
+	if (kms == "") {
+		kms=0;
+	}
+	 
+	
+	if(flag == 0){
+		 
+		  
 		var fd=new FormData();
-		fd.append('name',name);
-		fd.append('mob',mob);
-		fd.append('gst','NA');
+		fd.append('customerName',customerName);
+		fd.append('mobileNo',mobileNo);
+		fd.append('dateOfBirth',dateOfBirth);
+		fd.append('buisness',buisness);
+		fd.append('companyName',companyName);
+		fd.append('gstNo',gstNo);
+		fd.append('custAdd',custAdd);
+		fd.append('custId',custId);
+		fd.append('custType',custType);
+		fd.append('ageRange',ageRange);
+		fd.append('kms',kms);
+		fd.append('gender',gender);
+		fd.append('pincode',pincode);
+		fd.append('remark',remark); 
+		
 		 $.ajax({
 		       url: '${pageContext.request.contextPath}/addCustomer',
 		       type: 'POST',
@@ -1664,13 +1978,43 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		       success: function(data, textStatus, jqXHR)
 		       {
 		    	   if(data.error==false){
-						getCustomerList((data.message));
-							alertify.success("Customer addeed.");
-							document.getElementById("clsAddCust").click();
+		    		   
+		    		   document.getElementById("pincode").value = "";
+						document.getElementById("remark").value = "";
+						document.getElementById("customerName").value = "";
+						document.getElementById("mobileNo").value = "";
+						document.getElementById("kms").value = "0";
+						document.getElementById("dateOfBirth").value = "";
+
+						document.getElementById("n-option").checked = true;
+						document.getElementById("companyName").value = "";
+						document.getElementById("gstNo").value = "";
+						document.getElementById("custAdd").value = "";
+						document.getElementById("custId").value = 0;
+						document.getElementById("moption").checked = true;
+						document.getElementById("custType").value ="0";
+						$("#custType").trigger("chosen:updated");
+						document.getElementById("ageRange").value ="0";
+						$("#ageRange").trigger("chosen:updated");
+						$('.chosen-select').trigger('chosen:updated');
+						/* document
+								.getElementById("add_cust_head_name").innerHTML = "Add Customer"; */
+						$("#isbuissnessdiv").hide();
+
+						if (custId != 0) {
+							alertify.success("Update Successfully"); 
+						} else {
+							alertify.success("Customer addeed"); 
+						}
+						
+						
+							
+							 document.getElementById("clsAddCust").click();
 							//document.getElementById("selectCust").value=name+"~"+mob+"~"+gst;
-							document.getElementById("custName").value="";
+							/*document.getElementById("custName").value="";
 							document.getElementById("custMob").value="";
-							document.getElementById("custGst").value="";
+							document.getElementById("custGst").value=""; */
+							getCustomerList((data.addCustomerId));
 						}else{
 							alertify.error("Unable To Add Customer");
 						}
@@ -2175,14 +2519,17 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		   
 		var key =  $('#key').val() ;
 		var custId =document.getElementById("custId").value;
-			 
+		var holdCustName= $("#custId option:selected").text();
+
+		//alert(custId);
 				if(custId!="" || key>0 ){
 					  
 					  $.post(
 							'${billOnHold}',
 							{
 								key : key, 
-								holdCustName : custId,
+								custId : custId,
+								holdCustName : holdCustName,
 								ajax : 'true'
 							},
 							function(data) {
@@ -2211,6 +2558,34 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 					window.location = "${pageContext.request.contextPath}/newPos/0";
 							 
 				});   
+	}
+	function isBuissness(value) {
+
+		if (value == 1) {
+			$("#isbuissnessdiv").show();
+		} else {
+			$("#isbuissnessdiv").hide();
+		}
+
+	}
+	function validateMobile(mobile) {
+		//alert(mobile);
+		var mob = /^[1-9]{1}[0-9]{9}$/;
+
+		if (mob.test($.trim(mobile)) == false) {
+
+			//alert("Please enter a valid email address .");
+			return false;
+
+		}
+		return true;
+
+	}
+	function trim(el) {
+		el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
+		replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
+		replace(/\n +/, "\n"); // Removes spaces after newlines
+		return;
 	}
 </script>
 

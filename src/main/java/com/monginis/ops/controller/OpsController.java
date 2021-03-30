@@ -42,6 +42,7 @@ import com.monginis.ops.model.AddCustemerResponse;
 import com.monginis.ops.model.CategoryList;
 import com.monginis.ops.model.Customer;
 import com.monginis.ops.model.CustomerAmounts;
+import com.monginis.ops.model.CustomerForOps;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.FranchiseSup;
 import com.monginis.ops.model.Franchisee;
@@ -671,10 +672,10 @@ public class OpsController {
 			save.setExVar1("" + kms);
 			save.setGender(gender);
 			save.setExVar2(str);
-			Customer res = restTemplate.postForObject(Constant.URL + "/saveCustomer", save, Customer.class);
+			CustomerForOps res = restTemplate.postForObject(Constant.URL + "/saveCustomerForOps", save, CustomerForOps.class);
 
-			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
-			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
+			CustomerForOps[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomersForOps", CustomerForOps[].class);
+			List<CustomerForOps> customerList = new ArrayList<>(Arrays.asList(customer));
 
 			if (res == null) {
 
@@ -744,10 +745,10 @@ public class OpsController {
 				edit.setGstNo(gstNo);
 			}
 
-			Customer res = restTemplate.postForObject(Constant.URL + "/saveCustomer", edit, Customer.class);
+			CustomerForOps res = restTemplate.postForObject(Constant.URL + "/saveCustomer", edit, CustomerForOps.class);
 
-			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
-			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
+			CustomerForOps[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", CustomerForOps[].class);
+			List<CustomerForOps> customerList = new ArrayList<>(Arrays.asList(customer));
 
 			if (res == null) {
 
@@ -3049,79 +3050,64 @@ public class OpsController {
 
 		
 
-		@RequestMapping(value = "/billOnHold", method = RequestMethod.POST)
-		@ResponseBody
-		public Info billOnHold(HttpServletRequest request, HttpServletResponse responsel) {
+	/*
+	 * @RequestMapping(value = "/billOnHold", method = RequestMethod.POST)
+	 * 
+	 * @ResponseBody public Info billOnHold(HttpServletRequest request,
+	 * HttpServletResponse responsel) {
+	 * 
+	 * Info info = new Info();
+	 * 
+	 * try {
+	 * 
+	 * int key = Integer.parseInt(request.getParameter("key")); int custId =
+	 * Integer.parseInt(request.getParameter("custId")); String holdCustName =
+	 * request.getParameter("holdCustName");
+	 * 
+	 * if (hashMap.containsKey(key)) { hashMap.get(key).setCustId(custId);
+	 * hashMap.get(key).setItemList(itemBillList); } else { CustomerBillOnHold
+	 * addNew = new CustomerBillOnHold(); tempBillNo = tempBillNo + 1;
+	 * addNew.setCustId(custId); addNew.setItemList(itemBillList);
+	 * addNew.setTempCustomerName(holdCustName); hashMap.put(tempBillNo, addNew); }
+	 * System.out.println(hashMap); info.setError(false);
+	 * info.setMessage("Successfully"); } catch (Exception e) { e.printStackTrace();
+	 * info.setError(true); info.setMessage("failed"); } return info; }
+	 */
 
-			Info info = new Info();
+	/*
+	 * @RequestMapping(value = "/revertHoldBillOnCurrent", method =
+	 * RequestMethod.POST)
+	 * 
+	 * @ResponseBody public Info revertHoldBillOnCurrent(HttpServletRequest request,
+	 * HttpServletResponse responsel) {
+	 * 
+	 * Info info = new Info();
+	 * 
+	 * try {
+	 * 
+	 * int index = Integer.parseInt(request.getParameter("key")); key = index;
+	 * 
+	 * info.setError(false); info.setMessage("Successfully"); } catch (Exception e)
+	 * { e.printStackTrace(); info.setError(true); info.setMessage("failed"); }
+	 * return info; }
+	 */
 
-			try {
-
-				int key = Integer.parseInt(request.getParameter("key"));
-				int custId = Integer.parseInt(request.getParameter("custId"));
-				String holdCustName = request.getParameter("holdCustName");
-
-				if (hashMap.containsKey(key)) {
-					hashMap.get(key).setCustId(custId);
-					hashMap.get(key).setItemList(itemBillList);
-				} else {
-					CustomerBillOnHold addNew = new CustomerBillOnHold();
-					tempBillNo = tempBillNo + 1;
-					addNew.setCustId(custId);
-					addNew.setItemList(itemBillList);
-					addNew.setTempCustomerName(holdCustName);
-					hashMap.put(tempBillNo, addNew);
-				}
-				System.out.println(hashMap);
-				info.setError(false);
-				info.setMessage("Successfully");
-			} catch (Exception e) {
-				e.printStackTrace();
-				info.setError(true);
-				info.setMessage("failed");
-			}
-			return info;
-		}
-
-		@RequestMapping(value = "/revertHoldBillOnCurrent", method = RequestMethod.POST)
-		@ResponseBody
-		public Info revertHoldBillOnCurrent(HttpServletRequest request, HttpServletResponse responsel) {
-
-			Info info = new Info();
-
-			try {
-
-				int index = Integer.parseInt(request.getParameter("key"));
-				key = index;
-
-				info.setError(false);
-				info.setMessage("Successfully");
-			} catch (Exception e) {
-				e.printStackTrace();
-				info.setError(true);
-				info.setMessage("failed");
-			}
-			return info;
-		}
-
-		@RequestMapping(value = "/cancelFromHoldBill", method = RequestMethod.POST)
-		@ResponseBody
-		public Info cancelFromHoldBill(HttpServletRequest request, HttpServletResponse responsel) {
-
-			Info info = new Info();
-
-			try {
-
-				int index = Integer.parseInt(request.getParameter("key"));
-				hashMap.remove(index);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-				info.setError(true);
-				info.setMessage("failed");
-			}
-			return info;
-		}
+	/*
+	 * @RequestMapping(value = "/cancelFromHoldBill", method = RequestMethod.POST)
+	 * 
+	 * @ResponseBody public Info cancelFromHoldBill(HttpServletRequest request,
+	 * HttpServletResponse responsel) {
+	 * 
+	 * Info info = new Info();
+	 * 
+	 * try {
+	 * 
+	 * int index = Integer.parseInt(request.getParameter("key"));
+	 * hashMap.remove(index);
+	 * 
+	 * } catch (Exception e) { e.printStackTrace(); info.setError(true);
+	 * info.setMessage("failed"); } return info; }
+	 */
 	
 		
 		// mode------- 0=edit, 1=pay

@@ -45,8 +45,11 @@ import com.monginis.ops.billing.SellBillDetail;
 import com.monginis.ops.billing.SellBillHeader;
 import com.monginis.ops.common.Common;
 import com.monginis.ops.constant.Constant;
+import com.monginis.ops.model.AddCustemerResponse;
 import com.monginis.ops.model.CategoryList;
+import com.monginis.ops.model.Customer;
 import com.monginis.ops.model.CustomerBillItem;
+import com.monginis.ops.model.CustomerForOps;
 import com.monginis.ops.model.FrItemStockConfigure;
 import com.monginis.ops.model.FrItemStockConfigureList;
 import com.monginis.ops.model.FrMenu;
@@ -60,7 +63,6 @@ import com.monginis.ops.model.PostFrItemStockHeader;
 import com.monginis.ops.model.SubCategory;
 import com.monginis.ops.model.frsetting.FrSetting;
 import com.monginis.ops.model.newpos.BillItemList;
-import com.monginis.ops.model.newpos.Customer;
 import com.monginis.ops.model.newpos.CustomerBillOnHold;
 import com.monginis.ops.model.newpos.ErrorMsgWithItemList;
 import com.monginis.ops.model.newpos.NewPosBillItem;
@@ -76,7 +78,7 @@ public class NewOpsCustomerBillController {
 
 	List<BillItemList> itemList = new ArrayList<BillItemList>();
 
-	public List<Customer> custometList = new ArrayList<Customer>();
+	public List<CustomerForOps> custometList = new ArrayList<CustomerForOps>();
 	public List<Customer> customerTempList = new ArrayList<Customer>();
 	List<NewPosBillItem> showItemList = new ArrayList<NewPosBillItem>();
 
@@ -102,7 +104,9 @@ public class NewOpsCustomerBillController {
 		int runningMonth = 0;
 
 		try {
-
+			CustomerForOps[] custResp = restTemplate.getForObject(Constant.URL + "getAllCustomersForOps",
+					CustomerForOps[].class);
+			custometList = new ArrayList<CustomerForOps>(Arrays.asList(custResp));
 			map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("settingKeyList", "CHECK_STOCK_FOR_CUSTOMER_BILL");
@@ -216,17 +220,15 @@ public class NewOpsCustomerBillController {
 			NewPosBillItem[] biiItleListArr = restTemplate.postForObject(Constant.URL + "getItemListWithCS", map,
 					NewPosBillItem[].class);
 			showItemList = new ArrayList<NewPosBillItem>(Arrays.asList(biiItleListArr));
-			 
 
 			SubCategory[] subCatArr = restTemplate.getForObject(Constant.URL + "getAllSubCatList", SubCategory[].class);
 			subCatResp = new ArrayList<SubCategory>(Arrays.asList(subCatArr));
 
 			model.addObject("subCatList", subCatResp);
-			
-			MCategory[] catArr = restTemplate.getForObject(Constant.URL + "getCategories",
-					MCategory[].class);
-			catResp = new ArrayList<MCategory>(Arrays.asList(catArr));		
-			
+
+			MCategory[] catArr = restTemplate.getForObject(Constant.URL + "getCategories", MCategory[].class);
+			catResp = new ArrayList<MCategory>(Arrays.asList(catArr));
+
 			model.addObject("categoryList", catResp);
 
 			model.addObject("holdingList", hashMap);
@@ -238,31 +240,30 @@ public class NewOpsCustomerBillController {
 				model.addObject("key", key);
 				model.addObject("tempCust", 0);
 			} else {
-				map.add("frId", frDetails.getFrId());
-				Customer[] custResp = restTemplate.postForObject(Constant.URL + "getAllCustomerForPos", map,
-						Customer[].class);
-				custometList = new ArrayList<Customer>(Arrays.asList(custResp));
+				// map.add("frId", frDetails.getFrId());
+
 				CustomerBillOnHold customerBillOnHold = new CustomerBillOnHold();
 				itemList = new ArrayList<>();
-				//customerBillOnHold.setItemList(itemList);
+				// customerBillOnHold.setItemList(itemList);
 				customerBillOnHold.setItemBillList(itemList);
 				model.addObject("key", 0);
 				model.addObject("holdBill", customerBillOnHold);
 				model.addObject("tempCust", 0);
-				for (int i = 0; i < customerTempList.size(); i++) {
-
-					System.out.println("customerTempList.get " + customerTempList.get(i));
-					String phoneno = customerTempList.get(i).getPhoneNo();
-
-					Optional<Customer> result = custometList.stream()
-							.filter(obj -> phoneno.equalsIgnoreCase(obj.getPhoneNo())).findFirst();
-					System.out.println("result " + result);
-					if (result==null) {
-						custometList.add(customerTempList.get(i));
-
-					}
-
-				}
+				/*
+				 * for (int i = 0; i < customerTempList.size(); i++) {
+				 * 
+				 * System.out.println("customerTempList.get " + customerTempList.get(i)); String
+				 * phoneno = customerTempList.get(i).getPhoneNo();
+				 * 
+				 * Optional<Customer> result = custometList.stream() .filter(obj ->
+				 * phoneno.equalsIgnoreCase(obj.getPhoneNo())).findFirst();
+				 * System.out.println("result " + result); if (result==null) {
+				 * custometList.add(customerTempList.get(i));
+				 * 
+				 * }
+				 * 
+				 * }
+				 */
 
 			}
 
@@ -293,7 +294,7 @@ public class NewOpsCustomerBillController {
 			model.addObject("calStock", calStock);
 			model.addObject("ItemList", showItemList);
 		} catch (Exception e) {
-			System.out.println("Excep in /newPos : "+e.getMessage());
+			System.out.println("Excep in /newPos : " + e.getMessage());
 			e.printStackTrace();
 		}
 
@@ -301,83 +302,85 @@ public class NewOpsCustomerBillController {
 
 	}
 
-//	@RequestMapping(value = "/revertHoldBillOnCurrent", method = RequestMethod.POST)
-//	@ResponseBody
-//	public Info revertHoldBillOnCurrent(HttpServletRequest request, HttpServletResponse responsel) {
-//
-//		Info info = new Info();
-//
-//		try {
-//
-//			int index = Integer.parseInt(request.getParameter("key"));
-//			key = index;
-//
-//			info.setError(false);
-//			info.setMessage("Successfully");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			info.setError(true);
-//			info.setMessage("failed");
-//		}
-//		return info;
-//	}
+	@RequestMapping(value = "/revertHoldBillOnCurrent", method = RequestMethod.POST)
+	@ResponseBody
+	public Info revertHoldBillOnCurrent(HttpServletRequest request, HttpServletResponse responsel) {
 
-//	@RequestMapping(value = "/cancelFromHoldBill", method = RequestMethod.POST)
-//	@ResponseBody
-//	public Info cancelFromHoldBill(HttpServletRequest request, HttpServletResponse responsel) {
-//
-//		Info info = new Info();
-//
-//		try {
-//
-//			int index = Integer.parseInt(request.getParameter("key"));
-//			hashMap.remove(index);
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			info.setError(true);
-//			info.setMessage("failed");
-//		}
-//		return info;
-//	}
+		Info info = new Info();
 
-//	@RequestMapping(value = "/billOnHold", method = RequestMethod.POST)
-//	@ResponseBody
-//	public Info billOnHold(HttpServletRequest request, HttpServletResponse responsel) {
-//
-//		Info info = new Info();
-//
-//		try {
-//
-//			int key = Integer.parseInt(request.getParameter("key"));
-//			// int custId = Integer.parseInt(request.getParameter("holdCustName"));
-//			String holdCustName = request.getParameter("holdCustName");
-//
-//			Optional<Customer> result = custometList.stream()
-//					.filter(obj -> holdCustName.equalsIgnoreCase(obj.getPhoneNo())).findFirst();
-//
-//			if (hashMap.containsKey(key)) {
-//				hashMap.get(key).setCustId(holdCustName);
-//				hashMap.get(key).setTempCustomerName(result.get().getUserName() + " - " + result.get().getPhoneNo());
-//				hashMap.get(key).setItemList(itemList);
-//			} else {
-//				CustomerBillOnHold addNew = new CustomerBillOnHold();
-//				tempBillNo = tempBillNo + 1;
-//				addNew.setCustId(holdCustName);
-//				addNew.setItemList(itemList);
-//				addNew.setTempCustomerName(result.get().getUserName() + " - " + result.get().getPhoneNo());
-//				hashMap.put(tempBillNo, addNew);
-//			}
-//			System.out.println(hashMap);
-//			info.setError(false);
-//			info.setMessage("Successfully");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			info.setError(true);
-//			info.setMessage("failed");
-//		}
-//		return info;
-//	}
+		try {
+
+			int index = Integer.parseInt(request.getParameter("key"));
+			key = index;
+
+			info.setError(false);
+			info.setMessage("Successfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage("failed");
+		}
+		return info;
+	}
+
+	@RequestMapping(value = "/cancelFromHoldBill", method = RequestMethod.POST)
+	@ResponseBody
+	public Info cancelFromHoldBill(HttpServletRequest request, HttpServletResponse responsel) {
+
+		Info info = new Info();
+
+		try {
+
+			int index = Integer.parseInt(request.getParameter("key"));
+			hashMap.remove(index);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage("failed");
+		}
+		return info;
+	}
+
+	@RequestMapping(value = "/billOnHold", method = RequestMethod.POST)
+	@ResponseBody
+	public Info billOnHold(HttpServletRequest request, HttpServletResponse responsel) {
+
+		Info info = new Info();
+
+		try {
+
+			int key = Integer.parseInt(request.getParameter("key"));
+			int custId = Integer.parseInt(request.getParameter("custId"));
+			String holdCustName = request.getParameter("holdCustName");
+
+			/*
+			 * Optional<Customer> result = custometList.stream() .filter(obj ->
+			 * holdCustName.equalsIgnoreCase(obj.getPhoneNo())).findFirst();
+			 */
+
+			if (hashMap.containsKey(key)) {
+				hashMap.get(key).setCustId(custId);
+				hashMap.get(key).setTempCustomerName(holdCustName);
+				hashMap.get(key).setItemBillList(itemList);
+			} else {
+				CustomerBillOnHold addNew = new CustomerBillOnHold();
+				tempBillNo = tempBillNo + 1;
+				addNew.setCustId(custId);
+				addNew.setItemBillList(itemList);
+				addNew.setTempCustomerName(holdCustName);
+				hashMap.put(tempBillNo, addNew);
+			}
+			System.out.println(hashMap);
+			info.setError(false);
+			info.setMessage("Successfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage("failed");
+		}
+		return info;
+	}
 
 	@RequestMapping(value = "/addItemInBillLIst", method = RequestMethod.POST)
 	@ResponseBody
@@ -541,7 +544,7 @@ public class NewOpsCustomerBillController {
 
 	@RequestMapping(value = "/getCustomerList", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Customer> getCustomerList(HttpServletRequest request, HttpServletResponse response) {
+	public List<CustomerForOps> getCustomerList(HttpServletRequest request, HttpServletResponse response) {
 		// System.err.println("in Get Customer List");
 		return custometList;
 
@@ -562,78 +565,126 @@ public class NewOpsCustomerBillController {
 		return showItemList;
 
 	}
-	
-	
+
 	@RequestMapping(value = "/getSubCatByCatIdAjax", method = RequestMethod.GET)
 	@ResponseBody
 	public List<SubCategory> getSubCatByCatIdAjax(HttpServletRequest request, HttpServletResponse response) {
-		
+
 		List<SubCategory> subCatList = new ArrayList<SubCategory>();
 		try {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			
-			RestTemplate restTemplate = new RestTemplate();			
-			
+			RestTemplate restTemplate = new RestTemplate();
+
 			map.add("catId", Integer.parseInt(request.getParameter("catId")));
-			SubCategory[] subCatArr = restTemplate.postForObject(Constant.URL + "getSubCateListByCatId",
-					map,SubCategory[].class);
-			
+			SubCategory[] subCatArr = restTemplate.postForObject(Constant.URL + "getSubCateListByCatId", map,
+					SubCategory[].class);
+
 			subCatList = new ArrayList<SubCategory>(Arrays.asList(subCatArr));
-			
-			
 
 		} catch (Exception e) {
-			
+
 			System.err.println("Exce in getSubCatByCatIdAjax Ajax " + e.getMessage());
 			e.printStackTrace();
-			
+
 		}
 		return subCatList;
 	}
-	
+
+	/*
+	 * @RequestMapping(value = "/addCustomer", method = RequestMethod.POST)
+	 * 
+	 * @ResponseBody public Info addCustomer(HttpServletRequest request,
+	 * HttpServletResponse response) { // System.err.println("in Add Customer"); int
+	 * flag = 0;
+	 * 
+	 * Info info = new Info();
+	 * 
+	 * String uuid = UUID.randomUUID().toString();
+	 * 
+	 * try { String name = request.getParameter("name"); String mob =
+	 * request.getParameter("mob"); String gst = request.getParameter("gst");
+	 * Customer cust = new Customer();
+	 * 
+	 * cust.setId(uuid); cust.setUserName(name); cust.setPhoneNo(mob);
+	 * cust.setGstNo(gst); custometList.add(cust);
+	 * 
+	 * flag = 1; info.setError(false); info.setMessage(mob);
+	 * 
+	 * customerTempList.add(cust);
+	 * 
+	 * } catch (Exception e) { // TODO: handle exception //
+	 * System.err.println("Exception Occuered In Catach Block Of /addCustomer");
+	 * flag = 0; info.setError(true); info.setMessage(String.valueOf(0));
+	 * e.printStackTrace(); }
+	 * 
+	 * return info;
+	 * 
+	 * }
+	 */
 
 	@RequestMapping(value = "/addCustomer", method = RequestMethod.POST)
 	@ResponseBody
-	public Info addCustomer(HttpServletRequest request, HttpServletResponse response) {
-		// System.err.println("in Add Customer");
-		int flag = 0;
-		/*
-		 * String name=request.getParameter("name"); System.err.println(name+"Name Is");
-		 */
-		Info info = new Info();
+	public AddCustemerResponse saveCustomerFromBill(HttpServletRequest request, HttpServletResponse responsel) {
 
-		String uuid = UUID.randomUUID().toString();
+		AddCustemerResponse info = new AddCustemerResponse();
 
 		try {
-			String name = request.getParameter("name");
-			String mob = request.getParameter("mob");
-			String gst = request.getParameter("gst");
-			Customer cust = new Customer();
+			RestTemplate restTemplate = new RestTemplate();
+			String customerName = request.getParameter("customerName");
+			String mobileNo = request.getParameter("mobileNo");
+			String dateOfBirth = request.getParameter("dateOfBirth");
+			String buisness = request.getParameter("buisness");
+			String companyName = request.getParameter("companyName");
+			String gstNo = request.getParameter("gstNo");
+			String custAdd = request.getParameter("custAdd");
+			int custId = Integer.parseInt(request.getParameter("custId"));
+			int custType = Integer.parseInt(request.getParameter("custType"));
+			String ageRange = request.getParameter("ageRange");
+			int gender = Integer.parseInt(request.getParameter("gender"));
+			float kms = Float.parseFloat(request.getParameter("kms"));
+			String pincode = request.getParameter("pincode");
+			String remark = request.getParameter("remark");
 
-			cust.setId(uuid);
-			cust.setUserName(name);
-			cust.setPhoneNo(mob);
-			cust.setGstNo(gst);
-			custometList.add(cust);
+			String str = pincode + "-" + remark;
 
-			flag = 1;
-			info.setError(false);
-			info.setMessage(mob);
+			CustomerForOps save = new CustomerForOps();
+			save.setCustName(customerName);
+			save.setPhoneNumber(mobileNo);
+			save.setIsBuissHead(Integer.parseInt(buisness));
+			save.setCustDob(dateOfBirth);
+			save.setCompanyName(companyName);
+			save.setAddress(custAdd);
+			save.setGstNo(gstNo);
+			save.setDelStatus(0);
+			save.setCustId(custId);
 
-			customerTempList.add(cust);
+			save.setAgeGroup(ageRange);
+			save.setExInt1(custType);
+			save.setExVar1("" + kms);
+			save.setGender(gender);
+			save.setExVar2(str);
+			CustomerForOps res = restTemplate.postForObject(Constant.URL + "/saveCustomerForOps", save,
+					CustomerForOps.class);
+
+			CustomerForOps[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomersForOps",
+					CustomerForOps[].class);
+			custometList = new ArrayList<>(Arrays.asList(customer));
+
+			if (res == null) {
+
+				info.setError(true);
+			} else {
+				info.setCustomerList(custometList);
+				info.setAddCustomerId(res.getCustId());
+				info.setError(false);
+			}
 
 		} catch (Exception e) {
-			// TODO: handle exception
-			// System.err.println("Exception Occuered In Catach Block Of /addCustomer");
-			flag = 0;
-			info.setError(true);
-			info.setMessage(String.valueOf(0));
 			e.printStackTrace();
+			info.setError(true);
 		}
-
 		return info;
-
 	}
 
 	@RequestMapping(value = "/deleteItem", method = RequestMethod.POST)
@@ -691,15 +742,13 @@ public class NewOpsCustomerBillController {
 			// System.err.println(custDetails+"cust");
 			float discountPer = Float.parseFloat(request.getParameter("discPer"));
 			float payableAmount = Float.parseFloat(request.getParameter("payableAmt"));
-
-			Optional<Customer> result = custometList.stream()
-					.filter(obj -> custDetails.equalsIgnoreCase(obj.getPhoneNo())).findFirst();
-
-			if (result!=null) {
-				cName = result.get().getUserName();
-				cPhone = result.get().getPhoneNo();
-				cGst = result.get().getGstNo();
-			}
+			/*
+			 * Optional<Customer> result = custometList.stream() .filter(obj ->
+			 * custDetails.equalsIgnoreCase(obj.getPhoneNo())).findFirst();
+			 * 
+			 * if (result != null) { cName = result.get().getUserName(); cPhone =
+			 * result.get().getPhoneNo(); cGst = result.get().getGstNo(); }
+			 */
 
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate localDate = LocalDate.now();
