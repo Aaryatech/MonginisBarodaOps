@@ -21,7 +21,7 @@ abbr:hover {cursor: pointer;}
 			
 			<c:forEach items="${sessionScope.empModule}" var="list" varStatus="count">	
 				<c:set var="moduleId" value="${list.moduleId}"></c:set>
-
+${moduleId}
 				<c:if test="${moduleId==1}">
 
 					<li style="border: 1px; border-bottom: 1px solid #c9206c;"><a
@@ -117,13 +117,10 @@ abbr:hover {cursor: pointer;}
 							<div class="title">
 								View Purchase <span>Bills</span>
 							</div></a></li>
-				</c:if>
+				</c:if>				
 				
-				
-				
-				
-				<c:if test="${moduleId==8}">
-				<li><a
+				<c:if test="${moduleId==13}">								
+					<li><a
 						href="${pageContext.request.contextPath}/showOtherBill"><div
 								class="img">
 								<i class="fa fa-list icon" style="font-size: 22px !important;"></i>
@@ -131,8 +128,10 @@ abbr:hover {cursor: pointer;}
 							<div class="title">
 								Other Purchase <span>Bill</span>
 				</div></a></li>
-							
-							
+				</c:if>
+				
+				
+				<c:if test="${moduleId==8}">								
 					<li><a
 						href="${pageContext.request.contextPath}/showExpenseList"><div
 								class="img">
