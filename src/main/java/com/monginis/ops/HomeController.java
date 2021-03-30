@@ -41,6 +41,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.monginis.ops.common.Common;
 import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.constant.Constant;
@@ -67,6 +68,8 @@ import com.monginis.ops.model.Message;
 import com.monginis.ops.model.MessageListResponse;
 import com.monginis.ops.model.SchedulerList;
 import com.monginis.ops.model.Setting;
+import com.monginis.ops.model.access.OpsAccessRight;
+import com.monginis.ops.model.frsetting.FrSetting;
 import com.monginis.ops.model.pettycash.FrEmpMaster;
 
 import java.io.BufferedOutputStream;
@@ -212,6 +215,22 @@ public class HomeController {
 			model.addObject("msgList", msgList);
 			model.addObject("url", Constant.MESSAGE_IMAGE_URL);
 			model.addObject("isSpDayShow", spDayShow);
+			
+			
+			Gson gson = new Gson(); 			 
+			OpsAccessRight[] jsonArr = gson.fromJson(loginResponse.getFrEmp().getExVar1(), OpsAccessRight[].class); 
+			List<OpsAccessRight> empModule = new ArrayList<OpsAccessRight>(Arrays.asList(jsonArr));
+			
+			session.setAttribute("empModule", empModule);
+			model.addObject("empModule", empModule);
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", loginResponse.getFranchisee().getFrId());
+			FrSetting frSetting = restTemplate.postForObject(Constant.URL + "/getFrSettingValue", map, FrSetting.class);
+			System.out.println("frSetting------------------"+frSetting);
+			
+			session.setAttribute("frSetting", frSetting);
+			model.addObject("frSetting", frSetting);
 
 			logger.info("/login request mapping.");
 		} catch (Exception e) {
@@ -737,6 +756,7 @@ public class HomeController {
 		}
 		session.setAttribute("achievedTarget", achievedTarget);
 		session.setAttribute("fraTarget", frTotalSale.getTargetAmt());
+		session.setAttribute("frEmpId", loginResponse.getFrEmp().getFrEmpId());
 
 		model = new ModelAndView("home");
 		System.out.println("fr Image URL " + loginResponse.getFranchisee().getFrImage());
@@ -747,7 +767,14 @@ public class HomeController {
 		model.addObject("frEmpDetails", loginResponse.getFrEmp());
 		model.addObject("frDetails", loginResponse.getFranchisee());
 		model.addObject("url", Constant.MESSAGE_IMAGE_URL);
-		model.addObject("info", loginResponse.getLoginInfo());
+		model.addObject("info", loginResponse.getLoginInfo());	
+		
+		Gson gson = new Gson(); 		 
+		OpsAccessRight[] jsonArr = gson.fromJson(loginResponse.getFrEmp().getExVar1(), OpsAccessRight[].class); 
+		List<OpsAccessRight> empModule = new ArrayList<OpsAccessRight>(Arrays.asList(jsonArr));
+				
+		model.addObject("empModule", empModule);
+		
 		return "redirect:/home";
 		/* } */
 

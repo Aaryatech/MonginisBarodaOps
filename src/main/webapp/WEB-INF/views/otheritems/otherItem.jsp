@@ -17,7 +17,7 @@ table, th, td {
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <c:url var="editFrSupplier" value="/editFrSupplier"></c:url>
-
+<c:url value="getOtherItemCodeBySubCatId" var="getOtherItemCodeBySubCatId"/>
 <!--datepicker-->
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
@@ -78,11 +78,45 @@ table, th, td {
 							</a>
 						</div></div>
 					</div>
+
+						<div class="colOuter">
+							<div class="col-md-2">
+								<div class="col1title" align="left">Sub Category*:</div>
+							</div>
+							<div class="col-md-3">
+								<select name="subCat" required id="subCat"
+									class="form-control" placeholder="Select Sub Category">		
+											
+									<c:choose>
+										<c:when test="${isEdit==1}">
+											<c:forEach items="${subCatList}" var="subCatList">
+												<c:choose>
+													<c:when test="${item.itemGrp2==subCatList.subCatId }">
+														<option selected="selected" value="${subCatList.subCatId}">${subCatList.subCatName}</option>
+													</c:when>													
+												</c:choose>
+											</c:forEach>
+										</c:when>
+										
+										<c:otherwise>
+										<option value="">Select Sub Category</option>		
+											<c:forEach items="${subCatList}" var="subCatList">
+												<c:choose>
+													<c:when test="${item.itemGrp2==subCatList.subCatId }">
+														<option selected="selected" value="${subCatList.subCatId}">${subCatList.subCatName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${subCatList.subCatId}">${subCatList.subCatName}</option>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
+								</select>
+							</div>
+						</div>
 						
-						
-						
-						
-					<div class="colOuter">
+						<div class="colOuter">
 						<div class="col-md-2">
 							<div class="col1title" align="left">Item Code*: </div>
 						</div>
@@ -289,18 +323,18 @@ table, th, td {
 										 <td class="col-sm-1" style="text-align: right;"><c:out value="${count.index+1}" /></td>
 										<td class="col-md-1"><c:out
 												value="${itemList.itemId}" /></td>
-										<td class="col-md-2" style="text-align: center;"><c:out
+										<td class="col-md-2" style="text-align: left;"><c:out
 												value="${itemList.itemName}" /></td>
 									
-										<td class="col-md-1"><c:out
+										<td class="col-md-1" style="text-align: right;"><c:out
 												value="${itemList.itemRate1}" /></td>
-										<td class="col-md-1"><c:out
+										<td class="col-md-1" style="text-align: right;"><c:out
 												value="${itemList.itemMrp1}" /></td>
-										<td class="col-md-1"><c:out
+										<td class="col-md-1" style="text-align: right;"><c:out
 												value="${itemList.itemTax1}" /></td>
-											<td class="col-md-1"><c:out
+											<td class="col-md-1" style="text-align: right;"><c:out
 												value="${itemList.itemTax2}" /></td>
-												<td class="col-md-1"><c:out
+												<td class="col-md-1" style="text-align: right;"><c:out
 												value="${itemList.itemTax3}" /></td>
 										<td class="col-md-1" style="text-align: center;">
 										<c:choose>
@@ -497,6 +531,20 @@ function changeTax()
 			  }
 	  document.getElementById("igstPer").value=(cgstPer+sgstPer).toFixed(2);
 }
+
+</script>
+<script>
+	$("#subCat").change(function() {
+		var subCat = $("#subCat").val();
+		
+		$.getJSON('${getOtherItemCodeBySubCatId}', {
+			subCat : subCat,
+			ajax : 'true'
+		}, function(data) {
+			$("#itemCode").val(data)
+			
+		});
+	});
 </script>
 </body>
 </html>
