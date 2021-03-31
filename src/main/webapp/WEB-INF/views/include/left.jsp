@@ -21,7 +21,7 @@ abbr:hover {cursor: pointer;}
 			
 			<c:forEach items="${sessionScope.empModule}" var="list" varStatus="count">	
 				<c:set var="moduleId" value="${list.moduleId}"></c:set>
-${moduleId}
+
 				<c:if test="${moduleId==1}">
 
 					<li style="border: 1px; border-bottom: 1px solid #c9206c;"><a
