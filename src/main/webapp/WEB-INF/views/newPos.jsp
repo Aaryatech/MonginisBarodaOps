@@ -1935,6 +1935,13 @@ label:before {
 										});
 									});
 									$(document).ready(function() {
+										$('#myModalForCredit').popup({
+											focusdelay : 400,
+											outline : true,
+											vertical : 'top'
+										});
+									});
+									$(document).ready(function() {
 										$('#payment').popup({
 											focusdelay : 400,
 											outline : true,
@@ -4433,6 +4440,27 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 						}); 
 	  }
 
+	}
+	
+	function fetchRecord(){
+		
+		//alert("hi");
+
+	 var bills=document.getElementById("single12");
+	var tr=document.getElementById("split12");
+	var pending=document.getElementById("single22");
+	var deleted=document.getElementById("deleted13");
+
+	if(bills.checked==true){
+		getCustBills(1);
+	}else if(tr.checked==true){
+		getCustBills(3);
+	}else if(pending.checked==true){
+		getCustBills(2);
+	}else if(deleted.checked==true){
+		getCustBills(5);
+	} 
+	 
 	}
 	</script>
 </body>
