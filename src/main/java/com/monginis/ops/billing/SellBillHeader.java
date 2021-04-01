@@ -3,10 +3,10 @@ package com.monginis.ops.billing;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+ 
 
+public class SellBillHeader implements Serializable {
 
-public class SellBillHeader implements Serializable{
-	
 	private int sellBillNo;
 
 	private String invoiceNo;
@@ -63,12 +63,22 @@ public class SellBillHeader implements Serializable{
 
 	private char billType;
 
-	private int delStatus;
-	private int extInt1;
-	private int extInt2;
-	private float extFloat1;
+	private int delStatus; 
+	private int extInt1; 
+	private int extInt2; 
+	private float extFloat1; 
+	private float extFloat2; 
+	private float extFloat3; 
+	private String extVar1;  
+	private String extVar2;
+	
+	public String getExtVar2() {
+		return extVar2;
+	}
 
-	private String extVar1;
+	public void setExtVar2(String extVar2) {
+		this.extVar2 = extVar2;
+	}
 
 	public String getExtVar1() {
 		return extVar1;
@@ -344,6 +354,23 @@ public class SellBillHeader implements Serializable{
 		this.extInt2 = extInt2;
 	}
 
+	public float getExtFloat2() {
+		return extFloat2;
+	}
+
+	public void setExtFloat2(float extFloat2) {
+		this.extFloat2 = extFloat2;
+	}
+
+	public float getExtFloat3() {
+		return extFloat3;
+	}
+
+	public void setExtFloat3(float extFloat3) {
+		this.extFloat3 = extFloat3;
+	}
+ 
+
 	@Override
 	public String toString() {
 		return "SellBillHeader [sellBillNo=" + sellBillNo + ", invoiceNo=" + invoiceNo + ", billDate=" + billDate
@@ -356,8 +383,8 @@ public class SellBillHeader implements Serializable{
 				+ ", custLoyaltyPt=" + custLoyaltyPt + ", userName=" + userName + ", userGstNo=" + userGstNo
 				+ ", userPhone=" + userPhone + ", status=" + status + ", billType=" + billType + ", delStatus="
 				+ delStatus + ", extInt1=" + extInt1 + ", extInt2=" + extInt2 + ", extFloat1=" + extFloat1
-				+ ", extVar1=" + extVar1 + ", sellBillDetailsList=" + sellBillDetailsList + "]";
+				+ ", extFloat2=" + extFloat2 + ", extFloat3=" + extFloat3 + ", extVar1=" + extVar1 + ", extVar2="
+				+ extVar2 + ", sellBillDetailsList=" + sellBillDetailsList + "]";
 	}
 
-		
 }

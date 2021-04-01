@@ -52,8 +52,34 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/customerBill/chosen.css">
 <style>
-<!--
--->
+#overlay2 {
+	position: fixed;
+	display: none;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(239, 219, 219, 0.5);
+	z-index: 9992;
+	cursor: pointer;
+}
+
+#text2 {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	font-size: 25px;
+	color: white;
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+}
+
+.alertify-notifier {
+	z-index: 999999 !important;
+}
+
 #preloader {
 	position: fixed;
 	top: 0;
@@ -208,7 +234,7 @@ label:before {
 	<c:url var="revertHoldBillOnCurrent" value="/revertHoldBillOnCurrent" />
 	<c:url var="getAllItemList" value="/getAllItemList" />
 	<c:url var="getSubCatByCatIdAjax" value="/getSubCatByCatIdAjax" />
-
+	<c:url var="submitBill" value="/submitBill" />
 	<div style="display: none;">
 		<a href="${pageContext.request.contextPath}/newPos" id="relod"></a>
 	</div>
@@ -981,17 +1007,17 @@ label:before {
 								class="hold print_btn   initialism payment_open"
 								style="display: none;">Payment</button>
 							<a href="#" class="hold print_btn  initialism  "
-								onclick="paymentClick()">Payment</a>
+								onclick="openPaymentPopup()">Payment Option</a>
 							<!-- 	<a href="#" class="hold print_btn"  >Print Order</a>  -->
 							<!-- <button  id="payment1" class="hold bill_btn   "  style="display: none;">Print Bill</button> -->
-							<a href="#" class="hold bill_btn" onclick="printBillClick()">Print
-								Bill</a>
+							<a href="#" class="hold bill_btn" onclick="submitBill(2)">Print
+								GST Bill</a>
 						</div>
 						<div class="button_two">
 							<!-- 	<button  id="payment1" class="hold pay_btn  initialism payment_open"  style="display: none;">Payment</button>
 							<a href="#"   class="hold pay_btn  initialism " onclick="paymentClick()">Payment</a> -->
 							<a href="#" class="hold pay_btn  initialism "
-								onclick="billClick()">Bill</a>
+								onclick="submitBill(10)">Bill</a>
 						</div>
 
 					</div>
@@ -1006,7 +1032,13 @@ label:before {
 
 
 				</div>
-
+				<div id="overlay2">
+					<div id="text2">
+						<img
+							src="${pageContext.request.contextPath}/resources/newpos/images/loader.gif"
+							alt="madhvi_logo">
+					</div>
+				</div>
 				<script>
 					$(document).ready(function() {
 						$('.carlist_scrollbars').ClassyScroll();
@@ -1065,7 +1097,7 @@ label:before {
 
 			<h3 class="pop_head">Payment</h3>
 
-			<div class="add_frm">
+			<%-- <div class="add_frm">
 				<div class="add_customer_one">Discount %</div>
 				<div class="add_input" id="discountPopup">
 					<input type="text" name="discPer" id="discPer" step="0.01"
@@ -1150,6 +1182,320 @@ label:before {
 				<div class="close_l"></div>
 				<div class="close_r">
 					<a onclick="submitPayment()" href="#">Submit</a>
+				</div>
+				<div class="clr"></div>
+			</div> --%>
+
+			<div class="add_frm">
+
+
+				<div class="add_frm_one">
+					<div class="add_customer_one">Total AMT</div>
+					<div class="add_input" id="totalAmtPopup">
+						<%-- <fmt:formatNumber type="number" groupingUsed="false"
+							value="${totalAmt-advanceAmt}" maxFractionDigits="2"
+							minFractionDigits="2" /> --%>
+						<fmt:formatNumber type="number" groupingUsed="false"
+							value="${totalAmt}" maxFractionDigits="2" minFractionDigits="2" />
+
+					</div>
+					<div class="clr"></div>
+				</div>
+
+
+				<%-- <div class="add_frm_one">
+					<div class="add_customer_one">Advance AMT</div>
+					<div class="add_input" id="advAmtPopup">
+						<fmt:formatNumber type="number" groupingUsed="false"
+							value="${advanceAmt}" maxFractionDigits="2" minFractionDigits="2" />
+					</div>
+					<div class="clr"></div>
+				</div> --%>
+
+				<div class="add_frm_one">
+					<div class="add_customer_one">Discount %</div>
+					<div class="add_input" id="discountPopup">
+						<input type="text" name="discPer" id="discPer" step="0.01"
+							oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+							onchange="itemDiscPerCalculation(1)"
+							onkeyup="itemDiscPerCalculation(1)" class="form-control"
+							value="0" placeholder="Disc %"
+							style="text-align: center; width: 90px; border-radius: 20px;" />
+						<label for="discAmtLabel"
+							style="font-weight: 700; padding-left: 5px;">&nbsp;Disc
+							Amt&nbsp;</label> <input type="text" name="discAmt" id="discAmt"
+							oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+							onchange="itemDiscPerCalculation(2)"
+							onkeyup="itemDiscPerCalculation(2)" class="form-control"
+							value="0" placeholder="Disc Amt"
+							style="text-align: center; width: 90px; border-radius: 20px;" />
+					</div>
+					<div class="clr"></div>
+				</div>
+				<div class="add_frm_one">
+					<div class="add_customer_one">Total Payable</div>
+					<div class="add_input" id="totalPayableAmt">
+						<fmt:formatNumber type="number" groupingUsed="false"
+							value="${totalAmt-advanceAmt}" maxFractionDigits="2"
+							minFractionDigits="2" />
+					</div>
+					<div class="clr"></div>
+				</div>
+				<div class="add_frm_one">
+					<div class="add_customer_one">Credit Bill</div>
+					<div class="add_input">
+						<div class="radio_row popup_radio">
+							<ul>
+								<li><input type="radio" id="creditBillyes"
+									name="creditBill" onclick="modeOfPayDivHideShow(1)"> <label
+									for="creditBillyes">Yes</label>
+									<div class="check"></div></li>
+								<li><input type="radio" id="creditBillno" name="creditBill"
+									checked onclick="modeOfPayDivHideShow(2)"> <label
+									for="creditBillno">No </label>
+									<div class="check">
+										<div class="inside"></div>
+									</div></li>
+							</ul>
+						</div>
+					</div>
+					<div class="clr"></div>
+				</div>
+				<div id="modeOfPayDiv">
+
+					<div class="add_frm_one">
+						<div class="add_customer_one">Mode of Pay</div>
+						<div class="add_input">
+							<div class="radio_row popup_radio">
+								<ul>
+									<li><input type="radio" id="single" name="modePay"
+										onclick="changeSplitSingle(1)" checked> <label
+										for="single">Single</label>
+										<div class="check"></div></li>
+									<li style="display: none;"><input type="radio" id="split"
+										name="modePay" onclick="changeSplitSingle(2)"> <label
+										for="split">Split </label>
+										<div class="check">
+											<div class="inside"></div>
+										</div></li>
+								</ul>
+							</div>
+						</div>
+						<div class="clr"></div>
+					</div>
+					<div id="splitDiv" style="display: none;">
+						<div class="add_frm_one">
+							<div class="add_customer_one">Cash</div>
+							<div class="add_input">
+								<div class="radio_row popup_radio">
+									<ul>
+										<li>
+											<!-- <input type="checkbox" id="cashCheck"
+											name="cashCheck" checked> &nbsp;  --> <input type="text"
+											id="cashAmt" name="cashAmt" class=" input_add numberOnly"
+											oninput="matchSplitAmt(1)" onchange="matchSplitAmt(1)"
+											style="font-size: 16px;" placeholder="Cash Amount" value="0">
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="clr"></div>
+						</div>
+
+						<div class="add_frm_one">
+							<div class="add_customer_one">Card</div>
+							<div class="add_input">
+								<div class="radio_row popup_radio">
+									<ul style="padding-left: 5px;">
+										<li>
+											<!-- <input type="checkbox" id="cardCheck"
+											name="cardCheck"> &nbsp;  --> <input type="text" id="cardAmt"
+											name="cardAmt" class=" input_add numberOnly"
+											placeholder="Card Amount" value="0" style="font-size: 16px;"
+											oninput="matchSplitAmt(2)" onchange="matchSplitAmt(2)">
+										</li>
+										<li style="padding-left: 5px;"><select
+											name="cardTypeSplit" id="cardTypeSplit"
+											data-placeholder="Card Type" class="input_add "
+											style="text-align: left; font-size: 16px;">
+												<option value="" style="text-align: left;">Select
+													Card</option>
+
+												<option value="4" style="text-align: left;">Debit
+													Card</option>
+												<option value="5" style="text-align: left;">Credit
+													Card</option>
+										</select></li>
+									</ul>
+								</div>
+							</div>
+							<div class="clr"></div>
+						</div>
+
+						<div class="add_frm_one">
+							<div class="add_customer_one">E-Pay</div>
+							<div class="add_input">
+								<div class="radio_row popup_radio">
+									<ul>
+										<li>
+											<!-- <input type="checkbox" id="epayCheck"
+											name="epayCheck"> &nbsp;  --> <input type="text" id="epayAmt"
+											name="epayAmt" class="input_add numberOnly"
+											placeholder="E-Pay Ammount" value="0"
+											style="font-size: 16px;" oninput="matchSplitAmt(3)"
+											onchange="matchSplitAmt(3)">
+										</li>
+										<li style="padding-left: 5px;"><select
+											name="ePayTypeSplit" id="ePayTypeSplit"
+											data-placeholder="E-Pay Type" class="input_add "
+											style="text-align: left; font-size: 16px;">
+												<option value="">E-Pay Type</option>
+
+												<option value="7" style="text-align: left;">Paytm</option>
+
+												<option value="8" style="text-align: left;">Google
+													Pay</option>
+												<option value="6" style="text-align: left;">Bank
+													Transaction</option>
+												<option value="9" style="text-align: left;">Amazon
+													Pay</option>
+										</select></li>
+
+									</ul>
+								</div>
+							</div>
+
+						</div>
+						<div class="add_frm_one">
+							<div class="add_customer_one" id="epayLabel"></div>
+						</div>
+
+						<div class="clr"></div>
+					</div>
+
+					<div id="singleDiv">
+						<div class="add_frm_one">
+							<div class="add_customer_one">Type</div>
+							<div class="add_input">
+								<select name="billType" id="billType" data-placeholder="Type"
+									onchange="onPayTypeChange(this.value)" class="input_add "
+									style="text-align: left; font-size: 16px;">
+									<option value="1" style="text-align: left;" selected>Cash</option>
+									<option value="2" style="text-align: left;">Card</option>
+									<option value="3" style="text-align: left;">E-Pay</option>
+								</select>
+								<!-- <div class="dropdown popup_drop">
+									<div class="select">
+										<span>Payment Mode</span>
+									</div>
+
+									<ul class="dropdown-menu">
+										<li id="male">Cash</li>
+										<li id="female">Card</li>
+										<li id="female">E-pay</li>
+									</ul>
+								</div> -->
+
+							</div>
+							<div class="clr"></div>
+						</div>
+						<div class="add_frm_one" id="cardTypeDiv" style="display: none;">
+							<div class="add_customer_one">Card Type</div>
+							<div class="add_input">
+								<select name="cardType" id="cardType"
+									data-placeholder="Card Type" class="input_add "
+									style="text-align: left; font-size: 16px;">
+									<option value="" style="text-align: left;">Select Card</option>
+
+									<option value="4" style="text-align: left;">Debit Card</option>
+									<option value="5" style="text-align: left;">Credit
+										Card</option>
+								</select>
+
+							</div>
+							<div class="clr"></div>
+						</div>
+						<div class="add_frm_one" id="epayTypeDiv" style="display: none;">
+							<div class="add_customer_one">E-Pay Type</div>
+							<div class="add_input">
+								<select name="ePayType" id="ePayType"
+									data-placeholder="E-Pay Type" class="input_add "
+									style="text-align: left; font-size: 16px;">
+									<option value="">Select E-Pay Type</option>
+									<option value="7" style="text-align: left;">Paytm</option>
+									<option value="8" style="text-align: left;">Google Pay</option>
+									<option value="6" style="text-align: left;">Bank
+										Transaction</option>
+
+									<option value="9" style="text-align: left;">Amazon Pay</option>
+								</select>
+							</div>
+							<div class="clr"></div>
+						</div>
+
+						<div class="add_frm_one">
+							<div class="add_customer_one">Remark</div>
+							<div class="add_input">
+								<input name="payRemark" id="payRemark" type="text"
+									class="input_add " style="font-size: 100%;"
+									placeholder="Enter Remark" value="" />
+							</div>
+							<div class="clr"></div>
+						</div>
+
+						<div class="add_frm_one">
+							<div class="add_customer_one">Amount</div>
+							<div class="add_input">
+								<input name="payAmt" id="payAmt" type="text"
+									class="input_add numberOnly" placeholder="Enter Amount"
+									readonly="readonly" value="${totalAmt-advanceAmt}"
+									style="background-color: lightgrey; font-size: 16px;" />
+							</div>
+							<div class="clr"></div>
+						</div>
+
+
+						<div class="add_frm_one">
+							<div class="add_customer_one"></div>
+							<div class="add_input">
+
+								<label style="font-weight: 700; padding-left: 5px;">Paid&nbsp;</label>
+								<input type="text" name="pAmt" id="pAmt"
+									oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+									onchange="amtReturnCal()" onkeyup="amtReturnCal()"
+									class="form-control" value="" placeholder="Amount"
+									style="text-align: center; width: 90px; border-radius: 20px;" />
+
+
+								&nbsp;&nbsp; <label style="font-weight: 700; padding-left: 5px;">Return&nbsp;</label>
+								<input type="text" name="rAmt" id="rAmt" readonly="readonly"
+									class="form-control" value="" placeholder="Amount"
+									style="text-align: center; width: 90px; border-radius: 20px;" />
+
+
+
+							</div>
+							<div class="clr"></div>
+						</div>
+
+					</div>
+					<!-- <div class="add_frm_one">
+						<div class="add_customer_one">Amount</div>
+						<div class="add_input">
+							<input name="" type="text" class="input_add" />
+						</div>
+						<div class="clr"></div>
+					</div> -->
+				</div>
+			</div>
+			<div class="pop_btns">
+				<div class="close_l">
+					<button class="payment_close close_btn">Close</button>
+				</div>
+
+				<div class="close_r">
+					<a href="#" onclick="submitBillByPaymentOption(2)">GST Bill</a>
+					&nbsp;<a href="#" onclick="submitBillByPaymentOption(1)">KOT</a>
 				</div>
 				<div class="clr"></div>
 			</div>
@@ -1789,8 +2135,14 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 						document.getElementById("totalTax").innerHTML=tax.toFixed(2);
 						//alert(finalAmt);
 						document.getElementById("finalAmount").innerHTML=total.toFixed(2);
+						document.getElementById("totalAmtPopup").innerHTML = total.toFixed(2); 
+						document.getElementById("totalPayableAmt").innerHTML = total.toFixed(2);
+						
+						
 						document.getElementById("tblQty").value="";
-						jQuery("#preloader").delay(0).fadeOut("slow");
+						//jQuery("#preloader").delay(0).fadeOut("slow");
+						
+						
 						
 						 },
 		       error: function(jqXHR, textStatus, errorThrown)
@@ -1919,26 +2271,33 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 	var flag = 0;
 
 	if (customerName == "") {
-		alert("Enter Customer Name");
+		//alert("Enter Customer Name");
+		alertify.error("Enter Customer Name"); 
 		flag = 1;
 	} 
 	 
 	else if (mobileNo == "" || !validateMobile(mobileNo)) {
-		alert("Enter Valid Mobile No");
+		alertify.error("Enter Valid Mobile No"); 
+		//alert("Enter Valid Mobile No");
 		flag = 1;
 	}  else if (ageRange == 0) {
-		alert("Please Select Age Group");
+		
+		alertify.error("Please Select Age Group"); 
+		//alert("Please Select Age Group");
 		flag = 1;
 	} else if (buisness == 1) {
 
 		if (companyName == "") {
-			alert("Enter Company Name");
+			//alert("Enter Company Name");
+			alertify.error("Enter Company Name"); 
 			flag = 1;
 		} else if (gstNo == "") {
-			alert("Enter GST No");
+			alertify.error("Enter GST No"); 
+			//alert("Enter GST No");
 			flag = 1;
 		}else if(checkGST(gstNo)==false){
-			alert("Invalid GST No");
+			//alert("Invalid GST No");
+			alertify.error("Invalid GST No"); 
 			flag = 1;
 		}
 	}
@@ -2120,7 +2479,11 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 						document.getElementById("totalTax").innerHTML=tax.toFixed(2);
 						//alert(finalAmt);
 						document.getElementById("finalAmount").innerHTML=total.toFixed(2);
+						document.getElementById("totalAmtPopup").innerHTML = total.toFixed(2); 
+						document.getElementById("totalPayableAmt").innerHTML = total.toFixed(2);
 						document.getElementById("tblQty").value="";
+						
+						
 						
 		       },
 		       error: function(jqXHR, textStatus, errorThrown)
@@ -2132,7 +2495,15 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 	 
  }
  
- 
+ function amtReturnCal() {
+		
+		var amt=document.getElementById("payAmt").value;
+		var pay=document.getElementById("pAmt").value;
+		 
+		var ret=amt-pay;
+		document.getElementById("rAmt").value=ret;
+		
+	}
  function paymentClick(){
 	
 	 var pAmt=document.getElementById("finalAmount").innerHTML;
@@ -2183,7 +2554,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
  
  
  
- function itemDiscPerCalculation(val){
+/*  function itemDiscPerCalculation(val){
 	 var pAmt=document.getElementById("finalAmount").innerHTML;
 	 //alert(pAmt);
 	 if(val==1){
@@ -2201,13 +2572,178 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		 document.getElementById("pAmt").value=pAmt-amount;
 	}
 	 
- }
+ } */
  
- 
- 
- 
+ function itemDiscPerCalculation(flag) {
+		
+		document.getElementById("cashAmt").value =0;
+		document.getElementById("cardAmt").value =0;
+		document.getElementById("epayAmt").value =0;
+		document.getElementById("epayLabel").innerHTML =" Total: &nbsp;&nbsp;"+0;
+ 	document.getElementById("epayLabel").style.color="black";
 
-	function amtReturnCal() {
+		var discPer = parseFloat($('#discPer').val());
+		var discAmt = parseFloat($('#discAmt').val());
+		var totalAmtPopup;
+		
+		var grandTot=parseFloat($('#totalAmtPopup').text());
+		
+		//var advAmt = document.getElementById("advAmt").value;
+		var advAmt = 0;
+		totalAmtPopup= parseFloat($('#totalAmtPopup').text())-advAmt;
+		
+		//alert("TOT - "+totalAmtPopup);
+		
+		//alert(discAmt+"------- "+totalAmtPopup);
+		
+		 /*  if(parseFloat(advAmt)>0){
+			totalAmtPopup= parseFloat($('#totalAmtPopup').text())-parseFloat(advAmt);
+		}else{
+			totalAmtPopup= parseFloat($('#totalAmtPopup').text());
+		}   */
+		
+		if(flag==1){
+			
+			var calDiscAmt = parseFloat(grandTot*discPer/100);
+			
+			if(discPer>100){
+				alert("Discount percent is invalid");
+				document.getElementById("discAmt").value=0;
+				document.getElementById("discPer").value=0;
+				//document.getElementById("payAmt").value =totalAmtPopup;
+				
+				var totalAmt=totalAmtPopup-0;
+				document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
+				document.getElementById("payAmt").value = totalAmt.toFixed(0);
+				
+			}else{
+			
+			var totalAmt=totalAmtPopup-calDiscAmt;
+			document.getElementById("discAmt").value = calDiscAmt.toFixed(2);
+			document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
+			document.getElementById("payAmt").value = totalAmt.toFixed(0);
+			}
+			
+			
+			
+			
+			
+			/* var totalAmt=totalAmtPopup-calDiscAmt;
+			
+			if(isNaN(calDiscAmt)){
+				calDiscAmt=0;
+				totalAmt=totalAmtPopup;
+			}
+			
+			document.getElementById("discAmt").value = calDiscAmt.toFixed(2);
+			document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
+			document.getElementById("payAmt").value = totalAmt.toFixed(2); */
+			 
+		}else{
+			
+			 if(discAmt>grandTot){
+				 if(discAmt!=0){
+					alert("Discount amount should be smaller than total amount");
+				 }
+				document.getElementById("discPer").value=0;
+				document.getElementById("discAmt").value=0;
+				//document.getElementById("payAmt").value=payableAmount;
+				
+				var totalAmt=payableAmount-0;
+				document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
+				document.getElementById("payAmt").value = totalAmt.toFixed(0);
+				
+			}else{
+				/* alert(discAmt)
+				alert(grandTot) */
+			var calDiscPer = parseFloat((discAmt/(grandTot/100)));
+
+			
+			var totalAmt=totalAmtPopup-discAmt;
+			document.getElementById("discPer").value = calDiscPer.toFixed(2);;
+			document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
+			document.getElementById("payAmt").value = totalAmt.toFixed(0);
+			} 
+			
+			/* var calDiscPer = parseFloat((discAmt/(grandTot/100)));
+			var totalAmt=totalAmtPopup-discAmt;
+			
+			if(isNaN(calDiscPer)){
+				calDiscPer=0;
+				totalAmt=totalAmtPopup;
+			}
+			
+			document.getElementById("discPer").value = calDiscPer;
+			document.getElementById("totalPayableAmt").innerHTML = totalAmt;
+			document.getElementById("payAmt").value = totalAmt; */
+
+		}
+	}
+ 
+ 
+ function openPaymentPopup() {
+		
+	 $.getJSON('${getItemList}',{ajax:true},function(data){
+			if(data.length<1){
+				//$('#empty_itemList').show()
+				alertify.error("Please Select Atleast One Item To Genrate Bill!!!!!");
+			}else{
+				document.getElementById("pAmt").value=0;
+				document.getElementById("rAmt").value=0;
+				
+				
+				var advAmt = 0;
+				var custId =  $('#custId').val() ;
+				
+				//var dfCust=${defaultCustomer};
+		 
+				var key =  $('#key').val() ;
+			
+				 
+				document.getElementById("cashAmt").value =0;
+				document.getElementById("cardAmt").value =0;
+				document.getElementById("epayAmt").value =0;
+				document.getElementById("epayLabel").innerHTML =" Total: &nbsp;&nbsp;"+0;
+		 		document.getElementById("epayLabel").style.color="black";
+
+		 	
+		 		var advAmt = 0;
+		 	 
+		 	 
+				
+				var amt=parseFloat($('#totalAmtPopup').text())-advAmt;
+				 
+				
+				document.getElementById("totalPayableAmt").innerHTML = amt;
+				 //alert(custId)
+				document.getElementById("payAmt").value = amt;
+
+				itemDiscPerCalculation(2);
+				/* document.getElementById("discAmt").value=0;
+				document.getElementById("discPer").value=0; */
+				$("#modeOfPayDiv").show();
+				document.getElementById("creditBillno").checked = true;
+				 
+				var rowcount = $('#itemTable tr').length;
+				var flag = 0;
+				  
+				 if(rowcount<=1){
+					 alert("Select Minimum Product");
+					 flag=1;
+				 }else if(custId==0 || custId==null || custId==""){
+					 flag=1;
+					 //alert("Select Customer");
+					 alertify.error("Select customer.");
+				 }
+				 
+				 if(flag==0){
+					 $('#payment').popup('show');
+				 }
+			}
+		});
+	  
+	}
+	/* function amtReturnCal() {
 		
 		var amt=document.getElementById("paidAmt").value;
 		var pay=document.getElementById("pAmt").value;
@@ -2215,7 +2751,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		var ret=amt-pay;
 		document.getElementById("rAmt").value=ret;
 		
-	}
+	} */
  
  
  
@@ -2586,6 +3122,495 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
 		replace(/\n +/, "\n"); // Removes spaces after newlines
 		return;
+	}
+	function modeOfPayDivHideShow(value) {
+
+		if (value == 2) {
+			$("#modeOfPayDiv").show();
+		} else {
+			 document.getElementById('single').checked = true;
+			 changeSplitSingle(1);
+			$("#modeOfPayDiv").hide();
+			
+			 let element = document.getElementById('billType');
+			    element.value = 1;
+			    
+		}
+
+	}
+	function changeSplitSingle(value) {
+
+		if (value == 2) {
+			$("#splitDiv").show();
+			$("#singleDiv").hide();
+		} else {
+			$("#singleDiv").show();
+			$("#splitDiv").hide();
+		}
+
+	}
+	function onPayTypeChange(type){
+		if(type==1){
+			$('#cardTypeDiv').hide();
+			$('#epayTypeDiv').hide();
+		}else
+		if(type==2){
+			$('#cardTypeDiv').show();
+			$('#epayTypeDiv').hide();
+			document.getElementById("cardType").value=4;
+		}else if(type==3){
+			$('#epayTypeDiv').show();
+			$('#cardTypeDiv').hide();
+			
+			document.getElementById("ePayType").value=7;
+		}
+	}
+	function submitBillByPaymentOption(printbilltype) {
+		 
+								var advAmt = 0;  
+								var flagPayable=0;
+								
+								//document.getElementById("credAmt").innerHTML="0.0";
+
+								if (document.getElementById('split').checked) {
+											
+									var totalPayableAmt=parseFloat($('#totalPayableAmt').text());
+									
+									var cashAmt =  $('#cashAmt').val() ;
+									var cardAmt =  $('#cardAmt').val() ;
+									var epayAmt =  $('#epayAmt').val() ;
+								 
+									
+									var epayLabel=parseFloat(cashAmt)+parseFloat(cardAmt)+parseFloat(epayAmt)
+						 			 
+								 if(totalPayableAmt==epayLabel){
+									 
+									 flagPayable=1;
+								 }else{
+									 
+									 flagPayable=2;
+								 }
+								}
+						 
+								if(parseInt(flagPayable)==2 && document.getElementById('creditBillno').checked){
+									alert("Please Enter the valid Bill Amount!!");
+									
+								}else{
+								   
+								var key =  $('#key').val() ;
+								var custId =  $('#custId').val() ;
+								var cashAmt =  $('#cashAmt').val() ;
+								var cardAmt =  $('#cardAmt').val() ;
+								var epayAmt =  $('#epayAmt').val() ;
+								var billType =  $('#billType').val() ;
+								var payType=0;var payTypeFlag=0; var payTypeSplit="0";var msg="";
+								
+								
+								if(billType==1){
+									payTypeFlag=0;
+									payType=1;
+								}else if(billType==2) {
+									var cardType = $('#cardType option:selected').val();
+									if(cardType=="")
+										{
+										payTypeFlag=1;
+										msg="Please Select Pay Type( Card Type Or E-Pay type)";
+										}
+									payType=cardType;
+									}else if(billType==3)
+										{
+										var ePayType =  $('#ePayType option:selected').val();
+										if(ePayType=="")
+										{
+										payTypeFlag=1;
+										msg="Please Select Pay Type( Card Type Or E-Pay type)";
+										}
+										payType=ePayType;
+										} 
+								var payAmt =  $('#payAmt').val() ;
+								var frtype =  $('#frtype').val() ;
+								var discPer =  $('#discPer').val() ;
+								var discAmt =  $('#discAmt').val() ;
+								
+								var billAmtWtDisc;
+								
+								if(parseFloat(advAmt)>0){
+								 
+									billAmtWtDisc=parseFloat($('#totalAmtPopup').text())-parseFloat(advAmt);
+								}else{
+									billAmtWtDisc=parseFloat($('#totalAmtPopup').text())
+								}
+								
+								
+								var creditBill = 1;
+								var single = 1;
+								var selectedText = $("#cust option:selected").text(); 
+								var flag=0;
+								
+								if (document.getElementById('creditBillno').checked) {
+									creditBill = 2;
+								}
+								if (document.getElementById('split').checked) {
+									single = 2;
+									if(cashAmt>0){
+										payTypeSplit=",1";
+									}
+									var cardTypeSplit = $('#cardTypeSplit option:selected').val();
+									if(cardTypeSplit=="" && cardAmt>0)
+										{
+										msg="Please Select Card Type";
+										payTypeFlag=1;
+										}else if(cardAmt>0)
+											{
+											payTypeSplit=payTypeSplit+","+cardTypeSplit;
+											}
+									var ePayTypeSplit =  $('#ePayTypeSplit option:selected').val();
+									if(ePayTypeSplit=="" && epayAmt>0)
+									{
+										msg="Please Select Card & E-pay Type";payTypeFlag=1;
+									}else if(epayAmt>0)
+									{
+										payTypeSplit=payTypeSplit+","+ePayTypeSplit;
+									}
+								}
+								
+								if (cashAmt=="") {
+									cashAmt=0;
+								}
+								if (cardAmt=="") {
+									cardAmt=0;
+								}
+								if (epayAmt=="") {
+									epayAmt=0;
+								}
+								if (discPer=="") {
+									discPer=0;
+								}
+								if (discAmt=="") {
+									discAmt=0;
+								}
+								
+								if(creditBill==2 && single==1 && payAmt==""){
+									alert("Please Enter Amount");
+								}else
+									if(payTypeFlag==1){
+										alert(msg);
+									}else{
+									 $('#payment').popup('hide');
+									  document.getElementById("overlay2").style.display = "block";
+									  
+									  var fd=new FormData();
+										fd.append('key',key);
+										fd.append('custId',custId);
+												fd.append('creditBill',creditBill);
+												fd.append('paymentMode',single);
+											fd.append('billType',billType);
+													fd.append('payType',payType);
+												fd.append('payTypeSplit',payTypeSplit);
+																fd.append('cashAmt',cashAmt);
+													fd.append('cardAmt',cardAmt);
+																	fd.append('epayAmt',epayAmt);
+																fd.append('selectedText',selectedText);
+																fd.append('payAmt',payAmt);
+																	fd.append('discPer',discPer);
+																	fd.append('discAmt',discAmt);
+																	fd.append('billAmtWtDisc',billAmtWtDisc);
+																	fd.append('advAmt',advAmt);
+																	fd.append('remark',remark);
+													
+										
+										  $.ajax({
+										       url: '${pageContext.request.contextPath}/submitBillByPaymentOption',
+										       type: 'POST',
+										       data: fd,
+										       dataType: 'json',
+										       processData: false,
+										       contentType: false, 
+										       success: function(data, textStatus, jqXHR)
+										       { 
+
+													document.getElementById("discAmt").value=0;
+													document.getElementById("discPer").value=0;
+													 
+													 if(key==0){
+														 if(printbilltype==1){
+																
+															 //window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+															 
+															 var url="${pageContext.request.contextPath}/printKotBill/"+data.message;
+																
+															 $("<iframe>")                             
+													        .hide()                               
+													        .attr("src",url) 
+													        .appendTo("body"); 
+															 
+															 
+														}else if(printbilltype==2){
+															 
+															if(frtype<10000000){
+																//window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+																
+																 var url="${pageContext.request.contextPath}/printBillOfSupply/"+data.message;
+																	
+																 $("<iframe>")                             
+														        .hide()                               
+														        .attr("src",url) 
+														        .appendTo("body"); 
+																
+															}else{
+																//window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+																
+																 var url="${pageContext.request.contextPath}/printBillOfInvoice/"+data.message;
+																	
+																 $("<iframe>")                             
+														        .hide()                               
+														        .attr("src",url) 
+														        .appendTo("body"); 
+																
+															}
+														}
+														 var defaultCustomer =  1;
+															document.getElementById("custId").value = defaultCustomer;
+															cancelBill(0); 
+															$('.chosen-select').trigger(
+															'chosen:updated');
+															document.getElementById("overlay2").style.display = "none";	
+															
+															 
+															 document.getElementById('creditBillno').checked = true;
+															 document.getElementById('single').checked = true;
+															 document.getElementById("cashAmt").value = 0; 
+															 document.getElementById("cardAmt").value = 0; 
+															 document.getElementById("epayAmt").value = 0; 
+															 document.getElementById("payAmt").value = 0; 
+															 $("#splitDiv").hide();
+															 $("#singleDiv").show();
+													 }else{
+														 if(printbilltype==1){
+																
+															 //window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+															 
+															 var url="${pageContext.request.contextPath}/printKotBill/"+data.message;
+																
+															 $("<iframe>")                             
+													        .hide()                               
+													        .attr("src",url) 
+													        .appendTo("body"); 
+															 
+														}else if(printbilltype==2){
+															 
+															if(frtype<10000000){
+																//window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+																
+																 var url="${pageContext.request.contextPath}/printBillOfSupply/"+data.message;
+																	
+																 $("<iframe>")                             
+														        .hide()                               
+														        .attr("src",url) 
+														        .appendTo("body"); 
+																
+															}else{
+																//window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+																
+																 var url="${pageContext.request.contextPath}/printBillOfInvoice/"+data.message;
+																	
+																 $("<iframe>")                             
+														        .hide()                               
+														        .attr("src",url) 
+														        .appendTo("body"); 
+																 
+															}
+														}
+														 window.location = "${pageContext.request.contextPath}/newPos/0";
+													 }
+										    	   
+										       },
+										       error: function(jqXHR, textStatus, errorThrown)
+										       {
+										           console.log('ERRORS: ' + textStatus);
+										       }
+										   });
+										  
+									  
+								} 
+								}
+								 
+		 
+	}
+	
+	function submitBill(printbilltype) {
+		
+		 
+	   
+							
+							var advAmt = 0
+							/* var advOrderDate = document.getElementById("advOrderDate").value;
+							var isAdvanceOrder= document.getElementById("isAdvanceOrder").value; */
+							var key =  $('#key').val() ;
+							/* var key =  $('#advKey').val() ; */
+							var custId =  $('#custId').val() ;
+							var selectedText = $("#cust option:selected").text(); 
+							//document.getElementById("credAmt").innerHTML="0.0";
+
+							var frtype =  $('#frtype').val() ;
+							var rowcount = $('#itemTable tr').length;
+							var flag = 0;
+							   
+							 if(rowcount<=1){
+								 alertify.error("Add Minimum One Product");
+								 flag=1;
+							 }else if(custId==0 || custId==null){
+								 flag=1;
+								 alertify.error("Select customer.");
+								 //alert("Select Customer");
+							 }
+							 
+							 if(flag==0){
+							 document.getElementById("overlay2").style.display = "block";
+							   $
+								.post(
+										'${submitBill}',
+										{
+											key : key,  
+											custId : custId,
+					 						selectedText : selectedText,
+					 						advAmt:advAmt,
+					 						advOrderDate : '',
+					 						isAdvanceOrder : 0,
+											ajax : 'true'
+										},
+										function(data) {
+											document.getElementById("discAmt").value=0;
+											document.getElementById("discPer").value=0;
+											  if(advAmt>0){
+											 document.getElementById("advAmt").value = 0; 
+											 document.getElementById("advBillLable").style.display = 'none';
+											 document.getElementById("actionName").innerHTML= 'ADD BILL';
+											  }
+											  
+											 // alert(key);
+											  
+												if(key==0){
+													
+													if(printbilltype==1){
+														
+														//alert("hiii");
+														 
+														//window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+														 
+														//alert("hi");
+														//var url="${pageContext.request.contextPath}/printKotBill/"+data.message;
+														//alert(url);
+														
+														 var url="${pageContext.request.contextPath}/printKotBill/"+data.message;
+														
+														 $("<iframe>")                             
+												        .hide()                               
+												        .attr("src",url) 
+												        .appendTo("body");    
+												        
+												         
+														
+													}else if(printbilltype==2){
+														 
+														if(frtype<10000000){
+															//window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+														
+															var url="${pageContext.request.contextPath}/printBillOfSupply/"+data.message;
+															
+															 $("<iframe>")                             
+													        .hide()                               
+													        .attr("src",url) 
+													        .appendTo("body");   
+													        
+														
+														}else{
+															//window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+														
+															var url="${pageContext.request.contextPath}/printBillOfInvoice/"+data.message;
+															
+															 $("<iframe>")                             
+													        .hide()                               
+													        .attr("src",url) 
+													        .appendTo("body");   
+														
+														}
+													}
+													
+													 	var defaultCustomer =  1;
+													 	//alert(defaultCustomer)
+													 	document.getElementById("custId").value = defaultCustomer;
+													 	cancelBill(0); 
+														$('.chosen-select').trigger(
+														'chosen:updated');
+														document.getElementById("overlay2").style.display = "none";	 
+												 }else{
+													 if(printbilltype==1){
+															
+														 //window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+														 
+														 var url="${pageContext.request.contextPath}/printKotBill/"+data.message;
+															
+														 $("<iframe>")                             
+												        .hide()                               
+												        .attr("src",url) 
+												        .appendTo("body");   
+														 
+														 
+													}else if(printbilltype==2){
+														 
+														if(frtype<10000000){
+															//window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+															
+															
+															var url="${pageContext.request.contextPath}/printBillOfSupply/"+data.message;
+															
+															 $("<iframe>")                             
+													        .hide()                               
+													        .attr("src",url) 
+													        .appendTo("body");  
+															
+														}else{
+															//window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+														
+															var url="${pageContext.request.contextPath}/printBillOfInvoice/"+data.message;
+															
+															 $("<iframe>")                             
+													        .hide()                               
+													        .attr("src",url) 
+													        .appendTo("body");  
+														
+														
+														}
+													}
+													 
+														// var defaultCustomer =  $('#defaultCustomer').val() ;
+													 	//alert(defaultCustomer)
+													 	document.getElementById("custId").value = 1;
+													 	cancelBill(0); 
+														$('.chosen-select').trigger(
+														'chosen:updated');
+														document.getElementById("overlay2").style.display = "none";	 
+														document.getElementById("key").value = 0; 
+														
+														//alert();
+														
+													 
+													 //window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
+												 }
+											 
+											 
+											
+										});    
+							 }
+								
+								
+							 
+		
+		
+		
+		
+		  
 	}
 </script>
 
