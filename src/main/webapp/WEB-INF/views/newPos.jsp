@@ -1785,7 +1785,7 @@ label:before {
 		<div class="modal-content" style="width: 75%">
 			<span class="close" onclick="closeMyModal('myModalForCredit')">&times;</span>
 
-			<form name="modalfrm" id="modalfrm" method="post">
+			<form name="modalfrm1" id="modalfrm1" method="post">
 				<p>Customer Credit Bills</p>
 				<div class="clr"></div>
 				<div>
@@ -4462,6 +4462,321 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 	} 
 	 
 	}
+	
+	function onPayTypeChange1(type){
+		if(type==1){
+			$('#cardTypeDiv1').hide();
+			$('#epayTypeDiv1').hide();
+		}else
+		if(type==2){
+			$('#cardTypeDiv1').show();
+			$('#epayTypeDiv1').hide();
+			document.getElementById("cardType1").value=4;
+		}else if(type==3){
+			$('#epayTypeDiv1').show();
+			$('#cardTypeDiv1').hide();
+			document.getElementById("ePayType1").value=7;
+		}
+	}
+	function  settleCustBill() {
+		
+		
+		var tr_count=0; 
+		var finTot = 0;
+		var custId = document.getElementById("custId").value;
+		//var custtext = custId.options[custId.selectedIndex].innerHTML;
+		var creditAmt=document.getElementById("credAmt").innerHTML; 
+		
+		//document.getElementById('credCust').value=custtext;				
+
+			document.getElementById("penAmt").innerHTML = creditAmt; 
+			var x = document.getElementById("receivedAmt").value;
+		var pendingAmtInt=(parseInt(creditAmt));
+		var receivedAmtInt=(parseInt(x));
+	if(x=="" || x==null)
+		{
+		 alert("Please Enter Valid Recieved Amount!!")
+		 var total=document.getElementById("total").value;
+		 document.getElementById("receivedAmt").value=total;
+		}
+	else if(receivedAmtInt>pendingAmtInt){
+		document.getElementById("receivedAmt").value=0;
+		 alert("Entered Amount is greater than Pending Bill Amount!!");
+		 settleCustBill();
+	}else{
+			document.getElementById("total").value=0;
+			
+			//alert("hi");
+			
+				 $.post('${getCustCreditBills}',
+							{
+								cust: custId,
+								ajax: 'true'
+							},
+							function(data) {
+
+								//alert(JSON.stringify(data));
+								tr_count = data.length;
+
+								$('#custCreditTable td').remove();
+					$.each(data,
+										function(key, data) {
+						
+						//alert(data);
+											
+											document.getElementById("credCust").innerHTML = data.userName;
+											document.getElementById("credCust1").value = data.userName;
+											document.getElementById("creditCustId").value = data.custId; 
+											
+
+											var flag = 0;
+											var y = 0;
+											var tot = document.getElementById("total").value;
+										
+											
+											var rcvAmt = document.getElementById("receivedAmt").value;
+											//alert("tot" + tot);
+											//alert("expAmt"+expAmt);
+											 
+												if ((parseFloat(tot) + parseFloat(data.remainingAmt)) > parseFloat(rcvAmt)) {
+													//alert("ist gret");
+
+													y = (parseFloat(tot) + parseFloat(data.remainingAmt))
+															- parseFloat(rcvAmt);
+													//alert("ist gret"+ y);
+													flag = 1;
+												}
+										 
+													var tr = $('<tr></tr>');
+
+													if ((parseFloat(data.remainingAmt) <= parseFloat(rcvAmt) || flag == 1 ) && (parseFloat(rcvAmt) > parseFloat(tot))  ) {
+
+														tr
+																.append($(
+																		'<td></td>')
+																		.html(
+																				"<input type=checkbox   name='chkItem'  checked  value="+data.sellBillNo+"   id="+ data.sellBillNo+" >  <label for="+ data.sellBillNo+" ></label>"));
+
+													}else{
+														tr
+														.append($(
+																'<td></td>')
+																.html(
+																		"<input type=checkbox   name='chkItem'   value="+data.sellBillNo+"   id="+ data.sellBillNo+" >  <label for="+ data.sellBillNo+" ></label>"));
+													}
+
+													
+													
+													tr.append($('<td></td>')
+															.html(key + 1));
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			data.invoiceNo
+																					+ ""
+																					+ "<input type=hidden value='"+data.invoiceNo+"'  id=invoiceNo"+data.sellBillNo+"  name=invoiceNo"+data.sellBillNo+"  >"));
+
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			data.billDate
+																					+ ""
+																					+ "<input type=hidden value='"+data.billDate+"'  id=billDate"+data.sellBillNo+"  name=billDate"+data.sellBillNo+"  >"));
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			data.grandTotal
+																					+ ""
+																					+ "<input type=hidden value='"+data.grandTotal+"'  id=grandTotal"+data.sellBillNo+"  name=grandTotal"+data.sellBillNo+"  >"));
+													
+													
+													tr
+													.append($(
+															'<td></td>')
+															.html(
+																	data.discountAmt
+																			+ ""
+																			+ "<input type=hidden value='"+data.discountAmt+"'  id=discAmt"+data.sellBillNo+"  name=discAmt"+data.sellBillNo+"  >"));
+											
+											
+													
+												
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			data.paidAmt
+																					+ ""
+																					+ "<input type=hidden value='"+data.paidAmt+"'  id=paidAmt"+data.sellBillNo+"  name=paidAmt"+data.sellBillNo+"  >"));
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			data.remainingAmt
+																					+ ""
+																					+ "<input type=hidden value='"+data.remainingAmt+"'  id=remainingAmt"+data.sellBillNo+"  name=remainingAmt"+data.sellBillNo+"  >"));
+
+													if (flag == 0) {
+														
+														//alert("in if");
+
+														tr
+																.append($(
+																		'<td></td>')
+																		.html(
+																				"<input type=text onkeypress='return IsNumeric(event);'   style='width:100px;border-radius:25px; font-weight:bold;text-align:center;'  readonly ondrop='return false;' min='0'  onpaste='return false;' style='text-align: center;' class='form-control' name='settleAmt"
+																						+ data.sellBillNo
+																						+ "'  id=settleAmt"
+																						+ data.sellBillNo
+																						+ " value="
+																						+ data.remainingAmt
+																						+ "  /> &nbsp;  "));
+
+													 
+															finTot = parseFloat(data.remainingAmt)
+																	+ (parseFloat(finTot));
+															document
+																	.getElementById("total").value = finTot
+																	.toFixed(3);
+														 
+														$("#chkItem").prop(
+																"disabled",
+																true);
+													}
+
+													else {
+														
+														//alert("in else");
+														var fin = parseFloat(data.remainingAmt)
+														- (parseFloat(y));
+														
+														//alert("fin"+fin);
+											
+														tr
+																.append($(
+																		'<td></td>')
+																		.html(
+																				"<input type=text onkeypress='return IsNumeric(event);'   style='width:100px;border-radius:25px; font-weight:bold;text-align:center;'  readonly ondrop='return false;' min='0'  onpaste='return false;' style='text-align: center;' class='form-control' name='settleAmt"
+																						+ data.sellBillNo
+																						+ "'  id=settleAmt"
+																						+ data.sellBillNo
+																						+ " value="
+																						+ fin
+																						+ "  /> &nbsp;  "));
+
+													
+													 
+															finTot = fin
+																	+ (parseFloat(finTot));
+															//alert("finTot"+finTot);
+															document.getElementById("total").value = finTot
+																	.toFixed(3);
+															
+														
+													 
+														$("#chkItem").prop(
+																"disabled",
+																true);
+													}
+													
+													
+													$('#custCreditTable tbody')
+															.append(tr); 
+													
+													
+										}); 
+								
+								if (parseFloat(	document.getElementById("total").value) <= parseFloat(document
+										.getElementById("receivedAmt").value)) {
+									$("#sbtbtn").prop("disabled", false);
+
+								}  
+								
+								if(tr_count>0){
+									 $("#scrollbarsmodaldiv").css("height", "240");
+									 
+									} 
+
+							}); 
+		}
+	 
+	}
+	
+	$('#sbtbtn').click(function() {
+		
+		var billType =  $('#modType1').val() ;
+		//alert(billType);
+		
+		var isValid=0;
+		
+		if(billType==2) {
+			var cardType = $('#cardType1 option:selected').val();
+			if(cardType=="") {
+				alert("Please Select Card Type");
+			}else{
+				isValid=1;
+			}
+		}else if(billType==3) {
+			var ePayType =  $('#ePayType1 option:selected').val();
+			if(ePayType=="") {
+				alert("Please Select E-Pay Type");
+			}else{
+				isValid=1;
+			}
+		}else if(billType==1) {
+			isValid=1;
+		}
+		
+		
+		if(isValid==1){
+		
+		
+		
+		if(document.getElementById("receivedAmt").value>0){
+			//alert("hi");
+			document.getElementById("overlay2").style.display = "block";
+		$.ajax({
+			type : "POST",
+			url : "${pageContext.request.contextPath}/submitResposeCredit",
+			data : $("#modalfrm1").serialize(),
+			dataType : 'json',
+			success : function(data) {
+				if (data == 2) {
+					$('#custCreditTable td').remove();
+					document.getElementById("overlay2").style.display = "";
+					alert("Updated Successfully")
+					$("#overlay").fadeOut(300);
+					setCustAmt();
+					document.getElementById("sbtbtn").disabled="disabled";
+					document.getElementById("receivedAmt").value="0";
+					closeMyModal('myModalForCredit');
+					document.getElementById("credAmt").innerHTML="0.0";
+					
+					
+					var url="${pageContext.request.contextPath}/printCreditBill";
+					
+					 $("<iframe>")                             
+			        .hide()                               
+			        .attr("src",url) 
+			        .appendTo("body"); 
+					
+					
+				}
+			}
+		}).done(function() {
+			setTimeout(function() {
+				$("#overlay").fadeOut(300);
+			}, 500);
+		});
+		}else {
+			alert("Please Enter Valid Received Amount!!")
+		}
+		
+	}
+	});
 	</script>
 </body>
 
