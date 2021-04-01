@@ -235,6 +235,10 @@ label:before {
 	<c:url var="getAllItemList" value="/getAllItemList" />
 	<c:url var="getSubCatByCatIdAjax" value="/getSubCatByCatIdAjax" />
 	<c:url var="submitBill" value="/submitBill" />
+	<c:url var="getCustAmts" value="/getCustAmts" />
+	<c:url var="getCustCreditBills" value="/getCustCreditBills" />
+	<c:url var="getCustBills" value="/getCustBills" />
+	<c:url var="getCustBillsTransaction" value="/getCustBillsTransaction" />
 	<div style="display: none;">
 		<a href="${pageContext.request.contextPath}/newPos" id="relod"></a>
 	</div>
@@ -806,6 +810,28 @@ label:before {
 					<!--customer drop down here-->
 					<div class="add_customer_bx">
 						<!--customer row 1-->
+						<div class="pending_row">
+							<a href="#" class="    pending_btn"
+								onclick="openMyModal('myModalForCredit',0)">Pending Amt : <span
+								id="credAmt">00.00</span>
+							</a><a href="#" class="pending_btn"
+								onclick="openMyModal('custBills',1)">Customer Bills </a> <a
+								href="#" class="pending_btn"
+								onclick="openMyModal('custBills',2)">Today's Bills <span
+								id="credAmt1"></span>
+							</a>
+
+							<c:if test="${advanceAmt>0}">
+								<label id="advBillLable">Advance Amt : <span
+									id="advAmt1">${advanceAmt}</span>
+								</label>
+							</c:if>
+							<input type="hidden" id="advAmt" name="advAmt"
+								value="${advanceAmt}"> <input type="hidden"
+								id="advOrderDate" name="advOrderDate" value="${advOrderDate}">
+							<input type="hidden" id="isAdvanceOrder" name="isAdvanceOrder"
+								value="${isAdvanceOrder}">
+						</div>
 						<div class="customer_row">
 							<div class="customer_one">Customer</div>
 							<div class="customer_two small_size">
@@ -822,7 +848,7 @@ label:before {
 
 								<select name="custId" id="custId"
 									data-placeholder="Select Bill No" style="width: 100%%;"
-									class="input_add chosen-select">
+									class="input_add chosen-select" onchange="setCustAmt()">
 									<option value="0">Select Customer</option>
 
 									<c:choose>
@@ -887,7 +913,8 @@ label:before {
 									<i class="fa fa-plus" aria-hidden="true"></i>
 								</button>
 							</div>
-							<input id="key" name="key" value="${key}" type="hidden">
+							<input id="key" name="key" value="${key}" type="hidden"><input
+								name="popupType" id="popupType" type="hidden" value="0" />
 							<div class="clr"></div>
 						</div>
 
@@ -1622,9 +1649,286 @@ label:before {
 		</div>
 
 	</form>
+
+	<div id="custBills" class="add_customer">
+		<div id="overlay">
+			<div class="clock"></div>
+		</div>
+
+		<div class="modal-content" style="width: 90%">
+			<span class="close" onclick="closeMyModal('custBills')">&times;</span>
+
+			<form name="modalfrm" id="modalfrm" method="post">
+				<p>Bill List</p>
+				<div class="clr"></div>
+				<div>
+
+
+					<div id="dateCust" style="display: none;">
+						<div class="add_frm_one">
+							<div class="add_customer_one"
+								style="width: 40% ! important; float: left!importan!">
+								Customer Name:<span style="color: red; width: 80%"
+									id="custName1"></span>
+							</div>
+						</div>
+
+					</div>
+					<div id="dateDiv" style="display: none;">
+						<div class="add_frm_one">
+							<%-- <div class="add_customer_one"
+								style="width: 40% ! important; float: left!importan!; display: none;">
+								Date:<span style="color: red; width: 80%" id="date1">&nbsp;&nbsp;${date1}</span>
+							</div> --%>
+
+							<div class="add_customer_one"
+								style="width: 40% ! important; float: left!importan!">
+								Date:<span style="color: red; width: 80%">&nbsp;&nbsp;<input
+									autocomplete="off" placeholder="Date" name="dt" id="dt"
+									type="date" class="input_add" value="${date2}"
+									onChange="fetchRecord()" style="width: 200px;" /></span><input
+									type="hidden" id="todaysDate" value="${date2}"
+									style="display: none;">
+							</div>
+
+
+
+
+
+						</div>
+					</div>
+
+				</div>
+				<div id="modeOfPayDiv1">
+
+					<div class="add_frm_one">
+
+						<div class="add_input">
+							<div class="radio_row popup_radio">
+								<ul>
+									<li><input type="radio" id="single12" name="modePay1"
+										value="1" onclick="getCustBills(1)" checked="checked">
+										<label for="single12">Bills</label>
+										<div class="check"></div></li>
+									<li><input type="radio" id="split12" name="modePay1"
+										value="3" onclick="getCustBills(3)"> <label
+										for="split12">Transaction </label>
+										<div class="check">
+											<div class="inside"></div>
+										</div></li>
+
+									<li><input type="radio" id="single22" name="modePay1"
+										value="2" onclick="getCustBills(2)"> <label
+										for="single22">Pending</label>
+										<div class="check"></div></li>
+
+									<li id="deletedBillsRadio" style="display: none;"><input
+										type="radio" id="deleted12" name="modePay1" value="2"
+										onclick="getCustBills(4)"> <label for="deleted12">Deleted
+											Bills</label>
+										<div class="check"></div></li>
+
+									<li id="allDeletedBillsRadio" style="display: none;"><input
+										type="radio" id="deleted13" name="modePay1" value="2"
+										onclick="getCustBills(5)"> <label for="deleted13">Deleted
+											Bills</label>
+										<div class="check"></div></li>
+								</ul>
+							</div>
+						</div>
+						<div class="clr"></div>
+					</div>
+				</div>
+
+				<div class="total_table_one" id="printDivid">
+					<div class="scrollbars" id="scrollbarsmodaldiv">
+						<table id="custTable">
+
+							<thead>
+								<tr>
+
+									<th style="text-align: center;" width="2%">Sr</th>
+									<th style="text-align: center;">Bill No</th>
+									<th style="text-align: center;" id="billDateLabel">Bill
+										Date</th>
+									<th style="text-align: center;" width="10%">Bill Amt</th>
+									<th style="text-align: center;" width="10%" id="discTh">Disc
+										Amt</th>
+									<th style="text-align: center;" width="10%" id="payableTh">Payable
+										Amt</th>
+									<th style="text-align: center;" width="13%">Paid Amt</th>
+									<th style="text-align: center;" width="13%">Pending Amt</th>
+									<th style="text-align: center;" width="2%" id="modeofpay">Mode
+										of Payment</th>
+									<th style="text-align: center;" width="2%" id="remarkTh">Remark</th>
+									<th style="text-align: center;" width="2%" id="trAction">Action</th>
+								</tr>
+							</thead>
+							<tbody>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			</form>
+		</div>
+
+
+	</div>
+
+	<div id="myModalForCredit" class="add_customer">
+		<div id="overlay">
+			<div class="clock"></div>
+		</div>
+
+		<div class="modal-content" style="width: 75%">
+			<span class="close" onclick="closeMyModal('myModalForCredit')">&times;</span>
+
+			<form name="modalfrm" id="modalfrm" method="post">
+				<p>Customer Credit Bills</p>
+				<div class="clr"></div>
+				<div>
+
+
+					<div class="add_frm_one">
+						<div class="add_customer_one"
+							style="width: 40% ! important; float: left!importan!">
+							Customer Name:<span
+								style="color: red; width: 80%; padding-left: 7px;" id="credCust"
+								name="credCust"> NA</span>
+						</div>
+						<input type="hidden" id="credCust1" name="credCust1"> <input
+							type="hidden" id="creditCustId" name="creditCustId">
+						<div class="add_customer_one">
+							Pending Amount:<span
+								style="color: red; width: 20%; padding-left: 7px;" id="penAmt">
+								0.0</span>
+						</div>
+
+					</div>
+
+				</div>
+				<div class="total_table_one" id="printDivid">
+					<div class="scrollbars" id="scrollbarsmodaldiv">
+						<table id="custCreditTable">
+
+							<thead>
+								<tr>
+									<th style="text-align: center;" width="2%"></th>
+									<th style="text-align: center;" width="2%">Sr</th>
+									<th style="text-align: center;">Bill No</th>
+									<th style="text-align: center;">Bill Date</th>
+									<th style="text-align: center;" width="10%">Bill Amt</th>
+									<th style="text-align: center;" width="10%">Disc Amt</th>
+									<th style="text-align: center;" width="13%">Paid Amt</th>
+									<th style="text-align: center;" width="13%">Pending Amt</th>
+									<th style="text-align: center;" width="2%">Paying Amt</th>
+								</tr>
+							</thead>
+							<tbody>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="frm_row_one">
+
+					<div class="four_one three" style="width: 33%">
+						<div class="add_customer_one">Type</div>
+						<div class="add_input">
+							<select name="modType1" id="modType1" data-placeholder="Type"
+								onchange="onPayTypeChange1(this.value)" class="input_add "
+								style="text-align: left; font-size: 16px;">
+								<option value="1" style="text-align: left;" selected>Cash</option>
+								<option value="2" style="text-align: left;">Card</option>
+								<option value="3" style="text-align: left;">E-Pay</option>
+							</select>
+
+						</div>
+					</div>
+
+					<div class="four_one three" style="width: 33%">
+						<div class="add_frm_one" id="cardTypeDiv1"
+							style="display: none; margin: 0px;">
+							<div class="add_customer_one">Card Type</div>
+							<div class="add_input">
+								<select name="cardType1" id="cardType1"
+									data-placeholder="Card Type" class="input_add "
+									style="text-align: left; font-size: 16px;">
+									<option value="" style="text-align: left;">Select Card</option>
+
+									<option value="4" style="text-align: left;">Debit Card</option>
+									<option value="5" style="text-align: left;">Credit
+										Card</option>
+								</select>
+
+							</div>
+							<div class="clr"></div>
+						</div>
+						<div class="add_frm_one" id="epayTypeDiv1"
+							style="display: none; margin: 0px;">
+							<div class="add_customer_one">E-Pay Type</div>
+							<div class="add_input">
+								<select name="ePayType1" id="ePayType1"
+									data-placeholder="E-Pay Type" class="input_add"
+									style="text-align: left; font-size: 16px;">
+									<option value="">Select E-Pay Type</option>
+									<option value="7" style="text-align: left;">Paytm</option>
+									<option value="8" style="text-align: left;">Google Pay</option>
+									<option value="6" style="text-align: left;">Bank
+										Transaction</option>
+									<option value="9" style="text-align: left;">Amazon Pay</option>
+								</select>
+							</div>
+							<div class="clr"></div>
+						</div>
+					</div>
+
+					<div class="four_one three" style="width: 33%">
+						<div class="add_frm_one" style="margin: 0px;">
+							<div class="add_customer_one">Received Amt</div>
+							<div class="add_input">
+								<input placeholder="Received Amt" name="receivedAmt"
+									onchange="settleCustBill()" id="receivedAmt" type="text"
+									value="0" class="input_add" style="font-size: 16px;"
+									onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+							</div>
+							<div class="clr"></div>
+						</div>
+						<input type="hidden" name="finTotal" id="total" value="0">
+					</div>
+				</div>
+
+
+				<div class="pop_btns">
+					<div class="clr"></div>
+					<div class="close_r">
+
+						<button type="button" class="buttonsaveorderpos" id="sbtbtn"
+							disabled="disabled">Submit</button>
+					</div>
+
+
+
+				</div>
+			</form>
+		</div>
+
+
+	</div>
+
 	<script type="text/javascript">
 									$(document).ready(function() {
 										$('#quantity').popup({
+											focusdelay : 400,
+											outline : true,
+											vertical : 'top'
+										});
+									});
+									$(document).ready(function() {
+										$('#custBills').popup({
 											focusdelay : 400,
 											outline : true,
 											vertical : 'top'
@@ -3170,7 +3474,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 								var advAmt = 0;  
 								var flagPayable=0;
 								
-								//document.getElementById("credAmt").innerHTML="0.0";
+								document.getElementById("credAmt").innerHTML="0.0";
 
 								if (document.getElementById('split').checked) {
 											
@@ -3449,8 +3753,8 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 							var key =  $('#key').val() ;
 							/* var key =  $('#advKey').val() ; */
 							var custId =  $('#custId').val() ;
-							var selectedText = $("#cust option:selected").text(); 
-							//document.getElementById("credAmt").innerHTML="0.0";
+							var selectedText = $("#custId option:selected").text(); 
+							document.getElementById("credAmt").innerHTML="0.0";
 
 							var frtype =  $('#frtype').val() ;
 							var rowcount = $('#itemTable tr').length;
@@ -3613,7 +3917,524 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		  
 	}
 </script>
+	<script type="text/javascript">
+	
+	function setCustAmt() {
+		var cust =  $('#custId').val() ;
+		//validateDefCustomer(cust);
+		document.getElementById("credAmt").innerHTML = 0; 
+		//document.getElementById("advCustAmt").innerHTML = 0;
+		  $
+		.get(
+				'${getCustAmts}',
+				{
+					cust : cust,  
+					ajax : 'true'
+				},
+				function(data) {
+					//alert(data.creaditAmt);
+					
+					  
+					document.getElementById("credAmt").innerHTML = parseFloat(data.creaditAmt).toFixed(2); 
+					//document.getElementById("advCustAmt").innerHTML = data.advanceAmt; 
+						 
+				});   
+	}
+	
+	
+	function openMyModal(modalId,type) {
+		var radiobtn ;
+		
+		document.getElementById("modType1").selectedIndex = "0"; 
+		
+		if(type==1){
+			  radiobtn = document.getElementById("single12");
+			radiobtn.checked = true;
+			document.getElementById("popupType").value=1;//cust bills
+			
+			document.getElementById("deletedBillsRadio").style.display = "block";
+			document.getElementById("allDeletedBillsRadio").style.display = "none";
+			
+			//alert("hi");
+			getCustBills(1);
+			//alert("Bye");
 
+			
+		}else if(type==2){
+			
+			document.getElementById("allDeletedBillsRadio").style.display = "block";
+			
+			radiobtn = document.getElementById("single12");
+			radiobtn.checked = true;
+			document.getElementById("popupType").value=2;//todays bills
+			getCustBills(1);
+			
+			document.getElementById("deletedBillsRadio").style.display = "none";
+			
+		}else{
+			
+			document.getElementById("popupType").value=0;//otherwise
+			document.getElementById("receivedAmt").value=0;
+			
+			document.getElementById("deletedBillsRadio").style.display = "none";
+			document.getElementById("allDeletedBillsRadio").style.display = "none";
+			$('#cardTypeDiv1').hide();
+			$('#epayTypeDiv1').hide();
+			document.getElementById("ePayType1").value="";
+			document.getElementById("cardType1").value="";
+		}
+	
+		//alert(type);
+		 $('#'+modalId).popup('show');
+	/*  var modal1 = document.getElementById(modalId);
+	 modal1.style.display = "block";  */
+	 showDetailsForCp();
+	}
+	function closeMyModal(modalId) {
+		 
+		 /* var modal1 = document.getElementById(modalId);
+		 modal1.style.display = "none"; */
+		 $('#'+modalId).popup('hide');
+		 var date=document.getElementById('todaysDate').value;
+		 //alert(date);
+		 document.getElementById('dt').value=date;
+		 
+		 
+		}
+	function showDetailsForCp()  {
+		var tr_count=0; 
+		 // alert("in recv 0");
+		 $("#scrollbarsmodaldiv").css("height", "30");
+		  document.getElementById("total").value=0;
+
+		var finTot = 0;
+		   
+		var custId = document.getElementById("custId").value;
+
+		//var custtext = custId.options[custId.selectedIndex].innerHTML;
+	 
+
+		var creditAmt=document.getElementById("credAmt").innerHTML; 
+		
+		//document.getElementById('credCust').value=custtext;
+			document.getElementById("penAmt").innerHTML = creditAmt; 
+
+		//alert(custId);
+	
+		 
+				 $.post('${getCustCreditBills}',
+							{
+								cust: custId,
+								ajax: 'true'
+							},
+							function(data) {
+								//alert(JSON.stringify(data));
+								
+								tr_count = data.length;
+
+								$('#custCreditTable td').remove();
+								
+								$
+								.each(
+										data,
+										function(key, data) {
+											
+											document.getElementById("credCust").innerHTML = data.userName; 
+											document.getElementById("credCust1").value = data.userName; 
+													var tr = $('<tr></tr>');
+
+													 
+
+														tr
+																.append($(
+																		'<td></td>')
+																		.html(
+																				"<input type=checkbox   name='chkItem'   value="+data.sellBillNo+"   id="+ data.sellBillNo+" >  <label for="+ data.sellBillNo+" ></label>"));
+
+												 
+
+													tr.append($('<td></td>')
+															.html(key + 1));
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			data.invoiceNo
+																					+ ""
+																					+ "<input type=hidden value='"+data.invoiceNo+"'  id=invoiceNo"+data.sellBillNo+"  name=invoiceNo"+data.sellBillNo+"  >"));
+
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			data.billDate
+																					+ ""
+																					+ "<input type=hidden value='"+data.billDate+"'  id=billDate"+data.sellBillNo+"  name=billDate"+data.sellBillNo+"  >"));
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			data.grandTotal
+																					+ ""
+																					+ "<input type=hidden value='"+data.grandTotal+"'  id=grandTotal"+data.sellBillNo+"  name=grandTotal"+data.sellBillNo+"  >"));
+													
+													
+													tr
+													.append($(
+															'<td></td>')
+															.html(
+																	data.discountAmt
+																			+ ""
+																			+ "<input type=hidden value='"+data.discountAmt+"'  id=discAmt"+data.sellBillNo+"  name=discAmt"+data.sellBillNo+"  >"));
+											
+													
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			data.paidAmt
+																					+ ""
+																					+ "<input type=hidden value='"+data.paidAmt+"'  id=paidAmt"+data.sellBillNo+"  name=paidAmt"+data.sellBillNo+"  >"));
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			data.remainingAmt
+																					+ ""
+																					+ "<input type=hidden value='"+data.remainingAmt+"'  id=remainingAmt"+data.sellBillNo+"  name=remainingAmt"+data.sellBillNo+"  >"));
+ 
+													
+													tr
+													.append($(
+															'<td></td>')
+															.html(
+																	"<input type=text onkeypress='return IsNumeric(event);'   style='width:100px;border-radius:25px; font-weight:bold;text-align:center;'  readonly ondrop='return false;' min='0'  onpaste='return false;' style='text-align: center;' class='form-control' name='settleAmt"
+																			+ data.sellBillNo
+																			+ "'  id=settleAmt"
+																			+ data.sellBillNo
+																			+ " value=0  /> &nbsp;  "));
+
+													$('#custCreditTable tbody')
+															.append(tr); 
+													
+														
+										}); 
+								//alert(tr_count);
+				 				if(tr_count>0){
+									 $("#scrollbarsmodaldiv").css("height", "240");
+									 
+									} 
+							}); 
+			
+			 
+	}
+	
+	function  getCustBills(tempType) {
+		
+		
+		//alert(tempType);
+		
+		document.getElementById("overlay2").style.display = "block";
+		
+		var date = document.getElementById("dt").value;
+		//alert(date);
+
+		var custId = document.getElementById("custId").value;
+		var tabType = document.getElementById("popupType").value;
+			  var tr_count=0; 
+			  
+			 //alert("tabType= "+tabType);
+			
+		var ell = document.getElementById('custId');
+		var text = ell.options[ell.selectedIndex].innerHTML;
+		//alert(text);
+					document.getElementById("custName1").innerHTML  ="&nbsp;&nbsp;"+ text;
+
+		if(tabType!=2){
+			document.getElementById("custName1").innerHTML  = "&nbsp;&nbsp;"+ text;
+			
+			$("#dateCust").show();
+			$("#dateDiv").hide();
+
+		}else{
+			document.getElementById("custName1").innerHTML  ="&nbsp;nbsp;"+ text;
+			$("#dateDiv").show();
+			$("#dateCust").hide();
+		}	
+	if(tempType!=3)  {
+		$("#modeofpay").hide();
+		$("#remarkTh").hide();
+		$("#trAction").show();
+		$("#discTh").show();
+		$("#payableTh").show();
+		$("#payableTh")
+		document.getElementById("billDateLabel").innerHTML = "Bill DATE";
+		
+				 $.post('${getCustBills}',
+							{
+								cust: custId,
+								tempType: tempType,
+								tabType: tabType,
+								date:date,
+								ajax: 'true'
+							},
+							function(data) {
+								tr_count = data.length+1;
+
+								//alert(JSON.stringify(data));
+			                        document.getElementById("overlay2").style.display = "";
+
+								$('#custTable td').remove();
+								$
+								.each(
+										data,
+										function(key, data) {
+											
+											var invNo=data.invoiceNo+"--"+data.billType;
+											if(tabType==2){
+												invNo=invNo+" ("+data.userName+")";
+											}
+										/* 	var payType="";
+											
+											if(data.paymentMode==1){
+												payType="Cash";
+											}else if(data.paymentMode==2){
+												payType="Card";
+											}else{
+												payType="Other";
+											} */
+											
+										//	document.getElementById("credCust").innerHTML = data.userName; 
+
+														var tr = $('<tr id="bill'+data.sellBillNo+'"></tr>');
+														//tr.append($('<td ></td>').html(key + 1));
+														
+														tr_count=tr_count-1;
+														tr.append($('<td ></td>').html(tr_count));
+														
+														
+														tr.append($('<td ></td>').html(invNo));
+														tr.append($('<td ></td>').html(data.billDate));
+														tr.append($('<td ></td>').html(data.grandTotal));
+														tr.append($('<td ></td>').html(data.discountAmt));
+														tr.append($('<td ></td>').html(data.grandTotal-data.discountAmt));
+														tr.append($('<td ></td>').html(data.paidAmt));
+														tr.append($('<td ></td>').html(data.remainingAmt));
+													/* 	tr.append($('<td ></td>').html("NA")); */
+													var arrStartDate = data.billDate.split("-"); 
+                                                     var billDateJs = new Date(arrStartDate[2], (arrStartDate[1]-1), arrStartDate[0]).setHours(0,0,0,0);
+                                                     var currentDateJs = new Date().setHours(0,0,0,0);
+
+													if(tempType==1 && tabType==2){
+														
+														var adminDesg=${sessionScope.frEmpDetails.designation};
+														adminDesg=0;
+														var sessionEmpId=${sessionScope.frEmpDetails.frEmpId};
+														/* 
+														if(adminDesg==1){
+															tr.append($('<td ></td>').html('<a href="#" onclick="showCustBillForEdit('+data.sellBillNo+','+data.custId+',0)"  ><abbr title="Edit"><i class="fa fa-pencil"></i></abbr></span></a> &nbsp;&nbsp;  <a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+														}else  */
+														if(sessionEmpId==data.extInt1 && billDateJs.valueOf() == currentDateJs.valueOf()){
+															tr.append($('<td ></td>').html('<a href="#" onclick="showCustBillForEdit('+data.sellBillNo+','+data.custId+',0)"  ><abbr title="Edit"><i class="fa fa-pencil"></i></abbr></span></a> &nbsp;&nbsp;  <a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+														}else{
+															tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> '));
+														}
+														
+														
+														//tr.append($('<td ></td>').html('<a href="#" onclick="showCustBillForEdit('+data.sellBillNo+','+data.custId+',0)"  ><abbr title="Edit"><i class="fa fa-pencil"></i></abbr></span></a> &nbsp;&nbsp;  <a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+													}
+													else if(tempType==1 && tabType==1){
+														
+														var adminDesg=${sessionScope.frEmpDetails.designation};
+														adminDesg=0;
+														var sessionEmpId=${sessionScope.frEmpDetails.frEmpId};
+														 if(sessionEmpId==data.extInt1 && billDateJs.valueOf() == currentDateJs.valueOf()){
+															tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a>&nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+														}else{
+															tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> '));
+														}
+														
+														
+														//tr.append($('<td ></td>').html('<a href="#" onclick="showCustBillForEdit('+data.sellBillNo+','+data.custId+',0)"  ><abbr title="Edit"><i class="fa fa-pencil"></i></abbr></span></a> &nbsp;&nbsp; <a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+													}
+													else if(tempType==4 || tempType==5){
+														tr.append($('<td ></td>').html(' '));
+													}else{
+														
+														var adminDesg=${sessionScope.frEmpDetails.designation};
+														adminDesg=0;
+														var sessionEmpId=${sessionScope.frEmpDetails.frEmpId};
+														
+														/* if(adminDesg==1){
+															tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;'));
+														}else */
+														if(sessionEmpId==data.extInt1 && billDateJs.valueOf() == currentDateJs.valueOf()){
+															tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a>&nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+														}else{
+															tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> '));
+														}
+														
+														
+														//tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+													}
+														
+														$('#custTable tbody').append(tr);
+													 
+										}); 
+								
+								 
+								
+								if(tr_count>0){
+									 $("#scrollbarsmodaldiv").css("height", "240");
+									 
+									} 
+
+							}); 
+	  }else{
+		  
+			$("#modeofpay").show();
+			$("#remarkTh").show();
+			$("#trAction").hide();
+			$("#discTh").show();
+			$("#payableTh").hide();
+			document.getElementById("billDateLabel").innerHTML = "TRANSACTION DATE";
+			var today = new Date();
+			var dd = today.getDate();
+			var mm = today.getMonth() + 1; //January is 0!
+
+			var yyyy = today.getFullYear();
+			if (dd < 10) {
+			  dd = '0' + dd;
+			} 
+			if (mm < 10) {
+			  mm = '0' + mm;
+			} 
+			var today = dd + '-' + mm + '-' + yyyy;
+			 $.post('${getCustBillsTransaction}',
+						{
+							cust: custId,
+							tempType: tempType,
+							tabType: tabType,
+							date:date,
+							ajax: 'true'
+						},
+						function(data) {
+							
+							//alert(tabType+" ----------- "+tempType)
+							
+							tr_count = data.length+1;
+							document.getElementById("overlay2").style.display = "";
+
+							//alert(JSON.stringify(data));
+
+							$('#custTable td').remove();
+							$
+							.each(
+									data,
+									function(key, data) {
+										
+									   var payType="";
+										var paidAmount=parseFloat(data.cashAmt)+parseFloat(data.cardAmt)+parseFloat(data.ePayAmt);
+										//alert(data.exVar1);
+										/* if(data.exVar1=="0,1,2,3"){
+											payType="Cash,Card,e-Pay";
+												
+										}else if(data.exVar1=="0,1,2"){
+											payType="Cash,Card";
+											}else if(data.exVar1=="0,1,3"){
+												payType="Cash,e-Pay";
+											}else if(data.exVar1=="0,2,3"){
+												payType="Card,e-Pay";
+											}
+											else if(data.exVar1=="0,2"){
+												payType="Card";
+											}
+											else if(data.exVar1=="0,3"){
+												payType="e-Pay";
+											}
+											else if(data.exVar1=="0,1"){
+												payType="Cash";
+											}else{   payType="Credit";} */
+										if(data.exVar1=="0" || data.exVar1=="0," ){
+											payType="Credit Bill";
+												
+										}else{
+										var str_arr = data.exVar1.split(',');
+										//alert(str_arr);
+
+										for (i = 0; i < str_arr.length; i++) { 
+											
+											/*  if(str_arr[i] === "0"){
+												   //payType=payType+",Credit";  
+												   payType="Credit";
+												   alert("0");
+												} */
+											 
+											
+										   if(str_arr[i] === "1"){
+												payType="Cash("+data.cashAmt+")";
+												//payType=payType+",Cash("+data.cashAmt+")";  
+										   }
+										   if(str_arr[i] === "2"){
+											   payType=payType+",Card("+data.cardAmt+")";
+										   }
+										   if(str_arr[i] === "3"){
+											   payType=payType+",Epay("+data.ePayAmt+")";
+										   }
+										   if(str_arr[i] === "4"){
+											   payType=payType+",Debit Card("+data.cardAmt+")";
+										   }
+										   if(str_arr[i] === "5"){
+											   payType=payType+",Credit Card("+data.cardAmt+")"; 
+										   }
+										   if(str_arr[i] === "6"){
+											   payType=payType+",Bank Transaction("+data.ePayAmt+")";  
+										   }
+										   if(str_arr[i] === "7"){
+											   payType=payType+",Paytm("+data.ePayAmt+")"; 
+										   }
+										   if(str_arr[i] === "8"){
+											   payType=payType+",Google Pay("+data.ePayAmt+")"; 
+										   }
+										   if(str_arr[i] === "9"){
+											   payType=payType+",Amazon Pay("+data.ePayAmt+")";  
+										   }
+										  
+										   
+										  
+										}
+										var resultPayType = (payType[0] == ',') ? payType.substr(1) : payType;
+
+										}
+													var tr = $('<tr></tr>');
+													//tr.append($('<td ></td>').html(key + 1));
+													tr_count=tr_count-1;
+														tr.append($('<td ></td>').html(tr_count));
+													
+													tr.append($('<td ></td>').html(data.exVar2));
+													tr.append($('<td ></td>').html(data.transactionDate));
+													tr.append($('<td ></td>').html(data.exFloat1));
+													tr.append($('<td ></td>').html(Math.round(data.discAmt)));
+													tr.append($('<td ></td>').html(paidAmount));
+													tr.append($('<td ></td>').html(data.exFloat2));
+													tr.append($('<td class="gradient-multiline"></td>').html(resultPayType));
+													tr.append($('<td ></td>').html(data.remark));
+													
+													$('#custTable tbody').append(tr);
+									}); 
+							
+							 
+							
+							if(tr_count>0){
+								 $("#scrollbarsmodaldiv").css("height", "240");
+								 
+								} 
+
+						}); 
+	  }
+
+	}
+	</script>
 </body>
 
 </html>
