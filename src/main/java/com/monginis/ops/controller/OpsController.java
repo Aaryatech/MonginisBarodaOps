@@ -907,17 +907,18 @@ public class OpsController {
 			int modType1 = 0;
 			int cardType = 0;
 			int ePayType = 0;
-			System.err.println("hii id list " + modePay1);
+			// System.err.println("hii id list " + modePay1);
 			modType1 = Integer.parseInt(request.getParameter("modType1"));// cash/card
-			try {
-				cardType = Integer.parseInt(request.getParameter("cardType1"));
-			} catch (Exception e) {
-			}
+			/* try { */
+			cardType = Integer.parseInt(request.getParameter("cardType1"));
+			/*
+			 * } catch (Exception e) { }
+			 */
 
-			try {
-				ePayType = Integer.parseInt(request.getParameter("ePayType1"));
-			} catch (Exception e) {
-			}
+			/*
+			 * try { ePayType = Integer.parseInt(request.getParameter("ePayType1")); } catch
+			 * (Exception e) { }
+			 */
 
 			String type = "0";
 
@@ -947,25 +948,23 @@ public class OpsController {
 				 * System.err.println("SETTLE - "+settleAmt);
 				 */
 
-				if (modType1 == 1) {
-					cashAmt1 = settleAmt;
-					type = "0,1";
-
-				} else if (modType1 == 2) {
-					cardAmt1 = settleAmt;
-					// type = "0,2";
-					type = "0," + cardType;
-				} else {
-					epayAmt1 = settleAmt;
-					// type = "0,3";
-					type = "0," + ePayType;
-				}
+				/*
+				 * if (modType1 == 1) { cashAmt1 = settleAmt; type = "0,1";
+				 * 
+				 * } else if (modType1 == 2) {
+				 */
+				cashAmt1 = settleAmt;
+				// type = "0,2";
+				type = "0," + cardType;
+				/*
+				 * } else { epayAmt1 = settleAmt; // type = "0,3"; type = "0," + ePayType; }
+				 */
 
 				expTrans.setSellBillNo(headId);
-				expTrans.setCardAmt(Math.round(cardAmt1));
+				expTrans.setCardAmt(0);
 				expTrans.setCashAmt(Math.round(cashAmt1));
 				expTrans.setDiscType(0);
-				expTrans.setePayAmt(Math.round(epayAmt1));
+				expTrans.setePayAmt(0);
 				expTrans.setePayType(ePayType);
 				expTrans.setPayMode(modType2);
 				expTrans.setTransactionDate(sf1.format(date));

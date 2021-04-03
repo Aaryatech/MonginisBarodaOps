@@ -63,6 +63,8 @@ import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Item;
 import com.monginis.ops.model.ItemResponse;
 import com.monginis.ops.model.MCategory;
+import com.monginis.ops.model.PaymentMode;
+import com.monginis.ops.model.PaymentType;
 import com.monginis.ops.model.PostFrItemStockHeader;
 import com.monginis.ops.model.SubCategory;
 import com.monginis.ops.model.TransactionDetail;
@@ -111,6 +113,12 @@ public class NewOpsCustomerBillController {
 		int runningMonth = 0;
 
 		try {
+
+			PaymentMode[] paymentMode = restTemplate.getForObject(Constant.URL + "getPaymentModeList",
+					PaymentMode[].class);
+			List<PaymentMode> payModeList = new ArrayList<PaymentMode>(Arrays.asList(paymentMode));
+			model.addObject("payModeList", payModeList);
+
 			CustomerForOps[] custResp = restTemplate.getForObject(Constant.URL + "getAllCustomersForOps",
 					CustomerForOps[].class);
 			custometList = new ArrayList<CustomerForOps>(Arrays.asList(custResp));
@@ -307,6 +315,30 @@ public class NewOpsCustomerBillController {
 
 		return model;
 
+	}
+
+	@RequestMapping(value = "/getModeTypeList", method = RequestMethod.POST)
+	@ResponseBody
+	public List<PaymentType> getModeTypeList(HttpServletRequest request, HttpServletResponse responsel) {
+
+		List<PaymentType> list = new ArrayList<PaymentType>();
+
+		try {
+
+			int type = Integer.parseInt(request.getParameter("type"));
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("modeId", type);
+			PaymentType[] biiItleListArr = restTemplate.postForObject(Constant.URL + "getPaymentTypeList", map,
+					PaymentType[].class);
+			list = new ArrayList<PaymentType>(Arrays.asList(biiItleListArr));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	@RequestMapping(value = "/revertHoldBillOnCurrent", method = RequestMethod.POST)
@@ -1421,16 +1453,16 @@ public class NewOpsCustomerBillController {
 
 					if (paymentMode == 1) {
 
-						if (billType == 1) {
+						/*if (billType == 1) {*/
 							transactionDetail.setCashAmt(Math.round(Float.parseFloat(payAmt)));
 							transactionDetail.setExVar1("0," + payType);
-						} else if (billType == 2) {
-							transactionDetail.setCardAmt(Math.round(Float.parseFloat(payAmt)));
-							transactionDetail.setExVar1("0," + payType);
-						} else if (billType == 3) {
-							transactionDetail.setePayAmt(Math.round(Float.parseFloat(payAmt)));
-							transactionDetail.setExVar1("0," + payType);
-						}
+						/*
+						 * } else if (billType == 2) {
+						 * transactionDetail.setCardAmt(Math.round(Float.parseFloat(payAmt)));
+						 * transactionDetail.setExVar1("0," + payType); } else if (billType == 3) {
+						 * transactionDetail.setePayAmt(Math.round(Float.parseFloat(payAmt)));
+						 * transactionDetail.setExVar1("0," + payType); }
+						 */
 					} else {
 
 						String type = payTypeSplit;

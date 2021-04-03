@@ -1402,14 +1402,21 @@ label:before {
 
 					<div id="singleDiv">
 						<div class="add_frm_one">
-							<div class="add_customer_one">Type</div>
+							<div class="add_customer_one">Mode</div>
 							<div class="add_input">
 								<select name="billType" id="billType" data-placeholder="Type"
 									onchange="onPayTypeChange(this.value)" class="input_add "
 									style="text-align: left; font-size: 16px;">
-									<option value="1" style="text-align: left;" selected>Cash</option>
+									<!-- <option value="1" style="text-align: left;" selected>Cash</option>
 									<option value="2" style="text-align: left;">Card</option>
-									<option value="3" style="text-align: left;">E-Pay</option>
+									<option value="3" style="text-align: left;">E-Pay</option> -->
+									<option value="0" style="text-align: left;">Select
+										Payment Mode</option>
+									<c:forEach items="${payModeList}" var="payModeList">
+										<option value="${payModeList.modeId}"
+											style="text-align: left;">${payModeList.modeName}</option>
+									</c:forEach>
+
 								</select>
 								<!-- <div class="dropdown popup_drop">
 									<div class="select">
@@ -1426,7 +1433,24 @@ label:before {
 							</div>
 							<div class="clr"></div>
 						</div>
-						<div class="add_frm_one" id="cardTypeDiv" style="display: none;">
+
+						<div class="add_frm_one" id="cardTypeDiv">
+							<div class="add_customer_one">Mode Type</div>
+							<div class="add_input">
+								<select name="cardType" id="cardType"
+									data-placeholder="Card Type" class="input_add "
+									style="text-align: left; font-size: 16px;">
+									<option value="" style="text-align: left;">Select Card</option>
+
+									<!-- <option value="4" style="text-align: left;">Debit Card</option>
+									<option value="5" style="text-align: left;">Credit
+										Card</option> -->
+								</select>
+
+							</div>
+							<div class="clr"></div>
+						</div>
+						<!-- <div class="add_frm_one" id="cardTypeDiv" style="display: none;">
 							<div class="add_customer_one">Card Type</div>
 							<div class="add_input">
 								<select name="cardType" id="cardType"
@@ -1441,7 +1465,7 @@ label:before {
 
 							</div>
 							<div class="clr"></div>
-						</div>
+						</div> -->
 						<div class="add_frm_one" id="epayTypeDiv" style="display: none;">
 							<div class="add_customer_one">E-Pay Type</div>
 							<div class="add_input">
@@ -1841,32 +1865,37 @@ label:before {
 							<select name="modType1" id="modType1" data-placeholder="Type"
 								onchange="onPayTypeChange1(this.value)" class="input_add "
 								style="text-align: left; font-size: 16px;">
-								<option value="1" style="text-align: left;" selected>Cash</option>
+								<!-- <option value="1" style="text-align: left;" selected>Cash</option>
 								<option value="2" style="text-align: left;">Card</option>
-								<option value="3" style="text-align: left;">E-Pay</option>
+								<option value="3" style="text-align: left;">E-Pay</option> -->
+								<option value="0" style="text-align: left;">Select
+									Payment Mode</option>
+								<c:forEach items="${payModeList}" var="payModeList">
+									<option value="${payModeList.modeId}" style="text-align: left;">${payModeList.modeName}</option>
+								</c:forEach>
 							</select>
 
 						</div>
 					</div>
 
 					<div class="four_one three" style="width: 33%">
-						<div class="add_frm_one" id="cardTypeDiv1"
-							style="display: none; margin: 0px;">
-							<div class="add_customer_one">Card Type</div>
-							<div class="add_input">
-								<select name="cardType1" id="cardType1"
-									data-placeholder="Card Type" class="input_add "
-									style="text-align: left; font-size: 16px;">
-									<option value="" style="text-align: left;">Select Card</option>
+						<div class="add_customer_one">Card Type</div>
+						<div class="add_input">
+							<select name="cardType1" id="cardType1"
+								data-placeholder="Card Type" class="input_add "
+								style="text-align: left; font-size: 16px;">
+								<option value="" style="text-align: left;">Select Card</option>
 
-									<option value="4" style="text-align: left;">Debit Card</option>
-									<option value="5" style="text-align: left;">Credit
-										Card</option>
-								</select>
+								<option value="4" style="text-align: left;">Debit Card</option>
+								<option value="5" style="text-align: left;">Credit Card</option>
+							</select>
 
-							</div>
-							<div class="clr"></div>
 						</div>
+						<div class="clr"></div>
+					</div>
+
+					<div class="four_one three" style="width: 33%">
+
 						<div class="add_frm_one" id="epayTypeDiv1"
 							style="display: none; margin: 0px;">
 							<div class="add_customer_one">E-Pay Type</div>
@@ -3461,7 +3490,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 
 	}
 	function onPayTypeChange(type){
-		if(type==1){
+		/* if(type==1){
 			$('#cardTypeDiv').hide();
 			$('#epayTypeDiv').hide();
 		}else
@@ -3474,7 +3503,41 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 			$('#cardTypeDiv').hide();
 			
 			document.getElementById("ePayType").value=7;
-		}
+		} */
+		
+		 var fd=new FormData();
+			fd.append('type',type);  
+			  $.ajax({
+			       url: '${pageContext.request.contextPath}/getModeTypeList',
+			       type: 'POST',
+			       data: fd,
+			       dataType: 'json',
+			       processData: false,
+			       contentType: false, 
+			       success: function(data, textStatus, jqXHR)
+			       { 
+			    	   var html = '';
+						var len = data.length;
+													//alert(data.addCustomerId);
+													for (var i = 0; i < len; i++) {
+ 
+															html += '<option value="' + data[i].paymentTypeId + '">'
+																	+ data[i].typeName
+																	+ '</option>';
+														 
+
+													}
+													$('#cardType').html(html);
+
+													/* $("#custId").trigger("chosen:updated");
+													$('.chosen-select').trigger(
+															'chosen:updated'); */
+			       },
+			       error: function(jqXHR, textStatus, errorThrown)
+			       {
+			           console.log('ERRORS: ' + textStatus);
+			       }
+			   });
 	}
 	function submitBillByPaymentOption(printbilltype) {
 		 
@@ -3515,9 +3578,18 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 								var epayAmt =  $('#epayAmt').val() ;
 								var billType =  $('#billType').val() ;
 								var payType=0;var payTypeFlag=0; var payTypeSplit="0";var msg="";
+								var payType =  $('#cardType').val() ;
+								 
+								if(billType==0){
+									payTypeFlag=1;
+									msg="Select transaction mode.";
+								}else if(payType=="" || payType==null){
+									payTypeFlag=1;
+									msg="Select transaction type.";
+								}
 								
 								
-								if(billType==1){
+								/* if(billType==1){
 									payTypeFlag=0;
 									payType=1;
 								}else if(billType==2) {
@@ -3537,7 +3609,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 										msg="Please Select Pay Type( Card Type Or E-Pay type)";
 										}
 										payType=ePayType;
-										} 
+										}  */
 								var payAmt =  $('#payAmt').val() ;
 								var frtype =  $('#frtype').val() ;
 								var discPer =  $('#discPer').val() ;
@@ -3555,7 +3627,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 								
 								var creditBill = 1;
 								var single = 1;
-								var selectedText = $("#cust option:selected").text(); 
+								var selectedText = $("#custId option:selected").text(); 
 								var flag=0;
 								
 								if (document.getElementById('creditBillno').checked) {
@@ -3605,7 +3677,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 									alert("Please Enter Amount");
 								}else
 									if(payTypeFlag==1){
-										alert(msg);
+										 alertify.error(msg); 
 									}else{
 									 $('#payment').popup('hide');
 									  document.getElementById("overlay2").style.display = "block";
@@ -4464,7 +4536,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 	}
 	
 	function onPayTypeChange1(type){
-		if(type==1){
+		/* if(type==1){
 			$('#cardTypeDiv1').hide();
 			$('#epayTypeDiv1').hide();
 		}else
@@ -4476,7 +4548,41 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 			$('#epayTypeDiv1').show();
 			$('#cardTypeDiv1').hide();
 			document.getElementById("ePayType1").value=7;
-		}
+		} */
+		
+		var fd=new FormData();
+		fd.append('type',type);  
+		  $.ajax({
+		       url: '${pageContext.request.contextPath}/getModeTypeList',
+		       type: 'POST',
+		       data: fd,
+		       dataType: 'json',
+		       processData: false,
+		       contentType: false, 
+		       success: function(data, textStatus, jqXHR)
+		       { 
+		    	   var html = '';
+					var len = data.length;
+												//alert(data.addCustomerId);
+												for (var i = 0; i < len; i++) {
+
+														html += '<option value="' + data[i].paymentTypeId + '">'
+																+ data[i].typeName
+																+ '</option>';
+													 
+
+												}
+												$('#cardType1').html(html);
+
+												/* $("#custId").trigger("chosen:updated");
+												$('.chosen-select').trigger(
+														'chosen:updated'); */
+		       },
+		       error: function(jqXHR, textStatus, errorThrown)
+		       {
+		           console.log('ERRORS: ' + textStatus);
+		       }
+		   });
 	}
 	function  settleCustBill() {
 		
@@ -4708,11 +4814,16 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 	$('#sbtbtn').click(function() {
 		
 		var billType =  $('#modType1').val() ;
+		var cardType1 =  $('#cardType1').val() ;
 		//alert(billType);
 		
-		var isValid=0;
+		var isValid=1;
 		
-		if(billType==2) {
+		if(cardType1=="" || cardType1==null) {
+			alertify.error("Select mode type.");
+			isValid=0;
+		}
+		/* if(billType==2) {
 			var cardType = $('#cardType1 option:selected').val();
 			if(cardType=="") {
 				alert("Please Select Card Type");
@@ -4728,7 +4839,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 			}
 		}else if(billType==1) {
 			isValid=1;
-		}
+		} */
 		
 		
 		if(isValid==1){
@@ -4737,6 +4848,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		
 		if(document.getElementById("receivedAmt").value>0){
 			//alert("hi");
+			document.getElementById("sbtbtn").disabled=true;
 			document.getElementById("overlay2").style.display = "block";
 		$.ajax({
 			type : "POST",
@@ -4750,7 +4862,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 					alert("Updated Successfully")
 					$("#overlay").fadeOut(300);
 					setCustAmt();
-					document.getElementById("sbtbtn").disabled="disabled";
+					//document.getElementById("sbtbtn").disabled="disabled";
 					document.getElementById("receivedAmt").value="0";
 					closeMyModal('myModalForCredit');
 					document.getElementById("credAmt").innerHTML="0.0";
