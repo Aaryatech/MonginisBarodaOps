@@ -2,300 +2,275 @@ package com.monginis.ops.billing;
 
 import java.io.Serializable;
 import java.util.List;
-
-
-
-public class SellBillDetail implements Serializable{
-
-
-	
-		
-	
-private int sellBillDetailNo;
-
-
-private int sellBillNo;
-
-
-private int catId;
-
-
-private int itemId;
-
-private String itemName;
-
-private float mrp;
-
-
-private float qty;
-
-
-private float mrpBaseRate;
-
-private int billStockType;
-
-private float taxableAmt;
-	
-private float sgstPer;
-
-
-private float sgstRs;
-
-
-private float cgstPer;
-
-
-private float cgstRs;
-
-
-private float igstPer;
-
-
-private float igstRs;
-private float discPer;//new
-private float discAmt;//new
-
-private float totalTax;
-
-
-private float grandTotal;
-
-
-private String remark;
  
+public class SellBillDetail implements Serializable {
 
-private int delStatus;
+	private int sellBillDetailNo;
 
-private float extFloat1;
+	private int sellBillNo;
 
-private String extVar1;
+	private int catId;
 
-private String extVar2;
-private int extInt1;
+	private int itemId;
 
+	private String itemName;
 
-public String getExtVar1() {
-	return extVar1;
-}
+	private float mrp;
 
-public void setExtVar1(String extVar1) {
-	this.extVar1 = extVar1;
-}
+	private float qty;
 
-public String getExtVar2() {
-	return extVar2;
-}
+	private float mrpBaseRate;
 
-public void setExtVar2(String extVar2) {
-	this.extVar2 = extVar2;
-}
+	private int billStockType;
 
-public float getDiscPer() {
-	return discPer;
-}
+	private float taxableAmt;
 
-public void setDiscPer(float discPer) {
-	this.discPer = discPer;
-}
+	private float sgstPer;
 
-public float getDiscAmt() {
-	return discAmt;
-}
+	private float sgstRs;
 
-public void setDiscAmt(float discAmt) {
-	this.discAmt = discAmt;
-}
+	private float cgstPer;
 
-public int getBillStockType() {
-	return billStockType;
-}
+	private float cgstRs;
 
-public void setBillStockType(int billStockType) {
-	this.billStockType = billStockType;
-}
+	private float igstPer;
 
-public String getItemName() {
-	return itemName;
-}
+	private float igstRs;
+	private float discPer;// new
+	private float discAmt;// new
 
-public void setItemName(String itemName) {
-	this.itemName = itemName;
-}
+	private float totalTax;
 
-public int getSellBillDetailNo() {
-	return sellBillDetailNo;
-}
+	private float grandTotal;
 
-public void setSellBillDetailNo(int sellBillDetailNo) {
-	this.sellBillDetailNo = sellBillDetailNo;
-}
+	private String remark;
 
-public int getSellBillNo() {
-	return sellBillNo;
-}
+	private int delStatus;
 
-public void setSellBillNo(int sellBillNo) {
-	this.sellBillNo = sellBillNo;
-}
+	private float extFloat1;
 
-public int getCatId() {
-	return catId;
-}
+	private String extVar1;
+	private String extVar2;
+	private int extInt1;
 
-public void setCatId(int catId) {
-	this.catId = catId;
-}
+	public String getExtVar1() {
+		return extVar1;
+	}
 
-public int getItemId() {
-	return itemId;
-}
+	public void setExtVar1(String extVar1) {
+		this.extVar1 = extVar1;
+	}
 
-public void setItemId(int itemId) {
-	this.itemId = itemId;
-}
+	public float getDiscPer() {
+		return discPer;
+	}
 
-public float getMrp() {
-	return mrp;
-}
+	public void setDiscPer(float discPer) {
+		this.discPer = discPer;
+	}
 
-public void setMrp(float mrp) {
-	this.mrp = mrp;
-}
+	public float getDiscAmt() {
+		return discAmt;
+	}
 
-public float getQty() {
-	return qty;
-}
+	public void setDiscAmt(float discAmt) {
+		this.discAmt = discAmt;
+	}
 
-public void setQty(float qty) {
-	this.qty = qty;
-}
+	public int getBillStockType() {
+		return billStockType;
+	}
 
-public float getMrpBaseRate() {
-	return mrpBaseRate;
-}
+	public void setBillStockType(int billStockType) {
+		this.billStockType = billStockType;
+	}
 
-public void setMrpBaseRate(float mrpBaseRate) {
-	this.mrpBaseRate = mrpBaseRate;
-}
+	public String getItemName() {
+		return itemName;
+	}
 
-public float getTaxableAmt() {
-	return taxableAmt;
-}
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
 
-public void setTaxableAmt(float taxableAmt) {
-	this.taxableAmt = taxableAmt;
-}
+	public int getSellBillDetailNo() {
+		return sellBillDetailNo;
+	}
 
-public float getSgstPer() {
-	return sgstPer;
-}
+	public void setSellBillDetailNo(int sellBillDetailNo) {
+		this.sellBillDetailNo = sellBillDetailNo;
+	}
 
-public void setSgstPer(float sgstPer) {
-	this.sgstPer = sgstPer;
-}
+	public int getSellBillNo() {
+		return sellBillNo;
+	}
 
-public float getSgstRs() {
-	return sgstRs;
-}
+	public void setSellBillNo(int sellBillNo) {
+		this.sellBillNo = sellBillNo;
+	}
 
-public void setSgstRs(float sgstRs) {
-	this.sgstRs = sgstRs;
-}
+	public int getCatId() {
+		return catId;
+	}
 
-public float getCgstPer() {
-	return cgstPer;
-}
+	public void setCatId(int catId) {
+		this.catId = catId;
+	}
 
-public void setCgstPer(float cgstPer) {
-	this.cgstPer = cgstPer;
-}
+	public int getItemId() {
+		return itemId;
+	}
 
-public float getCgstRs() {
-	return cgstRs;
-}
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
 
-public void setCgstRs(float cgstRs) {
-	this.cgstRs = cgstRs;
-}
+	public float getMrp() {
+		return mrp;
+	}
 
-public float getIgstPer() {
-	return igstPer;
-}
+	public void setMrp(float mrp) {
+		this.mrp = mrp;
+	}
 
-public void setIgstPer(float igstPer) {
-	this.igstPer = igstPer;
-}
+	public float getQty() {
+		return qty;
+	}
 
-public float getIgstRs() {
-	return igstRs;
-}
+	public void setQty(float qty) {
+		this.qty = qty;
+	}
 
-public void setIgstRs(float igstRs) {
-	this.igstRs = igstRs;
-}
+	public float getMrpBaseRate() {
+		return mrpBaseRate;
+	}
 
-public float getTotalTax() {
-	return totalTax;
-}
+	public void setMrpBaseRate(float mrpBaseRate) {
+		this.mrpBaseRate = mrpBaseRate;
+	}
 
-public void setTotalTax(float totalTax) {
-	this.totalTax = totalTax;
-}
+	public float getTaxableAmt() {
+		return taxableAmt;
+	}
 
-public float getGrandTotal() {
-	return grandTotal;
-}
+	public void setTaxableAmt(float taxableAmt) {
+		this.taxableAmt = taxableAmt;
+	}
 
-public void setGrandTotal(float grandTotal) {
-	this.grandTotal = grandTotal;
-}
+	public float getSgstPer() {
+		return sgstPer;
+	}
 
-public String getRemark() {
-	return remark;
-}
+	public void setSgstPer(float sgstPer) {
+		this.sgstPer = sgstPer;
+	}
 
-public void setRemark(String remark) {
-	this.remark = remark;
-}
+	public float getSgstRs() {
+		return sgstRs;
+	}
 
-public int getDelStatus() {
-	return delStatus;
-}
+	public void setSgstRs(float sgstRs) {
+		this.sgstRs = sgstRs;
+	}
 
-public void setDelStatus(int delStatus) {
-	this.delStatus = delStatus;
-}
+	public float getCgstPer() {
+		return cgstPer;
+	}
 
+	public void setCgstPer(float cgstPer) {
+		this.cgstPer = cgstPer;
+	}
 
+	public float getCgstRs() {
+		return cgstRs;
+	}
 
-public float getExtFloat1() {
-	return extFloat1;
-}
+	public void setCgstRs(float cgstRs) {
+		this.cgstRs = cgstRs;
+	}
 
-public void setExtFloat1(float exFloat1) {
-	this.extFloat1 = exFloat1;
-}
+	public float getIgstPer() {
+		return igstPer;
+	}
 
-public int getExtInt1() {
-	return extInt1;
-}
+	public void setIgstPer(float igstPer) {
+		this.igstPer = igstPer;
+	}
 
-public void setExtInt1(int extInt1) {
-	this.extInt1 = extInt1;
-}
+	public float getIgstRs() {
+		return igstRs;
+	}
 
-@Override
-public String toString() {
-	return "SellBillDetail [sellBillDetailNo=" + sellBillDetailNo + ", sellBillNo=" + sellBillNo + ", catId=" + catId
-			+ ", itemId=" + itemId + ", itemName=" + itemName + ", mrp=" + mrp + ", qty=" + qty + ", mrpBaseRate="
-			+ mrpBaseRate + ", billStockType=" + billStockType + ", taxableAmt=" + taxableAmt + ", sgstPer=" + sgstPer
-			+ ", sgstRs=" + sgstRs + ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs + ", igstPer=" + igstPer
-			+ ", igstRs=" + igstRs + ", discPer=" + discPer + ", discAmt=" + discAmt + ", totalTax=" + totalTax
-			+ ", grandTotal=" + grandTotal + ", remark=" + remark + ", delStatus=" + delStatus + ", extFloat1="
-			+ extFloat1 + ", extVar1=" + extVar1 + ", extVar2=" + extVar2 + ", extInt1=" + extInt1 + "]";
-}
+	public void setIgstRs(float igstRs) {
+		this.igstRs = igstRs;
+	}
 
+	public float getTotalTax() {
+		return totalTax;
+	}
 
+	public void setTotalTax(float totalTax) {
+		this.totalTax = totalTax;
+	}
 
-	
+	public float getGrandTotal() {
+		return grandTotal;
+	}
+
+	public void setGrandTotal(float grandTotal) {
+		this.grandTotal = grandTotal;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public int getDelStatus() {
+		return delStatus;
+	}
+
+	public void setDelStatus(int delStatus) {
+		this.delStatus = delStatus;
+	}
+
+	public float getExtFloat1() {
+		return extFloat1;
+	}
+
+	public void setExtFloat1(float exFloat1) {
+		this.extFloat1 = exFloat1;
+	}
+
+	public String getExtVar2() {
+		return extVar2;
+	}
+
+	public void setExtVar2(String extVar2) {
+		this.extVar2 = extVar2;
+	}
+
+	public int getExtInt1() {
+		return extInt1;
+	}
+
+	public void setExtInt1(int extInt1) {
+		this.extInt1 = extInt1;
+	}
+
+	@Override
+	public String toString() {
+		return "SellBillDetail [sellBillDetailNo=" + sellBillDetailNo + ", sellBillNo=" + sellBillNo + ", catId="
+				+ catId + ", itemId=" + itemId + ", itemName=" + itemName + ", mrp=" + mrp + ", qty=" + qty
+				+ ", mrpBaseRate=" + mrpBaseRate + ", billStockType=" + billStockType + ", taxableAmt=" + taxableAmt
+				+ ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs + ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs
+				+ ", igstPer=" + igstPer + ", igstRs=" + igstRs + ", discPer=" + discPer + ", discAmt=" + discAmt
+				+ ", totalTax=" + totalTax + ", grandTotal=" + grandTotal + ", remark=" + remark + ", delStatus="
+				+ delStatus + ", extFloat1=" + extFloat1 + ", extVar1=" + extVar1 + ", extVar2=" + extVar2
+				+ ", extInt1=" + extInt1 + "]";
+	}
+
 }

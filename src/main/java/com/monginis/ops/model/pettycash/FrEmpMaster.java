@@ -1,6 +1,9 @@
 package com.monginis.ops.model.pettycash;
 
 import java.util.Date;
+import java.util.List;
+
+import com.monginis.ops.model.access.OpsAccessRight;
 
 public class FrEmpMaster {
 	
@@ -26,6 +29,9 @@ public class FrEmpMaster {
 	private String exVar1;
 	private String exVar2;
 	private String exVar3;
+	
+	List<OpsAccessRight> opsAccessList;
+	
 	public int getFrEmpId() {
 		return frEmpId;
 	}
@@ -158,6 +164,12 @@ public class FrEmpMaster {
 	public void setExVar3(String exVar3) {
 		this.exVar3 = exVar3;
 	}
+	public List<OpsAccessRight> getOpsAccessList() {
+		return opsAccessList;
+	}
+	public void setOpsAccessList(List<OpsAccessRight> opsAccessList) {
+		this.opsAccessList = opsAccessList;
+	}
 	@Override
 	public String toString() {
 		return "FrEmpMaster [frEmpId=" + frEmpId + ", frEmpName=" + frEmpName + ", frEmpContact=" + frEmpContact
@@ -166,7 +178,7 @@ public class FrEmpMaster {
 				+ fromDate + ", toDate=" + toDate + ", currentBillAmt=" + currentBillAmt + ", updateDatetime="
 				+ updateDatetime + ", password=" + password + ", empCode=" + empCode + ", designation=" + designation
 				+ ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1
-				+ ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + "]";
+				+ ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", opsAccessList=" + opsAccessList + "]";
 	}
-
+	
 }

@@ -126,7 +126,7 @@
 </head>
 <body>
 	<c:url var="getAllFrEmp" value="/getAllFrEmp" />
-<c:url var="getFrEmpById" value="/getFrEmpById" />
+	<c:url var="getFrEmpById" value="/getFrEmpById" />
 	<c:url var="checkUserAuthority" value="/checkUserAuthority" />
 	<c:url var="updateUserPasswords" value="/updateUserPasswords" />
 	<c:url var="updateAdminPassword" value="/updateAdminPassword" />
@@ -163,27 +163,28 @@
 
 				<!--rightSidebar-->
 				<div class="sidebarright">
-				
-					<div class="title_row">
-					<div class="title_l">
-						<div class="order-left">
-							<h2 class="pageTitle" style="margin:0; padding: 0;"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Profile</h2>
-						</div>
-					</div>
-					<div class="title_r">
-						<div class="order-right"
-								style="float: right;">
-								<a href="#" class="btn additem_btn addcust_open" style="margin: 0;" onclick="openAddEmpPopup()">Add Employee</a> 
-								<a href="#" class="btn additem_btn slide_open" onclick="getData()"  style="margin: 0;">Employee List</a>
-							</div>
-					</div>
-					<div class="clr"></div>
-				</div>
-				
 
-					<h2 class="pageTitle">
-						
-					</h2>
+					<div class="title_row">
+						<div class="title_l">
+							<div class="order-left">
+								<h2 class="pageTitle" style="margin: 0; padding: 0;">
+									<i class="fa fa-pencil" aria-hidden="true"></i> Edit Profile
+								</h2>
+							</div>
+						</div>
+						<div class="title_r">
+							<div class="order-right" style="float: right;">
+								<a href="javascript:void(0)" class="btn additem_btn addcust_open"
+									style="margin: 0;" onclick="openAddEmpPopup()">Add Employee</a>
+								<a href="javascript:void(0)" class="btn additem_btn slide_open"
+									onclick="getData()" style="margin: 0;">Employee List</a>
+							</div>
+						</div>
+						<div class="clr"></div>
+					</div>
+
+
+					<h2 class="pageTitle"></h2>
 
 
 					<!--slider-->
@@ -214,11 +215,10 @@
 					<!--slider-->
 
 
-
 					<div class="topSlide">
 						<div class="textcen">
 
-							
+
 
 
 							<div class="profileinsite">
@@ -572,11 +572,11 @@
 			<h3 class="pop_head">Add Employee</h3>
 			<div>
 				<div class="row">
-					<form action="saveFranchiseeEmp" id="fr_emp_form" method="post" autocomplete="off">
+					<form action="saveFranchiseeEmp" id="fr_emp_form" method="post"
+						autocomplete="off">
 						<div class="col-lg-6">
 
-							<input type="hidden"  name="fr_emp_id"
-								id="fr_emp_id">
+							<input type="hidden" name="fr_emp_id" id="fr_emp_id">
 
 							<div class="profile">
 								<div class="profilefildset">Employee Code</div>
@@ -595,18 +595,18 @@
 									</c:choose>
 								</div>
 							</div>
-							
+
 							<div class="profile">
 								<div class="profilefildset">Mobile Number</div>
 								<div class="profileinput">
 									<input name="emp_contact" type="text" class="texboxitemcode"
-										id="emp_contact" onchange="checkContactNo()"
-										 maxlength="10" autocomplete="off"
+										id="emp_contact" onchange="checkContactNo()" maxlength="10"
+										autocomplete="off"
 										oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
 										required />
 								</div>
 							</div>
-							
+
 							<input name="ttl_limit" type="hidden" class="texboxitemcode"
 								id="ttl_limit" value="1"
 								oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
@@ -616,8 +616,7 @@
 								<div class="add_customer_one">From Date</div>
 								<div class="add_input">
 									<input name="from_date" type="date" class="texboxitemcode"
-										id="from_date"  required
-										autocomplete="off" />
+										id="from_date" required autocomplete="off" />
 
 								</div>
 								<div class="clr"></div>
@@ -635,12 +634,12 @@
 									</select>
 								</div>
 							</div>
-							
+
 							<div class="profile">
 								<div class="profilefildset">Password</div>
 								<div class="profileinput">
-									<input name="pass" type="password" class="texboxitemcode" id="pass"
-										required />
+									<input name="pass" type="password" class="texboxitemcode"
+										id="pass" required />
 								</div>
 							</div>
 
@@ -648,7 +647,7 @@
 						</div>
 
 						<div class="col-lg-6">
-							
+
 							<div class="profile">
 								<div class="profilefildset">Employee Name</div>
 								<div class="profileinput">
@@ -674,7 +673,7 @@
 								<div class="add_customer_one">To Date</div>
 								<div class="add_input">
 									<input name="to_date" type="date" class="texboxitemcode"
-										id="to_date"/>
+										id="to_date" />
 								</div>
 								<div class="clr"></div>
 							</div>
@@ -692,22 +691,51 @@
 								<div class="profileinput">
 									<input type="radio" id="emp_status_yes"
 										${emp.delStatus==0 ? 'checked' : ''} name="emp_status"
-										value="0" checked> Yes  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio"
-										id="emp_status_no" ${emp.delStatus==1 ? 'checked' : ''}
-										name="emp_status" value="1"> NO
+										value="0"> Yes &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<input type="radio" id="emp_status_no"
+										${emp.delStatus==1 ? 'checked' : ''} name="emp_status"
+										value="1"> NO
 								</div>
 							</div>
 
 						</div>
+
+
+						<table class="responsive-table" id="table_grid1">
+							<thead>
+								<tr class="bgpink">
+									<th>Sr.No.</th>
+									<th>Module Name</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${opsList}" var="list" varStatus="count">
+									<tr>
+										<td style="display: inline-flex;">${count.index+1}
+											&nbsp;&nbsp;&nbsp; <input type="checkbox"
+											value="${list.moduleId}" id="modId${list.moduleId}"
+											name="modId${list.moduleId}">
+										</td>
+										<td>${list.moduleName }</td>
+									</tr>
+								</c:forEach>
+
+							</tbody>
+						</table>
+
+
 					</form>
 				</div>
 			</div>
 
+
+
 			<div class="pop_btns">
 				<div class="close_l" style="text-align: center;">
-					<input type="submit" class="btn additem_btn" id="sbtbtn4" value="Save">
+					<input type="submit" class="btn additem_btn" id="sbtbtn4"
+						value="Save">
 					<button class="btn additem_btn" onclick="clearForm()" id="cls_btn">Close</button>
-				</div>				
+				</div>
 				<div class="clr"></div>
 			</div>
 
@@ -730,28 +758,28 @@
 			<div>
 				<div class="row">
 					<table class="responsive-table" id="table_grid">
-				<thead>
-					<tr class="bgpink">
-						<th>Sr.No.</th>
-						<th>Employee Name</th>
-						<th>Contact No</th>
-						<th>Address</th>
-						<th>Joining Date</th>
-						<!-- <th>Code</th> -->
-						<th>Status</th>
-						<th>Action</th>
-					</tr>
-				</thead>
-				<tbody>
+						<thead>
+							<tr class="bgpink">
+								<th>Sr.No.</th>
+								<th>Employee Name</th>
+								<th>Contact No</th>
+								<th>Address</th>
+								<th>Joining Date</th>
+								<!-- <th>Code</th> -->
+								<th>Status</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
 
-				</tbody>
-			</table>
+						</tbody>
+					</table>
 				</div>
 			</div>
 			<div class="pop_btns">
-				<div class="close_l" style="text-align: center;">					
+				<div class="close_l" style="text-align: center;">
 					<button class="btn additem_btn" onclick="closeEmpListPopUp()">Close</button>
-				</div>				
+				</div>
 				<div class="clr"></div>
 			</div>
 		</div>
@@ -760,11 +788,11 @@
 
 
 <script>
-$( document ).ready(function() {
-	$("#fr_emp_form").trigger("reset");
-});
+	$(document).ready(function() {
+		$("#fr_emp_form").trigger("reset");
+	});
 	function openAddEmpPopup() {
-			
+
 		var modal = document.getElementById("addEmpModal");
 		modal.style.display = "block";
 
@@ -784,7 +812,7 @@ $( document ).ready(function() {
 		var modal = document.getElementById("empListModal");
 		modal.style.display = "block";
 	}
-	
+
 	function closeEmpListPopUp() {
 		var modal = document.getElementById("empListModal");
 		modal.style.display = "none";
@@ -792,103 +820,160 @@ $( document ).ready(function() {
 </script>
 
 <script type="text/javascript">
-		function clearForm() {
-			closeAddEmpPopup();
-			$("#fr_emp_form").trigger("reset");			
+	function clearForm() {
+		closeAddEmpPopup();
+		$("#fr_emp_form").trigger("reset");
+	}
+
+	$('#sbtbtn4').click(function() {
+		var mobNo = $('#emp_contact').val();
+		var empId = $('#fr_emp_id').val();
+
+		var valid = 0;
+		if ($('#emp_name').val() == "") {
+			valid = 1;
+			alert("Enter Employee Name");
+		} else if ($('#emp_contact').val() == "") {
+			valid = 1;
+			alert("Enter Contact No.");
+		} else if ($('#join_date').val() == "") {
+			valid = 1;
+			alert("Enter Joining Date");
+		} else if ($('#emp_address').val() == "") {
+			valid = 1;
+			alert("Enter Employee Address");
 		}
 
-		$('#sbtbtn4').click(function() {
-			var mobNo = $('#emp_contact').val();
-			var empId = $('#fr_emp_id').val();
+		/* else if ($('#ttl_limit').val() == 0) {
+			valid = 1;
+			alert("Enter Total Limit");
+		} */
+		/* else if ($('#curr_bill_amt').val() == 0) {
+			valid = 1;
+			alert("Enter Current Bill Amount");
+		} */
+		/*  else if ($('#from_date').val() == "") {
+			 valid = 1;
+			alert("Enter From Date"); 				
+		}  */
 
-			var valid = 0;
-			if ($('#emp_name').val() == "") {
-				valid = 1;
-				alert("Enter Employee Name");
-			} else if ($('#emp_contact').val() == "") {
-				valid = 1;
-				alert("Enter Contact No.");
-			} else if ($('#join_date').val() == "") {
-				valid = 1;
-				alert("Enter Joining Date");
-			} else if ($('#emp_address').val() == "") {
-				valid = 1;
-				alert("Enter Employee Address");
-			} 
-			
-			/* else if ($('#ttl_limit').val() == 0) {
-				valid = 1;
-				alert("Enter Total Limit");
-			} */
-			/* else if ($('#curr_bill_amt').val() == 0) {
-				valid = 1;
-				alert("Enter Current Bill Amount");
-			} */
-			/*  else if ($('#from_date').val() == "") {
-				 valid = 1;
-				alert("Enter From Date"); 				
-			}  */
-			
-			/*  else if ($('#to_date').val() == "") {
-				 valid = 1;
-				alert("Enter To Date"); 
+		/*  else if ($('#to_date').val() == "") {
+			 valid = 1;
+			alert("Enter To Date"); 
 
-			 }  */
-			else if ($('#pass').val() == "") {
-				valid = 1;
-				alert("Enter Password");
-			}
-			/* else if ($('#pass').val().length != 4) {
-				valid = 1;
-				alert("Enter 4 digit Password");
-			} */
-			else if ($('#emp_code').val() == "") {
-				valid = 1;
-				alert("Enter Employee Code");
-			}
+		 }  */
+		else if ($('#pass').val() == "") {
+			valid = 1;
+			alert("Enter Password");
+		}
+		/* else if ($('#pass').val().length != 4) {
+			valid = 1;
+			alert("Enter 4 digit Password");
+		} */
+		else if ($('#emp_code').val() == "") {
+			valid = 1;
+			alert("Enter Employee Code");
+		}
 
-			if (valid == 0) {
-				save();
-			}
+		if (valid == 0) {
+			save();
+		}
 
-		});
-		function save() {
+	});
+	function save() {
 
-			document.getElementById('sbtbtn4').disabled = true;
-			document.getElementById('cls_btn').disabled = true;		
+		document.getElementById('sbtbtn4').disabled = true;
+		document.getElementById('cls_btn').disabled = true;
 
-			$.ajax({
-				type : "POST",
-				url : "${pageContext.request.contextPath}/saveFranchiseeEmp",
-				data : $("#fr_emp_form").serialize(),
-				dataType : 'json',
-				success : function(data) {
-					if (data.frEmpName != null) {
+		$.ajax({
+			type : "POST",
+			url : "${pageContext.request.contextPath}/saveFranchiseeEmp",
+			data : $("#fr_emp_form").serialize(),
+			dataType : 'json',
+			success : function(data) {
+				if (data.frEmpName != null) {
 
-						document.getElementById('sbtbtn4').disabled = false;
-						document.getElementById('cls_btn').disabled = false;		
+					document.getElementById('sbtbtn4').disabled = false;
+					document.getElementById('cls_btn').disabled = false;
 
-						$("#fr_emp_form").trigger("reset");
-						getCurrentEmpCode();
-						closeAddEmpPopup();
-						alert("Employee Saved Successfylly");
-					}
+					$("#fr_emp_form").trigger("reset");
+					getCurrentEmpCode();
+					closeAddEmpPopup();
+					alert("Employee Saved Successfylly");
+					window.open("${pageContext.request.contextPath}/logout");
 				}
-			}).done(function() {
-				setTimeout(function() {
-				}, 500);
-			});
-		}
+			}
+		}).done(function() {
+			setTimeout(function() {
+			}, 500);
+		});
+	}
 
-		 function getData() {
-			 
-			 openEmpListPopUp();
-			 
+	function getData() {
+
+		openEmpListPopUp();
+
+		$
+				.getJSON(
+						'${getAllFrEmp}',
+
+						{
+							ajax : 'true'
+						},
+						function(data) {
+							$('#table_grid td').remove();
+							$
+									.each(
+											data,
+											function(key, emp) {
+												//alert(JSON.stringify(cashHndOvr));
+												$('#loader').hide();
+
+												var tr = $('<tr></tr>');
+												tr.append($('<td></td>').html(
+														key + 1));
+												tr.append($('<td></td>').html(
+														emp.frEmpName));
+												tr.append($('<td></td>').html(
+														emp.frEmpContact));
+												tr.append($('<td></td>').html(
+														emp.frEmpAddress));
+												tr.append($('<td></td>').html(
+														emp.frEmpJoiningDate));
+												var stat = '';
+												if (emp.delStatus == 0) {
+													stat = 'Active'
+												} else {
+													stat = 'In-Active'
+												}
+												tr.append($('<td ></td>').html(
+														stat));
+												tr
+														.append($('<td></td>')
+																.html(
+																		"<a href='#' onclick=editFrEmp("
+																				+ emp.frEmpId
+																				+ ") title='Edit' class='addcust_open'><i class='fa fa-edit'></i></a>"));
+												$('#table_grid tbody').append(
+														tr);
+
+											});
+
+						});
+	}
+	/* "<a href='#' onclick=deletFrEmp("+ emp.frEmpId+") title='Delete'><i class='fa fa-trash'></i></a>" */
+
+	/* function deletFrEmp(empId) {
+		//alert("Id----------"+empId)
+
+		if (empId != null) {
+
 			$
 					.getJSON(
-							'${getAllFrEmp}',
+							'${delFrEmpById}',
 
 							{
+								empId : empId,
 								ajax : 'true'
 							},
 							function(data) {
@@ -900,11 +985,12 @@ $( document ).ready(function() {
 													//alert(JSON.stringify(cashHndOvr));
 													$('#loader').hide();
 
-													
-
-													var tr = $('<tr></tr>');
-													tr.append($('<td></td>')
-															.html(key + 1));
+													var tr = $('<tr  ></tr>');
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			key + 1));
 													tr
 															.append($(
 																	'<td></td>')
@@ -925,197 +1011,155 @@ $( document ).ready(function() {
 																	'<td></td>')
 																	.html(
 																			emp.frEmpJoiningDate));
-													var stat = '';
-													if(emp.delStatus==0){
-														stat='Active'
-													}else{
-														stat='In-Active'
-													}
-													tr.append($('<td ></td>')
-															.html(stat));
+													tr
+															.append($(
+																	'<td  ></td>')
+																	.html(
+																			emp.empCode));
 													tr
 															.append($(
 																	'<td></td>')
 																	.html(
 																			"<a href='#' onclick=editFrEmp("
 																					+ emp.frEmpId
-																					+ ") title='Edit' class='addcust_open'><i class='fa fa-edit'></i></a>"));
+																					+ ") title='Edit' class='addcust_open'><i class='fa fa-edit'></i></a>&nbsp&nbsp<a href='#' onclick=deletFrEmp("
+																					+ emp.frEmpId
+																					+ ") title='Delete'><i class='fa fa-trash'></i></a>"));
 													$('#table_grid tbody')
 															.append(tr);
 
 												})
-
 							});
-		} 
-		/* "<a href='#' onclick=deletFrEmp("+ emp.frEmpId+") title='Delete'><i class='fa fa-trash'></i></a>" */
-
-		/* function deletFrEmp(empId) {
-			//alert("Id----------"+empId)
-
-			if (empId != null) {
-
-				$
-						.getJSON(
-								'${delFrEmpById}',
-
-								{
-									empId : empId,
-									ajax : 'true'
-								},
-								function(data) {
-									$('#table_grid td').remove();
-									$
-											.each(
-													data,
-													function(key, emp) {
-														//alert(JSON.stringify(cashHndOvr));
-														$('#loader').hide();
-
-														var tr = $('<tr  ></tr>');
-														tr
-																.append($(
-																		'<td></td>')
-																		.html(
-																				key + 1));
-														tr
-																.append($(
-																		'<td></td>')
-																		.html(
-																				emp.frEmpName));
-														tr
-																.append($(
-																		'<td></td>')
-																		.html(
-																				emp.frEmpContact));
-														tr
-																.append($(
-																		'<td></td>')
-																		.html(
-																				emp.frEmpAddress));
-														tr
-																.append($(
-																		'<td></td>')
-																		.html(
-																				emp.frEmpJoiningDate));
-														tr
-																.append($(
-																		'<td  ></td>')
-																		.html(
-																				emp.empCode));
-														tr
-																.append($(
-																		'<td></td>')
-																		.html(
-																				"<a href='#' onclick=editFrEmp("
-																						+ emp.frEmpId
-																						+ ") title='Edit' class='addcust_open'><i class='fa fa-edit'></i></a>&nbsp&nbsp<a href='#' onclick=deletFrEmp("
-																						+ emp.frEmpId
-																						+ ") title='Delete'><i class='fa fa-trash'></i></a>"));
-														$('#table_grid tbody')
-																.append(tr);
-
-													})
-								});
-			}
-		} */
-
-		 function editFrEmp(empId) {
-
-			if (empId != null) {
-
-				$
-						.getJSON(
-								'${getFrEmpById}',
-
-								{
-									empId : empId,
-									ajax : 'true'
-								},
-								function(data) {
-
-									//alert(JSON.stringify(data.delStatus)); 
-
-									//$('#addcust').show();
-									if(data!=null){
-										var modal = document.getElementById("addEmpModal");
-										modal.style.display = "block";
-									}
-									$('#fr_emp_id').val(data.frEmpId);
-									$('#emp_name').val(data.frEmpName);
-									$('#curr_bill_amt')
-											.val(data.currentBillAmt);
-									$('#emp_code').val(data.empCode);
-									$('#emp_address').val(data.frEmpAddress);
-									$('#emp_contact').val(data.frEmpContact);
-									$('#join_date').val(data.exVar1);
-									$('#from_date').val(data.exVar2);
-									$('#to_date').val(data.exVar3);
-									$('#pass').val(data.password);
-									$('#ttl_limit').val(data.totalLimit);
-									if (data.designation == 1) {
-										document.getElementById("designation").value = data.designation;
-									} else if (data.designation == 2) {
-										document.getElementById("designation").value = data.designation;
-									} else if (data.designation == 3) {
-										document.getElementById("designation").value = data.designation;
-									}
-									if(data.delStatus==0){
-										document.getElementById("emp_status_yes").checked = true;
-										
-									}else{
-										document.getElementById("emp_status_no").checked = true;
-									}
-									
-									closeEmpListPopUp();
-								});
-			}
 		}
+	} */
 
-		
-		function getCurrentEmpCode() {
+	function editFrEmp(empId) {
 
-			$.getJSON('${getCurrentEmpCodeValue}', {
+		if (empId != null) {
+
+			$
+					.getJSON(
+							'${getFrEmpById}',
+
+							{
+								empId : empId,
+								ajax : 'true'
+							},
+							function(data) {
+
+								//alert(JSON.stringify(data.modulList)); 
+
+								//$('#addcust').show();
+								if (data != null) {
+									var modal = document
+											.getElementById("addEmpModal");
+									modal.style.display = "block";
+								}
+								$('#fr_emp_id').val(data.emp.frEmpId);
+								$('#emp_name').val(data.emp.frEmpName);
+								$('#curr_bill_amt')
+										.val(data.emp.currentBillAmt);
+								$('#emp_code').val(data.emp.empCode);
+								$('#emp_address').val(data.emp.frEmpAddress);
+								$('#emp_contact').val(data.emp.frEmpContact);
+								$('#join_date').val(data.emp.frEmpJoiningDate);
+								$('#from_date').val(data.emp.exVar2);
+								$('#to_date').val(data.emp.exVar3);
+								$('#pass').val(data.emp.password);
+								$('#ttl_limit').val(data.emp.totalLimit);
+								if (data.designation == 1) {
+									document.getElementById("designation").value = data.emp.designation;
+								} else if (data.designation == 2) {
+									document.getElementById("designation").value = data.emp.designation;
+								} else if (data.designation == 3) {
+									document.getElementById("designation").value = data.emp.designation;
+								}
+								if (data.emp.delStatus == 0) {
+									document.getElementById("emp_status_yes").checked = true;
+
+								} else {
+									document.getElementById("emp_status_no").checked = true;
+								}
+								$('#table_grid1 td').remove();
+
+								var opsAccess = data.emp.opsAccessList;
+								
+								var check;
+								for (var i = 0; i < data.modulList.length; i++) {
+
+									var flag = 0;
+
+									for (var j = 0; j < opsAccess.length; j++) {
+										
+										if (data.modulList[i].moduleId == opsAccess[j].moduleId) {
+											check = '<input type="checkbox" checked value="'+data.modulList[i].moduleId+'" id="modId$'+data.modulList[i].moduleId+'" name="modId'+data.modulList[i].moduleId+'">';
+											flag = 1;
+											break;
+
+										}
+									}
+
+									if (flag == 0) {
+										check = '<input type="checkbox" value="'+data.modulList[i].moduleId+'" id="modId$'+data.modulList[i].moduleId+'" name="modId'+data.modulList[i].moduleId+'">';
+
+									}
+									var cnt = i+1;
+									var tr1 = $('<tr></tr>');
+									tr1.append($('<td style="display: flex;"></td>').html(cnt+'&nbsp;&nbsp;&nbsp;&nbsp;'+check));
+									tr1.append($('<td></td>').html(
+											data.modulList[i].moduleName));
+									$('#table_grid1 tbody').append(tr1);
+								}
+
+								closeEmpListPopUp();
+							});
+		}
+	}
+
+	function getCurrentEmpCode() {
+
+		$.getJSON('${getCurrentEmpCodeValue}', {
+			ajax : 'true'
+		}, function(data) {
+
+			//alert(JSON.stringify(data)); 
+			document.getElementById("emp_code").value = data;
+
+		});
+
+	}
+</script>
+<script type="text/javascript">
+	function checkContactNo() {
+
+		var empId = $('#fr_emp_id').val();
+
+		var mobNo = $('#emp_contact').val();
+
+		if (mobNo != "" || mobNo != null && empId != " ") {
+
+			$.getJSON('${verifyUniqueContactNo}', {
+				mobNo : mobNo,
 				ajax : 'true'
 			}, function(data) {
 
-				//alert(JSON.stringify(data)); 
-				document.getElementById("emp_code").value = data;
+				//alert("Info : "+JSON.stringify(data)); 
+				if (data.error == false) {
+
+					if (data.message != empId) {
+
+						document.getElementById("emp_contact").value = "";
+						alert("Contact No. already exist.");
+						$('#emp_contact').focus();
+						return true;
+					}
+				}
 
 			});
 
 		}
-	</script>
-<script type="text/javascript">
-		function checkContactNo() {
-
-			var empId = $('#fr_emp_id').val();
-		
-			var mobNo = $('#emp_contact').val();
-		
-			if (mobNo != "" || mobNo != null && empId!=" ") {
-
-				$.getJSON('${verifyUniqueContactNo}', {
-					mobNo : mobNo,
-					ajax : 'true'
-				}, function(data) {
-
-					//alert("Info : "+JSON.stringify(data)); 
-					if (data.error == false) {
-
-						if (data.message != empId) {
-
-							document.getElementById("emp_contact").value = "";
-							alert("Contact No. Already Exist.");
-							$('#emp_contact').focus();
-							return true;
-						}
-					}
-
-				});
-
-			}
-		}
-	</script>
+	}
+</script>
 
 
 <script type="text/javascript">

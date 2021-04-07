@@ -48,6 +48,8 @@ import com.monginis.ops.model.ItemSup;
 import com.monginis.ops.model.MRule;
 import com.monginis.ops.model.OtherBillDetail;
 import com.monginis.ops.model.OtherBillHeader;
+import com.monginis.ops.model.Setting;
+import com.monginis.ops.model.SubCategory;
 import com.monginis.ops.model.otheritems.Otheritems;
 import com.monginis.ops.model.otheritems.RawMaterialUom;
    
@@ -82,6 +84,8 @@ public class OtherBillController {
 		 
 		return model; 
 	}
+	
+	int setCatVal = 0;
 	@RequestMapping(value = "/addOtherItem", method = RequestMethod.GET)
 	public ModelAndView addOtherItem(HttpServletRequest request, HttpServletResponse response) {
 
@@ -92,19 +96,34 @@ public class OtherBillController {
 		try
 		{
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("settingKey","other_item_cat");				
+			Setting catSet = rest.postForObject(Constant.URL + "getValueBySettingKey", map, Setting.class);			
+			setCatVal = catSet.getSettingValue();
+			
 			map.add("frId", frDetails.getFrId());
+			map.add("catId", setCatVal);
 			Item[] list = rest.postForObject(Constant.URL + "/getOtherItemsByCatIdAndFrId",map,
 					Item[].class);
 			ArrayList<Item> itemList = new ArrayList<>(Arrays.asList(list)); 
 			model.addObject("itemList",itemList);
 			List<RawMaterialUom> rawMaterialUomList = rest.getForObject(Constant.URL + "rawMaterial/getRmUom", List.class);
 			model.addObject("rmUomList", rawMaterialUomList);
-			 map = new LinkedMultiValueMap<String, Object>();
-			map.add("catId",7);
-			map.add("subCatId", 5);
-
-			String code = rest.postForObject(Constant.URL + "/getItemCode", map, String.class);
-			model.addObject("code",code);
+			
+			
+//			map = new LinkedMultiValueMap<String, Object>();
+//			map.add("catId",7);
+//			map.add("subCatId", 5);
+//
+//			String code = rest.postForObject(Constant.URL + "/getItemCode", map, String.class);
+//			model.addObject("code",code);		
+					
+			map.add("catId", setCatVal);
+			SubCategory[] subCatArr = rest.postForObject(Constant.URL + "getSubCateListByCatId",
+					map,SubCategory[].class);
+			
+			List<SubCategory> subCatList = new ArrayList<SubCategory>(Arrays.asList(subCatArr));
+			model.addObject("subCatList",subCatList);
 		}catch(Exception e)
 		{
 			e.printStackTrace();
@@ -113,6 +132,28 @@ public class OtherBillController {
 		 
 		return model; 
 	}
+	
+	@RequestMapping(value = "/getOtherItemCodeBySubCatId", method = RequestMethod.GET)
+	@ResponseBody
+	public List<String> getOtherItemCodeBySubCatId(HttpServletRequest request, HttpServletResponse response) {
+	
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		RestTemplate rest = new RestTemplate();
+		List<String> code = new ArrayList<String>();
+		try {
+		map = new LinkedMultiValueMap<String, Object>();
+		map.add("catId",setCatVal);
+		map.add("subCatId", Integer.parseInt(request.getParameter("subCat")));
+
+		String codeStr = rest.postForObject(Constant.URL + "/getItemCode", map, String.class);
+		code.add(codeStr);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}		
+		System.out.println("code--------------"+code);
+		return code;		
+	}
+	
 	@RequestMapping(value = "/addOtherItemProcess", method = RequestMethod.POST)
 	public String addOtherItemProcess(HttpServletRequest request, HttpServletResponse response) {
 
@@ -160,8 +201,8 @@ public class OtherBillController {
 			Item item = new Item();
 			item.setId(id);
 			item.setItemId(itemCode);
-			item.setItemGrp1(7);//hardcoded
-			item.setItemGrp2(5);//hardcoded
+			item.setItemGrp1(setCatVal);//hardcoded
+			item.setItemGrp2(Integer.parseInt(request.getParameter("subCat")));
 			item.setItemGrp3(0);
 			item.setItemName(itemName);
 			item.setItemImage("-");
@@ -170,7 +211,7 @@ public class OtherBillController {
 			item.setItemMrp2(0.00f);
 			item.setItemMrp3(roundUp(saleRate));
 			item.setItemRate1(roundUp(purchaseRate));
-			item.setItemRate2(frDetails.getFrId());
+			item.setItemRate2(frDetails.getFrId());	//Franchise Id
 			item.setItemRate3(roundUp(purchaseRate));
 			item.setItemSortId(0.00f);
 			item.setItemTax1(roundUp(sgstPer));
@@ -267,7 +308,20 @@ public class OtherBillController {
 			ArrayList<Item> itemList = new ArrayList<>(Arrays.asList(list)); 
 			mav.addObject("itemList",itemList);
 			mav.addObject("isEdit", 1);
-            mav.addObject("code",item.getItemId() );
+            mav.addObject("code",item.getItemId());
+
+        	map = new LinkedMultiValueMap<String, Object>();
+			map.add("settingKey","other_item_cat");				
+			Setting catSet = restTemplate.postForObject(Constant.URL + "getValueBySettingKey", map, Setting.class);
+			
+			setCatVal = catSet.getSettingValue();
+					
+			map.add("catId", setCatVal);
+			SubCategory[] subCatArr = restTemplate.postForObject(Constant.URL + "getSubCateListByCatId",
+					map,SubCategory[].class);
+			
+			List<SubCategory> subCatList = new ArrayList<SubCategory>(Arrays.asList(subCatArr));
+			mav.addObject("subCatList",subCatList);
 		} catch (Exception e) {
 			System.out.println("Exc In /updateOtherItem" + e.getMessage());
 		}
@@ -404,12 +458,18 @@ public class OtherBillController {
 		try
 		{
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			//map.add("itemGrp1", 7);
-			map.add("frId",frDetails.getFrId());
 			RestTemplate rest = new RestTemplate();
-			Item[] items  = rest.postForObject(Constant.URL + "/getOtherItemsByCatIdAndFrId", map,
-					Item[].class);
 			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("settingKey","other_item_cat");				
+			Setting catSet = rest.postForObject(Constant.URL + "getValueBySettingKey", map, Setting.class);
+			setCatVal = catSet.getSettingValue();
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("catId", setCatVal);
+			map.add("frId", frDetails.getFrId());			
+			Item[] items  = rest.postForObject(Constant.URL + "/getOtherItemsByCatIdAndFrId", map,
+					Item[].class);			
 			
 			additemsList = new ArrayList<>();
 			itemsList = new ArrayList<>();
@@ -427,6 +487,7 @@ public class OtherBillController {
 			 model.addObject("supplierList",supplierList);
 		}catch(Exception e)
 		{
+			System.out.println("Excep in /showOtherBill : "+e.getMessage());
 			e.printStackTrace();
 		}
 		return model; 

@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
@@ -25,6 +27,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.common.Firebase;
 import com.monginis.ops.constant.Constant;
@@ -37,7 +42,10 @@ import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.LoginInfo;
 import com.monginis.ops.model.Setting;
+import com.monginis.ops.model.access.OpsAccessRight;
+import com.monginis.ops.model.frsetting.FrSetting;
 import com.monginis.ops.model.pettycash.FrEmpMaster;
+import com.monginis.ops.model.pettycash.FrEmpModules;
  
 
 @Controller
@@ -82,12 +90,26 @@ public class ProfileController {
 				fbaFlag=1;
 			}
 			
+			
+			HttpSession session = request.getSession();
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			FrSetting frSetting = rest.postForObject(Constant.URL + "/getFrSettingValue", map, FrSetting.class);
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("isFrPosAppicale", frSetting.getExVarchar());
+			OpsAccessRight[] opsArr = rest.postForObject(Constant.URL + "/getAllowedOpsMappings", map, OpsAccessRight[].class);
+			List<OpsAccessRight> opsList = new ArrayList<OpsAccessRight>(Arrays.asList(opsArr));
+			
 			model.addObject("pestControlFlag", pestControlFlag);
 			model.addObject("aggrementFlag", aggrementFlag);
 			model.addObject("fbaFlag", fbaFlag);
 			model.addObject("frSup", frSup);
 			model.addObject("URL", Constant.FR_IMAGE_URL);
 			model.addObject("frImageName", frImageName);
+			model.addObject("opsList", opsList);
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -317,18 +339,23 @@ public class ProfileController {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date = new Date();
+			RestTemplate rest = new RestTemplate();
+			
+			OpsAccessRight[] opsArr = rest.getForObject(Constant.URL + "/getAllOpsAccessRole", OpsAccessRight[].class);
+			List<OpsAccessRight> opsList = new ArrayList<OpsAccessRight>(Arrays.asList(opsArr));
 
 			session = req.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 			int frid = (int) session.getAttribute("frId");
 
-			RestTemplate rest = new RestTemplate();
+			
 			FrEmpMaster emp = new FrEmpMaster();
 			int frEmpId = 0;
 			try {
 					frEmpId = Integer.parseInt(req.getParameter("fr_emp_id"));
 				}catch (Exception e) {
 					frEmpId = 0;
-					e.printStackTrace();
+					///e.printStackTrace();
 				}
 			System.out.println("EmpId=" + frEmpId);
 
@@ -339,8 +366,7 @@ public class ProfileController {
 			emp.setEmpCode(req.getParameter("emp_code"));
 			emp.setExInt1(0);
 			emp.setExInt2(0);
-			emp.setExInt3(0);
-			emp.setExVar1("NA");
+			emp.setExInt3(0);			
 			emp.setExVar2("NA");
 			emp.setExVar3("NA");
 			emp.setFrEmpAddress(req.getParameter("emp_address"));
@@ -349,6 +375,38 @@ public class ProfileController {
 			emp.setFrEmpJoiningDate(req.getParameter("join_date"));
 			emp.setFrEmpName(req.getParameter("emp_name"));
 			emp.setFrId(frid);
+			
+		
+			String[] modIds = null;
+			String jsonStr = null;			
+			JSONArray modules = new JSONArray();
+			for (int i = 0; i < opsList.size(); i++) {		
+				
+				 System.out.println("M-----------"+opsList.get(i).getModuleId());
+					int modId = 0;
+				
+				try {
+					modId = Integer.parseInt(req.getParameter("modId"+opsList.get(i).getModuleId()));
+				}catch (Exception e) {
+					modId = 0;
+				}
+				if(modId>0) {
+				JSONObject json = new JSONObject();
+				json.put("moduleId", modId);
+				json.put("moduleName", opsList.get(i).getModuleName());
+				json.put("mappingName", opsList.get(i).getMappingName());
+				json.put("icons", opsList.get(i).getIcons());
+				json.put("view", opsList.get(i).getView());
+				json.put("settingValue", 0);
+				json.put("exInt1", 0);
+				json.put("exVar1", opsList.get(i).getExVar1());
+				modules.put(json);
+				}
+			}
+			
+			emp.setExVar1(modules.toString());
+			
+			System.out.println("Module JSON---------------"+modules);
 
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 			
@@ -433,8 +491,9 @@ public class ProfileController {
 	}
 	
 	@RequestMapping(value = "/getFrEmpById", method = RequestMethod.GET)
-	public @ResponseBody FrEmpMaster getFrEmpById(HttpServletRequest req, HttpServletResponse resp,
+	public @ResponseBody FrEmpModules getFrEmpById(HttpServletRequest req, HttpServletResponse resp,
 			HttpSession session) {
+		FrEmpModules frEmpModules = new FrEmpModules();
 		FrEmpMaster emp = new FrEmpMaster();
 		try {
 			RestTemplate rest = new RestTemplate();
@@ -443,14 +502,39 @@ public class ProfileController {
 			map.add("empId", empId);
 
 			emp = rest.postForObject(Constant.URL + "/getFrEmpByEmpId", map, FrEmpMaster.class);
-			emp.setExVar1(DateConvertor.convertToYMD(emp.getFrEmpJoiningDate()));
+			emp.setFrEmpJoiningDate(DateConvertor.convertToYMD(emp.getFrEmpJoiningDate()));
 			emp.setExVar2(DateConvertor.convertToYMD(emp.getFromDate()));
 			emp.setExVar3(DateConvertor.convertToYMD(emp.getToDate()));
+			System.out.println("Access String--------------"+emp.getExVar1());
+			
+			
+			
+			String json = emp.getExVar1();
+			final ObjectMapper objectMapper = new ObjectMapper();
+			
+			List<OpsAccessRight> accessList = objectMapper.readValue(json, new TypeReference<List<OpsAccessRight>>(){});			
+			
+			emp.setOpsAccessList(accessList);
+			System.out.println("Access List--------------"+accessList);
+			
+//			Gson gson = new Gson(); 
+//			OpsAccessRight[] jsonArr = gson.fromJson(emp.getExVar1(), OpsAccessRight[].class); 
+//			List<OpsAccessRight> empModule = new ArrayList<OpsAccessRight>(Arrays.asList(jsonArr));			
+//			emp.setExVar1(empModule.toString());
+			
+			
+			frEmpModules.setEmp(emp);
+			
+			System.out.println("FR Emp ----------------- "+emp);
+			
+			OpsAccessRight[] opsArr = rest.getForObject(Constant.URL + "/getAllOpsAccessRole", OpsAccessRight[].class);
+			List<OpsAccessRight> opsList = new ArrayList<OpsAccessRight>(Arrays.asList(opsArr));
 
+			frEmpModules.setModulList(opsList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return emp;
+		return frEmpModules;
 	}
 	
 	@RequestMapping(value = "/verifyUniqueContactNo", method = RequestMethod.GET)
@@ -476,4 +560,62 @@ public class ProfileController {
 
 	}
 	
+	
+	@RequestMapping(value = "/changeEmpPassword")
+	public ModelAndView changeEmpPassword(HttpServletRequest request,HttpServletResponse response) {
+	
+		ModelAndView model = new ModelAndView("chngEmpPassword");
+		try {
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+		
+		
+	}
+	
+	@RequestMapping(value = "/updateFrEmpPassword")
+	public String updatePassword(HttpSession session, HttpServletRequest req, HttpServletResponse res) {
+		System.out.println("Logout Controller User Logout");
+		HttpServletResponse response = (HttpServletResponse) res;
+
+		String result = "";
+
+		int empId = Integer.parseInt(req.getParameter("frEmpId"));
+		String pass = req.getParameter("txtNewPassword");
+		String oldPass = req.getParameter("oldPassword");
+
+		FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");		
+
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		map.add("empId", empId);
+		map.add("pass", pass);
+		
+		System.err.println("OLD PASS ---- "+frEmpDetails.getPassword());
+
+		if (!oldPass.equals(frEmpDetails.getPassword())) {
+			session.setAttribute("passMsg", "Old Password not Matched!");
+			result = "redirect:/changeEmpPassword";
+
+		} else {
+			RestTemplate restTemplate = new RestTemplate();
+			Info info = restTemplate.postForObject(Constant.URL + "updateFrEmpPassword", map, Info.class);
+
+			if (info.isError()) {
+
+				session.setAttribute("passMsg", "Failed to Update!");
+
+				result = "redirect:/changePass";
+			} else {
+
+				session.removeAttribute("passMsg");
+
+				result = "redirect:/frEmpLogin";
+			}
+
+		}
+
+		return result;
+	}
 }
