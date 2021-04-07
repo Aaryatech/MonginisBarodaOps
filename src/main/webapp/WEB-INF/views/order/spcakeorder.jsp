@@ -2482,6 +2482,7 @@ function setData(flavourAdonRate,mrp,profitPer) {
 
 						<div align="center" id="loader" style="display: none;">
 
+
 							<span>
 								<h4>
 									<font color="#343690">Loading</font>
