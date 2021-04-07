@@ -30,6 +30,7 @@ public class GrnGvnHeader {
 	
 	private String approvedDatetime;
 	
+	private String grnGvnStatusStr;
 	
 	//new
 	
@@ -223,18 +224,26 @@ public class GrnGvnHeader {
 		this.aprCessRs = aprCessRs;
 	}
 
+	public String getGrnGvnStatusStr() {
+		return grnGvnStatusStr;
+	}
+
+	public void setGrnGvnStatusStr(String grnGvnStatusStr) {
+		this.grnGvnStatusStr = grnGvnStatusStr;
+	}
+
 	@Override
 	public String toString() {
 		return "GrnGvnHeader [grnGvnHeaderId=" + grnGvnHeaderId + ", frId=" + frId + ", grngvnSrno=" + grngvnSrno
 				+ ", grngvnDate=" + grngvnDate + ", isGrn=" + isGrn + ", taxableAmt=" + taxableAmt + ", taxAmt="
 				+ taxAmt + ", totalAmt=" + totalAmt + ", grngvnStatus=" + grngvnStatus + ", apporvedAmt=" + apporvedAmt
 				+ ", isCreditNote=" + isCreditNote + ", creditNoteId=" + creditNoteId + ", approvedDatetime="
-				+ approvedDatetime + ", aprTaxableAmt=" + aprTaxableAmt + ", aprTotalTax=" + aprTotalTax
-				+ ", aprSgstRs=" + aprSgstRs + ", aprCgstRs=" + aprCgstRs + ", aprIgstRs=" + aprIgstRs + ", aprCessRs="
-				+ aprCessRs + ", aprGrandTotal=" + aprGrandTotal + ", aprROff=" + aprROff + ", grnGvn=" + grnGvn + "]";
+				+ approvedDatetime + ", grnGvnStatusStr=" + grnGvnStatusStr + ", aprTaxableAmt=" + aprTaxableAmt
+				+ ", aprTotalTax=" + aprTotalTax + ", aprSgstRs=" + aprSgstRs + ", aprCgstRs=" + aprCgstRs
+				+ ", aprIgstRs=" + aprIgstRs + ", aprCessRs=" + aprCessRs + ", aprGrandTotal=" + aprGrandTotal
+				+ ", aprROff=" + aprROff + ", grnGvn=" + grnGvn + "]";
 	}
 
 	
-
 	
 }
