@@ -4,6 +4,7 @@
 <%@page import="java.time.LocalDate,java.util.*"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
       
 <!DOCTYPE html>
 <html>
@@ -239,8 +240,8 @@ select {
 <c:url var="saveCustomerFromBill" value="/saveCustomerFromBill" />
 
 <jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
-
-
+<jsp:useBean id="current" class="java.util.Date"  ></jsp:useBean>
+ 
 
 <!--topHeader-->
 <!--rightContainer-->
@@ -253,6 +254,8 @@ select {
 <jsp:param name="myMenu" value="${menuList}"/>
 </jsp:include>
 
+<c:set var = "now" value = "<%= new java.util.Date()%>" />
+<fmt:formatDate type ="time" value="${now}"  var="tempTime" />
 
 <!--leftNav-->
 
@@ -269,7 +272,7 @@ select {
 							<form action="${pageContext.request.contextPath}/searchSpCake"
 								method="post" class="form-horizontal" name="form" id="searchform"
 								>
-
+								
 								<div class="fullform">
 									<div class="cackleft2">Item Code</div>
 									<div class="cackrighttexbox">
@@ -349,7 +352,7 @@ select {
 									    int menuId = (int) pageContext.getAttribute("menuId");
 										// Create a Calendar object
 										Calendar calendar = Calendar.getInstance();
-System.out.print("incr " +incr +" menuDeliveryDays " +menuDeliveryDays);
+/* System.out.print("incr " +incr +" menuDeliveryDays " +menuDeliveryDays); */
 										// Get current day from calendar
 										int day = calendar.get(Calendar.DATE);
 										// Get current month from calendar
@@ -363,20 +366,35 @@ System.out.print("incr " +incr +" menuDeliveryDays " +menuDeliveryDays);
 										year = calendar.get(Calendar.YEAR);
 
 										Calendar cal = Calendar.getInstance();
+										Calendar cal2 = Calendar.getInstance();
 										cal.setTime(new Date()); // Now use today date.
 										if(menuDeliveryDays>0){
 										cal.add(Calendar.DATE, incr); // Adding 1 days
 										}
+										if(menuDeliveryDays>0){
+											cal2.add(Calendar.DATE, incr+1); // Adding 1 days
+											}
 										Date date = cal.getTime();
+										
+										Date date2=cal2.getTime();
+										
+										
 										SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-
+										SimpleDateFormat formatter2 = new SimpleDateFormat("HH:MM:ss");
 										String fDate = formatter.format(date);
 										System.out.println("delDate " + fDate);
 										SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-yyyy");
 
 										String fDate1 = formatter1.format(date);
+										String currentTime=formatter2.format(date);
+										String fDate2 = formatter1.format(date2);
+										
+										
+										
 									%>
-									<%=fDate1 %>
+									<%-- <%=currentTime %> --%>
+									<%-- <%=fDate1 %> --%>
+									<%=fDate2 %>
 								</div>
 							</div>
 </div>  
@@ -384,7 +402,7 @@ System.out.print("incr " +incr +" menuDeliveryDays " +menuDeliveryDays);
 
 
 <!----------------------------------------Form Start-------------------------------------------------->
-<form action="${pageContext.request.contextPath}/orderSpCake"  method="post" class="form-horizontal" name="from_ord" id="validation-form" enctype="multipart/form-data"onsubmit="return validate()">
+<form action="${pageContext.request.contextPath}/orderSpCake"  method="post" class="form-horizontal" name="from_ord" id="validation-form" enctype="multipart/form-data" onsubmit="return validate()">
 <input type="hidden" name="menu_title" value="${menuTitle}"> 
 <input type="hidden" name="mode_add" id="mode_add" value="add_book">
 <input type="hidden" name="sp_id" id="sp_id" value="${specialCake.spId}">
@@ -405,9 +423,12 @@ System.out.print("incr " +incr +" menuDeliveryDays " +menuDeliveryDays);
 <input type="hidden" name="isSameDayApplicable" id="isSameDayApplicable" value="${isSameDayApplicable}">
 <input type="hidden" name="slipNo" id="slipNo" value="${slipNo}">
 <input type="hidden" name=noOfChars id="noOfChars" value="${specialCake.noOfChars}">
+<input type="hidden" name=fromTime id="fromTime" value="${fromTime}">
+<input type="hidden" name=toTime id="toTime" value="${toTime}">
+<input type="hidden" name=currentTm id="currentTm" value="<%=currentTime %>">
 
 <!--centerForm-->	
- 
+${currentTime}
 <div class="center">
 
 	 <div  class="colOuter">
@@ -634,33 +655,81 @@ System.out.print("incr " +incr +" menuDeliveryDays " +menuDeliveryDays);
 		</div>
 		
 	    <div class="col1full" id="englishDiv" >
-	    <textarea id="textarea"  name="sp_inst2"   cols="" rows="" style="width:250px;height:60px"maxlength="300" autocomplete="off"></textarea>
+	    <textarea id="textarea"  name="sp_inst2"  maxlength="150"   cols="" rows="" style="width:250px;height:60px"maxlength="300" autocomplete="off"></textarea>
 	    </div>
 	</div>
-	
-	<div class="colOuter">
-		<div class="col1"><div class="col1title">Delivery Date</div></div>
-		<div class="col2"><c:choose><c:when test="${menuDelDays<1}">
-			<input id="date" class="texboxitemcode texboxcal" value="<%=fDate %>"  name="datepicker" type="text" readonly>
-			<input id="datepicker" class="texboxitemcode texboxcal" value="<%=fDate %>"  name="datepicker" type="hidden" />
 
-		</c:when>
-		<c:otherwise>
-		<input id="datepicker" class="texboxitemcode texboxcal"  autocomplete="off" value="<%=fDate %>"  name="datepicker" type="text" required>
-		</c:otherwise>
-		</c:choose>
-		</div><div class="col2"> 
-        <%-- <c:if test = "${specialCake.isSlotUsed=='1'}"> <span class="cakename"id="slotUsedSpan">Check Slots availability</span> </c:if> --%></div>
-	<!-- </div>
+								<div class="colOuter">
+									<div class="col1">
+										<div class="col1title">Delivery Date</div>
+									</div>
+									<div class="col2">
+										<c:choose>
+											<c:when test="${menuDelDays<1}">
+												<input id="date" class="texboxitemcode texboxcal"
+													value="<%=fDate%>" name="datepicker" type="text" readonly>
+												<input id="datepicker" class="texboxitemcode texboxcal"
+													value="<%=fDate%>" name="datepicker" type="hidden" />
+
+											</c:when>
+											<c:otherwise>
+
+												<c:choose>
+													<c:when test="${fromTime lt toTime }">
+														<input id="datepicker" class="texboxitemcode texboxcal"
+															autocomplete="off" value="<%=fDate%>" name="datepicker"
+															type="text" required>
+													</c:when>
+													<c:otherwise>  
+														<c:choose>
+															
+															<c:when test="${tempTime  gt fromTime }">
+															<input type="hidden" id="exDate" value="<%=fDate2%>" >
+																<input id="datepicker" class="texboxitemcode texboxcal"
+																	autocomplete="off" value="<%=fDate2%>"
+																	name="datepicker" type="text" required>
+
+															</c:when>
+															<c:otherwise>
+
+																<input id="datepicker" class="texboxitemcode texboxcal"
+																	autocomplete="off" value="<%=fDate%>"
+																	name="datepicker" type="text" required>
+															</c:otherwise>
+														</c:choose>
+
+													</c:otherwise>
+
+
+												</c:choose>
+
+
+
+
+
+
+
+											</c:otherwise>
+
+										</c:choose>
+									</div>
+									<div class="col2">
+										<%-- <c:if test = "${specialCake.isSlotUsed=='1'}"> <span class="cakename"id="slotUsedSpan">Check Slots availability</span> </c:if> --%>
+									</div>
+									<!-- </div>
 	
 	
 	<div class="colOuter"> 
 		<div class="col1"><div class="col1title">Order No:</div></div>-->
-		<div class="col2"><input class="texboxitemcode" placeholder="Order No" name="sp_place" id="sp_place" type="text" value="${spNo}" readonly></div>
-	</div>    
-	
-	
-	<div class="colOuter">
+									<div class="col2">
+										<input class="texboxitemcode" placeholder="Order No"
+											name="sp_place" id="sp_place" type="text" value="${spNo}"
+											readonly>
+									</div>
+								</div>
+
+
+								<div class="colOuter">
 		<div class="col2"><input id="datepicker3" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker3" type="hidden"required>
 		</div>
 	</div>
@@ -2006,6 +2075,12 @@ function validate() {
 var b4=${specialCake.spBookb4};
 var todaysDate=new Date();
 var min=new Date(todaysDate.setDate(todaysDate.getDate()+b4));
+var exDate=$('#exDate').val();
+
+if(exDate!=null){
+	//alert(exDate);	
+	min=exDate;
+}
 
   $( function() {
     $( "#datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' ,  minDate:min,
@@ -2073,6 +2148,10 @@ $(document).ready(function () {
       	  	 
       	    	var produTime =$("#sp_pro_time").val();         
       	  
+      	    	
+      	    	var priceTemp=$("#price").html();
+      	    	//alert(priceTemp);
+      	    	
                   if(isSlotUsed=='1')
                   	{
               
@@ -2088,7 +2167,7 @@ $(document).ready(function () {
       				var valid=	validate();
       				
       				
-      				if(valid){
+      				if(valid  && priceTemp>0){
       					document.forms["from_ord"].submit();
       				}	
       					
@@ -2106,10 +2185,15 @@ $(document).ready(function () {
             	 var valid=	validate();
    				
    				
-   				if(valid){
+   				if(valid && priceTemp>0){
    					document.getElementById("click").disabled = true;//new
    					document.forms["from_ord"].submit();
-   				}	
+   				}
+   				else{
+   					
+   					alert("Please reselect flavour, Price always greater than 0");
+   					isValid= false;
+   				}
             	 
              }
          });
@@ -2396,7 +2480,7 @@ function setData(flavourAdonRate,mrp,profitPer) {
 			<div class="row">
 					<div class="col-md-12">
 
-						<div align="center" id="loader" style="display: none;">
+						<div align="center" id="loader">
 
 							<span>
 								<h4>
@@ -2586,7 +2670,7 @@ function closeNewCustPopUp() {
 }
 
 function showEmpInfo(custId) {
-	
+	//alert("Hiii")
 		$.getJSON('${getCustById}', {
 			custId : custId,			
 			ajax : 'true'

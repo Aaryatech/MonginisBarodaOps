@@ -560,11 +560,11 @@ jQuery(document).ready(function(){
 												<c:forEach items="${orderHistory}" var="orderList"
 													varStatus="count">
 													<tr>
-														<td class="col-md-1">${count.index+1}<c:choose>
+														<td class="col-md-1">${count.index+1}<%--<s c:choose>
 																<c:when test="${fn:length(orderList.spBookForMobNo)==1}">
-																	<%-- <button class="btn btn-info" value="Generate"
+																	<button class="btn btn-info" value="Generate"
 																		id="genBill${orderList.spOrderNo}"
-																		onclick="genBill(${orderList.spOrderNo})">Generate</button> --%>
+																		onclick="genBill(${orderList.spOrderNo})">Generate</button>
 																	<button class="btn btn-info" value="Generate"
 																		id="genBill${orderList.spOrderNo}"
 																		onclick="openPaymentPopup(${orderList.spOrderNo})">Generate</button>
@@ -572,10 +572,10 @@ jQuery(document).ready(function(){
 																<c:otherwise>
 
 																</c:otherwise>
-															</c:choose>
+															</c:choose> --%>
 														</td>
 														<td class="col-md-2">&nbsp;&nbsp;&nbsp;&nbsp; <c:out
-																value="${orderList.spName}" /> <c:choose>
+																value="${orderList.spName}" /> <%-- <c:choose>
 																<c:when test="${orderList.isBillGenerated==0}">
 												&nbsp;&nbsp;<a href="editSpOrder/${orderList.spOrderNo}"><span
 																		class="fa fa-pencil"></span></a>&nbsp;&nbsp;<a href="#"
@@ -585,7 +585,7 @@ jQuery(document).ready(function(){
 																<c:otherwise>
 
 																</c:otherwise>
-															</c:choose>
+															</c:choose> --%>
 														</td>
 														<td class="col-md-1"><c:out
 																value="${orderList.spDeliveryDate}" /></td>

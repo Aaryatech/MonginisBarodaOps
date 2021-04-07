@@ -164,17 +164,18 @@
 			</tr>
 			<tr>
 				<td colspan="2">
+		
 					<table width="100%" border="0" cellspacing="0" cellpadding="7">
 
 						<tr>
 							<td width="200" style="padding: 5px 7px;"><strong>Delivery
-									Date : </strong> ${regularSpCake.rspDeliveryDt}</td>
+									Date : </strong> ${spCakeOrder.spDeliveryDate}</td>
 
 						</tr>
 						<tr>
 							<td width="200"
 								style="border-top: 1px solid #E7E7E7; padding: 5px 7px;"><strong>Order
-									No:</strong> ${regularSpCake.rspPlace}</td>
+									No:</strong> ${spCakeOrder.spDeliveryPlace}</td>
 						</tr>
 
 					</table>
@@ -183,13 +184,13 @@
 			<tr>
 				<td width="200"
 					style="border-top: 1px solid #E7E7E7; padding: 5px 7px;"><strong>Customer
-						Name : </strong> ${regularSpCake.rspCustName}</td>
+						Name : </strong> ${spCakeOrder.spCustName}</td>
 
 			</tr>
 			<tr>
 				<td width="200"
 					style="border-top: 1px solid #E7E7E7; padding: 5px 7px;"><strong>Customer
-						Phone : </strong> ${regularSpCake.rspCustMobileNo}</td>
+						Phone : </strong> ${spCakeOrder.spCustMobNo}</td>
 			</tr>
 			<tr>
 				<td colspan="2"

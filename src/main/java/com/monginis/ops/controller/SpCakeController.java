@@ -267,6 +267,8 @@ public class SpCakeController {
 		model.addObject("customerList", customerList);
 
 		String menuTitle = "";
+		String menuFromTime="";
+		String menuToTime="";
 		List<Float> weightList = new ArrayList<>();
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
@@ -321,6 +323,11 @@ public class SpCakeController {
 				String itemShow = menuList.get(globalIndex).getItemShow();
 				currentMenuId = menuList.get(globalIndex).getMenuId();
 				menuTitle = menuList.get(globalIndex).getMenuTitle();
+				menuFromTime=menuList.get(globalIndex).getFromTime();
+				menuToTime=menuList.get(globalIndex).getToTime();
+				
+				
+				
 				HttpSession session = request.getSession();
 
 				Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
@@ -364,7 +371,12 @@ public class SpCakeController {
 					System.out.println("Sp Cake Not  Math ");
 					model = new ModelAndView("order/spcakeorder");
 
+					System.err.println("Menu Times--->"+menuFromTime+menuToTime);
+					model.addObject("fromTime", menuFromTime);
+					model.addObject("toTime", menuToTime);
+					
 					model.addObject("menuList", menuList);
+					
 					model.addObject("eventList", spMessageList);
 					model.addObject("flavourList", flavourList);
 					model.addObject("url", Constant.SPCAKE_IMAGE_URL);
@@ -509,6 +521,10 @@ public class SpCakeController {
 				model.addObject("menuId", currentMenuId);
 				model.addObject("menuTitle", menuTitle);
 				model.addObject("frMenuList", frMenuList);
+				System.err.println("Menu Times--->"+menuFromTime+menuToTime);
+				model.addObject("fromTime", menuFromTime);
+				model.addObject("toTime", menuToTime);
+				
 			} else {
 
 				System.out.println(" inside else:");
@@ -963,7 +979,7 @@ public class SpCakeController {
 		
 		
 		
-		/*	if (isSpPhoUpload == 1) {
+			if (isSpPhoUpload == 1) {
 			System.out.println("A] isSpPhoUpload =1");
 			System.out.println("Empty image");
 			// orderPhoto1 = ImageS3Util.uploadPhotoCakeImage(orderPhoto);
@@ -979,14 +995,14 @@ public class SpCakeController {
 
 				upload.saveUploadedFiles(orderPhoto, Constant.SPCAKE_IMAGE_TYPE, orderPhoto1);
 				System.out.println("upload method called " + orderPhoto.toString());
-				photoNames = orderPhoto1 + "~";
+				photoNames = orderPhoto1 + seprator;
 			} catch (IOException e) {
 
 				System.out.println("Exce in File Upload In Sp Cake Photo Insert " + e.getMessage());
 				e.printStackTrace();
 			}
 
-		}*/
+		}
 
 		if (isCustSpCk == 1) {
 			System.out.println("B] isCustSpCk =1");
@@ -1182,7 +1198,7 @@ public class SpCakeController {
 		spCakeOrder.setSpGrandTotal(Float.parseFloat(spGrand));
 		spCakeOrder.setSpId(spId);
 		spCakeOrder.setSpMaxWeight(Float.valueOf(spMaxWeight));
-		spCakeOrder.setSpMinWeight(Float.valueOf(spMinWeight));
+		spCakeOrder.setSpMinWeight(0);
 		spCakeOrder.setSpSelectedWeight(spWeight);
 		
 		spCakeOrder.setSpMinWeight(specialCake.getMenuDiscPer());//NEW SET ON 05-03-2021

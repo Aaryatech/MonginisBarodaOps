@@ -105,31 +105,7 @@ table, th, td {
 
 
 					<div id="table-scroll">
-						<!-- <div id="faux-table" class="faux-table" aria="hidden">
-							<table id="table2" class="main-table" border="1">
-								<thead>
-									<tr class="bgpink">
-										<th>Sr No.</th>
-
-										<th class="col-sm-1"><input type="checkbox"
-											onClick="selectBillNo(this)" /></th>
-										<th class="col-sm-1" style="text-align: center;">Date</th>
-										<th class="col-sm-1" style="text-align: center;">CRN Id</th>
-										<th class="col-md-2" style="text-align: center;">Inv. No
-										</th>
-										<th class="col-md-2" style="text-align: center;">Franchise</th>
-										<th class="col-md-1" style="text-align: center;">Taxable
-											Amt</th>
-										<th class="col-md-2" style="text-align: center;">Tax Amt</th>
-
-										<th class="col-md-2" style="text-align: center;">Amount</th>
-										<th class="col-sm-1">Action</th>
-									</tr>
-
-								</thead>
-								<tbody>
-							</table>
-						</div> -->
+						
 						<div>
 							<table id="table1" class="responsive-table" border="1">
 								<thead>
