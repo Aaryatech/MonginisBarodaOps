@@ -2480,7 +2480,8 @@ function setData(flavourAdonRate,mrp,profitPer) {
 			<div class="row">
 					<div class="col-md-12">
 
-						<div align="center" id="loader">
+						<div align="center" id="loader" style="display: none;">
+
 
 							<span>
 								<h4>
