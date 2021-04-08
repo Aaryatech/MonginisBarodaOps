@@ -344,12 +344,15 @@ document.getElementById("headeIdText").value=0;
 						
 						 var aprvVal;
 								var isCredit;
-								if(grndata.isCreditNote==1)
+								if(grndata.isCreditNote==1){
 									isCredit="Yes";
 									aprvVal = grndata.aprGrandTotal;
-								if(grndata.isCreditNote==0)
+								}
+								else{
 									aprvVal = '-';
 									isCredit="No";
+								}
+									
 								
 						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.grngvnSrno));
 						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.grngvnDate));
