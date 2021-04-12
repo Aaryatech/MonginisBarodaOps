@@ -71,6 +71,7 @@ import com.monginis.ops.model.Setting;
 import com.monginis.ops.model.access.OpsAccessRight;
 import com.monginis.ops.model.frsetting.FrSetting;
 import com.monginis.ops.model.pettycash.FrEmpMaster;
+import com.monginis.ops.model.setting.NewSetting;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -218,7 +219,17 @@ public class HomeController {
 			
 			
 			Gson gson = new Gson(); 			 
-			OpsAccessRight[] jsonArr = gson.fromJson(loginResponse.getFrEmp().getExVar1(), OpsAccessRight[].class); 
+			OpsAccessRight[] jsonArr = null;
+			try {
+				jsonArr = gson.fromJson(loginResponse.getFrEmp().getExVar1(), OpsAccessRight[].class); 
+			}catch (Exception e) {					
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("settingKey", "no_emp_json");
+				map.add("delStatus", 0);
+				NewSetting settingValue = restTemplate.postForObject(Constant.URL + "/getNewSettingByKey", map,
+						NewSetting.class);
+				jsonArr = gson.fromJson(settingValue.getSettingValue1(), OpsAccessRight[].class); 
+			}
 			List<OpsAccessRight> empModule = new ArrayList<OpsAccessRight>(Arrays.asList(jsonArr));
 			
 			session.setAttribute("empModule", empModule);
