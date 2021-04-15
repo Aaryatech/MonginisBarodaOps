@@ -2936,7 +2936,7 @@ function addCustomer() {
 						});
 				}
 			}
-		});
+		}); 
 }
 
 		
