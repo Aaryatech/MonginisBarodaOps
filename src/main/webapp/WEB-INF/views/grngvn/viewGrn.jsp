@@ -342,39 +342,25 @@ document.getElementById("headeIdText").value=0;
 						
 						var tr = $('<tr></tr>');
 						
-						var grnStatus;
-								
-								if(grndata.grngvnStatus==1)
-									grnStatus="Pending";
-								else if(grndata.grngvnStatus==2)
-									grnStatus="Approved  From Dispatch";
-								else if(grndata.grngvnStatus==3)
-									grnStatus="Reject From Dispatch";
-								else if(grndata.grngvnStatus==4)
-									grnStatus="Approved From Sales";
-								else if(grndata.grngvnStatus==5)
-									grnStatus="Reject From Sales";
-								else if(grndata.grngvnStatus==6)
-									grnStatus="Approved From Account";
-								else if(grndata.grngvnStatus==7)
-									grnStatus="Reject From Account";
-								
-								else if(grndata.grngvnStatus==8)
-									grnStatus="Partially Approved";
-								
+						 var aprvVal;
 								var isCredit;
-								if(grndata.isCreditNote==1)
+								if(grndata.isCreditNote==1){
 									isCredit="Yes";
-								if(grndata.isCreditNote==0)
+									aprvVal = grndata.aprGrandTotal;
+								}
+								else{
+									aprvVal = '-';
 									isCredit="No";
+								}
+									
 								
 						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.grngvnSrno));
 						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.grngvnDate));
 						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.taxableAmt));
 						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.taxAmt));
 						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.totalAmt));
-						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.aprGrandTotal));
-						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grnStatus));
+						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(aprvVal));/* grndata.aprGrandTotal */
+						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.grnGvnStatusStr));
 						
 						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(isCredit));
 

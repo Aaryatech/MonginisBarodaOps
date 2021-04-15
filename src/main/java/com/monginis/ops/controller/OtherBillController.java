@@ -211,7 +211,7 @@ public class OtherBillController {
 			item.setItemMrp2(0.00f);
 			item.setItemMrp3(roundUp(saleRate));
 			item.setItemRate1(roundUp(purchaseRate));
-			item.setItemRate2(frDetails.getFrId());	//Franchise Id
+			item.setItemRate2(0);
 			item.setItemRate3(roundUp(purchaseRate));
 			item.setItemSortId(0.00f);
 			item.setItemTax1(roundUp(sgstPer));
@@ -235,7 +235,7 @@ public class OtherBillController {
 				itemSup.setUomId(uomId);
 				itemSup.setItemUom(selectedUom);
 				itemSup.setItemHsncd(hsnCode);
-				itemSup.setIsGateSale(0);
+				itemSup.setIsGateSale(frDetails.getFrId()); //Franchise Id
 				itemSup.setActualWeight(1);
 				itemSup.setBaseWeight(1);
 				itemSup.setInputPerQty(1);

@@ -325,7 +325,7 @@ table, th, td {
 				}, function(data) {
 
 					//$('#table_grid td').remove();
-document.getElementById("headeIdText").value=0;
+					document.getElementById("headeIdText").value=0;
 					if (data == "") {
 						alert("No records found !!");
 
@@ -334,39 +334,24 @@ document.getElementById("headeIdText").value=0;
 					$.each(data, function(key, grndata) {
 
 						
-						var tr = $('<tr></tr>');
-						
-						var grnStatus;
-								
-								if(grndata.grngvnStatus==1)
-									grnStatus="Pending";
-							 if(grndata.grngvnStatus==2)
-									grnStatus="Approved From Dispatch";
-							 else if(grndata.grngvnStatus==3)
-									grnStatus="Reject From Dispatch";
-							 else if(grndata.grngvnStatus==4)
-									grnStatus="Approved From Sell";
-							 else	if(grndata.grngvnStatus==5)
-									grnStatus="Reject From Sell";
-							 else if(grndata.grngvnStatus==6)
-									grnStatus="Approved From Account";
-							 else if(grndata.grngvnStatus==7)
-									grnStatus="Reject From Account";
-							 else if(grndata.grngvnStatus==8)
-									grnStatus="Partially Approved";
-							 
+						var tr = $('<tr></tr>');						
+							 var aprvVal;
 							 var credited;
 							 if(grndata.isCreditNote==1){
+								 aprvVal = grndata.aprGrandTotal;
 								 credited="Yes";
-							 }else{credited="No";}
+							 }else{
+								 credited="No";
+							 	aprvVal = '-';
+							 }
 
 						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.grngvnSrno));
 						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.grngvnDate));
-				tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.taxableAmt));
-				tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.taxAmt));
+						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.taxableAmt));
+						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.taxAmt));
 						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.totalAmt));
-						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.aprGrandTotal));
-						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grnStatus));
+						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(aprvVal));/* grndata.aprGrandTotal */
+						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.grnGvnStatusStr));
 						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(credited));
 						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.creditNoteId));
 

@@ -2223,6 +2223,38 @@ float aprGrandTotalSum=0; float aprROffSum=0;
 				e.printStackTrace();
 				System.out.println(e.getMessage());
 			}
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("settingKey", "GVN_STATUS_JSON");
+			map.add("delStatus", 0);
+			NewSetting gvnStatusValues=restTemplate.postForObject(Constant.URL + "getNewSettingByKey", map,
+					NewSetting.class);
+			String json=gvnStatusValues.getExVarchar1();
+
+			ObjectMapper objectMapper = new ObjectMapper();
+			GgStatuses[] statusArray=null;
+			try {
+				 statusArray = objectMapper.readValue(json, GgStatuses[].class);
+			} catch (JsonParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			List<GgStatuses> statusList = Arrays.asList(statusArray);
+			System.err.println("Status List " +statusList);
+			
+			for (int i = 0; i < grnHeaderList.size(); i++) {
+				for (int j = 0; j < statusList.size(); j++) {
+					if(grnHeaderList.get(i).getGrngvnStatus()==statusList.get(j).getStatusValue()) {
+						grnHeaderList.get(i).setGrnGvnStatusStr(statusList.get(j).getStatusName());
+					}
+				}				
+			}
 
 			System.out.println("grn  list  grnHeaderList " + grnHeaderList.toString());
 		} // end of else
@@ -2576,7 +2608,7 @@ float aprGrandTotalSum=0; float aprROffSum=0;
 			map.add("isGrn", "0" + "," + "2");
 
 			map.add("grnGvnSrNo", grnSrNO);
-
+			
 			try {
 				gvnHeaderList = new ArrayList<>();
 
@@ -2599,7 +2631,7 @@ float aprGrandTotalSum=0; float aprROffSum=0;
 			map.add("toDate", toDate);
 			map.add("isGrn", "0" + "," + "2");
 			// getFrGrnDetail
-
+			
 			try {
 				gvnHeaderList = new ArrayList<>();
 
@@ -2611,6 +2643,40 @@ float aprGrandTotalSum=0; float aprROffSum=0;
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.out.println("EXCE in getting gvn Header List " + e.getMessage());
+			}
+			
+
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("settingKey", "GVN_STATUS_JSON");
+			map.add("delStatus", 0);
+			NewSetting gvnStatusValues=restTemplate.postForObject(Constant.URL + "getNewSettingByKey", map,
+					NewSetting.class);
+			String json=gvnStatusValues.getExVarchar1();
+
+			ObjectMapper objectMapper = new ObjectMapper();
+			GgStatuses[] statusArray=null;
+			try {
+				 statusArray = objectMapper.readValue(json, GgStatuses[].class);
+			} catch (JsonParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			List<GgStatuses> statusList = Arrays.asList(statusArray);
+			System.err.println("Status List " +statusList);
+			
+			for (int i = 0; i < gvnHeaderList.size(); i++) {
+				for (int j = 0; j < statusList.size(); j++) {
+					if(gvnHeaderList.get(i).getGrngvnStatus()==statusList.get(j).getStatusValue()) {
+						gvnHeaderList.get(i).setGrnGvnStatusStr(statusList.get(j).getStatusName());
+					}
+				}
+				
 			}
 
 			System.out.println("grn  list  grnHeaderList " + gvnHeaderList.toString());
