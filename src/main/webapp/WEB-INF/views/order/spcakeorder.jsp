@@ -222,7 +222,11 @@ select {
 }
 	</style>
 </head>
-<body onload="onLoad()">
+<body>
+ <style> body  {opacity:0;}</style>
+<script>
+  window.onload = function() {setTimeout(function(){document.body.style.opacity="100";},500);};
+ </script>
 <!--topLeft-nav-->
 <div class="sidebarOuter"></div>
 <!--topLeft-nav-->
@@ -394,7 +398,29 @@ select {
 									%>
 									<%-- <%=currentTime %> --%>
 									<%-- <%=fDate1 %> --%>
-									<%=fDate2 %>
+									<c:choose>
+											<c:when test="${menuDelDays<1}">
+												<%=fDate%>
+											</c:when>
+											<c:otherwise>
+												<c:choose>
+													<c:when test="${fromTime lt toTime}">
+														<%=fDate%>
+													</c:when>
+													<c:otherwise>  
+														<c:choose>
+															<c:when test="${tempTime  gt fromTime}">
+															<%=fDate2%>
+															</c:when>
+															<c:otherwise>
+																<%=fDate%>
+															</c:otherwise>
+														</c:choose>
+													</c:otherwise>
+												</c:choose>
+											</c:otherwise>
+										</c:choose>
+									<%-- <%=fDate2 %> --%>
 								</div>
 							</div>
 </div>  
@@ -2191,7 +2217,7 @@ $(document).ready(function () {
    				}
    				else{
    					
-   					alert("Please reselect flavour, Price always greater than 0");
+   					//alert("Please reselect flavour, Price always greater than 0");
    					isValid= false;
    				}
             	 
