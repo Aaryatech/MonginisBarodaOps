@@ -16,6 +16,11 @@
 <link href="${pageContext.request.contextPath}/resources/css/monginis.css" rel="stylesheet" type="text/css"/>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/images/feviconicon.png" type="image/x-icon"/> 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
+<!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
+<!-- Sac 16-04-2021 -->
+<link href="${pageContext.request.contextPath}/resources/css/select2.css" rel="stylesheet" />
+<script src="${pageContext.request.contextPath}/resources/js/select2.js"></script>
 
 <!--rightNav-->
    <link rel="stylesheet"
@@ -33,6 +38,10 @@ jQuery(document).ready(function(){
  jQuery("#menuzord").menuzord({
 		                         align:"left"
 	                         });
+});
+<!-- Sac 16-04-2021 -->
+$(document).ready(function() {
+    $('.js-example-basic-single').select2();
 });
 </script>
 <link rel="stylesheet"
@@ -768,17 +777,17 @@ ${currentTime}
 	<div class="colOuter">
 	    <div class="col1"><div class="col1title">Customer Name</div></div>
 		<div class="col2full">
-		<select id="sp_cust_id"  class="chosen-select" name="sp_cust_id" onchange="showEmpInfo(this.value)" required style="width: 80%;">
+		<select id="sp_cust_id"  class="js-example-basic-single" name="sp_cust_id" onchange="showEmpInfo(this.value)" required style="width: 80%;">
 			  <option>Select Customer</option>	
 			  	<c:forEach items="${customerList}" var="customerList">
 							<c:choose>
 							<c:when test="${customerList.phoneNumber eq 0000000000}">
-							<option selected value="${customerList.custId}"style="text-align: left;">
-					${customerList.custName} &nbsp;${customerList.phoneNumber}</option>	
+							<option selected value="${customerList.custId}">
+					${customerList.custName}&nbsp;${customerList.phoneNumber}</option>	
 							</c:when>
 							<c:otherwise>
-							<option value="${customerList.custId}"style="text-align: left;">
-					${customerList.custName} &nbsp;${customerList.phoneNumber}</option>	
+							<option value="${customerList.custId}">
+					${customerList.custName}&nbsp;${customerList.phoneNumber}</option>	
 							</c:otherwise>
 							</c:choose>
 					
@@ -2943,9 +2952,9 @@ function addCustomer() {
 	</script>
 <!-- chosen JS
 		============================================ -->
-	<script
+	<%-- <script
 		src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen.jquery.js"></script>
 	<script
-		src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen-active.js"></script>
+		src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen-active.js"></script> --%>
 </body>
 </html>
