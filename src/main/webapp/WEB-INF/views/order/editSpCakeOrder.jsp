@@ -15,7 +15,9 @@
 <link href="${pageContext.request.contextPath}/resources/css/monginis.css" rel="stylesheet" type="text/css"/>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/images/feviconicon.png" type="image/x-icon"/> 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
-
+<!-- Sac 19-04-2021 -->
+<link href="${pageContext.request.contextPath}/resources/css/select2.css" rel="stylesheet" />
+<script src="${pageContext.request.contextPath}/resources/js/select2.js"></script>
 <!--rightNav-->
    
  
@@ -31,6 +33,22 @@ jQuery(document).ready(function(){
  jQuery("#menuzord").menuzord({
 		                         align:"left"
 	                         });
+});
+
+var b4=${specialCake.spBookb4};
+var todaysDate=new Date();
+var min=new Date(todaysDate.setDate(todaysDate.getDate()+b4));
+var exDate=$('#exDate').val();
+if(exDate!=null){
+	//alert(exDate);	
+	min=exDate;
+}
+$(function() {
+	
+	$("#datepicker").datepicker({
+		dateFormat : 'dd-mm-yy',
+		minDate : min
+	});
 });
 </script>
 
@@ -190,7 +208,12 @@ select {
 	</style>
 	
 </head>
-<body onload="onLoad()">
+<body>
+
+<style> body  {opacity:0;}</style>
+<script>
+  window.onload = function() {setTimeout(function(){document.body.style.opacity="100";},500);};
+ </script>
 <!--topLeft-nav-->
 <div class="sidebarOuter"></div>
 <!--topLeft-nav-->
@@ -208,6 +231,7 @@ select {
 <c:url var="getFlavourBySpfId" value="/getFlavourBySpfId" />
 
 <jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
+<jsp:useBean id="current" class="java.util.Date"  ></jsp:useBean>
 
 
 
@@ -222,7 +246,8 @@ select {
 <jsp:param name="myMenu" value="${menuList}"/>
 </jsp:include>
 
-
+<c:set var = "now" value = "<%= new java.util.Date()%>" />
+<fmt:formatDate type ="time" value="${now}"  var="tempTime" />
 <!--leftNav-->
 
 <!--rightSidebar-->
@@ -306,11 +331,89 @@ select {
 							<div class="fullform">
 								<div class="cackleft">Earliest Delivery Date</div>
 								<div class="cackright">
-									<fmt:parseDate value="${spCakeOrder.spEstDeliDate}" pattern="yyyy-MM-dd" var="estDeliveryDateFmt"/>
+									<%-- <fmt:parseDate value="${spCakeOrder.spEstDeliDate}" pattern="yyyy-MM-dd" var="estDeliveryDateFmt"/>
 									<fmt:formatDate value="${estDeliveryDateFmt}" var="estDeliveryDateFormat" pattern="dd-MM-yyyy"/>
                                           ${estDeliveryDateFormat}
 									<c:set var="increment" value="${spBookb4}"></c:set>
+                                    <c:set var="menuId" value="${menuId}"></c:set> --%>
+                                    
+                                    <c:set var="increment" value="${spBookb4}"></c:set>
                                     <c:set var="menuId" value="${menuId}"></c:set>
+                                      <c:set var="menuDelDay" value="${menuDelDays}"></c:set>
+									<%
+									String fDate ="aa",fDate2="jjj";
+										try{									
+				 						int menuDeliveryDays = (int) pageContext.getAttribute("menuDelDay");
+				 						System.out.print(" menuDeliveryDays " +menuDeliveryDays);
+										int incr = (int) pageContext.getAttribute("increment");
+										System.out.print(" incr " +incr);
+									    int menuId = (int) pageContext.getAttribute("menuId");
+									    System.out.print(" menuId " +menuId);
+										Calendar calendar = Calendar.getInstance();
+										int day = calendar.get(Calendar.DATE);
+										int month = calendar.get(Calendar.MONTH) + 1;
+										int year = calendar.get(Calendar.YEAR);
+										calendar.add(Calendar.DATE, incr);
+
+										day = calendar.get(Calendar.DATE);
+										month = calendar.get(Calendar.MONTH);
+										year = calendar.get(Calendar.YEAR);
+
+										Calendar cal = Calendar.getInstance();
+										Calendar cal2 = Calendar.getInstance();
+										cal.setTime(new Date()); // Now use today date.
+										if(menuDeliveryDays>0){
+										cal.add(Calendar.DATE, incr); // Adding 1 days
+										}
+										if(menuDeliveryDays>0){
+											cal2.add(Calendar.DATE, incr+1); // Adding 1 days
+											}
+										Date date = cal.getTime();
+										
+										Date date2=cal2.getTime();
+										
+										
+										SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+										SimpleDateFormat formatter2 = new SimpleDateFormat("HH:MM:ss");
+										 fDate = formatter.format(date);
+										System.out.println("delDate " + fDate);
+										SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-yyyy");
+
+										String fDate1 = formatter1.format(date);
+										String currentTime=formatter2.format(date);
+										 fDate2 = formatter1.format(date2); 
+										}catch(ClassCastException e){
+											System.out.print(e.getMessage());
+											
+										}
+										
+										
+									%>
+									<%-- <%=currentTime %> --%>
+									<%-- <%=fDate1 %> --%>
+									
+									<c:choose>
+											<c:when test="${menuDelDays<1}">
+												<%=fDate%>
+											</c:when>
+											<c:otherwise>
+												<c:choose>
+													<c:when test="${fromTime lt toTime}">
+														<%=fDate%>
+													</c:when>
+													<c:otherwise>  
+														<c:choose>
+															<c:when test="${tempTime  gt fromTime}">
+															<%=fDate2%>
+															</c:when>
+															<c:otherwise>
+																<%=fDate%>
+															</c:otherwise>
+														</c:choose>
+													</c:otherwise>
+												</c:choose>
+											</c:otherwise>
+										</c:choose>
 									<%-- <%
 										int incr = (int) pageContext.getAttribute("increment");
 									    int menuId = (int) pageContext.getAttribute("menuId");
@@ -378,6 +481,9 @@ select {
 <input type="hidden" name="orderPhotoPrevious" id="orderPhotoPrevious" value="${spCakeOrder.orderPhoto}"/>
 <input type="hidden" name="custPhotoPrevious" id="custPhotoPrevious" value="${spCakeOrder.orderPhoto2}"/>
 <input type="hidden" name="orderDate" id="orderDate" value="${spCakeOrder.orderDate}"/>
+
+<input type="hidden" name=fromTime id="fromTime" value="${fromTime}">
+<input type="hidden" name=toTime id="toTime" value="${toTime}">
 
 <!--centerForm-->	
  
@@ -492,7 +598,7 @@ select {
     <div class="colOuter">
 		<div class="col1"><div class="col1title">Flavour</div></div>
 		<div class="col2full" >
-                <select name="spFlavour"  tabindex="-1"  onchange="onChangeFlavour()"id="spFlavour" required>
+                <select name="spFlavour"  tabindex="-1" id="spFlavour" required>
                   <option value="">Select Flavour</option>
                   
                     <c:forEach items="${flavourList}" var="flavourList">
@@ -516,7 +622,7 @@ select {
 		      <input type="hidden" name="dbRate" id="dbRate" value="${sprRate}">
 		          <input type="hidden" name="spBackendRate" id="spBackendRate" value="${spBackendRate}">
 		 
-          <select name="spwt" id="spwt" onchange="onChange('${dbRate}')"required>
+          <select name="spwt" id="spwt" onchange="onChange()"required>
             <c:forEach items="${weightList}" var="weightList">
             <c:choose>
               <c:when test="${spCakeOrder.spSelectedWeight eq weightList}">
@@ -539,7 +645,7 @@ select {
 	         
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Message </div></div>
-		<div class="col2"><select name="sp_event" id="sp_event"required>
+		<div class="col2"><select name="sp_event" id="sp_event" class="js-example-basic-single"required>
   
               <c:forEach items="${eventList}" var="eventList">
               <c:choose>
@@ -557,7 +663,7 @@ select {
 		
 	</div><div class="colOuter">
 		<div class="col1"><div class="col1title">MSG Name</div></div>
-		<div class="col2">  <select id="show" class="form-control" name="text1" onchange="showDiv1(this)" required>
+		<div class="col2">  <select id="show" style="display: none;" class="form-control" name="text1" onchange="showDiv1(this)" required>
                              <!--  <option value="1" id="marathi" >Marathi</option> -->
                              
                               <option value="3" id="english" >English</option>
@@ -568,7 +674,7 @@ select {
 		<div class="col3" id="msgEnglish" style="display: none"><input class="texboxitemcode" placeholder="Name" name="event_name" type="text" id="event_name_e" autocomplete="off">
 		</div>
 		</div>
-<c:choose>
+<%-- <c:choose>
 <c:when test="${specialCake.isCustChoiceCk=='1'}">
 		
 	      <div class="colOuter">
@@ -620,15 +726,112 @@ select {
         </div>
 	
 	</c:when>
+</c:choose>  --%>
+
+<c:choose>
+<c:when test="${specialCake.isCustChoiceCk=='1'}">
+		
+	      <div class="colOuter">
+	         <div class="col1"><div class="col1title">Photo Cake1</div></div>
+	    	   <div class="col2full"><div class="editimg">
+	    	     <div class="editpics">
+	    	        <div class="fileUpload">
+                                <span> <i class="fa fa-pencil"></i></span>
+                                <input class="upload" type="file" id="order_photo" name="order_photo"/>
+                                
+                            </div>
+                            </div>
+                             <img id="image" src="${SPCAKE_URL}${photoArray[0]}"  onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';"
+											style="width: 120px; height: 120px; padding: 2px; border: 1px solid #CCC;" />
+                            </div>
+                            </div>
+                            </div>
+	      <div class="colOuter">
+	        <div class="col1"><div class="col1title">Photo Cake2</div></div>
+	    	  <div class="col2full"><div class="editimg">
+	    	    <div class="editpics">
+	    	        <div class="fileUpload">
+                                <span> <i class="fa fa-pencil"></i></span>
+                                <input class="upload" type="file" id="cust_choice_ck" name="cust_choice_ck"/>   
+                            </div>
+                            </div>
+                           <!--   <img id="img" /> -->
+                             <img id="img" src="${SPCAKE_URL}${photoArray[1]}"  onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';"
+											style="width: 120px; height: 120px; padding: 2px; border: 1px solid #CCC;" />
+                            </div>
+                            </div>
+                            </div>
+                            
+                            <div class="colOuter">
+	         <div class="col1"><div class="col1title">Photo Cake3</div></div>
+	    	   <div class="col2full"><div class="editimg">
+	    	     <div class="editpics">
+	    	        <div class="fileUpload">
+                                <span> <i class="fa fa-pencil"></i></span>
+                                <input class="upload" type="file" id="order_photo3" name="order_photo3"/>
+                                
+                            </div>
+                            </div>
+                          <!--    <img id="image3" /> -->
+                              <img id="image3" src="${SPCAKE_URL}${photoArray[2]}"  onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';"
+											style="width: 120px; height: 120px; padding: 2px; border: 1px solid #CCC;" />
+                            </div>
+                            </div>
+                            </div>
+                            
+                             <div class="colOuter">
+	        <div class="col1"><div class="col1title">Photo Cake4</div></div>
+	    	  <div class="col2full"><div class="editimg">
+	    	    <div class="editpics">
+	    	        <div class="fileUpload">
+                                <span> <i class="fa fa-pencil"></i></span>
+                                <input class="upload" type="file" id="cust_choice_ck4" name="cust_choice_ck4"/>   
+                            </div>
+                            </div>
+                           <!--   <img id="img4" /> -->
+                           <img id="img4" src="${SPCAKE_URL}${photoArray[3]}"  onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';"
+											style="width: 120px; height: 120px; padding: 2px; border: 1px solid #CCC;" />
+                  
+                            </div>
+                            </div>
+                            </div>
+                            
+                          
+	
+	
+   </c:when>
+   <c:when test="${specialCake.spPhoupload=='1'}">
+	
+	  <div class="colOuter">
+	      <div class="col1"><div class="col1title">Photo Cake</div></div>
+	    	 <div class="col2full">
+	    	  <div class="editimg">
+	    	    <div class="editpics">
+	    	        <div class="fileUpload">
+                                <span> <i class="fa fa-pencil"></i></span>
+                                <input class="upload" type="file" id="order_photo" name="order_photo"/>
+                                
+                     </div>
+                 </div>
+                <!--  <img id="image" /> -->
+                   <img id="image" src="${SPCAKE_URL}${photoArray[0]}" alt="image"
+											style="width: 120px; height: 120px; padding: 2px; border: 1px solid #CCC;" />
+                  
+                
+              </div>
+          </div>
+        </div>
+	
+	</c:when>
 </c:choose> 
 
-       <div class="colOuter">
+       <div class="colOuter"  style="display: none;">
 		<div class="col1"><div class="col1title">Special Instructions</div></div>
         <div class="col2full">
                       <select id="show" class="form-control" name="showtextarea" onchange="showDiv(this)" required>
                            <!--    <option value="1" id="marathi" >Marathi</option> -->
                              
-                              <option value="3" id="english" >English</option>
+                              <option value="3" selected id="english" >English</option>
                                <option value="2" id="hindi" >Hindi</option>
                        </select>
         </div>
@@ -650,7 +853,7 @@ select {
 		<div class="col1"><div class="col1title">Delivery Date</div></div>
 		<fmt:parseDate value="${spCakeOrder.spDeliveryDate}" pattern="yyyy-MM-dd" var="deliveryDateFmt"/>
 <fmt:formatDate value="${deliveryDateFmt}" var="deliveryDateFormat" pattern="dd-MM-yyyy"/>
-		<div class="col2"><c:choose><c:when test="${menuId==46}">
+		<div class="col2"><%-- <c:choose><c:when test="${menuId==46}">
 			<input id="date" class="texboxitemcode texboxcal" value="${deliveryDateFormat}"  name="datepicker" type="text" readonly>
 			<input id="datepicker" class="texboxitemcode texboxcal" value="${deliveryDateFormat}"  name="datepicker" type="hidden" />
 
@@ -658,7 +861,55 @@ select {
 		<c:otherwise>
 		<input id="datepicker" class="texboxitemcode texboxcal" value="${deliveryDateFormat}" autocomplete="off"  name="datepicker" type="text" required>
 		</c:otherwise>
-		</c:choose>
+		</c:choose> --%>
+		<c:choose>
+											<c:when test="${menuDelDays<1}">
+												<input id="date" class="texboxitemcode texboxcal"
+													value="<%=fDate%>" name="datepicker" type="text" readonly>
+												<input id="datepicker" class="texboxitemcode texboxcal"
+													value="<%=fDate%>" name="datepicker" type="hidden" />
+
+											</c:when>
+											<c:otherwise>
+
+												<c:choose>
+													<c:when test="${fromTime lt toTime }">
+														<input id="datepicker" class="texboxitemcode texboxcal"
+															autocomplete="off" value="<%=fDate%>" name="datepicker"
+															type="text" required>
+													</c:when>
+													<c:otherwise>  
+														<c:choose>
+															
+															<c:when test="${tempTime  gt fromTime}">
+															<input type="hidden" id="exDate" value="<%=fDate2%>" >
+																<input id="datepicker" class="texboxitemcode texboxcal"
+																	autocomplete="off" value="<%=fDate2%>"
+																	name="datepicker" type="text" required>
+
+															</c:when>
+															<c:otherwise>
+
+																<input id="datepicker" class="texboxitemcode texboxcal"
+																	autocomplete="off" value="<%=fDate%>"
+																	name="datepicker" type="text" required>
+															</c:otherwise>
+														</c:choose>
+
+													</c:otherwise>
+
+
+												</c:choose>
+
+
+
+
+
+
+
+											</c:otherwise>
+
+										</c:choose>
 		</div><div class="col2"> 
         <c:if test = "${specialCake.isSlotUsed=='1'}"> <span class="cakename"id="slotUsedSpan">Check Slots availability</span> </c:if></div>
 	<!-- </div>
@@ -674,12 +925,17 @@ select {
 		<div class="col2"><input id="datepicker3" class="texboxitemcode texboxcal" placeholder="" name="datepicker3" type="hidden"required>
 		</div>
 	</div>
-	
+	<script type="text/javascript">
+	<!-- Sac 19-04-2021 -->
+$(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
+</script>
 	
 	<div class="colOuter">
 	    <div class="col1"><div class="col1title">Customer Name </div></div>
 	    <div class="col2full">
-	   <select id="sp_cust_id" class="form-control chosen-select" name="sp_cust_id" onchange="showEmpInfo(this.value)" required style="width: 80%;">
+	   <select id="sp_cust_id" class="form-control js-example-basic-single" name="sp_cust_id" onchange="showEmpInfo(this.value)" required style="width: 80%;">
 			  <option>Select Customer</option>	
 			  	<c:forEach items="${customerList}" var="customerList">
 			  	<c:choose>
@@ -791,7 +1047,11 @@ select {
 				
 				<li>
 					<div class="priceLeft">Extra Charges </div>
-					<div class="priceRight"><input name="sp_ex_charges" id="sp_ex_charges"  type="text"  value="${spCakeOrder.extraCharges}" oninput="chChange()"  style="width:75px;border-radius:20px;text-align:center;height: 27px;"></div>
+					<div class="priceRight"><input name="sp_ex_charges" id="sp_ex_charges"  type="text"  value="${spCakeOrder.extraCharges}" oninput="chChange(1)"  style="width:75px;border-radius:20px;text-align:center;height: 27px;"></div>
+				</li>
+				<li>
+					<div class="priceLeft">Company DISC(Rs) </div>
+					<div class="priceRight"><input name="menu_disc_rs" id="menu_disc_rs"  type="text" readonly value="0"    style="width:75px;border-radius:20px;text-align:center;height: 27px;"></div>
 				</li>
 				<fmt:formatNumber type = "number" 
          maxFractionDigits = "2"   minFractionDigits = "2"  value="${(spCakeOrder.spPrice+spCakeOrder.extraCharges)-spCakeOrder.spSubTotal}" var="discAmt" />
@@ -802,7 +1062,7 @@ select {
 				</li>
 				<li>
 					<div class="priceLeft">Discount(Rs) </div>
-					<div class="priceRight"><input name="sp_disc_rs" id="sp_disc_rs"  type="text"  value="${discAmt}"  oninput="onChangeDiscRs()" style="width:75px;border-radius:20px;text-align:center;height: 27px;"></div>
+					<div class="priceRight"><input name="sp_disc_rs" id="sp_disc_rs"  type="text"  value="${discAmt}"  oninput="chChange(3)" style="width:75px;border-radius:20px;text-align:center;height: 27px;"></div>
 				</li>
 				<li>
 					<div class="priceLeft">Sub Total </div>
@@ -877,6 +1137,23 @@ select {
 <input type="hidden" id="dbAdonRate" name="dbAdonRate" value="${orderdFlavour.spfAdonRate}">
  <input type="hidden" id="dbPrice" name="dbPrice"  value="${sprRate}">
 <input type="hidden" id="sp_id" name="sp_id"  value="${spCakeOrder.spId}">
+
+<!--NEW 16-04-2021  -->
+<input type="hidden" id="spBackEndRateNew" name="spBackEndRateNew"
+								value="0">
+								<input type="hidden" id="flvAdRate" name="flvAdRate"
+								value="0">
+								<input type="hidden" id="mrp" name="mrp"
+								value="0">
+								<input type="hidden" id="profPer" name="profPer"
+								value="0">
+								<input type="hidden" id="menu_disc_per" name="menu_disc_per"
+								value="0">
+									<input type="hidden" id="photos" name="photos"
+								value="${spCakeOrder.orderPhoto}">
+								
+								
+								
 </form>
 <!--rightForm-->
 
@@ -959,6 +1236,12 @@ $(document).ready(function() {
 
 <script type="text/javascript">
 		function onChange() {
+			var flavourAdonRate=$("#flvAdRate").val();
+			var mrp=$("#mrp").val();
+			var profitPer=$("#profPer").val();
+			setData(flavourAdonRate,mrp,profitPer);
+			if(1==2){
+			
 			var dbRate=$("#dbRate").val();
 			var wt = $('#spwt').find(":selected").text();
 			var flavourAdonRate =$("#dbAdonRate").val();
@@ -1047,12 +1330,16 @@ $(document).ready(function() {
 			document.getElementById("t1amt").setAttribute('value',tax1Amt.toFixed(2));
 			
 			document.getElementById("t2amt").setAttribute('value',tax2Amt.toFixed(2));
-			
+			}//End of if
 	}</script> 
 <!------------------------------------------------END------------------------------------------------>	
 <!------------------------CALLING FUNCTION WHEN FLAVOUR CHANGE FOR GETTING ADDON RATE---------------->		
 <script type="text/javascript">
 $(document).ready(function() { 
+	$(function () {
+	    $("select#spFlavour").change();
+	});
+	
 	$('#spFlavour').change(
 			function() {
 				var spId=document.getElementById("sp_id").value;
@@ -1061,6 +1348,47 @@ $(document).ready(function() {
 					spfId : $(this).val(),
 					ajax : 'true'
 				}, function(data) {
+					//NC
+					
+					$(
+					'#rate')
+					.empty();
+			$(
+					"#dbAdonRate")
+					.val((
+							data.sprAddOnRate).toFixed(2));
+			$(
+					"#rate")
+					.html(
+							(data.sprAddOnRate).toFixed(2));
+			/* document
+					.getElementById("adv").value = 0.00; */
+			document
+					.getElementById(
+							"sp_add_rate")
+					.setAttribute(
+							'value',
+							data.sprAddOnRate);
+
+			document .getElementById("flvAdRate").value=data.sprAddOnRate
+			document .getElementById("mrp").value=data.sprRateMrp;
+			document .getElementById("profPer").value=data.profitPer;
+			
+			var wt = $(
+					'#spwt')
+					.find(
+							":selected")
+					.text();
+			var flavourAdonRate=$("#flvAdRate").val();
+			var mrp=$("#mrp").val();
+			var profitPer=$("#profPer").val();
+			document .getElementById("menu_disc_per").value=data.menuDiscPer;
+
+			setData(flavourAdonRate,mrp,profitPer);
+			//ENd NC
+			if(1==2){
+					
+					
 					 $('#rate').empty();	
 					 $("#dbAdonRate").val(0);//data.spfAdonRate
 					$("#rate").html(data.mrp);
@@ -1156,14 +1484,119 @@ $(document).ready(function() {
 						document.getElementById("gst_rs").setAttribute('value',gstInRs.toFixed(2));
 						$('#mgstamt').html('AMT-'+mrpBaseRate.toFixed(2)); 
 						document.getElementById("m_gst_amt").setAttribute('value',mrpBaseRate.toFixed(2));
-						
+			}//End of if
 				});
 			});
 });
 </script>
 <script>
-
 function onChangeDiscRs() {
+	var disc_amt=parseFloat($("#sp_disc_rs").val());
+	var gtotal =parseFloat($("#total_amt").val());
+	
+if(disc_amt>0 && !isNaN(disc_amt)){
+if(gtotal<disc_amt){
+	document.getElementById("sp_disc").value=0;
+	chChange();
+		alert("Please enter valid discount amount.")
+		document.getElementById("sp_disc_rs").value=0;
+	}else{ 
+	var wt = $('#spwt').find(":selected").text();
+	var flavourAdonRate =$("#dbAdonRate").val();
+	var tax3 = parseFloat($("#tax3").val());
+	var tax1 = parseFloat($("#tax1").val());
+	var tax2 = parseFloat($("#tax2").val());
+	document.getElementById("adv").value=0;
+	var sp_ex_charges= parseFloat($("#sp_ex_charges").val());
+	//alert("sp_ex_charges"+sp_ex_charges);
+	//alert("sp_disc"+sp_disc);
+	var dbRate = $("#dbPrice").val();//dbRate
+	//alert("tax1:"+tax1+"tax2"+tax2+"tax3"+tax3);
+	
+	
+	var totalCakeRate = wt*dbRate;
+	var totalFlavourAddonRate = wt*flavourAdonRate;
+    var add=parseFloat(totalCakeRate+totalFlavourAddonRate);
+    var grandTotal=parseFloat(add);
+    //alert("without sp_ex_charges"+add);
+	var spSubtotal=add+sp_ex_charges;
+	//alert("with sp_ex_charges"+spSubtotal);
+	document.getElementById("adv").value=0;
+	//alert("disc_amt"+disc_amt);
+	var discPer=disc_amt/((spSubtotal/100));
+	//alert("final "+spSubtotal);
+	spSubtotal=spSubtotal-disc_amt;
+	
+	var mrpBaseRate=parseFloat((spSubtotal*100)/(tax3+100));
+	
+	var gstInRs=0;
+	var taxPerPerc1=0;
+	var taxPerPerc2=0;
+	var tax1Amt=0;
+	var tax2Amt=0;
+	if(tax3==0)
+		{
+		    gstInRs=0;
+		
+		}
+    else
+	{
+	   gstInRs=(mrpBaseRate*tax3)/100;
+		
+	   if(tax1==0)
+		{
+		   taxPerPerc1=0;
+		}
+	   else
+		{
+		    taxPerPerc1=parseFloat((tax1*100)/tax3);
+		    tax1Amt=parseFloat((gstInRs*taxPerPerc1)/100);
+
+		}
+	   if(tax2==0)
+		{
+		   taxPerPerc2=0;
+		}
+	   else
+		{
+			taxPerPerc2=parseFloat((tax2*100)/tax3);
+			tax2Amt=parseFloat((gstInRs*taxPerPerc2)/100);
+
+		}
+	}
+	
+ 
+	document.getElementById("sp_disc").value=discPer.toFixed(2);//new
+	$('#gstrs').html(gstInRs.toFixed(2));  document.getElementById("gst_rs").setAttribute('value',gstInRs.toFixed(2));
+
+	var mGstAmt=mrpBaseRate;
+	$('#mgstamt').html('AMT-'+mGstAmt.toFixed(2));  document.getElementById("m_gst_amt").setAttribute('value',mGstAmt.toFixed(2));
+	
+	$('#price').html(wt*dbRate);
+	document.getElementById("sp_calc_price").value=wt*dbRate;
+	$('#rate').html(wt*flavourAdonRate);	
+	document.getElementById("sp_add_rate").setAttribute('value',wt*flavourAdonRate);
+	//$('#subtotal').html(grandTotal);	
+	
+	$('#subtotal').html(spSubtotal.toFixed(2));	
+	/* document.getElementById("sp_sub_total").setAttribute('value',add); */
+	document.getElementById("sp_sub_total").setAttribute('value',spSubtotal.toFixed(2));
+	
+	$('#INR').html('INR-'+spSubtotal.toFixed(2));
+	document.getElementById("sp_grand").setAttribute('value',spSubtotal.toFixed(2));
+	$('#tot').html('TOTAL-'+spSubtotal.toFixed(2));
+	document.getElementById("total_amt").setAttribute('value',spSubtotal.toFixed(2));
+	$('#rmAmt').html(spSubtotal.toFixed(2));
+	document.getElementById("rm_amount").setAttribute('value',spSubtotal.toFixed(2));
+	
+	document.getElementById("t1amt").setAttribute('value',tax1Amt.toFixed(2));
+	
+	document.getElementById("t2amt").setAttribute('value',tax2Amt.toFixed(2));
+	}
+}
+}
+function onChangeDiscRs_OLD() {
+	
 	var wt = $('#spwt').find(":selected").text();
 	var flavourAdonRate =$("#dbAdonRate").val();
 	var tax3 = parseFloat($("#tax3").val());
@@ -1187,7 +1620,7 @@ function onChangeDiscRs() {
 	//alert("with sp_ex_charges"+spSubtotal);
 	document.getElementById("adv").value=0;
 	//alert("disc_amt"+disc_amt);
-	var discPer=disc_amt/(spSubtotal/100);
+	var discPer=(disc_amt/(spSubtotal/100));
 	//alert("final "+spSubtotal);
 	spSubtotal=spSubtotal-disc_amt;
 	
@@ -1263,8 +1696,25 @@ function onChangeDiscRs() {
 </script>
 
 <script>
+function chChange(inputValue) {
+	//alert("In ");
+	if(parseInt(inputValue)==2){
+		//alert("In A ");
+		document.getElementById("sp_disc_rs").setAttribute('value','0');
+		document.getElementById("sp_disc_rs").value=0;
+	}if(parseInt(inputValue)==3){
+		//alert("In B");
+		document.getElementById("sp_disc").value=0;
+		 var sp_disc1 = parseFloat($("#sp_disc").val());
+			//alert("AFTER==3 sp_disc1 " +sp_disc1);
+	}
+	var flavourAdonRate=$("#flvAdRate").val();
+	var mrp=$("#mrp").val();
+	var profitPer=$("#profPer").val();
+	setData(flavourAdonRate,mrp,profitPer);
+}
 
-function chChange() {
+function chChange_OLD() {
 	var wt = $('#spwt').find(":selected").text();
 	var flavourAdonRate =$("#dbAdonRate").val();
 	var tax3 = parseFloat($("#tax3").val());
@@ -1371,10 +1821,150 @@ function chChange() {
 <!------------------------------------------------END------------------------------------------------>	
 <!------------------------------------REMAINING AMOUNT ONKEYUP FUNCTION------------------------------>	
 <script type="text/javascript">
-function advanceFun() {
+function advanceFun_OLD() {
 	var advance=$("#adv").val();
 	var rmamt =$("#total_amt").val();
 	$('#rmAmt').html(rmamt-advance);document.getElementById("rm_amount").setAttribute('value',rmamt-advance);
+}
+function advanceFun() {
+	var flavourAdonRate=$("#flvAdRate").val();
+	var mrp=$("#mrp").val();
+	var profitPer=$("#profPer").val();
+	setData(flavourAdonRate,mrp,profitPer);
+}
+</script>
+
+<script type="text/javascript">
+function setData(flavourAdonRate,mrp,profitPer) {
+	/*Sachin 08-02-2021*/
+	var wt = $('#spwt').find(":selected").text();
+	//1
+	var spTotAddonRate=flavourAdonRate*wt;
+	//console.log("spTotAddonRate",spTotAddonRate)
+	var tax3 = parseFloat($("#tax3").val());
+	var tax1 = parseFloat($("#tax1").val());
+	var tax2 = parseFloat($("#tax2").val());
+	
+	var sp_ex_charges = parseFloat($("#sp_ex_charges").val());
+	var sp_disc = parseFloat($("#sp_disc").val());
+	var advAmt=document.getElementById("adv").value;
+	var spPrice=mrp*wt;
+	//console.log("spPrice",spPrice)
+	var spSubTotal=(spTotAddonRate+spPrice+sp_ex_charges);
+	console.log("spSubTotal",spSubTotal)
+	var spBackEndRate=(spSubTotal-(spSubTotal*profitPer)/100);
+	//console.log("spBackEndRate",spBackEndRate);
+	var discAmt=spSubTotal*(sp_disc/100);
+	console.log("AA discAmt",discAmt);
+	//tc
+	var disc_amt_entered=document.getElementById("sp_disc_rs").value;
+	var menu_disc_per=document.getElementById("menu_disc_per").value;
+	console.log("disc_amt_entered",disc_amt_entered);
+	console.log("menu_disc_per",menu_disc_per);
+	var menuDISCAMT=0;
+	menuDISCAMT=spSubTotal*(menu_disc_per/100);
+	document.getElementById("menu_disc_rs").setAttribute('value',
+			menuDISCAMT.toFixed(2));
+	console.log("menuDISCAMT",menuDISCAMT);
+	discAmt=menuDISCAMT;
+	//alert(disc_amt_entered);
+	if(parseFloat(sp_disc)>0){
+		//alert("A")
+		var tot_disc_per=parseFloat(menu_disc_per)+parseFloat(sp_disc);
+		discAmt=spSubTotal*(tot_disc_per/100);
+		discAmt2=spSubTotal*(sp_disc/100);
+		//document.getElementById("sp_disc_rs").value=discAmt;;
+		document.getElementById("sp_disc_rs").setAttribute('value',
+				discAmt2.toFixed(2));
+		 document.getElementById("sp_disc_rs").value=discAmt2.toFixed(2);
+		console.log("discAmt2",discAmt2);
+		//alert("A1")
+	}else if(parseFloat(disc_amt_entered)>0){
+		//alert("B")
+		//console.log("B","BBBB");
+		discAmt=parseFloat(disc_amt_entered)+parseFloat(menuDISCAMT);
+		var discPer=(parseFloat(disc_amt_entered)/(parseFloat(spSubTotal)/100));
+		console.log("B discPer",discPer);
+		//alert("discPer" +discPer)
+		//sp_disc=discPer;
+		// document.getElementById('sp_disc').value=sp_disc;
+		// document.getElementById("sp_disc").setAttribute('value',discPer.toFixed(2));
+		 document.getElementById("sp_disc").value=discPer.toFixed(2);
+		// var sp_disc1 = parseFloat($("#sp_disc").val());
+		//alert("AFTER sp_disc1 " +sp_disc1);
+		 //alert("B1")
+	}
+	//alert(discAmt);
+	
+	var spGrandTot=(parseFloat(spTotAddonRate)+parseFloat(spPrice)+parseFloat(sp_ex_charges))-parseFloat(discAmt);
+	//alert(spGrandTot);
+	var taxableAmt=(spGrandTot*100)/100+tax3;
+	//alert(taxableAmt);
+	var spSubTotalTemp=parseFloat(spSubTotal)-discAmt
+	var mrpBaseRate = parseFloat((spSubTotalTemp * 100) / (tax3 + 100));
+	//var mrpBaseRate = parseFloat((spSubTotal * 100) / (tax3 + 100));
+
+	var gstInRs = 0;
+	var taxPerPerc1 = 0;
+	var taxPerPerc2 = 0;
+	var tax1Amt = 0;
+	var tax2Amt = 0;
+	if (tax3 == 0) {
+		gstInRs = 0;
+
+	} else {
+		gstInRs = (mrpBaseRate * tax3) / 100;
+
+		if (tax1 == 0) {
+			taxPerPerc1 = 0;
+		} else {
+			taxPerPerc1 = parseFloat((tax1 * 100) / tax3);
+			tax1Amt = parseFloat((gstInRs * taxPerPerc1) / 100);
+		}
+		if (tax2 == 0) {
+			taxPerPerc2 = 0;
+		} else {
+			taxPerPerc2 = parseFloat((tax2 * 100) / tax3);
+			tax2Amt = parseFloat((gstInRs * taxPerPerc2) / 100);
+		}
+	}
+
+	$('#gstrs').html(gstInRs.toFixed(2));
+	document.getElementById("gst_rs").setAttribute('value',
+			taxableAmt.toFixed(2));
+
+	var mGstAmt = mrpBaseRate;
+	$('#mgstamt').html('AMT-' + mGstAmt.toFixed(2));
+	document.getElementById("m_gst_amt").setAttribute('value',
+			mGstAmt.toFixed(2));
+
+	$('#price').html(spPrice.toFixed(2));
+	document.getElementById("sp_calc_price").value = spPrice;
+	$('#rate').html(spTotAddonRate.toFixed(2));
+	document.getElementById("sp_add_rate").setAttribute('value',
+			spTotAddonRate);
+
+	$('#subtotal').html(spSubTotal.toFixed(2));
+	document.getElementById("sp_sub_total").setAttribute('value',
+			spSubTotal);
+
+	$('#INR').html('INR-' + (spGrandTot).toFixed(2));
+	document.getElementById("sp_grand").setAttribute('value',
+			spGrandTot);
+	$('#tot').html('TOTAL-' + (spSubTotal).toFixed(2));
+	document.getElementById("total_amt").setAttribute('value',
+			spSubTotal);
+	$('#rmAmt').html((spGrandTot-advAmt).toFixed(2));
+	document.getElementById("rm_amount").setAttribute('value',
+			(spGrandTot-advAmt).toFixed(2));
+
+	document.getElementById("t1amt").setAttribute('value',
+			tax1Amt.toFixed(2));
+
+	document.getElementById("t2amt").setAttribute('value',
+			tax2Amt.toFixed(2));
+	document.getElementById("spBackEndRateNew").setAttribute('value',
+			spBackEndRate.toFixed(2));
 }
 </script>
 <!------------------------------------------------END------------------------------------------------>
@@ -1567,6 +2157,33 @@ function validate() {
     reader.onload = function (e) {
         // get loaded data and render thumbnail.
         document.getElementById("img").src = e.target.result;
+    };
+
+    // read the image file as a data URL.
+    reader.readAsDataURL(this.files[0]);
+};
+</script>
+
+<script>
+ document.getElementById("order_photo3").onchange = function () {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+        // get loaded data and render thumbnail.
+        document.getElementById("image3").src = e.target.result;
+    };
+
+    // read the image file as a data URL.
+    reader.readAsDataURL(this.files[0]);
+};
+</script>
+<script>
+ document.getElementById("cust_choice_ck4").onchange = function () {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+        // get loaded data and render thumbnail.
+        document.getElementById("img4").src = e.target.result;
     };
 
     // read the image file as a data URL.

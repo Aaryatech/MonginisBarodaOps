@@ -575,7 +575,7 @@ jQuery(document).ready(function(){
 															</c:choose> --%>
 														</td>
 														<td class="col-md-2">&nbsp;&nbsp;&nbsp;&nbsp; <c:out
-																value="${orderList.spName}" /> <%-- <c:choose>
+																value="${orderList.spName}" /> <c:choose>
 																<c:when test="${orderList.isBillGenerated==0}">
 												&nbsp;&nbsp;<a href="editSpOrder/${orderList.spOrderNo}"><span
 																		class="fa fa-pencil"></span></a>&nbsp;&nbsp;<a href="#"
@@ -585,7 +585,7 @@ jQuery(document).ready(function(){
 																<c:otherwise>
 
 																</c:otherwise>
-															</c:choose> --%>
+															</c:choose>
 														</td>
 														<td class="col-md-1"><c:out
 																value="${orderList.spDeliveryDate}" /></td>

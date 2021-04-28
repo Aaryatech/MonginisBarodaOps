@@ -308,21 +308,21 @@ jQuery(document).ready(function(){
 								<div class="fullform">
 									<div class="cackleft">Order Photo 1</div>
 									<div class="cackright">
-										<a href="${SPCAKE_URL}${photoArray[0]}" target="_blank"><img src="${SPCAKE_URL}${photoArray[0]}" alt="image"
+										<a href="${SPCAKE_URL}${photoArray[0]}" target="_blank"><img src="${SPCAKE_URL}${photoArray[0]}" onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';"
 											style="width: 120px; height: 120px; padding: 2px; border: 1px solid #CCC;" />
 									</a></div>
 								</div>
 								<div class="fullform">
 									<div class="cackleft">Order Photo 2</div>
 									<div class="cackright">
-										<a href="${SPCAKE_URL}${photoArray[1]}" target="_blank"><img src="${SPCAKE_URL}${photoArray[1]}" alt="image"
+										<a href="${SPCAKE_URL}${photoArray[1]}" target="_blank"><img src="${SPCAKE_URL}${photoArray[1]}" onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';"
 											style="width: 120px; height: 120px; padding: 2px; border: 1px solid #CCC;" />
 									</a></div>
 								</div>
 								<div class="fullform">
 									<div class="cackleft">Order Photo 3</div>
 									<div class="cackright">
-										<a href="${SPCAKE_URL}${photoArray[2]}" target="_blank"><img src="${SPCAKE_URL}${photoArray[2]}" alt="image"
+										<a href="${SPCAKE_URL}${photoArray[2]}" target="_blank"><img src="${SPCAKE_URL}${photoArray[2]}" onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';"
 											style="width: 120px; height: 120px; padding: 2px; border: 1px solid #CCC;" />
 									</a></div>
 								</div>
@@ -330,7 +330,7 @@ jQuery(document).ready(function(){
 									<div class="cackleft">Order Photo 4</div>
 									<div class="cackright">
 										<a href="${SPCAKE_URL}${photoArray[3]}" target="_blank"> <img
-											src="${SPCAKE_URL}${photoArray[3]}" alt="image"
+											src="${SPCAKE_URL}${photoArray[3]}" onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';"
 											style="width: 120px; height: 120px; padding: 2px; border: 1px solid #CCC;" />
 										</a>
 									</div>
