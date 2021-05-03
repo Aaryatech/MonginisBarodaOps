@@ -84,8 +84,32 @@ public class SpecialCake {
 		private float sprAddOnRate;//existing just pinched below
 	private float profitPer;
 	
+	//For App
+	private float spSelectedWt;
+	private float exCharges;
+	private float advAmt;
 	
 	
+	
+	
+	public float getSpSelectedWt() {
+		return spSelectedWt;
+	}
+	public void setSpSelectedWt(float spSelectedWt) {
+		this.spSelectedWt = spSelectedWt;
+	}
+	public float getExCharges() {
+		return exCharges;
+	}
+	public void setExCharges(float exCharges) {
+		this.exCharges = exCharges;
+	}
+	public float getAdvAmt() {
+		return advAmt;
+	}
+	public void setAdvAmt(float advAmt) {
+		this.advAmt = advAmt;
+	}
 	public float getMenuDiscPer() {
 		return menuDiscPer;
 	}
@@ -311,8 +335,9 @@ public class SpecialCake {
 				+ ", mrpRate1=" + mrpRate1 + ", mrpRate2=" + mrpRate2 + ", mrpRate3=" + mrpRate3 + ", spRate1="
 				+ spRate1 + ", spRate2=" + spRate2 + ", spRate3=" + spRate3 + ", isSlotUsed=" + isSlotUsed
 				+ ", noOfChars=" + noOfChars + ", sprRateMrp=" + sprRateMrp + ", spBackendRate=" + spBackendRate
-				+ ", menuSettingDelDays=" + menuSettingDelDays + ", sprAddOnRate=" + sprAddOnRate + ", profitPer="
-				+ profitPer + "]";
+				+ ", menuSettingDelDays=" + menuSettingDelDays + ", menuDiscPer=" + menuDiscPer + ", sprAddOnRate="
+				+ sprAddOnRate + ", profitPer=" + profitPer + ", spSelectedWt=" + spSelectedWt + ", exCharges="
+				+ exCharges + ", advAmt=" + advAmt + "]";
 	}
 	public float getSprRateMrp() {
 		return sprRateMrp;
