@@ -119,7 +119,10 @@ public class NewOpsCustomerBillController {
 			List<PaymentMode> payModeList = new ArrayList<PaymentMode>(Arrays.asList(paymentMode));
 			model.addObject("payModeList", payModeList);
 
-			CustomerForOps[] custResp = restTemplate.getForObject(Constant.URL + "getAllCustomersForOps",
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			
+			CustomerForOps[] custResp = restTemplate.postForObject(Constant.URL + "getAllCustomersForOps",map,
 					CustomerForOps[].class);
 			custometList = new ArrayList<CustomerForOps>(Arrays.asList(custResp));
 			map = new LinkedMultiValueMap<String, Object>();
@@ -446,7 +449,16 @@ public class NewOpsCustomerBillController {
 			// System.err.println("catidtax1,2="+catId+tax1+tax2);
 
 			int flag = 0;
+			System.err.println("catidtax1,2="+catId+tax1+tax2 +"itemTax " +itemTax);
+			Float mrpBaseRate = (itemMrp * 100) / (100 + itemTax);
+			System.err.println("mrpBaseRate="+mrpBaseRate);
+			//float paybeleTaxable=((mrpBaseRate*itemQty)-(mrpBaseRate*itemTax)/100);
+			 paybeleTax=((mrpBaseRate*itemTax)/100);
+			//paybeleTax=(paybeleTaxable*itemTax)/100;
+			System.err.println("paybeleTax="+paybeleTax);
 
+			paybeleAmt=paybeleTax+mrpBaseRate;
+			System.err.println("paybeleAmt="+paybeleAmt);
 			for (int i = 0; i < itemList.size(); i++) {
 				if (itemList.get(i).getItemId() == itemId) {
 					if (calStock == 1) {
@@ -667,8 +679,12 @@ public class NewOpsCustomerBillController {
 	public AddCustemerResponse saveCustomerFromBill(HttpServletRequest request, HttpServletResponse responsel) {
 
 		AddCustemerResponse info = new AddCustemerResponse();
-
+		MultiValueMap<String, Object> map=null;
 		try {
+			
+			HttpSession session = request.getSession();
+		     Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		
 			RestTemplate restTemplate = new RestTemplate();
 			String customerName = request.getParameter("customerName");
 			String mobileNo = request.getParameter("mobileNo");
@@ -703,11 +719,15 @@ public class NewOpsCustomerBillController {
 			save.setExVar1("" + kms);
 			save.setGender(gender);
 			save.setExVar2(str);
+			
+			save.setFrId(frDetails.getFrId());
 			CustomerForOps res = restTemplate.postForObject(Constant.URL + "/saveCustomerForOps", save,
 					CustomerForOps.class);
-
-			CustomerForOps[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomersForOps",
-					CustomerForOps[].class);
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			
+			CustomerForOps[] customer = restTemplate.postForObject(Constant.URL + "/getAllCustomersForOps",
+					map,CustomerForOps[].class);
 			custometList = new ArrayList<>(Arrays.asList(customer));
 
 			if (res == null) {
@@ -934,7 +954,7 @@ public class NewOpsCustomerBillController {
 
 			RestTemplate restTemplate = new RestTemplate();
 
-			sellBillHeaderRes = restTemplate.postForObject(Constant.URL + "insertSellBillData", sellBillHeader,
+			sellBillHeaderRes = restTemplate.postForObject(Constant.URL + ",", sellBillHeader,
 					SellBillHeader.class);
 
 			System.out.println("info :" + sellBillHeaderRes.toString());
@@ -1604,12 +1624,12 @@ public class NewOpsCustomerBillController {
 
 						sellBillDetail.setCatId(itemsListByIds.get(j).getItemGrp1());
 						sellBillDetail.setSgstPer(itemsListByIds.get(j).getItemTax1());
-						sellBillDetail.setSgstRs(itemList.get(i).getTax1() / 2);
+						sellBillDetail.setSgstRs(roundUp(itemList.get(i).getPayableTax() / 2));
 						sellBillDetail.setCgstPer(itemsListByIds.get(j).getItemTax2());
-						sellBillDetail.setCgstRs(itemList.get(i).getTax2() / 2);
+						sellBillDetail.setCgstRs(roundUp(itemList.get(i).getPayableTax() / 2));
 						sellBillDetail.setDelStatus(0);
 						sellBillDetail.setIgstPer(itemsListByIds.get(j).getItemTax3());
-						sellBillDetail.setIgstRs(itemList.get(i).getPayableTax());
+						sellBillDetail.setIgstRs(roundUp(itemList.get(i).getPayableTax()));
 						sellBillDetail.setItemId(itemList.get(i).getItemId());
 						sellBillDetail.setMrp(itemList.get(i).getItemMrp());
 

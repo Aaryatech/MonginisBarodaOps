@@ -996,22 +996,45 @@ label:before {
 								<td>Total Items :</td>
 								<td id="totalCnt">${totalItemCount}</td>
 								<td>Total :</td>
-								<td align="right" style="text-align: right;" id="totalAmt"><fmt:formatNumber
+								<td align="right" style="text-align: right; font-weight: bold;" id="totalAmt"><fmt:formatNumber
 										type="number" groupingUsed="false" value="${totalTaxableAmt}"
 										maxFractionDigits="2" minFractionDigits="2" /></td>
 							</tr>
 							<tr bgcolor="#ffe5e6" style="border-top: 1px solid #f4f4f4;">
-								<td>Discount :</td>
-								<td>(0.00) 0.00</td>
-								<td>Order Tax :</td>
-								<td align="right" style="text-align: right;" id="totalTax"><fmt:formatNumber
+								<!-- <td>Discount :</td>
+								<td>(0.00) 0.00</td> -->
+								<td>
+								 Discount % 
+					 
+						<input type="text" name="discPer" id="discPer" step="0.01"
+							oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+							onchange="itemDiscPerCalculation(1)"
+							onkeyup="itemDiscPerCalculation(1)" class="form-control"
+							value="0" placeholder="Disc %"
+							style="text-align: center; width: 90px; border-radius: 20px;" />
+						<label for="discAmtLabel"
+							style="font-weight: 700; padding-left: 5px;">&nbsp;Disc
+							Amt&nbsp;</label> <input type="text" name="discAmt" id="discAmt"
+							oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+							onchange="itemDiscPerCalculation(2)"
+							onkeyup="itemDiscPerCalculation(2)" class="form-control"
+							value="0" placeholder="Disc Amt"
+							style="text-align: center; width: 90px; border-radius: 20px;" />
+					 </td>
+								
+								<%-- <td style="display: none">Order Tax :</td>
+								<td  align="right" style="text-align: right;display: none;" id="totalTax"><fmt:formatNumber
 										type="number" groupingUsed="false" value="${totalTaxAmt}"
-										maxFractionDigits="2" minFractionDigits="2" /></td>
+										maxFractionDigits="2" minFractionDigits="2" /></td> --%>
+										
+										<input type="hidden"   id="totalTax"><%-- <fmt:formatNumber
+										type="number"  groupingUsed="false" value="${totalTaxAmt}"
+										maxFractionDigits="2" minFractionDigits="2" /> --%>
 							</tr>
 							<tr bgcolor="#fefcd5" style="border-top: 1px solid #f4f4f4;">
 								<td style="font-weight: 600;">Total Payable :</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
+							<!-- 	<td>&nbsp;</td>
+								<td>&nbsp;</td> -->
 								<td style="font-weight: 600; text-align: right;" align="right"
 									id="finalAmount"><fmt:formatNumber type="number"
 										groupingUsed="false" value="${totalAmt+totalTaxAmt}"
@@ -1049,15 +1072,28 @@ label:before {
 
 					</div>
 
-					<div class="text_count">
+					<!-- <div class="text_count">
 						Paid Amount :
 						<p>0.00</p>
 						<span>Return Amount :
 							<p>0.00</p>
 						</span>
-					</div>
+					</div> -->
+					<div class="text_count">
+					<label style="font-weight: 700; padding-left: 5px;">Paid&nbsp;</label>
+								<input type="text" name="pAmt" id="pAmt"
+									oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+									onchange="amtReturnCal()" onkeyup="amtReturnCal()"
+									class="form-control" value="" placeholder="Amount"
+									style="text-align: center; width: 90px; border-radius: 20px;" />
 
 
+								&nbsp;&nbsp; <label style="font-weight: 700; padding-left: 5px;">Return&nbsp;</label>
+								<input type="text" name="rAmt" id="rAmt" readonly="readonly"
+									class="form-control" value="" placeholder="Amount"
+									style="text-align: center; width: 90px; border-radius: 20px;" />
+
+</div>
 				</div>
 				<div id="overlay2">
 					<div id="text2">
@@ -1240,7 +1276,7 @@ label:before {
 				</div> --%>
 
 				<div class="add_frm_one">
-					<div class="add_customer_one">Discount %</div>
+					<!-- <div class="add_customer_one">Discount %</div>
 					<div class="add_input" id="discountPopup">
 						<input type="text" name="discPer" id="discPer" step="0.01"
 							oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
@@ -1256,7 +1292,7 @@ label:before {
 							onkeyup="itemDiscPerCalculation(2)" class="form-control"
 							value="0" placeholder="Disc Amt"
 							style="text-align: center; width: 90px; border-radius: 20px;" />
-					</div>
+					</div> -->
 					<div class="clr"></div>
 				</div>
 				<div class="add_frm_one">
@@ -1508,7 +1544,7 @@ label:before {
 
 						<div class="add_frm_one">
 							<div class="add_customer_one"></div>
-							<div class="add_input">
+							<!-- <div class="add_input">
 
 								<label style="font-weight: 700; padding-left: 5px;">Paid&nbsp;</label>
 								<input type="text" name="pAmt" id="pAmt"
@@ -1525,7 +1561,7 @@ label:before {
 
 
 
-							</div>
+							</div> -->
 							<div class="clr"></div>
 						</div>
 
@@ -2008,6 +2044,15 @@ label:before {
 	<script
 		src="${pageContext.request.contextPath}/resources/newpos/js/jquery.mCustomScrollbar.concat.min.js"></script>
 
+<!-- SAC Script -->
+<script>
+$(document).ready(function(){
+    $('#enterQty').focus(function(){
+        document.getElementById("enterQty").value="";
+    });
+});
+</script>
+
 	<script>
 		(function($) {
 			$(window).on(
@@ -2373,11 +2418,15 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		//var catId = document.getElementById("itemUomHidden").value;
 		var tax1 = document.getElementById("itemTax1Hidden").value;
 		var tax2= document.getElementById("itemTax1Hidden").value;
+		//alert("tax1" +tax1+ "tax2" +tax2)
 		var catId= document.getElementById("itemCatId").value;
 	var aviableQty=	document.getElementById("aviableQty").value;
 		var price= (qty*itemMrp).toFixed(2);
 		var paybeleTax=((price*100)/(100+itemTax)).toFixed(2);
+		
 		var paybeleAmt=(price-paybeleTax).toFixed(2);
+		
+		//alert("paybeleTax" +paybeleTax+ "paybeleAmt" +paybeleAmt)
 		
 		 //alert(itemId);
 		//alert(itemTax);
@@ -2408,7 +2457,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		       async:false,
 		       success: function(data, textStatus, jqXHR)
 		       {
-		    	   var itemCnt = data.itemList.length;
+		    	   var itemCnt =0;// data.itemList.length;
 					var total = 0;
 					var tax = 0;
 					var finalAmt =0;
@@ -2436,13 +2485,14 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 						var mainTr = $(mainTrStr);
 						$('#itemTable tbody').append(
 								mainTr);
-						
+						var len = data.itemList.length;
+
 						$
 						.each(
 								data.itemList,
 								function(key, item) {
-						
-									 
+									//key=len;
+									itemCnt=itemCnt+item.itemQty;
 							
 							//alert(JSON.stringify(item))
 							finalAmt += parseFloat(item.payableAmt);
@@ -2462,7 +2512,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 								
 								
 								$('#itemTable tbody').append(tr);
-								
+								//len=len-1;
 								
 						});
 						getAllItemList();
@@ -2470,7 +2520,8 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 						 //alert(itemCnt);
 						document.getElementById("totalCnt").innerHTML=itemCnt;
 						//alert(total);
-						document.getElementById("totalAmt").innerHTML=payableAmt.toFixed(2);
+						//document.getElementById("totalAmt").innerHTML=payableAmt.toFixed(2);
+						document.getElementById("totalAmt").innerHTML=total.toFixed(2);
 						//alert(tax);
 						document.getElementById("totalTax").innerHTML=tax.toFixed(2);
 						//alert(finalAmt);
@@ -2490,7 +2541,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		           console.log('ERRORS: ' + textStatus);
 		       }
 		   });
-		  
+		  amtReturnCal();
 	}
 	
 	function getCustomerList(val) {
@@ -2756,7 +2807,9 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		       async:false,
 		       success: function(data, textStatus, jqXHR)
 		       {//alert(JSON.stringify(data));
-					var itemCnt = data.length;
+					//var itemCnt = data.length;
+					var itemCnt =0;
+
 					var total = 0;
 					var tax = 0;
 					var finalAmt =0;
@@ -2794,7 +2847,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 							total += parseFloat(item.calPrice);
 							tax += parseFloat(item.payableTax);
 							payableAmt += parseFloat(item.payableAmt);
-							
+							itemCnt=itemCnt+item.itemQty;
 							var tr=$('<tr></tr>');
 							tr
 							.append($(
@@ -2814,7 +2867,9 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 						//alert(itemCnt);
 						document.getElementById("totalCnt").innerHTML=itemCnt;
 						//alert(total);
-						document.getElementById("totalAmt").innerHTML=payableAmt.toFixed(2);
+						//document.getElementById("totalAmt").innerHTML=payableAmt.toFixed(2);
+						document.getElementById("totalAmt").innerHTML=total.toFixed(2);
+
 						//alert(tax);
 						document.getElementById("totalTax").innerHTML=tax.toFixed(2);
 						//alert(finalAmt);
@@ -2832,16 +2887,25 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		       }
 		   });
 		  
-	 
+		 amtReturnCal();
  }
  
  function amtReturnCal() {
 		
-		var amt=document.getElementById("payAmt").value;
-		var pay=document.getElementById("pAmt").value;
-		 
+		var amt=document.getElementById("pAmt").value;
+		//var pay=document.getElementById("pAmt").value;
+			//var pay=document.getElementById("finalAmount").value;
+			 var pay=document.getElementById("finalAmount").innerHTML;
+		 //alert("amt" +amt + "pay "+pay)
+		 if(amt==null || isNaN(amt) || amt==""){
+			 amt=0;
+		 }
+		 if(pay==null || isNaN(pay) || pay==""){
+			 pay=0;
+		 }
+			 
 		var ret=amt-pay;
-		document.getElementById("rAmt").value=ret;
+		document.getElementById("rAmt").value=ret.toFixed(2);
 		
 	}
  function paymentClick(){
@@ -2914,7 +2978,65 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 	 
  } */
  
+ 
+ 
  function itemDiscPerCalculation(flag) {
+	 document.getElementById("cashAmt").value =0;
+		document.getElementById("cardAmt").value =0;
+		document.getElementById("epayAmt").value =0;
+		document.getElementById("epayLabel").innerHTML =" Total: &nbsp;&nbsp;"+0;
+	document.getElementById("epayLabel").style.color="black";
+	var discPer = parseFloat($('#discPer').val());
+	var discAmt = parseFloat($('#discAmt').val());
+	var totalAmtPopup;
+	var grandTot=parseFloat($('#totalAmtPopup').text());
+	var advAmt = 0;
+	totalAmtPopup= parseFloat($('#totalAmtPopup').text())-advAmt;
+	if(flag==1){
+		var calDiscAmt = parseFloat(grandTot*discPer/100);
+		if(discPer>100){
+			alert("Discount percent is invalid");
+			document.getElementById("discAmt").value=0;
+			document.getElementById("discPer").value=0;
+			var totalAmt=totalAmtPopup-0;
+			document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
+			document.getElementById("payAmt").value = totalAmt.toFixed(0);
+			//document.getElementById("finalAmount").value = totalAmt.toFixed(0);//SAC Line
+			//document.getElementById("finalAmount").innerHTML= totalAmt.toFixed(2);
+			
+		}else{
+		var totalAmt=totalAmtPopup-calDiscAmt;
+		document.getElementById("discAmt").value = calDiscAmt.toFixed(2);
+		document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
+		document.getElementById("payAmt").value = totalAmt.toFixed(0);
+		//document.getElementById("finalAmount").value = totalAmt.toFixed(0);//SAC Line
+		document.getElementById("finalAmount").innerHTML= totalAmt.toFixed(2);
+		}
+	}else{
+		 if(discAmt>grandTot){
+			 if(discAmt!=0){
+				alert("Discount amount should be smaller than total amount");
+			 }
+			document.getElementById("discPer").value=0;
+			document.getElementById("discAmt").value=0;
+			var totalAmt=payableAmount-0;
+			document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
+			document.getElementById("payAmt").value = totalAmt.toFixed(0);
+			//document.getElementById("finalAmount").value = totalAmt.toFixed(0);//SAC Line
+
+		}else{
+		var calDiscPer = parseFloat((discAmt/(grandTot/100)));
+		var totalAmt=totalAmtPopup-discAmt;
+		document.getElementById("discPer").value = calDiscPer.toFixed(2);;
+		document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
+		document.getElementById("payAmt").value = totalAmt.toFixed(0);
+		document.getElementById("finalAmount").value = totalAmt.toFixed(0);//SAC Line
+		document.getElementById("finalAmount").innerHTML= totalAmt.toFixed(2);
+		} 
+	}
+	amtReturnCal();
+ }
+ function itemDiscPerCalculation_OLD(flag) {
 		
 		document.getElementById("cashAmt").value =0;
 		document.getElementById("cardAmt").value =0;
