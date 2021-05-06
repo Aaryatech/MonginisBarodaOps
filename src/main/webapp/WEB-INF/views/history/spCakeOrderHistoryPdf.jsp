@@ -106,8 +106,9 @@ th {
 		</tbody>
 	</table>
 	</c:when>
-	<c:otherwise>
-		<table align="center" border="1" cellspacing="0" cellpadding="1"
+	
+	<c:when test="${orderTyp==2}">
+	<table align="center" border="1" cellspacing="0" cellpadding="1"
 		id="table_grid" class="table table-bordered">
 		<thead>
 			<tr class="bgpink">
@@ -181,6 +182,82 @@ th {
 				<td style="text-align: right;"><fmt:formatNumber type="number"
 							minFractionDigits="2" maxFractionDigits="2"
 							value="${grndTtl}" /></td>
+			
+			</tr>
+		</tbody>
+	</table>
+	</c:when>
+	
+	
+	<c:otherwise>
+	<table align="center" border="1" cellspacing="0" cellpadding="1"
+		id="table_grid" class="table table-bordered">
+		<thead>
+			<tr class="bgpink">
+
+
+				<th style="text-align: center; width: 60px">Sr no.</th>
+				<th style="text-align: center; width: 100px">Item Name </th>
+				
+				<th style="text-align: center; width: 100px">Delivery Date</th>
+				<th style="text-align: center; width: 100px">Rate</th>				
+				<th style="text-align: center; width: 100px">Qty</th>
+				<th style="text-align: center; width: 100px">Total</th>
+				<th style="text-align: center; width: 100px">Advance</th>
+				
+			</tr>
+		</thead>
+
+		<tbody>
+			<c:set var="ttl" value="${0}" />
+			<c:set var="ttlAdvance" value="${0}" />
+			
+
+			<c:forEach items="${reportList}" var="spCakeOrder" varStatus="count">
+				<tr>
+					<%-- <c:set var="price"
+						value="${spCakeOrder.spGrandTotal * spCakeOrder.spTotalAddRate}" /> --%>
+					<td><c:out value="${count.index+1}" /></td>
+
+					<td><c:out value="${spCakeOrder.itemName}" /></td>
+
+					
+
+					<td style="text-align: center;">
+						<c:out value="${spCakeOrder.rspDeliveryDt}" /></td>
+					<td style="text-align: right;"><fmt:formatNumber type="number"
+							minFractionDigits="2" maxFractionDigits="2"
+							value="${spCakeOrder.rate }" /></td>				
+					<td style="text-align: right;"><fmt:formatNumber type="number"
+							minFractionDigits="2" maxFractionDigits="2"
+							value="${spCakeOrder.qty}" /></td>
+					<td style="text-align: right;"><fmt:formatNumber type="number"
+							minFractionDigits="2" maxFractionDigits="2"
+							value="${spCakeOrder.rspSubTotal}" /></td>
+							
+					<c:set var="ttl"
+						value="${ttl + spCakeOrder.rspSubTotal}" />
+							
+					<td style="text-align: right;"><fmt:formatNumber type="number"
+							minFractionDigits="2" maxFractionDigits="2"
+							value="${spCakeOrder.rspAdvanceAmt}" /></td>	
+						<c:set var="ttlAdvance"
+						value="${ttlAdvance + spCakeOrder.rspAdvanceAmt}" />				
+				</tr>
+			</c:forEach>
+			<tr>
+				<td></td>
+				<td>Total</td>
+				<td></td>
+				
+				<td></td>
+				<td></td>
+				<td style="text-align: right;"><fmt:formatNumber type="number"
+							minFractionDigits="2" maxFractionDigits="2"
+							value="${ttl}" /></td>
+				<td style="text-align: right;"><fmt:formatNumber type="number"
+							minFractionDigits="2" maxFractionDigits="2"
+							value="${ttlAdvance}" /></td>
 			
 			</tr>
 		</tbody>

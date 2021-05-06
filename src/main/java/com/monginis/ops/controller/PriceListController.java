@@ -28,10 +28,17 @@ import org.springframework.web.servlet.ModelAndView;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.CategoryListResponse;
 import com.monginis.ops.model.ExportToExcel;
+import com.monginis.ops.model.Flavour;
+import com.monginis.ops.model.FlavourConf;
+import com.monginis.ops.model.FlavourList;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.Item;
 import com.monginis.ops.model.MCategoryList;
+import com.monginis.ops.model.SearchSpCakeResponse;
+import com.monginis.ops.model.SpCakeOrder;
+import com.monginis.ops.model.SpCakeResponse;
+import com.monginis.ops.model.SpecialCake;
 import com.monginis.ops.model.SubCategory;
 
 @Controller
@@ -39,6 +46,10 @@ import com.monginis.ops.model.SubCategory;
 public class PriceListController {
 	
 	List<MCategoryList> CatList=  new ArrayList<MCategoryList>();
+	
+	FlavourList	flavourList =new FlavourList();
+	
+	List<SpecialCake> specialCakeList = new ArrayList<SpecialCake>();
 
 	public static List<MCategoryList> mCategoryList = null;
 	
@@ -55,8 +66,19 @@ public class PriceListController {
     			CatList=catResp.getmCategoryList();
     			model.addObject("mCategoryList", CatList);
     			mCategoryList = catResp.getmCategoryList();
-	    	 
+    			
+    		flavourList = restTemplate.getForObject(Constant.URL + "/showFlavourList", FlavourList.class);
+    		model.addObject("flavourList", flavourList.getFlavour());
+	    	// System.err.println("flvours==>"+flavourList.toString());
+    		
+    		SpCakeResponse spCakeResponse = restTemplate
+					.getForObject(Constant.URL + "showSpecialCakeListOrderBySpCode", com.monginis.ops.model.SpCakeResponse.class);
+			System.out.println("SpCake Controller SpCakeList Response " + spCakeResponse.toString());
+			
+
+			specialCakeList = spCakeResponse.getSpecialCake();
 	    	  
+			model.addObject("specialCakeList", specialCakeList);
 	    	 
 	    	
 	
@@ -67,6 +89,85 @@ public class PriceListController {
 		}
 		    return model;
 
+	}
+	
+	
+	List<FlavourConf> resp=new ArrayList<>();
+	
+	@RequestMapping(value="/searchSpPrice",method=RequestMethod.POST)
+	public @ResponseBody 	List<FlavourConf> searchBulkOrderAjax(HttpServletRequest request,HttpServletResponse response){
+		System.err.println("In /searchSpPrice");
+		MultiValueMap<String, Object> map=new LinkedMultiValueMap<>();
+		HttpSession session=request.getSession();
+		RestTemplate restTemplate=new RestTemplate();
+		
+		try {
+			 Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			
+			int flag=Integer.parseInt(request.getParameter("flag"));
+			String ids=request.getParameter("ids");
+			ids = ids.substring(1, ids.length() - 1);
+			ids = ids.replaceAll("\"", "");
+			System.err.println("Flag-->"+flag+"\t"+"ids-->"+ids);
+			if(flag==2) {
+				map=new LinkedMultiValueMap<>();
+				//map.add("frId", frDetails.getFrId());
+				map.add("flavIds", ids);
+				FlavourConf[] resArr=restTemplate.postForObject(Constant.URL+"getSpByFlavId", map, FlavourConf[].class);
+				resp=new ArrayList<>(Arrays.asList(resArr));
+			System.err.println("Resp-->"+resp.toString());
+			}else if(flag==1) {
+				map=new LinkedMultiValueMap<>();
+					//map.add("frId", frDetails.getFrId());
+					map.add("spIds", ids);
+					FlavourConf[] resArr=restTemplate.postForObject(Constant.URL+"getSpBySpId", map, FlavourConf[].class);
+					resp=new ArrayList<>(Arrays.asList(resArr));
+				System.err.println("Resp-->"+resp.toString());
+				
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.err.println("Exception In /searchBulkOrderAjax");
+		e.printStackTrace();
+		}
+		return resp;
+	}
+	
+	
+	@RequestMapping(value = "pdf/showSpPricelistPdf/", method = RequestMethod.GET)
+	public ModelAndView showSpPricelistPdf(HttpServletRequest request,HttpServletResponse response) {
+		System.err.println("In /showSpPricelistPdf");
+		 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd ");  
+		   LocalDateTime now = LocalDateTime.now();  
+		 
+		   HttpSession session = request.getSession();
+		   
+		   Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		ModelAndView model = new ModelAndView("showSpPricelistPdf"); 
+		//model.addObject("fromDate", );
+
+		model.addObject("frName",frDetails.getFrName() );
+		model.addObject("toDate",dtf.format(now) );
+		model.addObject("FACTORYNAME", Constant.FACTORYNAME);
+		model.addObject("FACTORYADDRESS", Constant.FACTORYADDRESS);
+		model.addObject("configList", resp);
+
+		return model;
+	}
+	
+	
+	
+	@RequestMapping(value="/selAllCakeAjax",method=RequestMethod.GET)
+	public @ResponseBody 	List<SpecialCake> selAllCakeAjax(){
+		System.err.println("In /selAllCakeAjax");
+		return specialCakeList;
+	}
+	
+	
+	@RequestMapping(value="/selAllFlavAjax",method=RequestMethod.GET)
+	public @ResponseBody 	List<Flavour> getAllFlav(){
+		System.err.println("In /selAllFlavAjax");
+		return flavourList.getFlavour();
 	}
 	
 	

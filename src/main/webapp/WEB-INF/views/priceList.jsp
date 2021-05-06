@@ -260,7 +260,9 @@ jQuery(document).ready(function(){
 	<c:url var="getMenus" value="/getMenus" />
 	<c:url var="getGroup2ByCatId" value="/getSubcat2ByCatId" />
 	<c:url value="/searchItemInSubcat" var="searchItemInSubcat"></c:url>
-
+<c:url value="/selAllFlavAjax" var="selAllFlavAjax" ></c:url>
+<c:url value="/selAllCakeAjax" var="selAllCakeAjax" ></c:url>
+<c:url value="/searchSpPrice" var="searchSpPrice" ></c:url>
 	<!--topLeft-nav-->
 	<div class="sidebarOuter"></div>
 	<!--topLeft-nav-->
@@ -309,9 +311,28 @@ jQuery(document).ready(function(){
 					<div class="title_r high">
 						<input type="hidden" name="mod_ser" id="mod_ser"
 							value="search_result">
+						<div class="frm_l_one">
+						<div class="frm_l high">Select Type </div>
+						<div class="frm_r_one high">
+							<select name="typeOfOrder" id="typeOfOrder" 
+									required onchange="priceListType(this.value)">
+									<option selected>Select Type</option>
+									<option value="1"><c:out value="Regular"></c:out></option>
+									<option value="2"><c:out value="Sp Cake"></c:out></option>
+															
 
-					<div class="colOuter">
+								</select>
+						</div>
+						</div>
+					
+					</div>
+					<div class="clr"></div>
+					<div class="colOuter" id="regCakeDiv">
 						<!-- copy div kalpesh -->
+						
+						
+						
+						
 
 						<div class="frm_l_one">
 						<div class="frm_l high">Select Category </div>
@@ -367,8 +388,82 @@ jQuery(document).ready(function(){
 						</div>
 
 					</div>
+					
+					<div class="colOuter" id="spCakeDiv" style="display: none;">
+						<!-- copy div kalpesh -->
+						
+						
+						
+						
+
+						<div class="frm_l_one">
+						
+						<div class="frm_l high">Select flavour </div>
+						<div class="frm_r_one high">
+							
+							<select multiple="multiple" name="flavourId" id="flavourId"
+									data-placeholder="Choose Sp Flavour" class="chosen-select"
+									style="text-align: left;" tabindex="6" onchange="selectFlav(this.value)" required>
+									<option value="-1" >Select All</option>
+
+																<c:forEach items="${flavourList}" var="flavour">
+
+
+																	<option value="${flavour.spfId}"><c:out
+																			value="${flavour.spfName}"></c:out></option>
+																</c:forEach>
+
+								
+								</select>
+							
+						</div> OR
+						</div>
+						
+						<div class="frm_l_one">
+						<div class="frm_l high">Select Cake</div>
+						<div class="frm_r_one high">
+							<select multiple="multiple" name="cakeId" id="cakeId"
+									data-placeholder="Choose Sp Cake" class="chosen-select"
+									style="text-align: left;" tabindex="6" onchange="selectCake(this.value)"  required>
+									<option value="-1" >Select All</option>
+
+																<c:forEach items="${specialCakeList}" var="spCake">
+
+
+																	<option value="${spCake.spId}"><c:out
+																			value="${spCake.spName}"></c:out></option>
+																</c:forEach>
+
+								
+								</select>
+						</div>
+						</div>
+						
+						
+
+
+
+						<!-- <div class="col-sm-2">
+							<label>OR GRN Sr No</label>
+							<input type="checkbox" class="form-control" id="headerCheckBox"
+						 name="headerCheckBox" id="headerCheckBox"
+							/>
+						</div> -->
+						<div class="frm_single">
+							<input type="hidden" id="Mrp" name="Mrp" value="1">
+						</div>
+						
+						<div class="frm_single">
+						<input name="" class="btn additem_btn" value="Search" style="margin: 0;"
+									type="submit" onclick="searchSpCall()">
+								
+							
+
+						</div>
+
 					</div>
-					<div class="clr"></div>
+					
+					
 				</div>
 					
 				
@@ -623,6 +718,8 @@ jQuery(document).ready(function(){
 					
 					<button class="btn additem_btn" value="PDF" id="PDFButton"
 						onclick="genPdf()">PDF</button>
+						<button class="btn additem_btn" value="PDF" id="PDFButton"
+						onclick="genSpPdf()">SP PDF</button>
 				</div>
 				<!--tab1-->
 
@@ -683,12 +780,166 @@ jQuery(document).ready(function(){
 		document.getElementById("mySidenav3").style.width = "0";
 	}
 </script>
+<script type="text/javascript">
+function priceListType(val){
+	//alert("hiii"+val+"regCakeDiv spCakeDiv")
+	if(val==1){
+		document.getElementById("regCakeDiv").style.display="block";
+		document.getElementById("spCakeDiv").style.display="none";
+	}else if(val==2){
+		document.getElementById("regCakeDiv").style.display="none";
+		document.getElementById("spCakeDiv").style.display="block";
+	}
+	
+	
+}
+
+
+function selectFlav(val){
+	//alert(val)
+	if(val==-1){
+		$.getJSON('${selAllFlavAjax}',
+				{
+			
+					ajax : 'true'
+				},
+				function(data) {
+					//alert(JSON.stringify(data))
+					var html = '<option value="">Select Flavour</option>';
+					
+					var len = data.length;
+					
+					$('#flavourId')
+				    .find('option')
+				    .remove()
+				    .end()
+					// $("#item_grp2").append($("<option></option>").attr( "value",-1).text("ALL"));
+
+					for ( var i = 0; i < len; i++) {
+	    
+	                   $("#flavourId").append(
+	                           $("<option selected></option>").attr(
+	                               "value", data[i].spfId).text(data[i].spfName)
+	                       );
+					}
+			
+					   $("#flavourId").trigger("chosen:updated");
+					   	
+					   
+				});
+	}
+}
+
+
+function selectCake(val){
+	//alert(val)
+	if(val==-1){
+		$.getJSON('${selAllCakeAjax}',
+				{
+			
+					ajax : 'true'
+				},
+				function(data) {
+					//alert(JSON.stringify(data))
+					var html = '<option value="">Select Flavour</option>';
+					
+					var len = data.length;
+					
+					$('#cakeId')
+				    .find('option')
+				    .remove()
+				    .end()
+					// $("#item_grp2").append($("<option></option>").attr( "value",-1).text("ALL"));
+
+					for ( var i = 0; i < len; i++) {
+	    
+	                   $("#cakeId").append(
+	                           $("<option selected></option>").attr(
+	                               "value", data[i].spId).text(data[i].spName)
+	                       );
+					}
+			
+					   $("#cakeId").trigger("chosen:updated");
+				});
+	}
+}
+
+</script>
+<script type="text/javascript">
+function searchSpCall(){
+	//alert("In Sp Cake Search");
+	var flavId=$('#flavourId').val();
+	var cakeIds=$('#cakeId').val();
+	//alert("flav-->"+flavId)
+	//alert("cake-->"+cakeId)
+	var byFlag=0;
+	var ids="";
+	if(flavId==null && cakeIds.length>0){
+		
+		byFlag=1;
+		ids=cakeIds;
+		alert(ids)
+		//alert("Search By Cake")
+	}
+	
+	if(flavId.length>0 && cakeIds==null){
+		
+		byFlag=2;
+		ids=flavId;
+		alert(ids)
+		//alert("Search By Flav")
+	}
+	
+	$.post('${searchSpPrice}', {
+    	ids : JSON.stringify(ids),
+    	flag : byFlag,
+		ajax : 'true'
+	}, function(data) {
+		//alert(JSON.stringify(data))
+		if (data != null) {
+				var len = data.length;
+				$('#table1 td').remove();
+				$.each(data,function(key, item) {
+					var tr = $('<tr ></tr>');
+					//alert(JSON.stringify(item))
+							tr.append($('<td width="27" style="width:  28px;" align="left" id="sr" ></td>').html(
+									key+1));
+							tr.append($('<td width="100" align="left" id="fr" ></td>').html(
+									item.exVar1));
+					
+							tr.append($('<td width="101" align="left" id="menu" ></td>').html(
+									item.mrp1));
+							
+						
+						
+							
+							
+							
+							$('#table1 tbody').append(
+									tr);
+							
+						})
+			
+			
+			
+			} 
+	});
+	
+	
+}
+</script>
 
 	<script type="text/javascript">
 function genPdf()
 {		
 	//var delDate = $("#datepicker").val();	
 	window.open('${pageContext.request.contextPath}/pdf/showPricelistPdf/');
+}
+
+function genSpPdf()
+{		
+	//var delDate = $("#datepicker").val();	
+	window.open('${pageContext.request.contextPath}/pdf/showSpPricelistPdf/');
 }
 
 </script>

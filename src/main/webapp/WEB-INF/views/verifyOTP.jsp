@@ -128,9 +128,9 @@
 								<%-- <a href="${pageContext.request.contextPath}/forgetPwd"><i class="fa fa-lock"></i>Re Generate OTP</a> --%>
 							</div>
 							<div class="loginfildset">
-								<div class="logintexboxleft">
-									<a href="${pageContext.request.contextPath}/"><!-- <i
-										class="fa fa-lock"></i> -->Back To Login Page</a>
+								<div class="">
+									<a href="${pageContext.request.contextPath}/"><i
+										class="fa fa-lock"></i>Back To Login Page</a>
 								</div>
 
 							</div>

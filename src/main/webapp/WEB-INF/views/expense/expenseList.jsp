@@ -222,7 +222,7 @@ table, th, td {
 											<td class="col-md-1" style="text-align: left;"><c:out
 													value="${expList.remark}" /></td>
 
-											<td class="col-md-1" style="text-align: left;"><a
+											<td  class="col-md-1" style="text-align: left;"><a
 												href="${imageUrl}${expList.imgName}" download><img
 													src="${imageUrl}${expList.imgName}"
 													style="width: 80px; height: 80px;"

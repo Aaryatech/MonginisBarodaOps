@@ -490,6 +490,30 @@ public class ProfileController {
 		return value;
 	}
 	
+	
+	@RequestMapping(value="/getCountOfEmpByFrid",method=RequestMethod.GET) 
+	public @ResponseBody Info getCountOfEmpByFrid(HttpServletRequest request,HttpServletResponse response) {
+		System.err.println("In /getCountOfEmpByFrid");
+		HttpSession session=request.getSession();
+		MultiValueMap<String,Object> map=new LinkedMultiValueMap<>();
+		RestTemplate restTemplate=new RestTemplate();
+		Info info=new Info();
+		
+		try {
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			map.add("frId", frDetails.getFrId());
+			int MaxCnt=restTemplate.postForObject(Constant.URL+"getCountOfEmpByFrid", map, Integer.class);
+			MaxCnt++;
+			info.setMessage(frDetails.getFrCode()+MaxCnt);
+			 System.err.println("Emp Count-->"+MaxCnt);
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.err.println("Excep In /getCountOfEmpByFrid");
+			e.printStackTrace();
+		}
+		return info;
+	}
+	
 	@RequestMapping(value = "/getFrEmpById", method = RequestMethod.GET)
 	public @ResponseBody FrEmpModules getFrEmpById(HttpServletRequest req, HttpServletResponse resp,
 			HttpSession session) {

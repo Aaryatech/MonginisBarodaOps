@@ -978,7 +978,7 @@ ${currentTime}
 	</div>
 	
 	<div class="order-btn">
-		<input name="" class="btnSubmit" value="SUBMIT"  type="button" id="click" >
+		<input name="" class="btnSubmit" value="SUBMIT"  type="button"   id="click" >
 		<input name="" class="btnReset" value="RESET" type="hidden">
 	</div>
 	
@@ -2176,61 +2176,68 @@ if(exDate!=null){
 
 $(document).ready(function () {
     $("#click").click(function ()  {
+    	
+    	  if (confirm("Do You Want To Place Order?")) {
+
+     	       var date = $('#datepicker').datepicker({ dateFormat: 'dd-mm-yy' }).val();
+     	  
+     	    	var isSlotUsed =$("#isSlotUsed").val();         
+     	  	 
+     	    	var produTime =$("#sp_pro_time").val();         
+     	  
+     	    	
+     	    	var priceTemp=$("#price").html();
+     	    	//alert(priceTemp);
+     	    	
+                 if(isSlotUsed=='1')
+                 	{
+             
+     			      $.getJSON('${findAvailableSlot}', {
+     				  deldate : date,
+     				  prodTime: produTime,
+     			      ajax : 'true'
+     			} , function(availableSlots) {
+     				
+     				if(availableSlots>0)
+     					{
+     					$("#slotUsedSpan").html(availableSlots +' Slots Available');
+     				var valid=	validate();
+     				
+     				
+     				if(valid  && priceTemp>0){
+     					document.forms["from_ord"].submit();
+     				}	
+     					
+     					}
+     				else
+     					{
+     				
+     					$("#slotsNotAvailable").html('No Slots Available');
+     					alert("Sorry, No Slots Available !");
+     					}
+     				
+     			
+     			});
+            }else{
+           	 var valid=	validate();
+  				
+  				
+  				if(valid && priceTemp>0){
+  					document.getElementById("click").disabled = true;//new
+  					document.forms["from_ord"].submit();
+  				}
+  				else{
+  					
+  					//alert("Please reselect flavour, Price always greater than 0");
+  					isValid= false;
+  				}
+           	 
+            }
+    		  } else {
+    		    
+    		  }
+    	  
    
-      	       var date = $('#datepicker').datepicker({ dateFormat: 'dd-mm-yy' }).val();
-      	  
-      	    	var isSlotUsed =$("#isSlotUsed").val();         
-      	  	 
-      	    	var produTime =$("#sp_pro_time").val();         
-      	  
-      	    	
-      	    	var priceTemp=$("#price").html();
-      	    	//alert(priceTemp);
-      	    	
-                  if(isSlotUsed=='1')
-                  	{
-              
-      			      $.getJSON('${findAvailableSlot}', {
-      				  deldate : date,
-      				  prodTime: produTime,
-      			      ajax : 'true'
-      			} , function(availableSlots) {
-      				
-      				if(availableSlots>0)
-      					{
-      					$("#slotUsedSpan").html(availableSlots +' Slots Available');
-      				var valid=	validate();
-      				
-      				
-      				if(valid  && priceTemp>0){
-      					document.forms["from_ord"].submit();
-      				}	
-      					
-      					}
-      				else
-      					{
-      				
-      					$("#slotsNotAvailable").html('No Slots Available');
-      					alert("Sorry, No Slots Available !");
-      					}
-      				
-      			
-      			});
-             }else{
-            	 var valid=	validate();
-   				
-   				
-   				if(valid && priceTemp>0){
-   					document.getElementById("click").disabled = true;//new
-   					document.forms["from_ord"].submit();
-   				}
-   				else{
-   					
-   					//alert("Please reselect flavour, Price always greater than 0");
-   					isValid= false;
-   				}
-            	 
-             }
          });
 });
   
@@ -2621,7 +2628,7 @@ function setData(flavourAdonRate,mrp,profitPer) {
 								<div class="profilefildset">DOB</div>
 								<div class="profileinput">
 									<input name="dateOfBirth" type="date" class="texboxitemcode"
-										id="dateOfBirth" value="" placeholder="Date Of Birth"/>
+										id="dateOfBirth" value=""  placeholder="Date Of Birth"/>
 								</div>
 							</div>
 							
@@ -2691,6 +2698,8 @@ function setData(flavourAdonRate,mrp,profitPer) {
 
 
 	</div>
+	
+	
 	<script>
 function openNewCustPopUp() {
 
@@ -2849,6 +2858,7 @@ function addCustomer() {
 	
 	if (flag == 0) {
 		document.getElementById("saveCust").disabled = true;
+		alert(dateOfBirth);
 		$('#loader').show();
 		$
 				.post(

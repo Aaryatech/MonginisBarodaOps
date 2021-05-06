@@ -60,7 +60,7 @@
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> Subcategory Summery Report</h2>
+						<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> Subcategory Summery Report </h2>
 					</div>
 				</div>
 				<input type="hidden" name="factoryName" id="factoryName"

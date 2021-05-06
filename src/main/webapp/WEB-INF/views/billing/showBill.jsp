@@ -76,6 +76,7 @@ table, th, td {
 	<c:url var="findAddOnRate" value="/getAddOnRate" />
 	<c:url var="findItemsByCatId" value="/getFlavourBySpfId" />
 	<c:url var="findAllMenus" value="/getAllTypes" />
+	<c:url value="/updateMultiBillStatus" var="updateMultiBillStatus" ></c:url>
 	<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 
 
@@ -189,7 +190,8 @@ table, th, td {
 							<thead>
 								<tr class="bgpink">
 								
-									<th style="text-align: center; white-space: nowrap;">Invoice No</th>
+									<th style="text-align: center; white-space: nowrap;">Invoice No<input type="checkbox" name="selAll"
+										id="selAllChk"  onclick="selAll()" /></th>
 									<th style="text-align: center; white-space: nowrap;">Date</th>
 
 									<th style="text-align: center; white-space: nowrap;">Taxable Amt</th>
@@ -201,13 +203,14 @@ table, th, td {
 									<th style="text-align: center; white-space: nowrap;">Action</th>
 								</tr>
 							</thead>
+							
 							<tbody>
 
 								<c:forEach items="${billHeader}" var="billHeader"
 									varStatus="count">
 									<tr>
 									<%-- 	<td class="col-sm-1"><c:out value="${billHeader.billNo}" /></td> --%>
-										<td style="text-align: center; white-space: nowrap;"><c:out value="${billHeader.invoiceNo}" /></td>
+										<td style="text-align: center; white-space: nowrap;"><c:out value="${billHeader.invoiceNo}" /><input type="checkbox" class="chkcls" name="chkcls" id="catCheck+${billHeader.billNo}" value="${billHeader.billNo}"></td>
 										<td style="text-align: left; white-space: nowrap;"><c:out
 												value="${billHeader.billDate}" /></td>
 										<td style="text-align: right; white-space: nowrap;"><c:out
@@ -271,6 +274,10 @@ table, th, td {
 									</tr>
 								</c:forEach>
 						</table>
+						<div class="four_txt">
+								<input name="" class="btn additem_btn" value="Received" style="margin: 15px; border:none;"
+									type="button" id="updateStatus" onclick="updateStatus()">
+					</div>
 
 					</div>
 				</div>
@@ -302,8 +309,63 @@ table, th, td {
 <!--easyTabs-->
 <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 <!--easyTabs-->
+<script>
+function updateStatus() {
+	
+	var elemntIds = [];										
+	
+	$(".chkcls:checkbox:checked").each(function() {
+		elemntIds.push($(this).val());
+	});
+	if(elemntIds==""){
+		alert("Select Atleast One Bill!!!");
+	}else{
+		$.post('${updateMultiBillStatus}', {
+			billNos:JSON.stringify(elemntIds),
+			 ajax : 'true'
+		   }, function(data) {
+			  alert(data.message)
+			   window.location.reload();
+		   });
+	}
+	
+	
+	
+	
+}
 
-
+/*function selAll(){
+ 	alert("All")
+	  var ele=document.getElementsByName('chkcls');  
+    for(var i=0; i<ele.length; i++){  
+        if(ele[i].type=='checkbox')  
+            ele[i].checked=true;  
+    } 
+}*/  
+</script>
+<script>
+$(document).on('click','#selAllChk',function(){
+	//alert()
+	var ele=document.getElementsByName('chkcls');  
+  
+	var flag=$('#selAllChk').prop('checked');
+	  if(flag){
+	  //	$('.chkcls').attr("checked",true)
+	    for(var i=0; i<ele.length; i++){  
+	        if(ele[i].type=='checkbox')  
+	            ele[i].checked=true;  
+	    } 
+	  }
+	  else
+	  {
+	  //$('.chkcls').attr("checked",false)
+		  for(var i=0; i<ele.length; i++){  
+		        if(ele[i].type=='checkbox')  
+		            ele[i].checked=false;  
+		    } 
+	  }  
+	   });
+</script>
 <script>
 	/*
 //  jquery equivalent
@@ -325,6 +387,7 @@ jQuery(document).ready(function() {
 
 
 	</script>
+	
 
 </body>
 </html>

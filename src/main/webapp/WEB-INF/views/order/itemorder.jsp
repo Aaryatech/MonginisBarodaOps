@@ -891,7 +891,7 @@ a:hover {
 			}
 			
 			
-		 if(parseInt(minqty) > parseInt(qty)){
+		 if(parseInt(minqty) > parseInt(qty) &&  parseInt(qty) > 0 ){
 				
 				var total =0;
 				alert("Plase Enter Minimum Order Qty");

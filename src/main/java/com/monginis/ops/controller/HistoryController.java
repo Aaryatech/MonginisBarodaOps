@@ -134,10 +134,25 @@ public class HistoryController {
 		int type=Integer.parseInt(request.getParameter("type"));
 		if(type==1)
 		{
-			list=regOrderMenuList;
-		}else
+			for(FrMenu menu :  regOrderMenuList) {
+				if(menu.getIsSameDayApplicable()==0) {
+					list.add(menu);
+				}
+			}
+			
+			//list=regOrderMenuList;
+		}else if(type==2)
 		{
 			list=spOrderMenuList;
+		}
+		else if(type==3) {
+			for(FrMenu menu :  regOrderMenuList) {
+				if(menu.getIsSameDayApplicable()==3) {
+					list.add(menu);
+				}
+			}
+
+			
 		}
 		}
 		catch(Exception e)
@@ -265,10 +280,76 @@ public class HistoryController {
 				session.setAttribute("exportExcelList", exportToExcelList);
 				session.setAttribute("excelName", "SpOrderHistory");
 
-			} else if (orderType==1 && (catList.contains(42)||catList.contains(80))) {
+			} else if (orderType==3 || (catList.contains(42)||catList.contains(80))) {
 				
+				System.err.println("In Bulk Search");
 				regSpHistory = regHistory(catIdStr,parsedDate, frId);
 				model.addObject("orderHistory", regSpHistory);
+				
+				
+				List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+				ExportToExcel expoExcel = new ExportToExcel();
+				List<String> rowData = new ArrayList<String>();
+				
+				rowData.add("Item name");
+
+				rowData.add("MRP");
+
+				rowData.add("Qty.");
+				rowData.add("Rate");
+
+				rowData.add("Total");
+																//orderList.spGrandTotal-orderList.spTotalAddRate					
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+				
+				double ttlQty = 0;
+				double ttlMrp = 0;
+				double ttlRate = 0;
+				double grndTtl = 0;
+				for (int i = 0; i < regSpHistory.size(); i++) {
+					expoExcel = new ExportToExcel();
+					rowData = new ArrayList<String>();
+					double total = regSpHistory.get(i).getQty()*regSpHistory.get(i).getRate();
+					rowData.add("" + regSpHistory.get(i).getItemName());
+					rowData.add("" + regSpHistory.get(i).getRspSubTotal());
+					rowData.add("" + regSpHistory.get(i).getQty());
+				
+					rowData.add("" + regSpHistory.get(i).getRate());
+					rowData.add("" + total);
+					
+					ttlQty = ttlQty+regSpHistory.get(i).getQty();
+					ttlMrp = ttlMrp + regSpHistory.get(i).getRate();
+					ttlRate = ttlRate + regSpHistory.get(i).getRate();
+					grndTtl = grndTtl + total;
+					
+					expoExcel.setRowData(rowData);
+					exportToExcelList.add(expoExcel);
+
+				}
+				
+
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>(); 
+				
+				rowData.add("Total");	
+				rowData.add("" + ttlMrp);
+				rowData.add("" + ttlQty);
+				rowData.add("" + ttlRate);
+				rowData.add("" + grndTtl);		
+				
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+				//HttpSession session = request.getSession();
+				session.setAttribute("exportExcelList", exportToExcelList);
+				session.setAttribute("excelName", "ItemHistoryReport");
+				
+				
+				
+				
+				
 			} else if(orderType==1){
 				// if (catId != 5)  prev
 				flag=2;
@@ -481,8 +562,8 @@ public class HistoryController {
 	 		 MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 	 	        map.add("spDeliveryDt",parsedDate);
 	 	        map.add("frId",frId);
-	 	       map.add("catId",catId);
-	 	        
+	 	       map.add("catId",catId.toString());
+	 	        System.err.println("Map-->"+map.toString());
 	 	       GetRegSpCakeOrders[] rspOrderList=rest.postForObject(Constant.URL+"/getRegSpCakeOrderHistory",map,GetRegSpCakeOrders[].class);
 	 	
 	 		System.out.println("OrderList"+rspOrderList.toString());
@@ -1091,6 +1172,19 @@ public class HistoryController {
 //			 }
 //			
 			
+		}else {
+			try {				
+				System.out.println("Sell Item2------------"+regSpHistory);			
+				
+				model.addObject("frName", franchisee.getFrName());
+				model.addObject("reportList", regSpHistory);
+				model.addObject("fromDate", delDate);
+				model.addObject("orderTyp", 3);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(e.getMessage());
+			}
 		}
 	return model;
 	

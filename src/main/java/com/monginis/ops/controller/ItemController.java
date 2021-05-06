@@ -927,16 +927,16 @@ public class ItemController {
 
 						System.out.println(" " + frItem.getItemQty() + "=?" + strQty);
 
-//						if (qty != frItem.getItemQty()) {
-//
-//							frItem.setItemQty(qty);
-//							orderList.add(frItem);
-//						}
+					if (qty != frItem.getItemQty()) {
 
-						if (qty > 0) {
 							frItem.setItemQty(qty);
 							orderList.add(frItem);
 						}
+
+						//if (qty > 0) {
+							//frItem.setItemQty(qty);
+							//orderList.add(frItem);
+						//}
 
 					} catch (Exception e) {
 						System.out.println("Except OrderList " + e.getMessage());

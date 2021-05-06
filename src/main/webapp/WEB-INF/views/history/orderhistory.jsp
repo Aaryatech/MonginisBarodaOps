@@ -289,14 +289,22 @@ jQuery(document).ready(function(){
 										<c:when test="${orderType==1}">
 											<option value="1" selected>Regular Order</option>
 											<option value="2">Sp Order</option>
+											<option value="3">Bluk Order</option>
 										</c:when>
 										<c:when test="${orderType==2}">
 											<option value="1">Regular Order</option>
 											<option value="2" selected>Sp Order</option>
+											<option value="3">Bluk Order</option>
+										</c:when>
+										<c:when test="${orderType==3}">
+											<option value="1" >Regular Order</option>
+											<option value="2">Sp Order</option>
+											<option value="3" selected>Bluk Order</option>
 										</c:when>
 										<c:otherwise>
 											<option value="1">Regular Order</option>
 											<option value="2">Sp Order</option>
+											<option value="3">Bluk Order</option>
 										</c:otherwise>
 									</c:choose>
 
@@ -517,12 +525,11 @@ jQuery(document).ready(function(){
   
  
   
-
+							
 </table>
         <br />
-    </c:when>     --%>
-							<c:otherwise>
-								<div class="clearfix"></div>
+    </c:when>     --%><c:when test="${orderType==2}">
+    <div class="clearfix"></div>
 								<div class="table-wrap">
 
 									<div id="table-scroll">
@@ -639,6 +646,105 @@ jQuery(document).ready(function(){
 
 								</div>
 								<br />
+   						 </c:when>
+    
+    
+    
+    
+							<c:otherwise>
+							
+								<div class="clearfix"></div>
+
+
+								<div id="table-scroll" class="table-scroll">
+									<div id="faux-table" class="faux-table" aria="hidden"></div>
+									<div class="table-wrap">
+										<table id="table_grid" class="main-table">
+											<thead>
+												<tr class="bgpink">
+													<th class="col-md-1" style="text-align: center;">Sr No</th>
+													<th class="col-md-2" style="text-align: center;">Item
+														Name</th>
+													<th class="col-md-1" style="text-align: center;">MRP</th>
+													<th class="col-sm-1" style="text-align: center;">Quantity</th>
+													<c:choose>
+														<c:when test="${catId!=42 && catId!=80}">
+															<th class="col-md-1" style="text-align: center;">Rate</th>
+														</c:when>
+													</c:choose>
+													<th class="col-md-1" style="text-align: center;">Total</th>
+													<c:choose>
+														<c:when test="${catId==42||catId==80}">
+															<th class="col-md-1" style="text-align: center;">Order
+																Memo</th>
+														</c:when>
+													</c:choose>
+												</tr>
+											</thead>
+											<tbody>
+												<c:choose>
+													<c:when test="${catId==42||catId==80}">
+														<c:forEach items="${orderHistory}" var="orderList"
+															varStatus="count">
+
+															<tr>
+																<td class="col-md-1">${count.index+1}</td>
+																<td class="col-md-2"><c:out
+																		value="${orderList.itemName}" /></td>
+																<td class="col-md-1" style="text-align: right;"><c:out
+																		value="${orderList.rate}" /></td>
+																<td style="text-align: center;" class="col-sm-1"><c:out
+																		value="${orderList.qty}" /></td>
+
+																<td class="col-md-1" style="text-align: right;"><fmt:formatNumber
+																		type="number" maxFractionDigits="2"
+																		minFractionDigits="2" groupingUsed="false"
+																		value="${orderList.qty * orderList.rate}" /></td>
+																<td class="col-md-1" style="text-align: center;"><a
+																	href="${pageContext.request.contextPath}/showRegCakeOrderHisPDF/${orderList.rspId}"
+																	target="_blank"><abbr title="PDF"><i
+																			class="fa fa-file-pdf-o"></i></abbr></a></td>
+
+															</tr>
+														</c:forEach>
+													</c:when>
+													<c:otherwise>
+
+														<c:forEach items="${orderHistory}" var="orderList"
+															varStatus="count">
+
+															<tr>
+																<td class="col-md-1">${count.index+1}</td>
+																<td class="col-md-2"><c:out
+																		value="${orderList.itemName}" /></td>
+																<td class="col-md-1" style="text-align: right;"><c:out
+																		value="${orderList.orderMrp}" /></td>
+																<td style="text-align: center;" class="col-sm-1"><c:out
+																		value="${orderList.orderQty}" /></td>
+																<td class="col-md-1" style="text-align: right;"><fmt:formatNumber
+																		type="number" maxFractionDigits="2"
+																		minFractionDigits="2" groupingUsed="false"
+																		value="${orderList.orderRate}" />
+																<td class="col-md-1" style="text-align: right;"><fmt:formatNumber
+																		type="number" maxFractionDigits="2"
+																		minFractionDigits="2" groupingUsed="false"
+																		value="${orderList.orderQty * orderList.orderRate}" />
+																</td>
+
+															</tr>
+														</c:forEach>
+													</c:otherwise>
+												</c:choose>
+											</tbody>
+
+										</table>
+									</div>
+								</div>
+
+
+
+								<br />
+								
 							</c:otherwise>
 						</c:choose>
 

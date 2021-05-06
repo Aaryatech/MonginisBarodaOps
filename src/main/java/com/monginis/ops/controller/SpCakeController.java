@@ -48,6 +48,7 @@ import com.monginis.ops.constant.Constant;
 import com.monginis.ops.constant.VpsImageUpload;
 import com.monginis.ops.model.AllspMessageResponse;
 import com.monginis.ops.model.Customer;
+import com.monginis.ops.model.CustomerForOps;
 import com.monginis.ops.model.ErrorMessage;
 import com.monginis.ops.model.Flavour;
 import com.monginis.ops.model.FlavourConf;
@@ -146,13 +147,22 @@ public class SpCakeController {
 
 			HttpSession ses = request.getSession();
 
-			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
+			/*Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
 			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
 			model.addObject("customerList", customerList);
-			System.err.println("Cust Lis--->" + customerList);
+			System.err.println("Cust Lis--->" + customerList);*/
 
 			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
 			String itemShow = menuList.get(globalIndex).getItemShow();
+			
+			
+			
+			MultiValueMap<String, Object>  mapforCust=new LinkedMultiValueMap<>();
+			mapforCust.add("frId", frDetails.getFrId());
+			CustomerForOps[] customer = restTemplate.postForObject(Constant.URL + "/getAllCustomerForPosByfrId",mapforCust, CustomerForOps[].class);
+			List<CustomerForOps> customerList = new ArrayList<>(Arrays.asList(customer));
+			model.addObject("customerList", customerList);
+			System.err.println("Cust Lis--->" + customerList);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
@@ -249,7 +259,8 @@ public class SpCakeController {
 
 	@RequestMapping(value = "/searchSpCake", method = RequestMethod.POST)
 	public ModelAndView searchSpCakeBySpCode(HttpServletRequest request, HttpServletResponse response) {
-
+		HttpSession session=request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		logger.info("inside Search Sp Cake Request");
 		// ----------------------------------------------------------
 		List<Flavour> flavoursList = new ArrayList<Flavour>();
@@ -262,9 +273,18 @@ public class SpCakeController {
 
 		RestTemplate restTemplate = new RestTemplate();
 
-		Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
+		/*Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
 		List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
+		model.addObject("customerList", customerList);*/
+		
+		
+		
+		MultiValueMap<String, Object>  mapforCust=new LinkedMultiValueMap<>();
+		mapforCust.add("frId", frDetails.getFrId());
+		CustomerForOps[] customer = restTemplate.postForObject(Constant.URL + "/getAllCustomerForPosByfrId",mapforCust, CustomerForOps[].class);
+		List<CustomerForOps> customerList = new ArrayList<>(Arrays.asList(customer));
 		model.addObject("customerList", customerList);
+		System.err.println("Cust Lis--->" + customerList);
 
 		String menuTitle = "";
 		String menuFromTime = "";
@@ -330,9 +350,7 @@ public class SpCakeController {
 				menuFromTime = menuList.get(globalIndex).getFromTime();
 				menuToTime = menuList.get(globalIndex).getToTime();
 
-				HttpSession session = request.getSession();
-
-				Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+				
 
 				List<String> arrShowItem = Arrays.asList(itemShow.split("\\s*,\\s*"));
 
@@ -3306,9 +3324,10 @@ String[] photoArray=request.getParameter("photos").split(seprator);
 
 	@RequestMapping(value = "/getCustById", method = RequestMethod.GET)
 	@ResponseBody
-	public Customer getCustById(HttpServletRequest request, HttpServletResponse responsel) {
+	public CustomerForOps getCustById(HttpServletRequest request, HttpServletResponse responsel) {
 
-		Customer cust = new Customer();
+		System.err.println("Find Cust");
+		CustomerForOps cust = new CustomerForOps();
 
 		try {
 			RestTemplate restTemplate = new RestTemplate();
@@ -3316,7 +3335,8 @@ String[] photoArray=request.getParameter("photos").split(seprator);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("custId", custId);
-			cust = restTemplate.postForObject(Constant.URL + "/getCustomerByCustId", map, Customer.class);
+			cust = restTemplate.postForObject(Constant.URL + "/getCustomerByCustIdNew", map, CustomerForOps.class);
+			System.err.println("DOB-->"+cust.getCustDob());
 			cust.setCustDob(DateConvertor.convertToDMY(cust.getCustDob()));
 			// System.out.println("Customer ---- "+cust);
 		} catch (Exception e) {

@@ -231,7 +231,29 @@ public class BillingController {
 	return modelAndView;
 	
 }
-	
+	@RequestMapping(value = "/updateMultiBillStatus", method = RequestMethod.POST)
+	public @ResponseBody Info updateMultiBillStatus(HttpServletRequest request,
+		HttpServletResponse response) {
+		System.err.println("In /updateMultiBillStatus");
+		RestTemplate restTemplate =new RestTemplate();
+		Info info =new Info();
+		try {
+			String billNos=request.getParameter("billNos");
+			billNos = billNos.substring(1, billNos.length() - 1);
+			billNos = billNos.replaceAll("\"", "");
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("billNo", billNos);
+			map.add("status", 2);
+		info= restTemplate.postForObject(Constant.URL + "updateMultiBillStatusAdm", map, Info.class);
+			System.err.println("Bill No"+billNos);
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.err.println("Exc In /updateMultiBillStatus");
+			e.printStackTrace();
+		}
+		
+		return info;
+	}
 	
 	
 	@RequestMapping(value = "/updateBillStatus", method = RequestMethod.GET)

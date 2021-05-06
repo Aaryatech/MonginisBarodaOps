@@ -132,6 +132,7 @@
 	<c:url var="updateAdminPassword" value="/updateAdminPassword" />
 	<c:url var="getCurrentEmpCodeValue" value="/getCurrentEmpCodeValue" />
 	<c:url var="verifyUniqueContactNo" value="/verifyUniqueContactNo" />
+	<c:url value="/getCountOfEmpByFrid" var="getCountOfEmpByFrid" ></c:url>
 	<!--topLeft-nav-->
 	<div class="sidebarOuter"></div>
 	<!--topLeft-nav-->
@@ -315,7 +316,7 @@
 													placeholder="Enter new Password" name="fr_password"
 													type="password" oninput="checkPasswordMatch();"
 													value="${frDetails.frPassword}" id="txtNewPassword"
-													disabled="disabled"
+													disabled="disabled" required="required"
 													style="font-size: 16pt; height: 33px; width: 130px; background-color: LightGrey;">
 											</div>
 										</div>
@@ -328,7 +329,7 @@
 								
 							</div>
 						</div> --%>
-										<div class="profile">
+										<div class="profile" style="display: none;">
 											<div class="profilefildset">Captain Password</div>
 											<div class="col2">
 												<input class="texboxitemcode" placeholder="Captain Password"
@@ -389,7 +390,7 @@
 											</div>
 
 										</div>
-										<div class="profile">
+										<%-- <div class="profile">
 											<div class="profilefildset">1 KG Limit</div>
 											<div class="profileinput mardis">${frDetails.frKg3}</div>
 
@@ -398,7 +399,7 @@
 											<div class="profilefildset">Pastries Limit</div>
 											<div class="profileinput mardis">${frDetails.frKg1}</div>
 
-										</div>
+										</div> --%>
 										<div class="profile">
 											<div class="profilefildset">Shop Opening Date</div>
 											<div class="profileinput mardis">${frDetails.frOpeningDate}</div>
@@ -436,7 +437,7 @@
 													placeholder="Confirm new Password" name="fr_password"
 													type="password" value="${frDetails.frPassword}"
 													id="txtConfirmPassword" oninput="checkPasswordMatch();"
-													disabled="disabled"
+													disabled="disabled" required="required"
 													style="font-size: 16pt; height: 33px; width: 130px; background-color: LightGrey;">
 
 											</div>
@@ -453,7 +454,7 @@
 
 										</div>
 
-										<div class="profile">
+										<div class="profile" style="display: none;">
 											<div class="profilefildset">CSP Password</div>
 											<div class="col2">
 												<input class="texboxitemcode" class="btn additem_btn"
@@ -599,7 +600,7 @@
 							<div class="profile">
 								<div class="profilefildset">Mobile Number</div>
 								<div class="profileinput">
-									<input name="emp_contact" type="text" class="texboxitemcode"
+									<input name="emp_contact" type="tel" class="texboxitemcode"
 										id="emp_contact" onchange="checkContactNo()" maxlength="10"
 										autocomplete="off"
 										oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
@@ -788,11 +789,23 @@
 
 
 <script>
+var ChkFlag=0;
 	$(document).ready(function() {
+		
 		$("#fr_emp_form").trigger("reset");
 	});
 	function openAddEmpPopup() {
+		
+		//ChkFlag=1;
+		document.getElementById("emp_contact").value = "";
+		$.getJSON('${getCountOfEmpByFrid}', {
+			ajax : 'true'
+		}, function(data) {
+			
+			//alert(JSON.stringify(data)); 
+		document.getElementById("emp_code").value = data.message;
 
+		}); 
 		var modal = document.getElementById("addEmpModal");
 		modal.style.display = "block";
 
@@ -926,36 +939,38 @@
 									.each(
 											data,
 											function(key, emp) {
-												//alert(JSON.stringify(cashHndOvr));
+												//alert(JSON.stringify(emp));
 												$('#loader').hide();
 
-												var tr = $('<tr></tr>');
-												tr.append($('<td></td>').html(
-														key + 1));
-												tr.append($('<td></td>').html(
-														emp.frEmpName));
-												tr.append($('<td></td>').html(
-														emp.frEmpContact));
-												tr.append($('<td></td>').html(
-														emp.frEmpAddress));
-												tr.append($('<td></td>').html(
-														emp.frEmpJoiningDate));
-												var stat = '';
-												if (emp.delStatus == 0) {
-													stat = 'Active'
-												} else {
-													stat = 'In-Active'
+												if(emp.delStatus == 0){
+													var tr = $('<tr></tr>');
+													tr.append($('<td></td>').html(
+															key + 1));
+													tr.append($('<td></td>').html(
+															emp.frEmpName));
+													tr.append($('<td></td>').html(
+															emp.frEmpContact));
+													tr.append($('<td></td>').html(
+															emp.frEmpAddress));
+													tr.append($('<td></td>').html(
+															emp.frEmpJoiningDate));
+													var stat = '';
+													if (emp.delStatus == 0) {
+														stat = 'Active'
+													} else {
+														stat = 'In-Active'
+													}
+													tr.append($('<td ></td>').html(
+															stat));
+													tr
+															.append($('<td></td>')
+																	.html(
+																			"<a href='#' onclick=editFrEmp("
+																					+ emp.frEmpId
+																					+ ") title='Edit' class='addcust_open'><i class='fa fa-edit'></i></a>"));
+													$('#table_grid tbody').append(
+															tr);
 												}
-												tr.append($('<td ></td>').html(
-														stat));
-												tr
-														.append($('<td></td>')
-																.html(
-																		"<a href='#' onclick=editFrEmp("
-																				+ emp.frEmpId
-																				+ ") title='Edit' class='addcust_open'><i class='fa fa-edit'></i></a>"));
-												$('#table_grid tbody').append(
-														tr);
 
 											});
 
@@ -1131,18 +1146,26 @@
 </script>
 <script type="text/javascript">
 	function checkContactNo() {
-
+		
+		//alert("checkContactNo()")
+		
 		var empId = $('#fr_emp_id').val();
 
+		
 		var mobNo = $('#emp_contact').val();
 
-		if (mobNo != "" || mobNo != null && empId != " ") {
+		
+	
+		
+		if (mobNo != "" || mobNo != null && empId != " "  ) {
 
 			$.getJSON('${verifyUniqueContactNo}', {
 				mobNo : mobNo,
 				ajax : 'true'
 			}, function(data) {
 
+				
+				
 				//alert("Info : "+JSON.stringify(data)); 
 				if (data.error == false) {
 
@@ -1312,30 +1335,42 @@
 	function updateAdminPassword() {
 
 		var adminPwd = document.getElementById('txtNewPassword').value;
-		$.getJSON('${updateAdminPassword}', {
+		var confirmPass = document.getElementById('txtConfirmPassword').value;
+		//alert(adminPwd+"\t Hii \t"+confirmPass.length);
+		if(adminPwd.length==0){
+			alert("Password Can't Be Blank!!!");
+		}else if(confirmPass.length==0){
+			alert("Password Can't Be Blank!!!");
+		}else{
+			$.getJSON('${updateAdminPassword}', {
 
-			adminPwd : adminPwd,
+				adminPwd : adminPwd,
 
-			ajax : 'true'
-		}, function(data) {
+				ajax : 'true'
+			}, function(data) {
 
-			if (data.error == false) {
-				document.getElementById('changePwd1').removeAttribute(
-						'disabled');
-				document.getElementById('txtNewPassword').disabled = true;
-				document.getElementById('txtConfirmPassword').disabled = true;
-				document.getElementById("btnupdate_profile").disabled = false;
+				if (data.error == false) {
+					document.getElementById('changePwd1').removeAttribute(
+							'disabled');
+					document.getElementById('txtNewPassword').disabled = true;
+					document.getElementById('txtConfirmPassword').disabled = true;
+					document.getElementById("btnupdate_profile").disabled = false;
 
-				$('#txtNewPassword').css('background-color', 'LightGrey'); // change the background color
-				$('#txtConfirmPassword').css('background-color', 'LightGrey'); // 
-				document.getElementById('updateDiv').style.display = "none";
-				document.getElementById('changePwd1').style.display = "block";
-				document.getElementById('changePwd2').style.display = "block";
-				alert("Admin Password Updated Successfully");
-				$("#divCheckPasswordMatch").html("");
-			}
+					$('#txtNewPassword').css('background-color', 'LightGrey'); // change the background color
+					$('#txtConfirmPassword').css('background-color', 'LightGrey'); // 
+					document.getElementById('updateDiv').style.display = "none";
+					document.getElementById('changePwd1').style.display = "block";
+					document.getElementById('changePwd2').style.display = "block";
+					alert("Admin Password Updated Successfully");
+					$("#divCheckPasswordMatch").html("");
+				}
 
-		});
+			});
+		}
+		
+		
+		
+		
 	}
 </script>
 <script>

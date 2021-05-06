@@ -56,6 +56,7 @@ import com.monginis.ops.model.FrItemList;
 import com.monginis.ops.model.FrLoginResponse;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.FrTotalSale;
+import com.monginis.ops.model.FranchiseSup;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetConfiguredSpDayCk;
 import com.monginis.ops.model.GetDataForLineChart;
@@ -517,7 +518,7 @@ public class HomeController {
 
 				session.setAttribute("isEmpPresent", 0);
 
-				return "redirect:/home";
+				return "redirect:/noEmpHome";
 			} else {
 				logger.info("List is not empty");
 				session.setAttribute("isEmpPresent", 1);
@@ -1188,4 +1189,74 @@ public class HomeController {
 		return "redirect:/frEmpLogin";
 		// return "redirect:/";
 	}
+	
+	int empCodeKey = 54;
+	@RequestMapping(value = "/noEmpHome")
+	public ModelAndView noEmpHome(HttpServletRequest request,HttpServletResponse response) {
+	
+		ModelAndView model = new ModelAndView("noEmpHome");
+        int pestControlFlag=0;int aggrementFlag=0;int fbaFlag=0;
+		try {
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			String frImageName = (String) ses.getAttribute("frImage");
+			System.out.println("Franchisee Rsponse" + frDetails);
+			RestTemplate rest = new RestTemplate();
+			
+			Setting setting= rest.getForObject(Constant.URL + "/getSettingDataById?settingId={settingId}",
+					Setting.class,empCodeKey);
+			model.addObject("empCode", setting.getSettingValue());
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			
+
+			FranchiseSup frSup = rest.postForObject(Constant.URL + "/getFrSupByFrId", map, FranchiseSup.class);
+
+			Date currentDate = new Date();
+			Date pestControlDate = new SimpleDateFormat("dd-MM-yyyy").parse(frSup.getPestControlDate());
+			Date agrementDate = new SimpleDateFormat("dd-MM-yyyy").parse(frDetails.getFrAgreementDate());
+			Date fbaLicenseDate = new SimpleDateFormat("dd-MM-yyyy").parse(frDetails.getFbaLicenseDate());
+			if (pestControlDate.before(currentDate)) {
+				pestControlFlag=1;
+			}
+			if (agrementDate.before(currentDate)) {
+				aggrementFlag=1;
+			}
+			if (fbaLicenseDate.before(currentDate)) {
+				fbaFlag=1;
+			}
+			
+			
+			HttpSession session = request.getSession();
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			FrSetting frSetting = rest.postForObject(Constant.URL + "/getFrSettingValue", map, FrSetting.class);
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("isFrPosAppicale", frSetting.getExVarchar());
+			OpsAccessRight[] opsArr = rest.postForObject(Constant.URL + "/getAllowedOpsMappings", map, OpsAccessRight[].class);
+			List<OpsAccessRight> opsList = new ArrayList<OpsAccessRight>(Arrays.asList(opsArr));
+			
+			model.addObject("pestControlFlag", pestControlFlag);
+			model.addObject("aggrementFlag", aggrementFlag);
+			model.addObject("fbaFlag", fbaFlag);
+			model.addObject("frSup", frSup);
+			model.addObject("URL", Constant.FR_IMAGE_URL);
+			model.addObject("frImageName", frImageName);
+			model.addObject("opsList", opsList);
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+
+}
+	
+	
+	
+	
+	
 }

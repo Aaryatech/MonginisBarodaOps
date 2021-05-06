@@ -2,6 +2,7 @@ package com.monginis.ops.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.monginis.ops.constant.Constant;
+import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.Info;
 
 @Controller
@@ -26,8 +28,9 @@ public class PosPlaceOrderController {
 
 		Info info = new Info();
 		int res = 0;
-
+		HttpSession session=request.getSession();
 		try {
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
 			String phoneNo = request.getParameter("phoneNo");
 			System.out.println("Info" + phoneNo);
@@ -35,7 +38,9 @@ public class PosPlaceOrderController {
 
 			map.add("phoneNo", phoneNo);
 			RestTemplate restTemplate = new RestTemplate();
-			info = restTemplate.postForObject(Constant.URL + "/checkCustPhone", map, Info.class);
+			//info = restTemplate.postForObject(Constant.URL + "/checkCustPhone", map, Info.class);
+			map.add("frId",frDetails.getFrId());
+			info = restTemplate.postForObject(Constant.URL + "/checkEmployeeEmailWithFrid", map, Info.class);
 			System.out.println("Info" + info + "info.isError()" + info.isError());
 			if (info.isError() == false) {
 				res = 0;// exists

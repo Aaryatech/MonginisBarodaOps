@@ -627,7 +627,8 @@ public class OpsController {
 	public AddCustemerResponse saveCustomerFromBill(HttpServletRequest request, HttpServletResponse responsel) {
 
 		AddCustemerResponse info = new AddCustemerResponse();
-
+		HttpSession session=request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		try {
 
 			String customerName = request.getParameter("customerName");
@@ -647,7 +648,7 @@ public class OpsController {
 
 			String str = pincode + "-" + remark;
 
-			Customer save = new Customer();
+			CustomerForOps save = new CustomerForOps();
 			save.setCustName(customerName);
 			save.setPhoneNumber(mobileNo);
 			save.setIsBuissHead(Integer.parseInt(buisness));
@@ -657,18 +658,25 @@ public class OpsController {
 			save.setGstNo(gstNo);
 			save.setDelStatus(0);
 			save.setCustId(custId);
-
+			save.setFrId(frDetails.getFrId());
+			
 			save.setAgeGroup(ageRange);
 			save.setExInt1(custType);
 			save.setExVar1("" + kms);
 			save.setGender(gender);
 			save.setExVar2(str);
+			System.err.println("dateOfB"+dateOfBirth+"\t"+save.getCustDob());
+			
+			
 			CustomerForOps res = restTemplate.postForObject(Constant.URL + "/saveCustomerForOps", save,
 					CustomerForOps.class);
 
-			CustomerForOps[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomersForOps",
-					CustomerForOps[].class);
+			MultiValueMap<String, Object>  mapforCust=new LinkedMultiValueMap<>();
+			mapforCust.add("frId", frDetails.getFrId());
+			CustomerForOps[] customer = restTemplate.postForObject(Constant.URL + "/getAllCustomerForPosByfrId",mapforCust, CustomerForOps[].class);
 			List<CustomerForOps> customerList = new ArrayList<>(Arrays.asList(customer));
+			//model.addObject("customerList", customerList);
+			System.err.println("Cust Lis--->" + customerList);
 
 			if (res == null) {
 
