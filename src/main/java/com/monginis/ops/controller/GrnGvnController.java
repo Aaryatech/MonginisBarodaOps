@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -38,22 +39,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.monginis.ops.billing.GetBillDetail;
 import com.monginis.ops.billing.Info;
 import com.monginis.ops.billing.SellBillDataCommon;
 import com.monginis.ops.billing.SellBillDetail;
 import com.monginis.ops.billing.SellBillHeader;
+import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.common.Firebase;
 import com.monginis.ops.common.GgStatuses;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.constant.VpsImageUpload;
+import com.monginis.ops.model.AllItemsListResponse;
 import com.monginis.ops.model.CategoryList;
+import com.monginis.ops.model.CategoryListResponse;
+import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetCurrentStockDetails;
+import com.monginis.ops.model.Item;
 import com.monginis.ops.model.MCategory;
+import com.monginis.ops.model.MCategoryList;
 import com.monginis.ops.model.PostFrItemStockHeader;
 import com.monginis.ops.model.SellBillDetailList;
 import com.monginis.ops.model.creditnote.CreditNoteHeaderPrint;
@@ -668,7 +677,29 @@ public class GrnGvnController {
 		return modelAndView;
 
 	}
+	
+	
+	@RequestMapping(value = "/getGrnPreview", method = RequestMethod.POST)
+	public @ResponseBody List<ShowGrnBean> getGrnPreview(HttpServletRequest request, HttpServletResponse response){
 
+		System.err.println("Ok Here" +request.getParameter("OKKKK"));
+		
+		for (int i = 0; i < objShowGrnList.size(); i++) {
+
+			String tempGrnQtyAuto = request
+					.getParameter("grnqtyauto" + objShowGrnList.get(i).getBillDetailNo() + "");
+			System.err.println("tempGrnQtyAuto " +tempGrnQtyAuto);
+			float ggQty=0;
+			try {
+				ggQty=Float.parseFloat(tempGrnQtyAuto);
+				objShowGrnList.get(i).setEnteredQty(ggQty);
+			}catch (Exception e) {
+				objShowGrnList.get(i).setEnteredQty(0);
+			}
+
+		}
+		return objShowGrnList;
+	}
 	private int checktime() {
  
 		int flag = 0;
@@ -1526,7 +1557,11 @@ public class GrnGvnController {
 			String curDate = new SimpleDateFormat("dd-MM-yyyy").format(cDate);
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			// String view = request.getParameter("view_opt");
+			CategoryListResponse itemsWithCategoryResponseList = restTemplate.getForObject(Constant.URL + "showAllCategory",
+					CategoryListResponse.class);
 
+			List<MCategoryList> itemsWithCategoriesList = itemsWithCategoryResponseList.getmCategoryList();
+			modelAndView.addObject("catList", itemsWithCategoriesList);
 			int frId = frDetails.getFrId();
 
 			if (view.contains("0")) {
@@ -1536,9 +1571,9 @@ public class GrnGvnController {
 				map.add("frId", frId);
 			    map.add("curDate", curDate);
 
-				billsForFr = new GetBillsForFrList();
+				//billsForFr = new GetBillsForFrList();
 
-				billsForFr = restTemplate.postForObject(Constant.URL + "getBillsForFr", map, GetBillsForFrList.class);
+				//billsForFr = restTemplate.postForObject(Constant.URL + "getBillsForFr", map, GetBillsForFrList.class);
 
 			} else {
 
@@ -1551,16 +1586,16 @@ public class GrnGvnController {
 
 				map.add("billDate", billDate);
 				billsForFr = new GetBillsForFrList();
-				billsForFr = restTemplate.postForObject(Constant.URL + "getBillsForFrByBillDate", map,
-						GetBillsForFrList.class);
+				//billsForFr = restTemplate.postForObject(Constant.URL + "getBillsForFrByBillDate", map,
+						//GetBillsForFrList.class);
 
 			}
 
 			frBillList = new ArrayList<>();
 
-			frBillList = billsForFr.getGetBillsForFr();
+			//frBillList = billsForFr.getGetBillsForFr();
 
-			System.out.println("FR BILL LIST " + frBillList.toString());
+			//System.out.println("FR BILL LIST " + frBillList.toString());
 
 			modelAndView.addObject("frBillList", frBillList);
 			modelAndView.addObject("curDate", curDate);
@@ -1576,7 +1611,7 @@ public class GrnGvnController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/getGvnBillDetails", method = RequestMethod.GET)
+	@RequestMapping(value = "/getGvnBillDetails", method = RequestMethod.POST)
 	public ModelAndView getGvnBillDetails(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView modelAndView = new ModelAndView("grngvn/showgvn");
@@ -1584,18 +1619,34 @@ public class GrnGvnController {
 		// modelAndView.addObject("frBillList", frBillList);
 
 		try {
-
-			int billNo = Integer.parseInt(request.getParameter("bill_no"));
-			System.out.println("selected bill no " + billNo);
+			int billNo=0;
+			try {
+			 billNo = Integer.parseInt(request.getParameter("bills"));
+			}catch (Exception e) {
+				 billNo=0;
+			}
+			 
 
 			RestTemplate restTemplate = new RestTemplate();
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
+			if(billNo>0) {
 			map.add("billNo", billNo);
 
 			grnGvnConfResponse = restTemplate.postForObject(Constant.URL + "getGvnItemConfig", map,
 					GetGrnGvnConfResponse.class);
+			}else {
+				String fd=request.getParameter("fd");
+				String td=request.getParameter("td");
+				Integer catId=Integer.parseInt(request.getParameter("catId"));
+				String[] itemArray=request.getParameterValues("items");
+				
+				String itemString =String.join(",",itemArray);
+
+				System.err.println("Item String " +itemString);
+				
+			}
 
 			grnConfList = new ArrayList<>();
 
@@ -2983,5 +3034,161 @@ float aprGrandTotalSum=0; float aprROffSum=0;
 		}
 
 		return model;
+	}
+	
+	//SAC 5-5-2021
+	@RequestMapping(value = "/showGrnItem", method = RequestMethod.GET)
+	public ModelAndView   showGrnItems(HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		ModelAndView modelAndView = new ModelAndView("billing/grnItemExpiry");
+		
+		try {
+
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			
+			RestTemplate restTemplate = new RestTemplate();
+			AllItemsListResponse	allItemsListResponse = restTemplate.getForObject(Constant.URL + "getAllItems",
+					AllItemsListResponse.class);
+			List<Item> itemList=new ArrayList<>();
+			for(int i=0;i<allItemsListResponse.getItems().size();i++)
+			{
+				if(allItemsListResponse.getItems().get(i).getItemGrp1()==1 || allItemsListResponse.getItems().get(i).getItemGrp1()==2 || allItemsListResponse.getItems().get(i).getItemGrp1()==4)
+				{
+					itemList.add(allItemsListResponse.getItems().get(i));
+				}
+				
+			}
+			CategoryListResponse itemsWithCategoryResponseList = restTemplate.getForObject(Constant.URL + "showAllCategory",
+					CategoryListResponse.class);
+
+			List<MCategoryList> itemsWithCategoriesList = itemsWithCategoryResponseList.getmCategoryList();
+			modelAndView.addObject("catList", itemsWithCategoriesList);
+			//modelAndView.addObject("itemList",itemList);
+			String itemIds[] = request.getParameterValues("itemId");
+			//System.out.println("itemIds"+itemIds);
+			 String itemId = Arrays.toString(itemIds);
+			 itemId = itemId.substring(1, itemId.length()-1).replace(" ", ",");
+				//System.out.println("itemIds"+itemId);
+			String searchType=request.getParameter("searchType");
+			if(searchType!=null && searchType!="")
+			{
+				if(searchType.equals("1"))
+				{
+					String expiryDate=request.getParameter("expiry_date");
+					
+					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+					map.add("frId", frDetails.getFrId());
+					map.add("expiryDate",DateConvertor.convertToYMD(expiryDate));
+					List<GetBillDetail> billDetailsResponse = restTemplate.postForObject(Constant.URL + "getGrnItemsByExpiryDate",
+							map, List.class);
+
+					modelAndView.addObject("billDetailsList",billDetailsResponse);
+					modelAndView.addObject("expiryDate",expiryDate);
+					modelAndView.addObject("itemId","");
+				}else if(itemId!=null && itemId!="") {
+					/*if(itemId.length()>1) {
+					    itemId = itemId.substring(1, itemId.length() - 1);
+			            itemId = itemId.replaceAll("\"", "");
+					}*/
+			            MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			            map.add("frId", frDetails.getFrId());
+						map.add("ids",itemId);
+						List<GetBillDetail> billDetailsResponse = restTemplate.postForObject(Constant.URL + "getGrnItemsByIds",
+								map, List.class);
+						modelAndView.addObject("billDetailsList",billDetailsResponse);
+						modelAndView.addObject("itemId",itemId);
+						modelAndView.addObject("expiryDate","");
+				}
+				
+			}
+			modelAndView.addObject("searchType",searchType);
+		}catch (Exception e) {
+		e.printStackTrace();
+		}
+		
+	return modelAndView;
+}
+	
+	@RequestMapping(value = "/checkGrnItemExpire", method = RequestMethod.POST)
+	public @ResponseBody   List<GetBillDetail> checkGrnItemExpire(HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		HttpSession session = request.getSession();
+		RestTemplate restTemplate = new RestTemplate();
+		
+		List<GetBillDetail> billDetailsResponse=new ArrayList<GetBillDetail>();
+		
+		try {
+			
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			
+			String selectedItems=request.getParameter("items");
+			selectedItems = selectedItems.substring(1, selectedItems.length() - 1);
+			selectedItems = selectedItems.replaceAll("\"", "");
+			String expDate=request.getParameter("expDate");
+			System.err.println("expDate" +expDate);
+			String catId=request.getParameter("catId");
+				 MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		            map.add("frId", frDetails.getFrId());
+					map.add("ids",selectedItems);
+					if(selectedItems.equalsIgnoreCase("-1")) {
+						map.add("catId",0);
+					}else {
+					map.add("catId",catId);
+					}
+					map.add("expiryDate",DateConvertor.convertToYMD(expDate));
+					
+					billDetailsResponse = restTemplate.postForObject(Constant.URL + "getGrnItemsByExpDateAndItems",
+							map, List.class);
+					
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		return billDetailsResponse;
+		
+		
+	}
+	
+	
+	
+	@RequestMapping(value = "/getInvoiecesForGVN", method = RequestMethod.POST)
+	public @ResponseBody   List<GetBillsForFr> getInvoiecesForGVN(HttpServletRequest request,
+			HttpServletResponse response) {
+		 MultiValueMap<String, Object> map = null;
+		HttpSession session = request.getSession();
+		RestTemplate restTemplate = new RestTemplate();
+		frBillList=new ArrayList<GetBillsForFr>();
+		
+		try {
+			String fd=request.getParameter("fd");
+			String td=request.getParameter("td");
+			String x=request.getParameter("x");
+			
+		map = new LinkedMultiValueMap<String, Object>();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+
+		map.add("frId", frDetails.getFrId());
+		GetBillsForFrList billsForFr = new GetBillsForFrList();
+		if(Integer.parseInt(x)==0) {
+		map.add("fd", DateConvertor.convertToYMD(fd));
+		map.add("td", DateConvertor.convertToYMD(td));
+		}else {
+			map.add("fd", "");
+			map.add("td", "");
+		}
+		map.add("x", Integer.parseInt(x));
+		billsForFr = new GetBillsForFrList();
+		billsForFr = restTemplate.postForObject(Constant.URL + "getBillsForFrBetDate", map,
+				GetBillsForFrList.class);
+		frBillList=billsForFr.getGetBillsForFr();
+		}catch (HttpClientErrorException e) {
+			System.err.println("ff" +e.getResponseBodyAsString());
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return frBillList;
 	}
 }

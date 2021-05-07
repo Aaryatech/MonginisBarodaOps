@@ -25,7 +25,8 @@ import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.CategoryListResponse;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.MCategoryList;
-import com.monginis.ops.model.PostFrItemStockDetail;;
+import com.monginis.ops.model.PostFrItemStockDetail;
+import com.monginis.ops.model.setting.NewSetting;;
 
 @Controller
 @Scope("session")
@@ -35,11 +36,18 @@ public class OpeneningStockController {
 
 	@RequestMapping(value = "/showFrOpeningStock")
 	public ModelAndView showFrOpeningStock(HttpServletRequest request, HttpServletResponse response) {
-
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		RestTemplate restTemplate = new RestTemplate();
 		ModelAndView model = new ModelAndView("stock/fropeningstock");
 
-		RestTemplate restTemplate = new RestTemplate();
-
+map = new LinkedMultiValueMap<String, Object>();
+map.add("settingKey", "ALLOW_FR_OP_STOCK");
+map.add("delStatus", 0);
+NewSetting isFrAllowToOPStock=restTemplate.postForObject(Constant.URL + "getNewSettingByKey", map,
+		NewSetting.class);
+try {
+if(isFrAllowToOPStock.getSettingValue1().equalsIgnoreCase("1")) {
+		
 		CategoryListResponse itemsWithCategoryResponseList = restTemplate.getForObject(Constant.URL + "showAllCategory",
 				CategoryListResponse.class);
 
@@ -66,6 +74,15 @@ public class OpeneningStockController {
 		}
 
 		model.addObject("catList", itemsWithCategoriesList);
+
+}else {
+	model.addObject("errorMsg", "Access Denied");
+}
+}catch (Exception e) {
+	model.addObject("errorMsg", "Access Denied");
+}
+
+		
 		// ---------------------------------4-jan-2019------------------------------------
 
 		return model;

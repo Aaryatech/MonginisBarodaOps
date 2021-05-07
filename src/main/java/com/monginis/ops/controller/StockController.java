@@ -125,10 +125,22 @@ public class StockController {
 					List.class);
 
 			System.out.println("list " + list);
-
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("settingKey", "ALLOW_FR_OP_STOCK");
+			map.add("delStatus", 0);
+			NewSetting isFrAllowToOPStock=restTemplate.postForObject(Constant.URL + "getNewSettingByKey", map,
+					NewSetting.class);
+			try {
+			if(isFrAllowToOPStock.getSettingValue1().equalsIgnoreCase("1")) {
+				model.addObject("allow_fr_op_stock", 1);
+			}else {
+				model.addObject("allow_fr_op_stock", 0);
+			}
+			}catch (Exception e) {
+				model.addObject("allow_fr_op_stock", 0);
+			}
 			frItemStockHeader = restTemplate.postForObject(Constant.URL + "getRunningMonth", map,
 					PostFrItemStockHeader.class);
-
 			System.out.println("Fr Opening Stock " + frItemStockHeader.toString());
 			runningMonth = frItemStockHeader.getMonth();
 
@@ -137,7 +149,7 @@ public class StockController {
 
 			System.err.println("Month name " + mon);
 			model.addObject("getMonthList", list);
-
+			map = new LinkedMultiValueMap<String, Object>();
 		} catch (Exception e) {
 			System.out.println("Exception in runningMonth" + e.getMessage());
 			e.printStackTrace();

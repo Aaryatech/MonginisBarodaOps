@@ -32,9 +32,21 @@ public class ShowGrnBean {
         private float taxAmt;
         private float discPer;
        
+        private float enteredQty;
         
         
-	    public float getCessPer() {
+        
+        
+        
+	    public float getEnteredQty() {
+			return enteredQty;
+		}
+
+		public void setEnteredQty(float enteredQty) {
+			this.enteredQty = enteredQty;
+		}
+
+		public float getCessPer() {
 			return cessPer;
 		}
 

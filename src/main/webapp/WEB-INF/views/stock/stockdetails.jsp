@@ -179,6 +179,7 @@ table, th, td {
 						<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
 					</div>
 				</div>
+				<c:if test="${allow_fr_op_stock==1}">
 				<div class="col-md-8">
 					<div align="right">
 
@@ -188,6 +189,7 @@ table, th, td {
 
 					</div>
 				</div>
+				</c:if>
 
 
 

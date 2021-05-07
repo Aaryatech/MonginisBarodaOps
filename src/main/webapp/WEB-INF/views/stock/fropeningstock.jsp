@@ -43,6 +43,9 @@
 			<div class="sidebarright">
 				<div class="order-left">
 					<h2 class="pageTitle">Opening Stock Details</h2>
+					<c:if test="${not empty errorMsg}">
+<h2 class="pageTitle">${errorMsg}</h2>
+</c:if>
 					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
 				</div>
 
@@ -202,7 +205,7 @@
 															+ item.itemName
 															+ "</td>";
 
-													var itemStockQty = "<td align=center><input type=number min=0 max=500 class=form-control   id= stockQty"
+													var itemStockQty = "<td align=center><input type=number min=0  class=form-control   id= stockQty"
 									+ item.itemId
 									+ " name=stockQty"
 									+ item.itemId

@@ -3,8 +3,11 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/loader.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tableSearch.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/customerBill/chosen.css">
 <style type="text/css">
 label::before {
     width: 0px;
@@ -15,7 +18,63 @@ label::before {
  .main-table tbody > tr:hover{
   background-color: #ffa;
 }
+.radio_row{display: inline-block; width:100%; text-align: left;}
+.input_row{display: inline-block; width: 100%; margin: 0 0 15px 0; text-align: left;}
+.radio_one{float: left; width: 25%; margin: 10px 0 0 0 }
+.radio_one label{font-size: 14px;
+    color: #555;
+    vertical-align: text-bottom;
+    margin: 0 0 0 3px;}
+.bill_row{display: inline-block; width: 100%; margin: 0 0 15px 0;}
+.small_radio{float: left; width: 50%;}
+.bills_drop{float: left; width: 30%; margin: 0 15px 0 0;}
+.row_button{float: left;}
+.btn-primary {padding: 6px 15px; border: none; cursor: pointer; background: #ec268f; color: #FFF; font-size: 14px; border-radius: 3px;}
+.btn-primary:hover {color:#fff; background-color:#e51d87;}
+.date_row_r{float: right; width: 50%;}
+.date_one{float: left; width: 25%; margin: 0 15px 0 0;}
+.date_btn{float: left;}
+.date_one.increse{width:35%;}
+.date_row {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+.input_one {
+    border: 1px solid #ddd;
+    padding: 7px 12px;
+    width: 100%;
+    border-radius: 3px;
+    color: #555;
+    font-size: 14px;
+    outline: none;
+    resize: none;
+}
+.input_one::-webkit-input-placeholder {color: #555 !important;opacity: 1 !important;}
+.input_one:-moz-placeholder { color: #555 !important;opacity: 1 !important;}
+.input_one::-moz-placeholder {color: #555!important;opacity: 1 !important;}
+.calendar_icn {
+    position: absolute;
+    right: 10px;
+    top: 11px;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 0;
+}
 
+.drop_down_one{float: left; width: 20%; margin: 0 15px 0 0;}
+.drop_down_one.multitple{width: 35%;}
+.drop_down_one.date{width: 15%;}
+
+.select-css {display: block; font-size: 14px; color: #555; line-height: 1.3; padding: 8px 12px; width: 100%; 
+border: 1px solid #ddd; max-width: 100%; box-sizing: border-box; margin: 0; border-radius: 3px; -moz-appearance: none; 
+-webkit-appearance: none; appearance: none; background:#FFF url(${pageContext.request.contextPath}/resources/images/dropdown_arrow.jpg) no-repeat; 
+background-position: right .7em top 50%, 0 0;}
+.select-css::-ms-expand {display: none;}
+.select-css:hover {border-color: none;}
+.select-css:focus {outline: none;}
+.select-css option {font-weight:normal;}
+*[dir="rtl"] .select-css, :root:lang(ar) .select-css, :root:lang(iw) .select-css {background-position: left .7em top 50%, 0 0; padding: .6em .8em .5em 1.4em;}
 </style>
 
  <style>
@@ -26,6 +85,7 @@ table, th, td {
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
 <c:url var="getViewGvnOption" value="/getViewGvnOption" />
+	<c:url var="getItemListByMenu" value="/getItemListById"></c:url>
 
 <div class="sidebarOuter"></div>
 
@@ -63,7 +123,7 @@ table, th, td {
 					<div class="title_l high">
 						<h2 class="pageTitle"><i class="fa fa-refresh" aria-hidden="true"></i> Request GVN<!-- Request GVN --></h2>
 					</div>
-					<div class="title_r high">
+					<%-- <div class="title_r high">
 						<div class="frm_l_one two_btn marg_bttm">
 						<select name="view_opt" id="view_opt" class="form-control"
 							style="background-color: white;" onchange="showDate()">
@@ -110,10 +170,109 @@ table, th, td {
 						<div class="frm_single">
 							
 						</div>
-					</div>
+					</div> --%>
 					<div class="clr"></div>
 				</div>
-			
+				
+				<form
+							action="${pageContext.request.contextPath}/getGvnBillDetails"
+							name="grn" id="grn" method="post">
+				<!-- new designer code start here 07-05-2021 -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="radio_row">
+							<div class="input_row">
+					            <div class="radio_one" id="d1">
+					            <input type="radio" id="bill" name="prodBill" value="1" onchange="setDiv(1,this.value)">
+					            <label for="bill" class="checkbox_txt"> As Per Bill</label>
+					            </div>
+					
+					            <div class="radio_one" id="d2">
+					            <input type="radio" id="product" name="prodBill" value="0" onchange="setDiv(2,this.value)">
+					            <label for="product" class="checkbox_txt"> As per Product</label>
+					            </div>
+					            
+					            <div class="radio_one" id="d3" style="display: none">
+					            <input type="radio" id="billwise" name="billdatewise" value="1" onchange="setDiv(3,this.value)">
+					            <label for="billwise" class="checkbox_txt"> Billwise</label>
+					            </div>
+					            
+					            <div class="radio_one" id="d4" style="display:none">
+					            <input type="radio" id="datewise" name="billdatewise" value="0" onchange="setDiv(4,this.value)">
+					            <label for="datewise" class="checkbox_txt"> Datewise</label>
+					            </div>
+					        </div>
+						</div>
+						
+						<div class="input_row">
+							 <div class="date_one" id="d5" style="display:none">
+                                <div class="date_row" >
+                                    <input type="text" id="fd"   name="fd" class="input_one" placeholder="From Date">
+                                    <i class="fa fa-calendar calendar_icn" aria-hidden="true"></i>
+                                </div> 
+                            </div>
+                            <div class="date_one" id="d6" style="display:none">
+                                <div class="date_row" >
+                                    <input type="text" id="td" name="td" class="input_one" placeholder="To Date">
+                                    <i class="fa fa-calendar calendar_icn" aria-hidden="true"></i>
+                                </div> 
+                            </div>
+                            <div class="date_one" id="d7" style="display:none">
+                            	<div class="form_field">
+                                 <select class="select-css" id="catId" name="catId" onchange="getItems()">
+                                 <option selected value="">Select Category</option>
+			<c:forEach var="catList" items="${catList}">
+			<option value="${catList.catId}">${catList.catName}</option>   
+			</c:forEach>
+                                    </select>
+                            </div>
+                            </div>
+                            <div class="date_btn" id="d8" style="display:none">
+                            	<button type="button" onclick="getBills()" class="btn additem_btn addcust_open" style="margin:0;"> Search Bills</button>
+                            </div>
+						</div>
+						
+						<div class="input_row">
+							<div class="date_one increse" id="d9" style="display:none">
+                            	<div class="col1">
+                                 <select   id="items" name="items" multiple="multiple"  class="chosen-select">
+                                    </select>
+                            </div>
+                            </div>
+                            
+                            <div class="date_one" id="d10" style="display:none">
+                            	<div class="form_field">
+                                 <select class="select-css" id="bills" name="bills">
+                                   <!--  <option>Select Bills</option>
+                                    <option>Bills 1</option>
+                                    <option>Bills 2</option>
+                                    <option>Bills 3</option>
+                                    <option>Bills 4</option> -->
+                                    </select>
+                            </div>
+                            </div>
+                            <!-- <div class="date_one">
+                            	<input name="" type="text" class="input_one" placeholder="Get Details">
+                            </div> -->
+                            <div class="date_btn" id="d11" style="display:none">
+                            	<button type="submit" class="btn additem_btn addcust_open" style="margin:0;"> Get Details</button>
+                            </div>
+						</div>
+						
+					</div>
+				</div>
+				<div align="center" id="loader" style="display: none">
+
+									<span>
+										<h4>
+											<font color="#343690">Loading</font>
+										</h4>
+									</span> <span class="l-1"></span> <span class="l-2"></span> <span
+										class="l-3"></span> <span class="l-4"></span> <span
+										class="l-5"></span> <span class="l-6"></span>
+								</div>
+				</form>
+			<!-- new designer code end here 07-05-2021 -->
 
 				
 
@@ -249,9 +408,175 @@ table, th, td {
 </div>
 <!--wrapper-end-->
 
-<!--easyTabs-->
+<!-- new css for 07-05-2021 -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/css/jquery-ui.css"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+
 <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
-<!--easyTabs-->
+	<script
+		src="${pageContext.request.contextPath}/resources/customerBill/chosen.jquery.js"
+		type="text/javascript"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/customerBill/init.js"
+		type="text/javascript" charset="utf-8"></script>
+      <script type="text/javascript">
+      $( function() {
+        $(".datepicker").datepicker();
+      } );
+          $(".datepicker").datepicker({
+        inline: true
+    });
+          
+          $(function() {
+        		$("#fd").datepicker({ dateFormat: 'dd-mm-yy' });
+        	});
+        	$(function() {
+        		$("#td").datepicker({ dateFormat: 'dd-mm-yy' });
+        	});
+      </script> 
+<script>
+function getBills(){
+	$('#loader').show();
+	var x=$('input[name="billdatewise"]:checked').val();
+	var formData=new  FormData();
+	formData.append("x",x);
+	if(x==1){
+		//15 days bill
+		formData.append("fd","");
+		formData.append("td","");
+	}else{
+		//fd td bill
+		var fd = $("#fd").val();
+		var td = $("#td").val();
+	
+		formData.append("fd",fd);
+		formData.append("td",td);
+	}
+	
+	$('#loader').show();
+	$.ajax({
+        url:"${pageContext.request.contextPath}/getInvoiecesForGVN",
+  type: "POST",
+  data: formData,
+  contentType: false,
+        cache: false,
+  processData:false,
+  beforeSend : function()
+  {
+	  /* if(fd=="" || fd==null){
+		  alert("Please select From Date")
+	  } */
+  },
+  success: function(data)
+     {
+	  	var len=data.length;
+	  $('#bills')
+	    .find('option')
+	    .remove()
+	    .end()
+		for ( var i = 0; i < len; i++) {
+         $("#bills").append(
+                 $("<option></option>").attr(
+                     "value", data[i].billNo).text(data[i].invoiceNo+ " - Inv Date " + data[i].billDate)
+             );
+		}
+		   $("#bills").trigger("chosen:updated");
+		   $('#loader').hide();
+     },
+	})
+}
+
+function getItems(){
+	$('#loader').show();
+	 var catId=document.getElementById("catId").value;	
+$
+.getJSON(
+		'${getItemListByMenu}',
+		{
+			menu_id : catId,
+			ajax : 'true'
+		},
+		function(data) {
+			var len=data.length;
+			$('#items')
+		    .find('option')
+		    .remove()
+		    .end()
+			 $("#items").append($("<option></option>").attr( "value",-1).text("ALL"));
+			for ( var i = 0; i < len; i++) {
+               $("#items").append(
+                       $("<option></option>").attr(
+                           "value", data[i].id).text(data[i].itemName)
+                   );
+			}
+			   $("#items").trigger("chosen:updated");
+			   $('#loader').hide();
+			  // getData()
+		})
+		$('#loader').hide();
+		
+}
+
+
+function setDiv(p1,p2){
+	//document.getElementById("d1").style="display:none";
+	//document.getElementById("d2").style="display:none";
+	document.getElementById("d3").style="display:none";
+	document.getElementById("d4").style="display:none";
+	document.getElementById("d5").style="display:none";
+	document.getElementById("d6").style="display:none";
+	document.getElementById("d7").style="display:none";
+	document.getElementById("d8").style="display:none";
+	document.getElementById("d9").style="display:none";
+	document.getElementById("d10").style="display:none";
+	document.getElementById("d11").style="display:none";
+	
+	if(p1==1){
+		document.getElementById("d3").style.display= "block";
+		document.getElementById("d4").style.display= "block";
+		$("input[name='billdatewise']").attr("checked", false);
+
+	}else if(p1==2){
+		//document.getElementById("datepicker").style="display:none";
+		document.getElementById("d5").style.display= "block";
+		document.getElementById("d6").style.display= "block";
+		document.getElementById("d7").style.display= "block";
+		document.getElementById("d9").style.display= "block";
+		document.getElementById("d11").style.display= "block";
+		$("input[name='billdatewise']").attr("checked", false);
+	}else if(p1==3){
+		document.getElementById("d10").style.display= "block";
+		document.getElementById("d11").style.display= "block";
+		
+		document.getElementById("d3").style.display= "block";
+		document.getElementById("d4").style.display= "block";
+		
+		document.getElementById("d3").style.display= "block";
+		document.getElementById("d4").style.display= "block";
+		getBills();
+	}
+	else if(p1==4){
+		document.getElementById("d5").style.display= "block";
+		document.getElementById("d6").style.display= "block";
+		document.getElementById("d8").style.display= "block";
+		document.getElementById("d10").style.display= "block";
+		document.getElementById("d11").style.display= "block";
+		
+		document.getElementById("d3").style.display= "block";
+		document.getElementById("d4").style.display= "block";
+		
+	}
+	 $('#bills')
+	    .find('option')
+	    .remove()
+	    .end()
+$("#bills").trigger("chosen:updated");
+}
+
+</script>
+
+
+
 <script>
 (function() {
   var fauxTable = document.getElementById("faux-table");

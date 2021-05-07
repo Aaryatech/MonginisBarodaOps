@@ -7,7 +7,8 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/loader.css">
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
 <style>
@@ -15,6 +16,82 @@ table, th, td {
 	border: 1px solid #9da88d;
 }
 </style>
+
+<style>
+.fileUpload {
+     margin: 0px 0px 0px 0px;
+    padding-top: 1px;
+}
+/* The Modal (background) */
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 555; /* Sit on top */
+	padding-top: 60px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 8px 20px 20px 20px;
+	border: 1px solid #888;
+	width: 30%;
+}
+
+/* The Close Button */
+.close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#overlay2 {
+	position: fixed;
+	display: none;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(239, 219, 219, 0.5);
+	z-index: 9992;
+	cursor: pointer;
+}
+
+#text2 {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	font-size: 25px;
+	color: white;
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+}
+
+.itemDummyClass {
+	cursor: pointer;
+}
+
+.def_customer {
+	display: none;
+}
+	</style>
 <div class="sidebarOuter"></div>
 
 <div class="wrapper">
@@ -67,12 +144,22 @@ table, th, td {
 						<h2 class="pageTitle"><i class="fa fa-refresh" aria-hidden="true"></i>GRN Based on Stock</h2>
 					</div>
 				</div>
-
+<div class="row">
+					<div class="col-md-12">
+						<div align="center" id="loader" style="display: none;">
+							<span>
+								<h4>
+									<font color="#343690">Loading</font>
+								</h4>
+							</span> <span class="l-1"></span> <span class="l-2"></span> <span
+								class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
+							<span class="l-6"></span>
+						</div>
+					</div>
+				</div>
 				<div class="clearfix"></div>
 				<form action="${pageContext.request.contextPath}/insertGrnProcess"
-					onsubmit="return confirm('Do you really want to save ?');"
-					name="validation_form" id="validation_form" method="post">
-
+					name="validation_form" id="vf" method="post">
 <c:set var="flag" value="0" />
 
 					<div id="table-scroll">
@@ -259,14 +346,72 @@ table, th, td {
 						</c:when>
 						<c:otherwise>
 							<input type="submit" class="btn btn-primary" id="submit"
-								value="Save">
+								value="Save" onclick="setValue(1)"  >
+								 <button class="addcust_open btn btn-primary" type="submit" onclick="setValue(0)"
+						 >Preview 
+				 
+						</button>
 						</c:otherwise>
 					</c:choose>
 
 
-
+					<input type="hidden" id="isSaveOrPreview" name="isSaveOrPreview" value="0">
 
 				</form>
+				
+				<div id="addEmpModal" class="modal">
+		<div id="overlay">
+			<div class="clock"></div>
+		</div>
+
+		<div class="modal-content" style="width: 75%">
+			<span class="close" onclick="closeNewCustPopUp()" style="opacity: 2;">&times;</span>
+
+			<h3 class="pageTitle">Preview GRN Save</h3>
+			
+			<div>
+				<div class="row">
+						<div class="col-lg-12">
+						
+						<table id="table_grid_preview" class="responsive-table">
+									<!-- class="main-table"> -->
+									<thead>
+										<tr class="bgpink">
+											<th class="col-md-2" style="text-align: center;">Invoice
+												Date</th>
+											<th class="col-md-2" style="text-align: center;">Invoice
+												No</th>
+											<th class="col-md-2" style="text-align: center;">Name</th>
+											<th class="col-md-2" style="text-align: center;">Type</th>
+											<th class="col-md-1" style="text-align: center;">Rate</th>
+											<!-- 	<th class="col-md-1">Grn Rate</th> -->
+											<th class="col-md-1" style="text-align: center;">Edit
+												Qty</th>
+											
+										</tr>
+
+									</thead>
+									<tbody>
+									
+									</tbody>
+									</table>
+									
+						</div>
+				</div>
+			</div>
+
+			<!-- <div class="pop_btns">
+				<div class="close_l" style="text-align: center;">
+					<input type="submit" class="btn additem_btn" id="saveCust" value="Save Cust" onclick="addCustomer()">
+					<button class="btn additem_btn" onclick="closeNewCustPopUp()" id="cls_btn">Close</button>
+				</div>				
+				<div class="clr"></div>
+			</div> -->
+
+		</div>
+
+
+	</div>
 			</div>
 			<!--table end-->
 
@@ -285,9 +430,130 @@ table, th, td {
 <!--easyTabs-->
 <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 <!--easyTabs-->
-
 <script type="text/javascript">
-	
+function setValue(valueP){
+	document.getElementById("isSaveOrPreview").value=valueP;
+}
+		$(document).ready(function (e) {
+			 $("#vf").on('submit',(function(e) {
+				 try{
+				 e.preventDefault();
+				  $('#loader').show();
+				var valueP=  document.getElementById("isSaveOrPreview").value
+				  
+				  if(parseInt(valueP)==0){
+					  destUrl="${pageContext.request.contextPath}/getGrnPreview";
+					  openNewCustPopUp();
+				  }else{
+					  destUrl="${pageContext.request.contextPath}/insertGrnProcess";
+					  document.getElementById("submit").setAttribute("disabled",true); 
+				  }
+				
+			  $.ajax({
+			         url:destUrl,// "${pageContext.request.contextPath}/getGrnPreview",
+			   type: "POST",
+			   data:  new FormData(this),
+			   contentType: false,
+			         cache: false,
+			   processData:false,
+			   beforeSend : function()
+			   {
+			   },
+			   success: function(data)
+			      {
+			    if(data=='invalid')
+			    {
+			    }
+			    else
+			    {
+			    	if(parseInt(valueP)==0){
+			    		
+			    	
+			    	len=data.length;
+					$('#table_grid_preview td').remove();
+					for(var x=0; x<len;x++){
+						if(parseFloat(data[x].enteredQty)>0){
+					var tr = $('<tr ></tr>');
+					tr .append($('<td class="col-md-1"></td>').html(data[x].billDate));
+					tr .append($('<td class="col-md-1"></td>').html(data[x].invoiceNo));
+					tr .append($('<td class="col-md-1"></td>').html(data[x].itemName));
+					tr .append($('<td class="col-md-1"></td>').html(data[x].grnType));
+					tr .append($('<td class="col-md-1"></td>').html(data[x].rate));
+					tr .append($('<td class="col-md-1"></td>').html(data[x].enteredQty));
+					$('#table_grid_preview tbody')
+					.append(tr);
+						}
+					}
+			    	}else{
+			    		alert("GRN Saved Successfully")
+			    		window.open("${pageContext.request.contextPath}/displayGrn","_self");
+			    	}
+					 $('#loader').hide();
+			    }
+			      },
+			     error: function(e) 
+			      {
+			    	  $('#loader').hide();
+			      }          
+			    });
+			 }catch (e) {
+				alert(e);
+				$('#loader').hide();
+				  $('#loader').hide();
+			}
+			 }));
+			});
+		</script>
+<script type="text/javascript">
+
+function getGRNPreview(){
+	try{
+	openNewCustPopUp();
+	 var fd=new FormData();
+		fd.append('OKKKK',"lllL");
+	$('#loader').show();
+	$.ajax({
+	url : '${pageContext.request.contextPath}/getGrnPreview',
+	type : 'post',
+	dataType : 'json',
+	data : fd,
+	contentType : false,
+	processData : false,
+	success: function(data, textStatus, jqXHR){
+		len=data.length;
+		$('#table_grid_preview td').remove();
+		for(var x=0; x<len;x++){
+			if(parseFloat(data[x].enteredQty)>0){
+		var tr = $('<tr ></tr>');
+		tr .append($('<td class="col-md-1"></td>').html(data[x].billDate));
+		tr .append($('<td class="col-md-1"></td>').html(data[x].invoiceNo));
+		tr .append($('<td class="col-md-1"></td>').html(data[x].itemName));
+		tr .append($('<td class="col-md-1"></td>').html(data[x].grnType));
+		tr .append($('<td class="col-md-1"></td>').html(data[x].rate));
+		tr .append($('<td class="col-md-1"></td>').html(data[x].enteredQty));
+		$('#table_grid_preview tbody')
+		.append(tr);
+			}
+		}
+	},
+	})
+	$('#loader').hide();
+	}catch (e) {
+		alert(e)
+	}
+}
+function openNewCustPopUp() {
+
+	var modal = document.getElementById("addEmpModal");
+	modal.style.display = "block";
+
+}
+
+function closeNewCustPopUp() {
+
+	var modal = document.getElementById("addEmpModal");
+	modal.style.display = "none";	
+}
 	
 	/*  function showEdit(id,itemId,autoGrnQty) {
 		
