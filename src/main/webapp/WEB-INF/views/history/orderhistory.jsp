@@ -420,12 +420,16 @@ jQuery(document).ready(function(){
 														Name</th>
 													<th class="col-md-1" style="text-align: center;">MRP</th>
 													<th class="col-sm-1" style="text-align: center;">Quantity</th>
+													
 													<c:choose>
 														<c:when test="${catId!=42 && catId!=80}">
 															<th class="col-md-1" style="text-align: center;">Rate</th>
 														</c:when>
 													</c:choose>
 													<th class="col-md-1" style="text-align: center;">Total</th>
+													<th class="col-md-1" style="text-align: center;">Disc%</th>
+													<th class="col-md-1" style="text-align: center;">Grn%</th>
+													<th class="col-md-1" style="text-align: center;">Menu</th>
 													<c:choose>
 														<c:when test="${catId==42||catId==80}">
 															<th class="col-md-1" style="text-align: center;">Order
@@ -483,6 +487,10 @@ jQuery(document).ready(function(){
 																		minFractionDigits="2" groupingUsed="false"
 																		value="${orderList.orderQty * orderList.orderRate}" />
 																</td>
+																<td class="col-md-1">${orderList.discPer}</td>
+																<td class="col-md-1">${orderList.grnPer}</td>
+																<td class="col-md-2"><c:out
+																		value="${orderList.menuTitle}" /></td>
 
 															</tr>
 														</c:forEach>
@@ -529,6 +537,7 @@ jQuery(document).ready(function(){
 </table>
         <br />
     </c:when>     --%><c:when test="${orderType==2}">
+   
     <div class="clearfix"></div>
 								<div class="table-wrap">
 
@@ -558,6 +567,9 @@ jQuery(document).ready(function(){
 													<th class="col-md-1" style="text-align: center;">Total</th>
 													<th class="col-md-1" style="text-align: center;">Advance</th>
 													<th class="col-md-1" style="text-align: center;">Remaining</th>
+													<th class="col-md-1" style="text-align: center;">Disc%</th>
+													<th class="col-md-1" style="text-align: center;">GRN%</th>
+													<th class="col-md-1" style="text-align: center;">Menu</th>
 													<th class="col-md-1" style="text-align: center;">Memo
 														& Bill</th>
 
@@ -620,6 +632,15 @@ jQuery(document).ready(function(){
 																type="number" maxFractionDigits="2"
 																minFractionDigits="2" groupingUsed="false"
 																value="${orderList.spGrandTotal-orderList.spAdvance}" /></td>
+																
+														<td class="col-md-1" style="text-align: right;"><c:out
+																value="${orderList.discPer}" /></td>
+																<td class="col-md-1" style="text-align: right;"><c:out
+																value="${orderList.grnPer}" /></td>
+																<td class="col-md-1" style="text-align: right;"><c:out
+																value="${orderList.menuTitle}" /></td>		
+																
+																
 														<td class="col-md-1" style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															<a
 															href="${pageContext.request.contextPath}/showSpCakeOrderHisPDF/${orderList.spOrderNo}"
@@ -672,6 +693,10 @@ jQuery(document).ready(function(){
 															<th class="col-md-1" style="text-align: center;">Rate</th>
 														</c:when>
 													</c:choose>
+													<th class="col-sm-1" style="text-align: center;">Disc%</th>
+													<th class="col-sm-1" style="text-align: center;">GRN%</th>
+													<th class="col-sm-1" style="text-align: center;">MENU</th>
+												
 													<th class="col-md-1" style="text-align: center;">Total</th>
 													<c:choose>
 														<c:when test="${catId==42||catId==80}">
@@ -683,7 +708,7 @@ jQuery(document).ready(function(){
 											</thead>
 											<tbody>
 												<c:choose>
-													<c:when test="${catId==42||catId==80}">
+													<c:when test="${true}">
 														<c:forEach items="${orderHistory}" var="orderList"
 															varStatus="count">
 
@@ -700,6 +725,16 @@ jQuery(document).ready(function(){
 																		type="number" maxFractionDigits="2"
 																		minFractionDigits="2" groupingUsed="false"
 																		value="${orderList.qty * orderList.rate}" /></td>
+																		
+																<td class="col-md-1" style="text-align: right;"><c:out
+																		value="${orderList.discPer}" /></td>
+																<td class="col-md-1" style="text-align: right;"><c:out
+																		value="${orderList.grnPer}" /></td>
+																		
+																<td class="col-md-1" style="text-align: right;"><c:out
+																		value="${orderList.menuTitle}" /></td>
+																		
+																		
 																<td class="col-md-1" style="text-align: center;"><a
 																	href="${pageContext.request.contextPath}/showRegCakeOrderHisPDF/${orderList.rspId}"
 																	target="_blank"><abbr title="PDF"><i
