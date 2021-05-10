@@ -379,7 +379,7 @@ public class BillingController {
 
 						System.out.println("Bill Header Response " + billHeader.toString());
 					
-				} else {
+				} else {  
 
 					// update time
 				String	curDateTime = dateFormat.format(cal.getTime());
@@ -423,6 +423,111 @@ public class BillingController {
 	}
 		
 	}
+	
+	
+	/***********************Akhilesh 2021-05-07********************************************************************************/
+	@RequestMapping(value = "/updateBillStatusAndSpBill", method = RequestMethod.GET)
+	public @ResponseBody void updateBillStatusAndSpBill(HttpServletRequest request,
+		HttpServletResponse response) {
+		System.err.println("In /updateBillStatusAndSpBill");
+		
+		String billNo=request.getParameter("billNo");
+		System.out.println("Bill No : "+ billNo);
+		
+		
+		
+		 System.out.println("Headerdgdgdfg List "+billHeadeResponse.getGetBillHeaders().toString());
+		
+		try {
+			GetBillHeader getBillHeader=new GetBillHeader();
+			 List<GetBillHeader> getBillHeaders=billHeadeResponse.getGetBillHeaders();
+			 
+			 System.out.println("Header List "+getBillHeaders.toString());
+		for(int i=0;i<billHeadeResponse.getGetBillHeaders().size();i++)
+		{
+			if(billHeadeResponse.getGetBillHeaders().get(i).getBillNo()==Integer.parseInt(billNo))
+			{
+				System.out.println("first date :"+ billHeadeResponse.getGetBillHeaders().get(i).getBillDate());
+				
+				
+				
+				getBillHeader=billHeadeResponse.getGetBillHeaders().get(i);
+				//postBillHeader.setBillDate(date);
+				
+				
+							}
+		}
+		
+		getBillHeader.setStatus(2);
+		
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("kk:mm:ss ");
+		TimeZone istTimeZone = TimeZone.getTimeZone("Asia/Kolkata");
+		
+		Date d = new Date();
+		sdf.setTimeZone(istTimeZone);
+		
+		String strtime = sdf.format(d);
+		
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+		System.out.println("************* Date Time " + dateFormat.format(cal.getTime()));
+		
+		getBillHeader.setBillDateTime(dateFormat.format(cal.getTime()));
+		getBillHeader.setTime(strtime);
+		RestTemplate restTemplate = new RestTemplate();
+		try {
+			
+		Info info = restTemplate.postForObject(Constant.URL + "updateBillStatus", getBillHeader,
+					Info.class);
+
+			System.out.println("Message :   "+info.getMessage());
+			System.out.println("Error  :    "+info.getError());
+			if(info.getError()==false) {
+			
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("billNo", billNo);
+			GetBillDetailsResponse details=restTemplate.postForObject(Constant.URL+"getBillDetails", map, GetBillDetailsResponse.class);
+			
+			System.err.println(""+details.getGetBillDetails());
+			for(GetBillDetail det : details.getGetBillDetails()) {
+				if(det.getCatId()==5) {
+					map = new LinkedMultiValueMap<String, Object>();
+					map.add("spOrderNo", det.getOrderId());
+					map.add("invoiceNo", getBillHeader.getInvoiceNo());
+					map.add("frId", frDetails.getFrId());
+				boolean flag=restTemplate.postForObject(Constant.URL+"generateSpBillOps", map, boolean.class);
+				if(flag) {
+					System.err.println("Bill Gen For Ops");
+				}else {
+					System.err.println("Unable To Gen Bill For Ops");
+				}
+					
+				}
+			}
+
+
+		
+			}
+	
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}catch (Exception e) {
+		System.out.println("ex in update bill "+e.getMessage());
+		e.printStackTrace();
+	}
+		
+	}
+	/*******************************************************************************************************************/
+	
 	
 	@RequestMapping(value = "pdf/showBillPdf/{transportMode}/{vehicleNo}/{selectedBills}", method = RequestMethod.GET)
 	public ModelAndView showBillPdf(@PathVariable String transportMode, @PathVariable String vehicleNo,

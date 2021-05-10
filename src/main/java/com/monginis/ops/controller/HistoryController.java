@@ -59,8 +59,11 @@ import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetCustBillTax;
 import com.monginis.ops.model.GetItemHsnCode;
 import com.monginis.ops.model.GetRegSpCakeOrders;
+import com.monginis.ops.model.GetRegSpCakeOrdersNew;
 import com.monginis.ops.model.ItemOrderHis;
+import com.monginis.ops.model.ItemOrderHisNew;
 import com.monginis.ops.model.ItemOrderList;
+import com.monginis.ops.model.ItemOrderListNew;
 import com.monginis.ops.model.MCategory;
 import com.monginis.ops.model.Main;
 import com.monginis.ops.model.Menus;
@@ -69,6 +72,8 @@ import com.monginis.ops.model.RegularSpCkOrders;
 import com.monginis.ops.model.SpHistoryExBill;
 import com.monginis.ops.model.SpOrderHis;
 import com.monginis.ops.model.SpOrderHisList;
+import com.monginis.ops.model.SpOrderHisListNew;
+import com.monginis.ops.model.SpOrderHisNew;
 import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 
 //import org.bouncycastle.cert.ocsp.Req;
@@ -82,8 +87,8 @@ public class HistoryController {
 	List<MCategory> mCategoryList=null;
 	List<FrMenu> menuListSelected=null;List<FrMenu> menuListNotSelected=null;
 	AllMenuResponse allMenuResponse;
-	List<SpOrderHis> spOrderHistory;int flag=0;
-	List<GetRegSpCakeOrders> regSpHistory;	List<ItemOrderHis> itemOrderHistory;
+	List<SpOrderHisNew> spOrderHistory;int flag=0;
+	List<GetRegSpCakeOrdersNew> regSpHistory;	List<ItemOrderHisNew> itemOrderHistory;
 	ArrayList<FrMenu> regOrderMenuList=null;ArrayList<FrMenu> spOrderMenuList=null;
 	
 	@RequestMapping(value = "/orderHistory", method = RequestMethod.GET)
@@ -457,8 +462,10 @@ public class HistoryController {
 	        map.add("menuId","1");
 	        map.add("frId","1");
 		 spOrderList=rest.postForObject(Constant.URL+"/getSpCkOrderForExBill",map,SpHistoryExBill.class);
-		  ArrayList<GetRegSpCakeOrders> regSpecialHistory=new ArrayList<GetRegSpCakeOrders>(Arrays.asList(spOrderList.getRegularSpCkOrders()));
-		  ArrayList<SpOrderHis> spOrderHistoryRes=new ArrayList<SpOrderHis>(Arrays.asList(spOrderList.getSpCakeOrder()));
+		  //ArrayList<GetRegSpCakeOrdersNew> regSpecialHistory=new ArrayList<GetRegSpCakeOrdersNew>(Arrays.asList(spOrderList.getRegularSpCkOrders()));
+//		  ArrayList<SpOrderHis> spOrderHistoryRes=new ArrayList<SpOrderHis>(Arrays.asList(spOrderList.getSpCakeOrder()));
+		 List<GetRegSpCakeOrdersNew> regSpecialHistory=new ArrayList<>(Arrays.asList(spOrderList.getRegularSpCkOrders()));
+		 List<SpOrderHisNew> spOrderHistoryRes=new ArrayList<>(Arrays.asList(spOrderList.getSpCakeOrder()));
 
 		  
 		  spOrderHistory=spOrderHistoryRes;
@@ -503,9 +510,10 @@ public class HistoryController {
 	        map.add("orderNo","0");
 		  spHistoryExBill=rest.postForObject(Constant.URL+"/getSpCkOrderForExBill",map,SpHistoryExBill.class);
 		  
-		  ArrayList<GetRegSpCakeOrders> regSpecialHistory=new ArrayList<GetRegSpCakeOrders>(Arrays.asList(spHistoryExBill.getRegularSpCkOrders()));
-		  ArrayList<SpOrderHis> spOrderHistoryRes=new ArrayList<SpOrderHis>(Arrays.asList(spHistoryExBill.getSpCakeOrder()));
-
+		 // ArrayList<GetRegSpCakeOrders> regSpecialHistory=new ArrayList<GetRegSpCakeOrders>(Arrays.asList(spHistoryExBill.getRegularSpCkOrders()));
+//		  ArrayList<SpOrderHis> spOrderHistoryRes=new ArrayList<SpOrderHis>(Arrays.asList(spHistoryExBill.getSpCakeOrder()));
+		  List<GetRegSpCakeOrdersNew> regSpecialHistory=new ArrayList<>(Arrays.asList(spHistoryExBill.getRegularSpCkOrders()));
+		  List<SpOrderHisNew> spOrderHistoryRes=new ArrayList<>(Arrays.asList(spHistoryExBill.getSpCakeOrder())); 
 		  
 		  spOrderHistory=spOrderHistoryRes;
 		  regSpHistory=regSpecialHistory;
@@ -520,7 +528,7 @@ public class HistoryController {
 		return spHistoryExBill;
 
 	}
-	public List<ItemOrderHis> orderHistory(String catId,String parsedDate,int frId)
+	public List<ItemOrderHisNew> orderHistory(String catId,String parsedDate,int frId)
 	{
 	
 		
@@ -529,16 +537,20 @@ public class HistoryController {
 	        map.add("catId",catId);
 	        map.add("deliveryDt",parsedDate);
 	        map.add("frId",frId);
-		ItemOrderList itemOrderList=rest.postForObject(
+	/*	ItemOrderList itemOrderList=rest.postForObject(
 				Constant.URL+"/orderHistory",map,
 				ItemOrderList.class);
-		List<ItemOrderHis> itemHistory=itemOrderList.getItemOrderList();
+		List<ItemOrderHis> itemHistory=itemOrderList.getItemOrderList();*/
+	    	ItemOrderListNew itemOrderList=rest.postForObject(
+					Constant.URL+"/orderHistoryNew",map,
+					ItemOrderListNew.class);
+			List<ItemOrderHisNew> itemHistory=itemOrderList.getItemOrderList();
 		System.out.println("OrderList"+itemHistory.toString());
 		return itemHistory;
 	
 	}
 	
-   public List<SpOrderHis> spHistory(String catId,String parsedDate,String frCode)
+   public List<SpOrderHisNew> spHistory(String catId,String parsedDate,String frCode)
 	{
 	  
 		RestTemplate rest=new RestTemplate();
@@ -546,15 +558,19 @@ public class HistoryController {
 	        map.add("catId",catId);
 	        map.add("spDeliveryDt",parsedDate);
 	        map.add("frCode",frCode);
-		SpOrderHisList spOrderList=rest.postForObject(
+	        SpOrderHisListNew spOrderList=rest.postForObject(
+					Constant.URL+"/SpCakeOrderHistoryNew",map,
+					SpOrderHisListNew.class);
+			List<SpOrderHisNew> spCkHisList=spOrderList.getSpOrderList();
+		/*SpOrderHisList spOrderList=rest.postForObject(
 				Constant.URL+"/SpCakeOrderHistory",map,
 				SpOrderHisList.class);
-		List<SpOrderHis> spCkHisList=spOrderList.getSpOrderList();
+		List<SpOrderHis> spCkHisList=spOrderList.getSpOrderList();*/
 		System.out.println("OrderList"+spCkHisList.toString());
 		return spCkHisList;
 		
 	}
-   public List<GetRegSpCakeOrders> regHistory(String catId,String parsedDate,int frId)
+   public List<GetRegSpCakeOrdersNew> regHistory(String catId,String parsedDate,int frId)
    {
 	   
 	   System.out.println("spHistory");
@@ -564,10 +580,10 @@ public class HistoryController {
 	 	        map.add("frId",frId);
 	 	       map.add("catId",catId.toString());
 	 	        System.err.println("Map-->"+map.toString());
-	 	       GetRegSpCakeOrders[] rspOrderList=rest.postForObject(Constant.URL+"/getRegSpCakeOrderHistory",map,GetRegSpCakeOrders[].class);
+	 	       GetRegSpCakeOrdersNew[] rspOrderList=rest.postForObject(Constant.URL+"/getRegSpCakeOrderHistoryNew",map,GetRegSpCakeOrdersNew[].class);
 	 	
 	 		System.out.println("OrderList"+rspOrderList.toString());
-	 		ArrayList<GetRegSpCakeOrders> regSpecialHistory=new ArrayList<GetRegSpCakeOrders>(Arrays.asList(rspOrderList));
+	 		ArrayList<GetRegSpCakeOrdersNew> regSpecialHistory=new ArrayList<GetRegSpCakeOrdersNew>(Arrays.asList(rspOrderList));
 	 		System.out.println("OrderList"+rspOrderList.toString());
 
 	 		regSpHistory=regSpecialHistory;
@@ -579,8 +595,8 @@ public class HistoryController {
 
 		ModelAndView model = new ModelAndView("report/order");
 		try {
-			SpOrderHis spOrderHisSelected=null;
-			for(SpOrderHis spOrderHis:spOrderHistory) 
+			SpOrderHisNew spOrderHisSelected=null;
+			for(SpOrderHisNew spOrderHis:spOrderHistory) 
 			{
 			   if(spOrderHis.getSpOrderNo()==spOrderNo)
 			   {
@@ -629,8 +645,8 @@ public class HistoryController {
 
 		ModelAndView model = new ModelAndView("history/regorderMemo");
       try {
-    	  GetRegSpCakeOrders rspOrderHisSelected=null;
-			for(GetRegSpCakeOrders rspOrderHis:regSpHistory) 
+    	  GetRegSpCakeOrdersNew rspOrderHisSelected=null;
+			for(GetRegSpCakeOrdersNew rspOrderHis:regSpHistory) 
 			{
 				System.err.println(rspOrderHis.getRspId());
 			   if(rspOrderHis.getRspId()==rspId)
@@ -682,8 +698,8 @@ public class HistoryController {
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		try {
 	
-			SpOrderHis spOrderHisSelected=null;
-			for(SpOrderHis spOrderHis:spOrderHistory) 
+			SpOrderHisNew spOrderHisSelected=null;
+			for(SpOrderHisNew spOrderHis:spOrderHistory) 
 			{
 			   if(spOrderHis.getSpOrderNo()==spOrderNo)
 			   {

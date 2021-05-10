@@ -4,25 +4,29 @@ import java.util.List;
 
 public class SpHistoryExBill {
 
-	SpOrderHis[] spCakeOrder=null;
+	SpOrderHisNew[] spCakeOrder=null;
 	
-	GetRegSpCakeOrders[] regularSpCkOrders=null;
+	GetRegSpCakeOrdersNew[] regularSpCkOrders=null;
 
-	public SpOrderHis[] getSpCakeOrder() {
+
+
+	public SpOrderHisNew[] getSpCakeOrder() {
 		return spCakeOrder;
 	}
 
-	public void setSpCakeOrder(SpOrderHis[] spCakeOrder) {
+	public void setSpCakeOrder(SpOrderHisNew[] spCakeOrder) {
 		this.spCakeOrder = spCakeOrder;
 	}
 
-	public GetRegSpCakeOrders[] getRegularSpCkOrders() {
+	public GetRegSpCakeOrdersNew[] getRegularSpCkOrders() {
 		return regularSpCkOrders;
 	}
 
-	public void setRegularSpCkOrders(GetRegSpCakeOrders[] regularSpCkOrders) {
+	public void setRegularSpCkOrders(GetRegSpCakeOrdersNew[] regularSpCkOrders) {
 		this.regularSpCkOrders = regularSpCkOrders;
 	}
+
+
 
 	
 }

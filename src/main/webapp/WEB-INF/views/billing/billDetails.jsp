@@ -98,6 +98,7 @@ th, td {
 </head>
 <body onload="myFunction(${billStatus})">
 <c:url var="updateBillStatus" value="/updateBillStatus" />
+<c:url value="/updateBillStatusAndSpBill" var="updateBillStatusAndSpBill" ></c:url>
 
 	<!--topLeft-nav-->
 	<div class="sidebarOuter"></div>
@@ -178,6 +179,8 @@ th, td {
 		 			<div class="four_txt">
 								<input name="" class="btn additem_btn" value="Received" style="margin: 0; border:none;"
 									type="button" id="updateStatus" onclick="updateStatus(${billNo})">
+									<input name="" class="btn additem_btn" value="Received & Sp Bill" style="margin: 0; border:none;"
+									type="button" id="updateStatus1" onclick="updateStatusAndSpBill(${billNo})">
 					</div>				
 							</div>
 		
@@ -311,6 +314,7 @@ function myFunction(status){
 	if(status==2)
 		{
 		document.getElementById("updateStatus").style="display:none";
+		document.getElementById("updateStatus1").style="display:none";
 		
 		}
 	
@@ -329,12 +333,33 @@ function updateStatus(billNo)
 
 	});
 	document.getElementById("updateStatus").style="display:none";
+	document.getElementById("updateStatus1").style="display:none";
 	x.className = "show";
 	setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 }
 function goBack() {
     window.history.back();
 }
+</script>
+<script type="text/javascript">
+function updateStatusAndSpBill(billNo){
+	//alert(billNo);
+	var x = document.getElementById("snackbar")
+	var status=document.getElementById("billstatus").value;
+	document.getElementById("status"+status).innerHTML = "Recieved";	
+	$.getJSON('${updateBillStatusAndSpBill}',{
+		
+		billNo : billNo,
+		
+		ajax : 'true',
+
+	});
+	document.getElementById("updateStatus").style="display:none";
+	document.getElementById("updateStatus1").style="display:none";
+	x.className = "show";
+	setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
+
 </script>
 
 <script>
