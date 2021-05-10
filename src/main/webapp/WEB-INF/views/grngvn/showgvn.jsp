@@ -12,7 +12,7 @@
 label::before {
     width: 0px;
     height: 0px;
-    border: 0px;
+    border: 0px; 
     }
     
  .main-table tbody > tr:hover{
