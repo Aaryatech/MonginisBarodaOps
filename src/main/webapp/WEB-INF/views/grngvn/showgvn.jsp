@@ -183,41 +183,58 @@ table, th, td {
 						<div class="radio_row">
 							<div class="input_row">
 					            <div class="radio_one" id="d1">
-					            <input type="radio" id="bill" name="prodBill" value="1" onchange="setDiv(1,this.value)">
+					            <input type="radio" id="bill" name="prodBill" ${p1==1 ? 'checked' : ''} value="1" onchange="setDiv(1,this.value)">
 					            <label for="bill" class="checkbox_txt"> As Per Bill</label>
 					            </div>
 					
 					            <div class="radio_one" id="d2">
-					            <input type="radio" id="product" name="prodBill" value="0" onchange="setDiv(2,this.value)">
+					            <input type="radio" id="product" name="prodBill" ${p1==0 ? 'checked' : ''} value="0" onchange="setDiv(2,this.value)">
 					            <label for="product" class="checkbox_txt"> As per Product</label>
 					            </div>
-					            
-					            <div class="radio_one" id="d3" style="display: none">
-					            <input type="radio" id="billwise" name="billdatewise" value="1" onchange="setDiv(3,this.value)">
+					            <c:set var="divStylep2" value="style=display:none"></c:set>
+					            <c:if test="${p1==1}">
+					            <c:set var="divStylep2" value=""></c:set>
+					            </c:if>
+					            <div class="radio_one" id="d3" ${divStylep2}>
+					            <input type="radio" id="billwise" name="billdatewise" value="1" ${p2==1 ? 'checked' : ''} onchange="setDiv(3,this.value)">
 					            <label for="billwise" class="checkbox_txt"> Billwise</label>
 					            </div>
 					            
-					            <div class="radio_one" id="d4" style="display:none">
-					            <input type="radio" id="datewise" name="billdatewise" value="0" onchange="setDiv(4,this.value)">
+					            <div class="radio_one" id="d4" ${divStylep2}>
+					            <input type="radio" id="datewise" name="billdatewise" value="0" ${p2==0 ? 'checked' : ''} onchange="setDiv(4,this.value)">
 					            <label for="datewise" class="checkbox_txt"> Datewise</label>
 					            </div>
 					        </div>
 						</div>
 						
 						<div class="input_row">
-							 <div class="date_one" id="d5" style="display:none">
+						 <c:set var="divStyleP" value="style=display:none"></c:set>
+					            <c:if test="${p1==0}">
+					            <c:set var="divStyleP" value=""></c:set>
+					            </c:if>
+					            
+					             <c:set var="dateDivStyle" value="style=display:none"></c:set>
+					            <c:if test="${p1==0||p2==0}">
+					            <c:set var="dateDivStyle" value=""></c:set>
+					            </c:if>
+					            
+							 <div class="date_one" id="d5" ${dateDivStyle}>
                                 <div class="date_row" >
                                     <input type="text" id="fd"   name="fd" class="input_one" placeholder="From Date">
                                     <i class="fa fa-calendar calendar_icn" aria-hidden="true"></i>
                                 </div> 
                             </div>
-                            <div class="date_one" id="d6" style="display:none">
+                            <div class="date_one" id="d6"  ${dateDivStyle}>
                                 <div class="date_row" >
                                     <input type="text" id="td" name="td" class="input_one" placeholder="To Date">
                                     <i class="fa fa-calendar calendar_icn" aria-hidden="true"></i>
                                 </div> 
                             </div>
-                            <div class="date_one" id="d7" style="display:none">
+                            <c:set var="divStyleQ" value="style=display:none"></c:set>
+                             <c:if test="${p1==0}">
+					            <c:set var="divStyleQ" value=""></c:set>
+					            </c:if>
+                            <div class="date_one" id="d7" ${divStyleQ}>
                             	<div class="form_field">
                                  <select class="select-css" id="catId" name="catId" onchange="getItems()">
                                  <option selected value="">Select Category</option>
@@ -227,20 +244,20 @@ table, th, td {
                                     </select>
                             </div>
                             </div>
-                            <div class="date_btn" id="d8" style="display:none">
+                            <div class="date_btn" id="d8" ${divStyleP}>
                             	<button type="button" onclick="getBills()" class="btn additem_btn addcust_open" style="margin:0;"> Search Bills</button>
                             </div>
 						</div>
 						
 						<div class="input_row">
-							<div class="date_one increse" id="d9" style="display:none">
-                            	<div class="col1">
-                                 <select   id="items" name="items" multiple="multiple"  class="chosen-select">
+							<div class="date_one increse" id="d9" ${divStyleQ}>
+                            	<div class="form_field">
+                                 <select   id="items" name="items" multiple="multiple"  class="select-css">
                                     </select>
                             </div>
                             </div>
                             
-                            <div class="date_one" id="d10" style="display:none">
+                            <div class="date_one" id="d10" ${divStylep2}>
                             	<div class="form_field">
                                  <select class="select-css" id="bills" name="bills">
                                    <!--  <option>Select Bills</option>
@@ -254,7 +271,7 @@ table, th, td {
                             <!-- <div class="date_one">
                             	<input name="" type="text" class="input_one" placeholder="Get Details">
                             </div> -->
-                            <div class="date_btn" id="d11" style="display:none">
+                            <div class="date_btn" id="d11">
                             	<button type="submit" class="btn additem_btn addcust_open" style="margin:0;"> Get Details</button>
                             </div>
 						</div>
@@ -426,7 +443,11 @@ table, th, td {
           $(".datepicker").datepicker({
         inline: true
     });
-          
+          window.onload = function() {
+        	  var pp1=${p1};
+        	  var pp2=${p2};
+        	  //setDiv(pp1,pp2);
+        	};
           $(function() {
         		$("#fd").datepicker({ dateFormat: 'dd-mm-yy' });
         	});
@@ -519,6 +540,7 @@ $
 
 
 function setDiv(p1,p2){
+	//alert("OK")
 	//document.getElementById("d1").style="display:none";
 	//document.getElementById("d2").style="display:none";
 	document.getElementById("d3").style="display:none";
