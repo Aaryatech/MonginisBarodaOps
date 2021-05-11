@@ -142,7 +142,7 @@ table.pending_tab td {text-align: left; padding: 8px; border: 1px solid #ddd; fo
 table.pending_tab tr:nth-child(even){background-color: #f2f2f2}
 
 .total_table_one{/*height: 263px; overflow-y: scroll;*/ display: block;}
-.scrollbars{height:269px /* 293px */ /**235px 283px*/; width: 100%;}
+.scrollbars{height:229px /* 269px */ /* 293px */ /**235px 283px*/; width: 100%;}
 .total_table_one table {border-collapse: collapse; border-spacing: 0; width: 100%; border: 1px solid #fd54a0; background: #FFF;}
 .total_table_one th{text-transform: uppercase; font-size: 14px; color: #FFF; text-align: left; padding: 8px; border: 1px solid #d93f86;}
 .total_table_one td {text-align: left; padding: 8px; border: 1px solid #d93f86; font-size: 15px;}
