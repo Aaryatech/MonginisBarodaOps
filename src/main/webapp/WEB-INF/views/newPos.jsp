@@ -924,9 +924,65 @@ label:before {
 					<c:set var="totalTaxAmt" value="0"></c:set>
 					<c:set var="totalAmt" value="0"></c:set>
 					<!--product table-->
-					<div class="total_table_one">
-						<div class="scrollbars">
+					
+					
+					<!-- new table -->
+					<%-- <div class="tableFixHead">
+	<table id="itemTable">         
+	<thead style="background-color: #f75e9f;">
+		<tr class="bgpink">
+			<th style="text-align: center;" width="2%">Sr</th>
+			<th style="text-align: center;">Product</th>
+			<th style="text-align: center;" width="10%">Qty</th>
+			<th style="text-align: center;" width="13%">Price</th>
+			<th style="text-align: center;" width="13%">Total</th>
+			<th style="text-align: center;" width="2%">Del</th>
+		</tr>
+	</thead>
+	
+	<tbody>
 
+
+										<c:forEach items="${holdBill.itemBillList}" var="itemList"
+											varStatus="count">
+											<c:set var="totalItemCount" value="${totalItemCount+1}"></c:set>
+											<tr>
+												<td>${count.index+1}</td>
+												<td style=""><div
+														style="width: 100%; white-space: normal;">${itemList.itemName}</div></td>
+												<td style="text-align: right;"
+													onclick="opnItemPopup('${itemList.itemId}','${itemList.itemName}','${itemList.catId}','${itemList.aviableQty}','${itemList.itemTax}','${itemList.itemTax}','${itemList.itemMrp}','${itemList.itemUom}',0)">
+
+													${itemList.itemQty}</td>
+												<td style="text-align: right;"><fmt:formatNumber
+														type="number" groupingUsed="false"
+														value="${itemList.itemMrp}" maxFractionDigits="2"
+														minFractionDigits="2" /></td>
+												<td style="text-align: right;"><fmt:formatNumber
+														type="number" groupingUsed="false"
+														value="${itemList.calPrice}" maxFractionDigits="2"
+														minFractionDigits="2" /></td>
+												<td style="text-align: center;"><a href="#"
+													title="Delete" onclick="deleteItem(${itemList.itemId})"><i
+														class="fa fa-trash"></i></a></td>
+											</tr>
+											<c:set var="totalTaxableAmt"
+												value="${totalTaxableAmt+itemList.payableAmt}"></c:set>
+											<c:set var="totalTaxAmt"
+												value="${totalTaxAmt+itemList.payableTax}"></c:set>
+											<c:set var="totalAmt" value="${totalAmt+itemList.payableAmt}"></c:set>
+										</c:forEach>
+
+									</tbody>
+	</table>
+	<div>
+		<span style="display: none; color: red" id="empty_itemList">*Select
+			Atleast One Item To Genrate Bill!!!!</span>
+	</div>
+</div> --%>	
+					
+						  <div class="total_table_one">
+						 <div class="scrollbars">
 							<div>
 								<table id="itemTable">
 									<thead>
@@ -981,19 +1037,19 @@ label:before {
 								<span style="display: none; color: red" id="empty_itemList">*Select
 									Atleast One Item To Genrate Bill!!!!</span>
 							</div>
-						</div>
+						</div> 
 					</div>
-					<script>
+					 <script>
 						$(document).ready(function() {
 							$('.scrollbars').ClassyScroll();
 						});
-					</script>
+					</script> 
 
 					<!--total-table start here-->
 					<div class="total_tab">
 						<div class="one_row bg_1">
-							<div class="total_l">Total Items : <span id="totalCnt">${totalItemCount}</span></div> 
-							<div class="total_r" style="text-align:right; font-weight: bold;" >Total : 
+							<div class="total_l" style="font-size: 14px;">Total Items : <span id="totalCnt">${totalItemCount}</span></div> 
+							<div class="total_r" style="text-align:right; font-weight: bold; font-size: 14px;"" >Total : 
 							<span id="totalAmt"><fmt:formatNumber type="number" groupingUsed="false" value="${totalTaxableAmt}"
 							maxFractionDigits="2" minFractionDigits="2" /></span></div>
 							<div class="clr"></div>
@@ -1027,7 +1083,7 @@ label:before {
 						
 						<div class="one_row bg_3">
 							<div class="radio_l">							
-								<div class="radio_row popup_radio" style="margin:3px 0px 0 0;">
+								<div class="radio_row one popup_radio" style="margin:3px 0px 0 0;">
 									<div class="gnd">Gendor</div>
 											<ul>
 												<li class="gend_rad"><input type="radio" type="radio" name="creditBill"
@@ -1044,15 +1100,53 @@ label:before {
 							</div>
 							
 							<div class="remark_bx">
-								<div class="total_one remark"> Remark 
+								<div id="modeOfPayDiv" style="display: none">
+							<div class="radio_left"  id="singleDiv">							
+								<div class="radio_row">
+									<div class="gnd_mode ">Mode</div>
+											<select name="billType" id="billType" data-placeholder="Type"
+									onchange="onPayTypeChange(this.value)" class="input_add mode one"
+									style="text-align: left; font-size: 13px;">
+									<!-- <option value="1" style="text-align: left;" selected>Cash</option>
+									<option value="2" style="text-align: left;">Card</option>
+									<option value="3" style="text-align: left;">E-Pay</option> -->
+									<option value="0" style="text-align: left;">Select Payment Mode</option>
+									<c:forEach items="${payModeList}" var="payModeList">
+										<option value="${payModeList.modeId}"
+											style="text-align: left;">${payModeList.modeName}</option>
+									</c:forEach>
+
+								</select>
+										</div>
+							</div>
+							
+							<div class="radio_right">
+								<div class="total_one remark" id="cardTypeDiv" style="margin: 0;"> 
+								<div class="gnd_mode">Sub Mode</div> 
+							<select name="cardType" id="cardType"
+									data-placeholder="Card Type" class="input_add mode one"
+									style="text-align: left; font-size: 13px;">
+									<option value="" style="text-align: left;">Select Card</option>
+
+									<!-- <option value="4" style="text-align: left;">Debit Card</option>
+									<option value="5" style="text-align: left;">Credit
+										Card</option> -->
+								</select>
+</div>
+							</div>
+							<div class="clr"></div>
+							
+						</div>
+						
+								<!-- <div class="total_one remark"> Remark 
 							<span>
 								<input type="text"  name="payRemark" id="payRemark" class="form-control" placeholder="Remark"
 								style="text-align: center; width: 70%; border-radius: 20px;" />
-							</span></div>
+							</span></div> -->
 							</div>
 						</div>
 						
-						<div class="one_row bg_3 SAC" id="modeOfPayDiv" style="display: none">
+						<%-- <div class="one_row bg_3 SAC" id="modeOfPayDiv" style="display: none">
 							<div class="radio_l"  id="singleDiv">							
 								<div class="radio_row popup_radio" style="margin:3px 0px 0 0;">
 									<div class="gnd">Mode</div>
@@ -1086,7 +1180,7 @@ label:before {
 								</select>
 </div>
 							</div>
-						</div>
+						</div> --%>
 					
 						<table>
 							 <%-- <tr bgcolor="#ffe5e6">
@@ -1181,14 +1275,21 @@ label:before {
 								<input type="text" name="pAmt" id="pAmt"
 									oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
 									onchange="amtReturnCal()" onkeyup="amtReturnCal()"
-									class="form-control" value="" placeholder="Amount"
-									style="text-align: center; width: 90px; border-radius: 20px;" />
+									class="form-control one_feeld" value="" placeholder="Amount"
+									style="text-align: center; border-radius: 20px;" />
 
 
 								&nbsp;&nbsp; <label style="font-weight: 700; padding-left: 5px;">Return&nbsp;</label>
 								<input type="text" name="rAmt" id="rAmt" readonly="readonly"
-									class="form-control" value="0" placeholder="Amount"
-									style="text-align: center; width: 90px; border-radius: 20px;" />
+									class="form-control one_feeld" value="0" placeholder="Amount"
+									style="text-align: center; border-radius: 20px;" />
+									
+								&nbsp;&nbsp; <label style="font-weight: 700; padding-left: 5px;">Remark&nbsp;</label>
+								
+								<input type="text"  name="payRemark" id="payRemark" class="form-control two_feeld" placeholder="Remark"
+								style="text-align: left; border-radius: 3px; border:1px solid #d2d6de; padding: 2px 5px;" />
+								
+									
 
 </div>
 				</div>

@@ -446,9 +446,9 @@ input:checked + .slider:before {-webkit-transform: translateX(26px); -ms-transfo
 .total_l{float: left; width:50%;}
 .total_l span,.total_r span{padding: 0 0 0 15px;}
 .total_r{float: right; width:50%;}
-.radio_l{float: left; width:40%;}
+.radio_l{float: left; width:35% /* 40% */;}
 .gnd{float: left; margin: 0; font-size: 14px;}
-.remark_bx{float: left; width:60%;}
+.remark_bx{float: left; width:65%;}
 .radio_row ul li.gend_rad{color: #000;}
 .total_one.remark{width:100%;}
 
@@ -456,6 +456,30 @@ input:checked + .slider:before {-webkit-transform: translateX(26px); -ms-transfo
 .add_frm_one.single{padding: 0 15px;}
 .total_table_one.popup_tab{padding: 0 15px;}
 .add_customer_one.all_width{width:100%;}
+
+.one_feeld{width:90px;}
+.two_feeld{width:100px;}
+.radio_row.one ul li label{padding:0 10px 0 30px;}
+.radio_row.one ul li .check{left:10px;}
+.radio_left{float: left; width:38%;}
+.radio_right{float: right; width:58%;}
+.input_add.mode{background: #FFF; border-radius:3px; border:1px solid #d2d6de; padding:2px 2px;}
+.gnd_mode{float: left;width:35%; font-size:13px; margin:4px 0 0 0;}
+.input_add.mode.one{float: left; width:65%;}
+
+
+/*responsive trable*/
+/* .tableFixHead {overflow-y: auto; max-height: 269px; display: inline-block; width: 100%; }
+.tableFixHead thead th {position: sticky; top: -1px; z-index: 99;}
+.tableFixHead table {border-collapse: collapse; width: 100%;}
+.tableFixHead th,.tableFixHead td {padding:8px; border: 1px solid #f75e9f; background: #FFF;}
+.tableFixHead thead tr:nth-child(even) {background-color: #f6f6f6;}
+.tableFixHead th, .tableFixHead td a{color: #333;}
+.tableFixHead th {background: #d93f86 !important; color:#FFF; font-size: 15px; font-weight: 600;}
+.tableFixHead thead th.bgpink{padding: 4px 16px;} */
+
+
+
 
 
 
