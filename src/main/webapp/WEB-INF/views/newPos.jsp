@@ -1009,15 +1009,18 @@ label:before {
 								value="0" placeholder="Disc %"
 								style="text-align: center; width: 60px; border-radius: 20px;" />
 							</span></div>
-							<div class="total_one">Round Off   
+							<div class="total_one">Dic Amt   
 							<span>
-								<input type="text" name="" id="" class="form-control"
-								value="0" placeholder="Round Off"
+								<input type="text" name="discAmt" id="discAmt" class="form-control"
+								value="0" placeholder="DISC Amt" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+								onchange="itemDiscPerCalculation(2)"
+								onkeyup="itemDiscPerCalculation(2)"
 								style="text-align: center; width: 60px; border-radius: 20px;" />
 							</span></div>
 							<div class="total_one" style="font-weight: bold;">
-								Total Amount: 
-							<span id="totalAmt"><fmt:formatNumber type="number" groupingUsed="false" value="${totalTaxableAmt}"
+								Total Payable: <!-- totalAmt -->
+							
+							<span id="totalPayableAmt"><fmt:formatNumber type="number" groupingUsed="false" value="${totalTaxableAmt}"
 							maxFractionDigits="2" minFractionDigits="2" /></span>
 							</div>
 						</div>	
@@ -1027,12 +1030,12 @@ label:before {
 								<div class="radio_row popup_radio" style="margin:3px 0px 0 0;">
 									<div class="gnd">Gendor</div>
 											<ul>
-												<li class="gend_rad"><input type="radio" type="radio" name="gender"
-													id="yes" checked value="1"> <label
-													for="yes">Yes</label>
+												<li class="gend_rad"><input type="radio" type="radio" name="creditBill"
+													id="creditBillyes" onclick="modeOfPayDivHideShow(1)"    > <label
+													for="creditBillyes">Yes</label>
 													<div class="check"></div></li>
-												<li class="gend_rad"><input type="radio" id="no" name="gender"
-													value="2"> <label for="no">No </label>
+												<li class="gend_rad"><input type="radio" id="creditBillno" name="creditBill"
+													 checked onclick="modeOfPayDivHideShow(2)"  > <label for="creditBillno">No </label>
 													<div class="check">
 														<div class="inside"></div>
 													</div></li>
@@ -1043,9 +1046,45 @@ label:before {
 							<div class="remark_bx">
 								<div class="total_one remark"> Remark 
 							<span>
-								<input type="text" name="discPer" class="form-control" placeholder="Remark"
+								<input type="text"  name="payRemark" id="payRemark" class="form-control" placeholder="Remark"
 								style="text-align: center; width: 70%; border-radius: 20px;" />
 							</span></div>
+							</div>
+						</div>
+						
+						<div class="one_row bg_3 SAC" id="modeOfPayDiv" style="display: none">
+							<div class="radio_l"  id="singleDiv">							
+								<div class="radio_row popup_radio" style="margin:3px 0px 0 0;">
+									<div class="gnd">Mode</div>
+											<select name="billType" id="billType" data-placeholder="Type"
+									onchange="onPayTypeChange(this.value)" class="input_add "
+									style="text-align: left; font-size: 16px;">
+									<!-- <option value="1" style="text-align: left;" selected>Cash</option>
+									<option value="2" style="text-align: left;">Card</option>
+									<option value="3" style="text-align: left;">E-Pay</option> -->
+									<option value="0" style="text-align: left;">Select
+										Payment Mode</option>
+									<c:forEach items="${payModeList}" var="payModeList">
+										<option value="${payModeList.modeId}"
+											style="text-align: left;">${payModeList.modeName}</option>
+									</c:forEach>
+
+								</select>
+										</div>
+							</div>
+							
+							<div class="remark_bx">
+								<div class="total_one remark" id="cardTypeDiv"> Sub Mode 
+							<select name="cardType" id="cardType"
+									data-placeholder="Card Type" class="input_add "
+									style="text-align: left; font-size: 16px;">
+									<option value="" style="text-align: left;">Select Card</option>
+
+									<!-- <option value="4" style="text-align: left;">Debit Card</option>
+									<option value="5" style="text-align: left;">Credit
+										Card</option> -->
+								</select>
+</div>
 							</div>
 						</div>
 					
@@ -1137,7 +1176,7 @@ label:before {
 							<p>0.00</p>
 						</span>
 					</div> -->
-					<!-- <div class="text_count">
+					<div class="text_count">
 					<label style="font-weight: 700; padding-left: 5px;">Paid&nbsp;</label>
 								<input type="text" name="pAmt" id="pAmt"
 									oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
@@ -1148,10 +1187,10 @@ label:before {
 
 								&nbsp;&nbsp; <label style="font-weight: 700; padding-left: 5px;">Return&nbsp;</label>
 								<input type="text" name="rAmt" id="rAmt" readonly="readonly"
-									class="form-control" value="" placeholder="Amount"
+									class="form-control" value="0" placeholder="Amount"
 									style="text-align: center; width: 90px; border-radius: 20px;" />
 
-</div> -->
+</div>
 				</div>
 				<div id="overlay2">
 					<div id="text2">
@@ -1355,7 +1394,7 @@ label:before {
 				</div>
 				<div class="add_frm_one">
 					<div class="add_customer_one">Total Payable</div>
-					<div class="add_input" id="totalPayableAmt">
+					<div class="add_input" id="totalPayableAmt1">
 						<fmt:formatNumber type="number" groupingUsed="false"
 							value="${totalAmt-advanceAmt}" maxFractionDigits="2"
 							minFractionDigits="2" />
@@ -1366,7 +1405,7 @@ label:before {
 					<div class="add_customer_one">Credit Bill</div>
 					<div class="add_input">
 						<div class="radio_row popup_radio">
-							<ul>
+							<!-- <ul>
 								<li><input type="radio" id="creditBillyes"
 									name="creditBill" onclick="modeOfPayDivHideShow(1)"> <label
 									for="creditBillyes">Yes</label>
@@ -1377,12 +1416,12 @@ label:before {
 									<div class="check">
 										<div class="inside"></div>
 									</div></li>
-							</ul>
+							</ul> -->
 						</div>
 					</div>
 					<div class="clr"></div>
 				</div>
-				<div id="modeOfPayDiv">
+				<div id="modeOfPayDiv1">
 
 					<div class="add_frm_one">
 						<div class="add_customer_one">Mode of Pay</div>
@@ -1494,11 +1533,11 @@ label:before {
 						<div class="clr"></div>
 					</div>
 
-					<div id="singleDiv">
+					<div id="singleDiv1">
 						<div class="add_frm_one">
 							<div class="add_customer_one">Mode</div>
 							<div class="add_input">
-								<select name="billType" id="billType" data-placeholder="Type"
+								<%-- <select name="billType" id="billType" data-placeholder="Type"
 									onchange="onPayTypeChange(this.value)" class="input_add "
 									style="text-align: left; font-size: 16px;">
 									<!-- <option value="1" style="text-align: left;" selected>Cash</option>
@@ -1511,7 +1550,7 @@ label:before {
 											style="text-align: left;">${payModeList.modeName}</option>
 									</c:forEach>
 
-								</select>
+								</select> --%>
 								<!-- <div class="dropdown popup_drop">
 									<div class="select">
 										<span>Payment Mode</span>
@@ -1531,16 +1570,16 @@ label:before {
 						<div class="add_frm_one" id="cardTypeDiv">
 							<div class="add_customer_one">Mode Type</div>
 							<div class="add_input">
-								<select name="cardType" id="cardType"
+								<!-- <select name="cardType" id="cardType"
 									data-placeholder="Card Type" class="input_add "
 									style="text-align: left; font-size: 16px;">
 									<option value="" style="text-align: left;">Select Card</option>
 
-									<!-- <option value="4" style="text-align: left;">Debit Card</option>
+									<option value="4" style="text-align: left;">Debit Card</option>
 									<option value="5" style="text-align: left;">Credit
-										Card</option> -->
+										Card</option>
 								</select>
-
+ -->
 							</div>
 							<div class="clr"></div>
 						</div>
@@ -2295,7 +2334,7 @@ $(document).ready(function(){
  							'<div class="new_cake_bx" >'+
  								'<a href="#" class="initialism  addcust1_open  " title="'+jsonStr[i].itemName+'">'+
  									'<div class="cake_picture">'+
- 										'<p>'+jsonStr[i].mrp+'</p>'+
+ 										'<p><i class="fa fa-inr" aria-hidden="true"></i>'+jsonStr[i].mrp+'</p>'+
  										'<img src="${pageContext.request.contextPath}/resources/newpos/images/chocolate_cake.jpg" alt="">'+
  										'<span>'+jsonStr[i].totalRegStock+'</span>'+
  									'</div>'+
@@ -2309,7 +2348,7 @@ $(document).ready(function(){
 						'<div class="new_cake_bx" >'+
 							'<a href="#" class="initialism  addcust1_open  " title="'+jsonStr[i].itemName+'">'+
 								'<div class="cake_picture">'+
-									'<p>'+jsonStr[i].mrp+'</p>'+
+									'<p><i class="fa fa-inr" aria-hidden="true"></i>'+jsonStr[i].mrp+'</p>'+
 									'<img src="${pageContext.request.contextPath}/resources/newpos/images/chocolate_cake.jpg" alt="">'+
 									'<span>'+jsonStr[i].totalRegStock+'</span>'+
 								'</div>'+
@@ -2432,7 +2471,9 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 			
 		}
 		
-		
+		 document.getElementById("discPer").value = 0;
+		 document.getElementById("discAmt").value = 0;
+
 		jQuery("#status").fadeOut();
 		 
 		var itemName =document.getElementById("itemNameHidden").value;
@@ -2544,6 +2585,8 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 						
 						 //alert(itemCnt);
 						document.getElementById("totalCnt").innerHTML=itemCnt;
+						document.getElementById("totalPayableAmt").innerHTML = total.toFixed(2);
+
 						//alert(total);
 						//document.getElementById("totalAmt").innerHTML=payableAmt.toFixed(2);
 						document.getElementById("totalAmt").innerHTML=total.toFixed(2);
@@ -2552,8 +2595,6 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 						//alert(finalAmt);
 						document.getElementById("finalAmount").innerHTML=total.toFixed(2);
 						document.getElementById("totalAmtPopup").innerHTML = total.toFixed(2); 
-						document.getElementById("totalPayableAmt").innerHTML = total.toFixed(2);
-						
 						
 						document.getElementById("tblQty").value="";
 						//jQuery("#preloader").delay(0).fadeOut("slow");
@@ -2891,6 +2932,8 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 						});
 						//alert(itemCnt);
 						document.getElementById("totalCnt").innerHTML=itemCnt;
+						document.getElementById("totalPayableAmt").innerHTML = total.toFixed(2);
+
 						//alert(total);
 						//document.getElementById("totalAmt").innerHTML=payableAmt.toFixed(2);
 						document.getElementById("totalAmt").innerHTML=total.toFixed(2);
@@ -2920,7 +2963,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		var amt=document.getElementById("pAmt").value;
 		//var pay=document.getElementById("pAmt").value;
 			//var pay=document.getElementById("finalAmount").value;
-			 var pay=document.getElementById("finalAmount").innerHTML;
+			 var pay=document.getElementById("totalPayableAmt").innerHTML;
 		 //alert("amt" +amt + "pay "+pay)
 		 if(amt==null || isNaN(amt) || amt==""){
 			 amt=0;
@@ -3014,7 +3057,9 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 	var discPer = parseFloat($('#discPer').val());
 	var discAmt = parseFloat($('#discAmt').val());
 	var totalAmtPopup;
-	var grandTot=parseFloat($('#totalAmtPopup').text());
+	//var grandTot=parseFloat($('#totalAmtPopup').text());
+		var grandTot=parseFloat($('#totalAmt').text());
+	
 	var advAmt = 0;
 	totalAmtPopup= parseFloat($('#totalAmtPopup').text())-advAmt;
 	if(flag==1){
@@ -3030,7 +3075,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 			//document.getElementById("finalAmount").innerHTML= totalAmt.toFixed(2);
 			
 		}else{
-		var totalAmt=totalAmtPopup-calDiscAmt;
+		var totalAmt=grandTot-calDiscAmt;
 		document.getElementById("discAmt").value = calDiscAmt.toFixed(2);
 		document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
 		document.getElementById("payAmt").value = totalAmt.toFixed(0);
@@ -3051,7 +3096,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 
 		}else{
 		var calDiscPer = parseFloat((discAmt/(grandTot/100)));
-		var totalAmt=totalAmtPopup-discAmt;
+		var totalAmt=grandTot-discAmt;
 		document.getElementById("discPer").value = calDiscPer.toFixed(2);;
 		document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
 		document.getElementById("payAmt").value = totalAmt.toFixed(0);
@@ -3611,7 +3656,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		return;
 	}
 	function modeOfPayDivHideShow(value) {
-
+	
 		if (value == 2) {
 			$("#modeOfPayDiv").show();
 		} else {
@@ -3997,6 +4042,26 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 							 
 							 if(flag==0){
 							 document.getElementById("overlay2").style.display = "block";
+							 
+							 
+							 var fd=new FormData();
+								fd.append('key',key);
+								fd.append('custId',custId);
+										fd.append('creditBill',creditBill);
+										fd.append('paymentMode',single);
+									fd.append('billType',billType);
+											fd.append('payType',payType);
+										fd.append('payTypeSplit',payTypeSplit);
+														fd.append('cashAmt',cashAmt);
+											fd.append('cardAmt',cardAmt);
+															fd.append('epayAmt',epayAmt);
+														fd.append('selectedText',selectedText);
+														fd.append('payAmt',payAmt);
+															fd.append('discPer',discPer);
+															fd.append('discAmt',discAmt);
+															fd.append('billAmtWtDisc',billAmtWtDisc);
+															fd.append('advAmt',advAmt);
+															fd.append('remark',remark);
 							   $
 								.post(
 										'${submitBill}',
@@ -4071,8 +4136,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 													 	//alert(defaultCustomer)
 													 	document.getElementById("custId").value = defaultCustomer;
 													 	cancelBill(0); 
-														$('.chosen-select').trigger(
-														'chosen:updated');
+														$('.chosen-select').trigger('chosen:updated');
 														document.getElementById("overlay2").style.display = "none";	 
 												 }else{
 													 if(printbilltype==1){

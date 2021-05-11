@@ -1599,7 +1599,11 @@ public class GrnGvnController {
 
 			modelAndView.addObject("frBillList", frBillList);
 			modelAndView.addObject("curDate", curDate);
-
+			
+			modelAndView.addObject("fd", curDate);
+			modelAndView.addObject("td", curDate);
+			modelAndView.addObject("p1", -1);
+			modelAndView.addObject("p2", -1);
 		} catch (Exception e) {
 
 			System.out.println("ex in get Bills For Fr gvn " + e.getMessage());
@@ -1615,9 +1619,46 @@ public class GrnGvnController {
 	public ModelAndView getGvnBillDetails(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView modelAndView = new ModelAndView("grngvn/showgvn");
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
 		// modelAndView.addObject("frBillList", frBillList);
-
+int p1=-1,p2=-1;
+	try {
+		p1=Integer.parseInt(request.getParameter("prodBill"));
+	}catch (Exception e) {
+		p1=-1;
+	}
+	try {
+		p2=Integer.parseInt(request.getParameter("billdatewise"));
+	}catch (Exception e) {
+		p2=-1;
+	}
+	
+	if(p1==1) {
+		if(p2==1) {
+			//last 15 days bill
+			modelAndView.addObject("frBillList", frBillList);
+		}else {
+			//bills bet fd td 
+			String fd=request.getParameter("fd");
+			String td=request.getParameter("td");
+			modelAndView.addObject("fd", fd);
+			modelAndView.addObject("td", td);
+		}
+	}else {
+		//cat id, fd td and item ids
+		String fd=request.getParameter("fd");
+		String td=request.getParameter("td");
+		Integer catId=Integer.parseInt(request.getParameter("catId"));
+		String[] itemArray=request.getParameterValues("items");
+		
+		modelAndView.addObject("fd", fd);
+		modelAndView.addObject("td", td);
+		modelAndView.addObject("selectedCatId", catId);
+	}
+	modelAndView.addObject("p1", p1);
+	modelAndView.addObject("p2", p2);
 		try {
 			int billNo=0;
 			try {
@@ -1646,14 +1687,22 @@ public class GrnGvnController {
 
 				System.err.println("Item String " +itemString);
 				
+				map.add("fd", DateConvertor.convertToYMD(fd));
+				map.add("td", DateConvertor.convertToYMD(td));
+				map.add("catId", catId);
+				map.add("itemString", itemString);
+				map.add("frId", frDetails.getFrId());
+				
+				grnGvnConfResponse = restTemplate.postForObject(Constant.URL + "getGvnItemConfigAsPerProd", map,
+						GetGrnGvnConfResponse.class);
+				
 			}
 
 			grnConfList = new ArrayList<>();
 
 			grnConfList = grnGvnConfResponse.getGetGrnItemConfigs();
-			System.out.println("gvn conf list " + grnConfList.toString());
 
-			modelAndView.addObject("frBillList", frBillList);
+			//modelAndView.addObject("frBillList", frBillList);
 			modelAndView.addObject("selctedBillNo", billNo);
 
 			objShowGvnList = new ArrayList<>();
@@ -1708,7 +1757,6 @@ public class GrnGvnController {
 			getAllRemarks = new ArrayList<>();
 			getAllRemarks = getAllRemarksList.getGetAllRemarks();
 
-			System.out.println("remark list " + getAllRemarks.toString());
 
 			modelAndView.addObject("remarkList", getAllRemarks);
 			modelAndView.addObject("gvnConfList", objShowGvnList);
