@@ -92,8 +92,11 @@ font-family: 'Source Sans Pro', sans-serif !important; margin: 2px 0 0 0;}
 .new_cake_bx{position: relative;}
 .cake_picture{position: relative;}
 .cake_picture img{width: 100%; height: 92px; object-fit: cover;}
-.cake_picture p{background: #FFF /* #ed1c24 */; color:#fd54a0 /* #FFF */; font-size: 10px; font-weight: 600; border-radius: 50%; position: absolute;
-    right: 6px; top: 6px; width: 20px; height: 20px; line-height: 20px; text-align: center;}
+.cake_picture p{background: #FFF /* #ed1c24 */; color:#fd54a0 /* #FFF */; font-size: 11px; font-weight: 600; border-radius: 50%; position: absolute;
+    right: 6px; top: 6px; width: 28px; height: 28px; line-height: 28px; text-align: center;}
+    
+.cake_picture p i{font-size: 9px; margin: 0 1px 0 0;}    
+    
 .cake_picture span{font-size: 11px; text-transform: uppercase; font-weight: 600; position: absolute; 
 left: 5px; bottom: 5px; color: #fd54a0; background: #FFF; border-radius: 50%; width: 18px; height: 18px; text-align: center; line-height: 18px;}
 .cake_name{padding:5px 4px 4px 4px /* 3px 4px 4px 4px */; font-size:11px /* 13px */; color:#333; text-transform: uppercase; text-overflow:ellipsis;vertical-align:middle;white-space:nowrap;overflow:hidden;}
@@ -139,7 +142,7 @@ table.pending_tab td {text-align: left; padding: 8px; border: 1px solid #ddd; fo
 table.pending_tab tr:nth-child(even){background-color: #f2f2f2}
 
 .total_table_one{/*height: 263px; overflow-y: scroll;*/ display: block;}
-.scrollbars{height:293px /**235px 283px*/; width: 100%;}
+.scrollbars{height:269px /* 293px */ /**235px 283px*/; width: 100%;}
 .total_table_one table {border-collapse: collapse; border-spacing: 0; width: 100%; border: 1px solid #fd54a0; background: #FFF;}
 .total_table_one th{text-transform: uppercase; font-size: 14px; color: #FFF; text-align: left; padding: 8px; border: 1px solid #d93f86;}
 .total_table_one td {text-align: left; padding: 8px; border: 1px solid #d93f86; font-size: 15px;}
@@ -430,6 +433,29 @@ input:checked + .slider:before {-webkit-transform: translateX(26px); -ms-transfo
 
 
 
+
+.one_row{ display: inline-block; width:100%; padding: 8px;}
+.one_row.bg_1{background: #f5f5f5;}
+.one_row.bg_2{background: #ffe5e6;}
+.one_row.bg_3{background: #fefcd5;}
+.one_row.bg_4{background: #fefcd5;}
+
+.total_one{float: left; width:33.333%; font-size: 14px; padding:0 10px 0 0;}
+.total_one span{margin:0 0 0 10px;}
+.one_row:hover{background-color: rgba(129,208,177,.3);}
+.total_l{float: left; width:50%;}
+.total_l span,.total_r span{padding: 0 0 0 15px;}
+.total_r{float: right; width:50%;}
+.radio_l{float: left; width:40%;}
+.gnd{float: left; margin: 0; font-size: 14px;}
+.remark_bx{float: left; width:60%;}
+.radio_row ul li.gend_rad{color: #000;}
+.total_one.remark{width:100%;}
+
+.add_customer_one.width_inc{width:50%;}
+.add_frm_one.single{padding: 0 15px;}
+.total_table_one.popup_tab{padding: 0 15px;}
+.add_customer_one.all_width{width:100%;}
 
 
 

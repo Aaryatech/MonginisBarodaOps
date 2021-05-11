@@ -991,16 +991,74 @@ label:before {
 
 					<!--total-table start here-->
 					<div class="total_tab">
-						<table width="100%">
-							<tr bgcolor="#ffe5e6">
-								<td>Total Items :</td>
+						<div class="one_row bg_1">
+							<div class="total_l">Total Items : <span id="totalCnt">${totalItemCount}</span></div> 
+							<div class="total_r" style="text-align:right; font-weight: bold;" >Total : 
+							<span id="totalAmt"><fmt:formatNumber type="number" groupingUsed="false" value="${totalTaxableAmt}"
+							maxFractionDigits="2" minFractionDigits="2" /></span></div>
+							<div class="clr"></div>
+						</div>
+						
+						<div class="one_row bg_2">
+							<div class="total_one"> Discount %  
+							<span>
+								<input type="text" name="discPer" id="discPer" step="0.01"
+								oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+								onchange="itemDiscPerCalculation(1)"
+								onkeyup="itemDiscPerCalculation(1)" class="form-control"
+								value="0" placeholder="Disc %"
+								style="text-align: center; width: 60px; border-radius: 20px;" />
+							</span></div>
+							<div class="total_one">Round Off   
+							<span>
+								<input type="text" name="" id="" class="form-control"
+								value="0" placeholder="Round Off"
+								style="text-align: center; width: 60px; border-radius: 20px;" />
+							</span></div>
+							<div class="total_one" style="font-weight: bold;">
+								Total Amount: 
+							<span id="totalAmt"><fmt:formatNumber type="number" groupingUsed="false" value="${totalTaxableAmt}"
+							maxFractionDigits="2" minFractionDigits="2" /></span>
+							</div>
+						</div>	
+						
+						<div class="one_row bg_3">
+							<div class="radio_l">							
+								<div class="radio_row popup_radio" style="margin:3px 0px 0 0;">
+									<div class="gnd">Gendor</div>
+											<ul>
+												<li class="gend_rad"><input type="radio" type="radio" name="gender"
+													id="yes" checked value="1"> <label
+													for="yes">Yes</label>
+													<div class="check"></div></li>
+												<li class="gend_rad"><input type="radio" id="no" name="gender"
+													value="2"> <label for="no">No </label>
+													<div class="check">
+														<div class="inside"></div>
+													</div></li>
+											</ul>
+										</div>
+							</div>
+							
+							<div class="remark_bx">
+								<div class="total_one remark"> Remark 
+							<span>
+								<input type="text" name="discPer" class="form-control" placeholder="Remark"
+								style="text-align: center; width: 70%; border-radius: 20px;" />
+							</span></div>
+							</div>
+						</div>
+					
+						<table>
+							 <%-- <tr bgcolor="#ffe5e6">
+								<td width="40%">Total Items :</td>
 								<td id="totalCnt">${totalItemCount}</td>
-								<td>Total :</td>
+								<td width="40%">Total :</td>
 								<td align="right" style="text-align: right; font-weight: bold;" id="totalAmt"><fmt:formatNumber
 										type="number" groupingUsed="false" value="${totalTaxableAmt}"
 										maxFractionDigits="2" minFractionDigits="2" /></td>
-							</tr>
-							<tr bgcolor="#ffe5e6" style="border-top: 1px solid #f4f4f4;">
+							</tr>  --%>
+							<%-- <tr bgcolor="#ffe5e6" style="border-top: 1px solid #f4f4f4;">
 								<!-- <td>Discount :</td>
 								<td>(0.00) 0.00</td> -->
 								<td>
@@ -1012,6 +1070,7 @@ label:before {
 							onkeyup="itemDiscPerCalculation(1)" class="form-control"
 							value="0" placeholder="Disc %"
 							style="text-align: center; width: 90px; border-radius: 20px;" />
+						
 						<label for="discAmtLabel"
 							style="font-weight: 700; padding-left: 5px;">&nbsp;Disc
 							Amt&nbsp;</label> <input type="text" name="discAmt" id="discAmt"
@@ -1022,24 +1081,23 @@ label:before {
 							style="text-align: center; width: 90px; border-radius: 20px;" />
 					 </td>
 								
-								<%-- <td style="display: none">Order Tax :</td>
+								<td style="display: none">Order Tax :</td>
 								<td  align="right" style="text-align: right;display: none;" id="totalTax"><fmt:formatNumber
 										type="number" groupingUsed="false" value="${totalTaxAmt}"
-										maxFractionDigits="2" minFractionDigits="2" /></td> --%>
+										maxFractionDigits="2" minFractionDigits="2" /></td>
 										
-										<input type="hidden"   id="totalTax"><%-- <fmt:formatNumber
+										<input type="hidden"   id="totalTax"><fmt:formatNumber
 										type="number"  groupingUsed="false" value="${totalTaxAmt}"
-										maxFractionDigits="2" minFractionDigits="2" /> --%>
-							</tr>
-							<tr bgcolor="#fefcd5" style="border-top: 1px solid #f4f4f4;">
+										maxFractionDigits="2" minFractionDigits="2" />
+							</tr> --%>
+							 <%-- <tr bgcolor="#fefcd5" style="border-top: 1px solid #f4f4f4;">
 								<td style="font-weight: 600;">Total Payable :</td>
-							<!-- 	<td>&nbsp;</td>
-								<td>&nbsp;</td> -->
+							
 								<td style="font-weight: 600; text-align: right;" align="right"
 									id="finalAmount"><fmt:formatNumber type="number"
 										groupingUsed="false" value="${totalAmt+totalTaxAmt}"
 										maxFractionDigits="2" minFractionDigits="2" /></td>
-							</tr>
+							</tr> --%> 
 						</table>
 					</div>
 
@@ -1079,7 +1137,7 @@ label:before {
 							<p>0.00</p>
 						</span>
 					</div> -->
-					<div class="text_count">
+					<!-- <div class="text_count">
 					<label style="font-weight: 700; padding-left: 5px;">Paid&nbsp;</label>
 								<input type="text" name="pAmt" id="pAmt"
 									oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
@@ -1093,7 +1151,7 @@ label:before {
 									class="form-control" value="" placeholder="Amount"
 									style="text-align: center; width: 90px; border-radius: 20px;" />
 
-</div>
+</div> -->
 				</div>
 				<div id="overlay2">
 					<div id="text2">
@@ -1650,48 +1708,7 @@ label:before {
 
 					</div>
 				</div>
-				<%-- <div class="calcy_2">
-																<div class="calculator_bx">
-																	<div class="cal_quan">
-																		<div class="qty_l">AMT</div>
-																		<div class="qty_m">
-																			<input type="text" class="qty_one">
-																		</div>
-																		<div class="qty_r">
-																			<button type="submit" class="go_btn"></button>
-																		</div>
-																		<div class="clr"></div>
-																	</div>
-
-																	<div class="calc_no">
-																		<div class="calc_no_l">
-																			<ul>
-																				<li><a href="#">7</a></li>
-																				<li><a href="#">8</a></li>
-																				<li><a href="#">9</a></li>
-																				<li><a href="#">4</a></li>
-																				<li><a href="#">5</a></li>
-																				<li><a href="#">6</a></li>
-																				<li><a href="#">1</a></li>
-																				<li><a href="#">2</a></li>
-																				<li><a href="#">3</a></li>
-																				<li><a href="#">0</a></li>
-																				<li><a href="#">.</a></li>
-																				<li><a href="#"><img
-																						src="${pageContext.request.contextPath}/resources/newpos/images/next_arrow_one.png"
-																						alt="next_arrow_one"> </a></li>
-																			</ul>
-																		</div>
-																		<div class="calc_no_r">
-																			<a href="#"><img
-																				src="${pageContext.request.contextPath}/resources/newpos/images/right_arrow_one.png"
-																				alt="right_arrow_one"></a>
-																		</div>
-																		<div class="clr"></div>
-																	</div>
-
-																</div>
-															</div> --%>
+				
 				<div class="clr"></div>
 			</div>
 
@@ -1715,19 +1732,20 @@ label:before {
 			<div class="clock"></div>
 		</div>
 
-		<div class="modal-content" style="width: 90%">
-			<span class="close" onclick="closeMyModal('custBills')">&times;</span>
+		<div class="modal-content">
+			<button class="close close_popup" onclick="closeMyModal('custBills')">
+					<i class="fa fa-times" aria-hidden="true"></i>
+				</button>
+				<h3 class="pop_head">Bill List</h3>
 
 			<form name="modalfrm" id="modalfrm" method="post">
-				<p>Bill List</p>
-				<div class="clr"></div>
-				<div>
+				
+				<div class="add_frm" style="padding:0 15px;">
 
 
 					<div id="dateCust" style="display: none;">
 						<div class="add_frm_one">
-							<div class="add_customer_one"
-								style="width: 40% ! important; float: left!importan!">
+							<div class="add_customer_one all_width">
 								Customer Name:<span style="color: red; width: 80%"
 									id="custName1"></span>
 							</div>
@@ -1736,13 +1754,8 @@ label:before {
 					</div>
 					<div id="dateDiv" style="display: none;">
 						<div class="add_frm_one">
-							<%-- <div class="add_customer_one"
-								style="width: 40% ! important; float: left!importan!; display: none;">
-								Date:<span style="color: red; width: 80%" id="date1">&nbsp;&nbsp;${date1}</span>
-							</div> --%>
 
-							<div class="add_customer_one"
-								style="width: 40% ! important; float: left!importan!">
+							<div class="add_customer_one all_width">
 								Date:<span style="color: red; width: 80%">&nbsp;&nbsp;<input
 									autocomplete="off" placeholder="Date" name="dt" id="dt"
 									type="date" class="input_add" value="${date2}"
@@ -1763,7 +1776,7 @@ label:before {
 
 					<div class="add_frm_one">
 
-						<div class="add_input">
+						<div><!-- class="add_input" -->
 							<div class="radio_row popup_radio">
 								<ul>
 									<li><input type="radio" id="single12" name="modePay1"
@@ -1800,7 +1813,7 @@ label:before {
 					</div>
 				</div>
 
-				<div class="total_table_one" id="printDivid">
+				<div class="total_table_one popup_tab"  id="printDivid">
 					<div class="scrollbars" id="scrollbarsmodaldiv">
 						<table id="custTable">
 
@@ -1842,25 +1855,25 @@ label:before {
 			<div class="clock"></div>
 		</div>
 
-		<div class="modal-content" style="width: 75%">
-			<span class="close" onclick="closeMyModal('myModalForCredit')">&times;</span>
+		<div class="modal-content" ><!-- modal-content style="width: 75%" -->
+			
+				<button class="close close_popup" onclick="closeMyModal('myModalForCredit')">
+					<i class="fa fa-times" aria-hidden="true"></i>
+				</button>
+				<h3 class="pop_head">Customer Credit Bills</h3>
+			
 
 			<form name="modalfrm1" id="modalfrm1" method="post">
-				<p>Customer Credit Bills</p>
-				<div class="clr"></div>
 				<div>
-
-
-					<div class="add_frm_one">
-						<div class="add_customer_one"
-							style="width: 40% ! important; float: left!importan!">
+					<div class="add_frm_one single">
+						<div class="add_customer_one width_inc">
 							Customer Name:<span
 								style="color: red; width: 80%; padding-left: 7px;" id="credCust"
 								name="credCust"> NA</span>
 						</div>
 						<input type="hidden" id="credCust1" name="credCust1"> <input
 							type="hidden" id="creditCustId" name="creditCustId">
-						<div class="add_customer_one">
+						<div class="add_customer_one width_inc">
 							Pending Amount:<span
 								style="color: red; width: 20%; padding-left: 7px;" id="penAmt">
 								0.0</span>
@@ -1869,21 +1882,21 @@ label:before {
 					</div>
 
 				</div>
-				<div class="total_table_one" id="printDivid">
+				<div class="total_table_one popup_tab" id="printDivid">
 					<div class="scrollbars" id="scrollbarsmodaldiv">
 						<table id="custCreditTable">
 
 							<thead>
 								<tr>
-									<th style="text-align: center;" width="2%"></th>
-									<th style="text-align: center;" width="2%">Sr</th>
+									<th style="text-align: center;"></th>
+									<th style="text-align: center;">Sr</th>
 									<th style="text-align: center;">Bill No</th>
 									<th style="text-align: center;">Bill Date</th>
-									<th style="text-align: center;" width="10%">Bill Amt</th>
-									<th style="text-align: center;" width="10%">Disc Amt</th>
-									<th style="text-align: center;" width="13%">Paid Amt</th>
-									<th style="text-align: center;" width="13%">Pending Amt</th>
-									<th style="text-align: center;" width="2%">Paying Amt</th>
+									<th style="text-align: center;">Bill Amt</th>
+									<th style="text-align: center;">Disc Amt</th>
+									<th style="text-align: center;">Paid Amt</th>
+									<th style="text-align: center;">Pending Amt</th>
+									<th style="text-align: center;">Paying Amt</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -1893,9 +1906,9 @@ label:before {
 					</div>
 				</div>
 
-				<div class="frm_row_one">
+				<div class="add_frm">
 
-					<div class="four_one three" style="width: 33%">
+					<div class="add_frm_one">
 						<div class="add_customer_one">Type</div>
 						<div class="add_input">
 							<select name="modType1" id="modType1" data-placeholder="Type"
@@ -1914,7 +1927,7 @@ label:before {
 						</div>
 					</div>
 
-					<div class="four_one three" style="width: 33%">
+					<div class="add_frm_one">
 						<div class="add_customer_one">Card Type</div>
 						<div class="add_input">
 							<select name="cardType1" id="cardType1"
@@ -1930,7 +1943,7 @@ label:before {
 						<div class="clr"></div>
 					</div>
 
-					<div class="four_one three" style="width: 33%">
+					
 
 						<div class="add_frm_one" id="epayTypeDiv1"
 							style="display: none; margin: 0px;">
@@ -1949,10 +1962,10 @@ label:before {
 							</div>
 							<div class="clr"></div>
 						</div>
-					</div>
+					
 
-					<div class="four_one three" style="width: 33%">
-						<div class="add_frm_one" style="margin: 0px;">
+					<div class="add_frm_one" >
+						<div class="" style="margin: 0px;">
 							<div class="add_customer_one">Received Amt</div>
 							<div class="add_input">
 								<input placeholder="Received Amt" name="receivedAmt"
@@ -1966,8 +1979,20 @@ label:before {
 					</div>
 				</div>
 
-
 				<div class="pop_btns">
+					<div class="close_l">
+						<button class="addcust_close close_btn" onclick="closeMyModal('myModalForCredit')">Close</button>
+					</div>
+					<div class="close_r">
+						<button type="button" class="buttonsaveorderpos" id="sbtbtn"
+							disabled="disabled">Submit</button>
+							
+						
+					</div>
+					<div class="clr"></div>
+				</div>
+							
+				<!-- <div class="pop_btns">
 					<div class="clr"></div>
 					<div class="close_r">
 
@@ -1977,7 +2002,7 @@ label:before {
 
 
 
-				</div>
+				</div> -->
 			</form>
 		</div>
 
@@ -2157,7 +2182,7 @@ $(document).ready(function(){
 		 							'<div class="new_cake_bx" >'+
 		 								'<a href="#" class="initialism  addcust1_open  " title="'+jsonStr[i].itemName+'">'+
 		 									'<div class="cake_picture">'+
-		 										'<p>'+jsonStr[i].mrp+'</p>'+
+		 										'<p><i class="fa fa-inr" aria-hidden="true"></i>'+jsonStr[i].mrp+'</p>'+
 		 										'<img src="${pageContext.request.contextPath}/resources/newpos/images/chocolate_cake.jpg" alt="">'+
 		 										'<span>'+jsonStr[i].totalRegStock+'</span>'+
 		 									'</div>'+

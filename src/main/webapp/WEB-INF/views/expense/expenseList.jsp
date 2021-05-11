@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
+<link rel="icon" href="${pageContext.request.contextPath}/resources/images/MongiFavicon.png" type="image/x-icon">
+
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/tableSearch.css">
 <style>
@@ -40,8 +42,7 @@ table, th, td {
 <body onload="getData()">
 
 	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-	<link rel="stylesheet"
-		href="${pageContext.request.contextPath}/resources/css/loader.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/loader.css">
 	<!--datepicker-->
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
@@ -148,7 +149,7 @@ table, th, td {
 
 							</div>
 
-							<div class="col-md-1"></div>
+							
 							<div class="col-md-1">
 								<div class="col1title">To Date</div>
 							</div>
@@ -158,7 +159,7 @@ table, th, td {
 									type="text">
 
 							</div>
-							<div class="col-md-1"></div>
+							
 							<div class="col-md-1">
 								<div class="col1title">Type</div>
 							</div>
@@ -171,17 +172,23 @@ table, th, td {
 
 								</select>
 							</div>
+							
+							<div class="col-md-1">
+								<div align="center">
+								<input class="btn additem_btn" value="Submit" type="submit" id="btnsub" style="margin: 0;">
+								</div>
+							</div>
 
 
 						</div>
 
-						<div class="row">
+						<!-- <div class="row">
 							<div align="center">
 								<input class="btn additem_btn" value="Submit" type="submit"
 									id="btnsub" style="margin: 30px 0 0 0;">
 							</div>
 
-						</div>
+						</div> -->
 
 
 

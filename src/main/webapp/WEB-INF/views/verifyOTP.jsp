@@ -37,130 +37,86 @@
 
 
 </head>
-<body>
-	<c:url value="reGenOPSOtp" var="reGenOPSOtp"></c:url>
-	<!--wrapper-start-->
+<body style="background: url(resources/images/lgn_bg.jpg) no-repeat left top;">
 	<div class="wrapper">
-
-
-
-		<!--topHeader-->
-		<div class="fullGrid center logoBarbg slideposi">
-			<div class="wrapperIn positionR">
-				<div class="logoBarLeft">
-					<a href=""><img
-						src="${pageContext.request.contextPath}/resources/images/monginis1.png"
-						alt="monginis"></a>
-				</div>
-				<div class="logoBarRight">
-					<div id="menuzord" class="menuzord red menuzord-responsive">
-						<ul
-							class="menuzord-menu menuzord-right menuzord-indented scrollable">
-							<%--  <li><a href="#"><div class="usericon">John doe</div> <div class="userimg"><img src="${pageContext.request.contextPath}/resources/images/userimg.jpg"></div> </a>
-                	<ul class="dropdown">
-                        <li><a href="#">My Account</a></li>
-						<li><a href="#">Edit Profile</a></li>
-						<li><a href="#">Setting</a></li>
-						<li><a href="#">Log out</a></li>
-					</ul>
-                </li> --%>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!--topHeader-->
+	
 
 		<!--rightContainer-->
 		<div class="fullGrid center">
 			<!--fullGrid-->
 			<div class="wrapperIn2">
-
-
-				<!-- <form method="POST" action="uploadFile" enctype="multipart/form-data">
-    File to upload: <input type="file" name="file" >
-    <br />
-    Name: <input type="text" name="name" >
-    <br />
-    <br />
-    <input type="submit" value="Upload">
-</form> -->
-
-
 				<c:if test="${not empty message}">
 					<!-- here would be a message with a result of processing -->
 					<div class="messages messagesErr">${message}</div>
 
 				</c:if>
+				
 
-
-				<!-- <form id="form-login" action="loginProcess" method="post"> -->
+				<c:url value="reGenOPSOtp" var="reGenOPSOtp"></c:url>
+				
 				<div class="loginInner">
-					<h2>
-						<span>OTP Verification</span>
+				
+					<div class="login_l light_height"><a href=""><img
+						src="${pageContext.request.contextPath}/resources/images/monginis1.png"
+						alt="monginis"></a>
+						<p class="login_txt">Delivering with Professional Excellence To be preferred Chartered Accountant, Advisor or Consultant to Business across India; and provide utility oriented legal compliance. </p>	
+					</div>
+						
+					<div class="login_r frget_pass">
+				
+					<h2 class="login_head_one">
+						OTP Verification
 					</h2>
 					<div class="loginBox">
-						<div class="loginUser">
-							<img
-								src="${pageContext.request.contextPath}/resources/images/loginuser.png"
-								align="img">
-						</div>
 						<form action="OpsOTPVerification" class="form-horizontal"
 							id="validation-form" method="post">
 
-
 							<div class="loginfildset">
-								<input class="texboxlogin" placeholder="" name="otp" id="otp"
+								<input class="texboxlogin" placeholder="OTP Verification" name="otp" id="otp"
 									type="text" data-rule-required="true" required="required">
-							</div>
+							
 
 							<input class="texboxlogin" name="username" id="username"
 								type="hidden" value="${frCode}" readonly="readonly"
 								data-rule-required="true">
+							</div>
 
 							<div class="loginfildset">
-								<input name="" class="buttonlogin" value="Verify OTP"
-									type="submit">
+								<div class="left_button">
+									<input name="" class="buttonlogin one" value="Verify OTP" type="submit">
+								</div>	
+								<div class="right_button">	
+									<input type="button" class="buttonlogin one" onclick="reGenOPSOtp()" value="Re Generate OTP" />	
+								</div>	
 							</div>
 							<div class="loginfildset">
-								<input type="button" class="buttonlogin" onclick="reGenOPSOtp()"
-									value="Re Generate OTP" />
-								<%-- <a href="${pageContext.request.contextPath}/forgetPwd"><i class="fa fa-lock"></i>Re Generate OTP</a> --%>
-							</div>
-							<div class="loginfildset">
-								<div class="">
-									<a href="${pageContext.request.contextPath}/"><i
-										class="fa fa-lock"></i>Back To Login Page</a>
+								<div class="logintexboxleft">
+									<a href="${pageContext.request.contextPath}/">
+									<i class="fa fa-lock"></i> Back To Login Page</a>
 								</div>
 
 							</div>
 						</form>
 					</div>
-
-					<%-- <div class="loginBox">
-		<div class="loginUser"><img src="${pageContext.request.contextPath}/resources/images/loginuser.png" align="img"></div>
-		
-		<h3> Forgot your Password</h3>
-		
-		<div class="loginfildset">
-		<div class="loginfildset"><input class="texboxlogin" placeholder="Enter Password" name="" type="text"></div>
-		<div class="loginfildset"><input name="" class="buttonlogin" value="SUBMIT" type="button"></div>
-		</div>
-	
-	</div> --%>
-				</div>
+	</div>	
+	<div class="clr"></div>
+</div>
 				</form>
-				<!-- <div class="messages messagesErr">err message</div>
-        <div class="messages messagesInfo">info message</div>
-        <div class="messages messagesSuccess">success message </div>
- -->
 			</div>
 			<!--fullGrid-->
 		</div>
 		<!--rightContainer-->
 
 	</div>
-	<!--wrapper-end-->
+	
+
+
+
+
+
+
+	
+	
 
 	<!--easyTabs-->
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>

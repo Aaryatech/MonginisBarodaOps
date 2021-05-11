@@ -137,17 +137,17 @@ th, td {
 		
 		
 		<div class="row">
-			<div class="four_txt">
+			<div class="four_txt one">
 		    <h2 class=" pull-left flt_one">Invoice No:-  <span style="color:#ec268f;"> ${invoiceNo}</span></h2>
 		</div>
 	
-		<div class="four_txt" >
+		<div class="four_txt one" >
 		    <h2 class="pull-left flt_one">Bill Date:- <span style="color:#ec268f;"> ${billDate}</span></h2>
 		</div>
-			<div class="four_txt" >
+			<div class="four_txt one" >
 		    <h2 class="pull-left flt_one">Grand Total:- <span style="color:#ec268f;"> ${grandTotal}</span></h2>
 		</div>
-		<div class="four_txt" >
+		<div class="four_txt one" >
 			  <h2 class="pull-left flt_one">Bill Status:-<input type="hidden" value="${billStatus}" name="billstatus" id="billstatus"> <c:choose>
 																	<c:when test="${billStatus==1}">
 																		<span style="color:#ec268f;"><label  id="status1">Pending</label></span>
@@ -176,10 +176,10 @@ th, td {
 		</div>
 		
 		 
-		 			<div class="four_txt">
-								<input name="" class="btn additem_btn" value="Received" style="margin: 0; border:none;"
+		 			<div class="four_txt two">
+								<input name="" class="btn additem_btn" value="Received" style="margin: 0; border:none; font-size:14px;"
 									type="button" id="updateStatus" onclick="updateStatus(${billNo})">
-									<input name="" class="btn additem_btn" value="Received & Sp Bill" style="margin: 0; border:none;"
+									<input name="" class="btn additem_btn" value="Received & Sp Bill" style="margin: 0; border:none; font-size:14px;"
 									type="button" id="updateStatus1" onclick="updateStatusAndSpBill(${billNo})">
 					</div>				
 							</div>
@@ -279,6 +279,8 @@ th, td {
 						</table>
 					</div></div>
 				</div>
+				
+				<div style="clear:both"></div>
 				
 				<div align="center">
 								<a href="${pageContext.request.contextPath}/showBill"><input name="" class="btn additem_btn" value="Go Back"

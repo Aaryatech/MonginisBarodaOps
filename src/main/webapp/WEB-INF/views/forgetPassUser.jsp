@@ -37,60 +37,19 @@
 
 
 </head>
-<body style=" background: url(resources/images/lgn_bg.jpg) no-repeat left top;">
+<body style="background: url(resources/images/lgn_bg.jpg) no-repeat left top;">
 
 	<!--wrapper-start-->
 	<div class="wrapper">
 	
 
-
-		<!--topHeader-->
-		<%-- <div class="fullGrid center logoBarbg slideposi">
-			<div class="wrapperIn positionR">
-				<div class="logoBarLeft">
-					<a href=""><img
-						src="${pageContext.request.contextPath}/resources/images/monginis1.png"
-						alt="monginis"></a>
-				</div>
-				<div class="logoBarRight">
-					<div id="menuzord" class="menuzord red menuzord-responsive">
-						<ul
-							class="menuzord-menu menuzord-right menuzord-indented scrollable">
-							 <li><a href="#"><div class="usericon">John doe</div> <div class="userimg"><img src="${pageContext.request.contextPath}/resources/images/userimg.jpg"></div> </a>
-                	<ul class="dropdown">
-                        <li><a href="#">My Account</a></li>
-						<li><a href="#">Edit Profile</a></li>
-						<li><a href="#">Setting</a></li>
-						<li><a href="#">Log out</a></li>
-					</ul>
-                </li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div> --%>
-		<!--topHeader-->
-
 		<!--rightContainer-->
 		<div class="fullGrid center">
 			<!--fullGrid-->
 			<div class="wrapperIn2">
-
-
-				<!-- <form method="POST" action="uploadFile" enctype="multipart/form-data">
-    File to upload: <input type="file" name="file" >
-    <br />
-    Name: <input type="text" name="name" >
-    <br />
-    <br />
-    <input type="submit" value="Upload">
-</form> -->
-
-
 				<c:if test="${not empty message}">
 					<!-- here would be a message with a result of processing -->
 					<div class="messages">${message}</div><!-- messagesErr -->
-
 				</c:if>
 
 

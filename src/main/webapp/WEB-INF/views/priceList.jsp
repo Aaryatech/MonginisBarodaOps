@@ -304,11 +304,14 @@ jQuery(document).ready(function(){
 				
 					<div class="title_row">
 					<div class="title_l high">
-						<div class="order-left">
-							<h2 class="pageTitle" style="margin:0; padding: 0;"><i class="fa fa-file-text-o"></i> Price List</h2>
-						</div>
+					
+						
+							<h2 class="pageTitle" ><i class="fa fa-file-text-o"></i> Price List</h2>
+						
 					</div>
-					<div class="title_r high">
+					
+					
+					<%-- <div class="title_r high">
 						<input type="hidden" name="mod_ser" id="mod_ser"
 							value="search_result">
 						<div class="frm_l_one">
@@ -325,49 +328,51 @@ jQuery(document).ready(function(){
 						</div>
 						</div>
 					
-					</div>
+					</div> --%>
 					<div class="clr"></div>
+					</div>
+					
 					<div class="colOuter" id="regCakeDiv">
 						<!-- copy div kalpesh -->
 						
 						
-						
-						
-
-						<div class="frm_l_one">
-						<div class="frm_l high">Select Category </div>
-						<div class="frm_r_one high">
-							<select name="orderType" id="orderType" 
+						<div class="row">
+							<input type="hidden" name="mod_ser" id="mod_ser"
+							value="search_result">
+							<div class="col-md-1 flav_txt"> Type</div>
+							<div class="col-md-2">
+								<select name="typeOfOrder" id="typeOfOrder" 
+									required onchange="priceListType(this.value)">
+									<option selected>Select Type</option>
+									<option value="1"><c:out value="Regular"></c:out></option>
+									<option value="2"><c:out value="Sp Cake"></c:out></option>
+								</select>
+							</div>
+							
+							<div class="col-md-1 flav_txt"> Category</div>
+							<div class="col-md-2">
+								<select name="orderType" id="orderType" 
 									required ">
 									<option selected>Select Category</option>
-
-																<c:forEach items="${mCategoryList}" var="mCategoryList">
-
-
-																	<option value="${mCategoryList.catId}"><c:out
-																			value="${mCategoryList.catName}"></c:out></option>
-																</c:forEach>
-
+									<c:forEach items="${mCategoryList}" var="mCategoryList">
+										<option value="${mCategoryList.catId}"><c:out value="${mCategoryList.catName}"></c:out></option>
+									</c:forEach>
 								</select>
-						</div>
-						</div>
-						
-						<div class="frm_l_one">
-						<div class="frm_l high">Sub-Category </div>
-						<div class="frm_r_one high">
-							<select multiple="multiple" name="item_grp2" id="item_grp2"
+							</div>
+							
+							<div class="col-md-1"> Sub-Category</div>
+							<div class="col-md-4">
+								<select multiple="multiple" name="item_grp2" id="item_grp2"
 									data-placeholder="Choose Subcategory" class="chosen-select"
 									style="text-align: left;" tabindex="6" required>
-									
-
-								
 								</select>
+							</div>
+							
+							<div class="col-md-1"> 
+								<input type="hidden" id="Mrp" name="Mrp" value="1">
+								<input name="" class="btn additem_btn" value="Search" style="margin: 0;" type="submit" onclick="searchCall()">
+							</div>
 						</div>
-						</div>
-						
-						
-
-
 
 						<!-- <div class="col-sm-2">
 							<label>OR GRN Sr No</label>
@@ -375,28 +380,47 @@ jQuery(document).ready(function(){
 						 name="headerCheckBox" id="headerCheckBox"
 							/>
 						</div> -->
-						<div class="frm_single">
-							<input type="hidden" id="Mrp" name="Mrp" value="1">
-						</div>
-						
-						<div class="frm_single">
-						<input name="" class="btn additem_btn" value="Search" style="margin: 0;"
-									type="submit" onclick="searchCall()">
-								
-							
-
-						</div>
-
 					</div>
 					
 					<div class="colOuter" id="spCakeDiv" style="display: none;">
 						<!-- copy div kalpesh -->
 						
-						
+						<div class="row">
+							<div class="col-md-1 flav_txt">Flavour</div>
+							<div class="col-md-3">
+								<select multiple="multiple" name="flavourId" id="flavourId"
+									data-placeholder="Choose Sp Flavour" class="chosen-select"
+									style="text-align: left;" tabindex="6" onchange="selectFlav(this.value)" required>
+									<option value="-1" >Select All</option>
+									<c:forEach items="${flavourList}" var="flavour">
+										<option value="${flavour.spfId}"><c:out value="${flavour.spfName}"></c:out></option>
+									</c:forEach>
+								</select>
+							</div>
+							
+							<div class="col-md-1 flav_txt">Cake</div>
+							<div class="col-md-3">
+								<select multiple="multiple" name="cakeId" id="cakeId"
+									data-placeholder="Choose Sp Cake" class="chosen-select"
+									style="text-align: left;" tabindex="6" onchange="selectCake(this.value)"  required>
+									<option value="-1" >Select All</option>
+									<c:forEach items="${specialCakeList}" var="spCake">
+										<option value="${spCake.spId}"><c:out value="${spCake.spName}"></c:out></option>
+									</c:forEach>
+								</select>
+							</div>
+							
+							<div class="col-md-1">
+								<input type="hidden" id="Mrp" name="Mrp" value="1">
+								<input name="" class="btn additem_btn" value="Search" style="margin: 0;" type="submit" onclick="searchSpCall()">
+							</div>
+						</div>
 						
 						
 
-						<div class="frm_l_one">
+						<%-- <div class="frm_l_one">
+						
+						
 						
 						<div class="frm_l high">Select flavour </div>
 						<div class="frm_r_one high">
@@ -416,10 +440,10 @@ jQuery(document).ready(function(){
 								
 								</select>
 							
-						</div> OR
-						</div>
+						</div>  OR 
+						</div> --%>
 						
-						<div class="frm_l_one">
+						<%-- <div class="frm_l_one">
 						<div class="frm_l high">Select Cake</div>
 						<div class="frm_r_one high">
 							<select multiple="multiple" name="cakeId" id="cakeId"
@@ -437,7 +461,7 @@ jQuery(document).ready(function(){
 								
 								</select>
 						</div>
-						</div>
+						</div> --%>
 						
 						
 
@@ -449,7 +473,7 @@ jQuery(document).ready(function(){
 						 name="headerCheckBox" id="headerCheckBox"
 							/>
 						</div> -->
-						<div class="frm_single">
+						<!-- <div class="frm_single">
 							<input type="hidden" id="Mrp" name="Mrp" value="1">
 						</div>
 						
@@ -459,12 +483,12 @@ jQuery(document).ready(function(){
 								
 							
 
-						</div>
+						</div> -->
 
 					</div>
 					
 					
-				</div>
+				
 					
 				
 				

@@ -56,7 +56,7 @@
 		<div class="">
 	<br>
 		<div class="col1" style="width: 10%;">
-		   Search By: 
+		   Search By : 
 		</div>
 		<c:set var="sts1" value=""/><c:set var="sts2" value=""/>
 	   <div class="col1" style="width: 15.333333%">
