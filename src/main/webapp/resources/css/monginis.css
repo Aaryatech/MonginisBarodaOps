@@ -773,6 +773,16 @@ background-position: right .7em top 50%, 0 0;}
 .flav_txt{margin: 7px 0 0 0;}
 
 
+/*responsive trable*/
+.tableFixHead {overflow-y: auto; max-height: 65vh /* 500px */; display: inline-block; width: 100%; border-bottom: 1px solid #ccc;}
+.tableFixHead thead th {position: sticky; top: -1px; z-index: 99;}
+.tableFixHead table {border-collapse: collapse; width: 100%;}
+.tableFixHead th,.tableFixHead td {padding: 4px 16px; border: 1px solid #ccc; background: #FFF;}
+.tableFixHead thead tr:nth-child(even) {background-color: #f6f6f6;}
+.tableFixHead th, .tableFixHead td a{color: #333;}
+.tableFixHead th {background: #f3b5db !important /* #eee */; color:#FFF; font-size: 15px; font-weight: 600;}
+.tableFixHead thead th.bgpink{padding: 4px 16px;}
+
 
 
 /*--css-divices--*/

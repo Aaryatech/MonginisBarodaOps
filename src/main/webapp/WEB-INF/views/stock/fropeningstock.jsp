@@ -41,13 +41,43 @@
 
 			<!--rightSidebar-->
 			<div class="sidebarright">
-				<div class="order-left">
+				<div class="row">
+					<div class="col-md-7">
+						<h2 class="pageTitle">Opening Stock Details</h2>
+					<c:if test="${not empty errorMsg}">
+						<h2 class="pageTitle">${errorMsg}</h2>
+					</c:if>
+					</div>
+					<div class="col-md-5">
+						<label class="col-md-3 control-label menu_label" style="margin:7px 0 0 0;">Category</label>
+									<div class=" col-md-7 controls menu_select">										
+										<select data-placeholder="Choose Category"
+											class="form-control chosen" tabindex="6" id="selectMenu"
+											name="selectMenu">
+											<c:forEach items="${catList}" var="catIdName"
+												varStatus="count">
+												<option value="${catIdName.catId}"><c:out
+														value="${catIdName.catName}" /></option>
+											</c:forEach>
+										</select>
+									</div>
+									<div class="col-md-2">
+										<button class="btn btn-primary" onclick="getItems()">Search</button>
+
+									</div>
+					</div>
+				</div>
+			
+			
+				<%-- <div class="order-left">
 					<h2 class="pageTitle">Opening Stock Details</h2>
 					<c:if test="${not empty errorMsg}">
-<h2 class="pageTitle">${errorMsg}</h2>
-</c:if>
+						<h2 class="pageTitle">${errorMsg}</h2>
+					</c:if>
 					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
-				</div>
+				</div> --%>
+				
+				
 
 
 				<div id="main-content">
@@ -63,26 +93,7 @@
 							<div class="row">
 
 
-								<div class="form-group col-md-9">
-								 <label class=" col-md-2 control-label menu_label">Select
-										Category</label>
-									<div class=" col-md-3 controls menu_select">
-
-										<select data-placeholder="Choose Category"
-											class="form-control chosen" tabindex="6" id="selectMenu"
-											name="selectMenu">
-											<c:forEach items="${catList}" var="catIdName"
-												varStatus="count">
-												<option value="${catIdName.catId}"><c:out
-														value="${catIdName.catName}" /></option>
-											</c:forEach>
-										</select>
-									</div>
-									<div class="col-md-1">
-										<button class="btn btn-primary" onclick="getItems()">Search</button>
-
-									</div>
-								</div>
+								
 
 
 
@@ -116,7 +127,26 @@
 							method="post">
 							<div class="box-content">
 								<div class="row">
-									<div class="col-md-12 table-responsive">
+									<div class="col-md-12">
+										<div class="tableFixHead">
+	<table id="table_grid">         
+	<thead style="background-color: #f3b5db;">
+		<tr class="bgpink">
+			<th style="width:80px; text-align: center;">Sr.No.</th>
+			<th style="text-align: center;">Item Id</th>
+			<th style="text-align: left;">Item Name</th>
+			<th style="text-align: center; width:160px;">Opening Quantity</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+    </tbody>
+	</table>
+</div>
+									</div>
+									
+									
+									<!-- <div class="col-md-12 table-responsive">
 										<table class="table table-bordered table-striped fill-head "
 											style="width: 50%" id="table_grid" align="left">
 											<thead>
@@ -132,16 +162,22 @@
 
 											</tbody>
 										</table>
-									</div>
+									</div> -->
 								</div>
 
-								<div class="row">
+								<div style="text-align: center;">
+											
+											<button id="submitStock" style="display: none; margin:15px 0;" class="btn btn-primary"
+											onclick="submitForm()">Submit</button><!-- btn additem_btn -->
+										</div>
+										
+										
+								<!-- <div class="row">
 									<div class="col-md-offset-6 col-md-6">
-										<button id="submitStock"   style="display: none;"
-											class="btn btn-info pull-center" style="margin-right: 5px;"
+										<button id="submitStock"   style="display: none;" class="btn btn-info pull-center" 
 											onclick="submitForm()">Submit</button>
 									</div>
-								</div>
+								</div> -->
 							</div>
 						</form>
 					</div>
@@ -194,14 +230,14 @@
 
 													var tr = "<tr>";
 
-													var index = "<td>&nbsp;&nbsp;&nbsp;"
+													var index = "<td align=center>"
 															+ index + "</td>";
 
-													var itemCode = "<td>&nbsp;&nbsp;&nbsp;"
+													var itemCode = "<td align=center>"
 															+ item.itemCode
 															+ "</td>";
 
-													var itemName = "<td>&nbsp;&nbsp;&nbsp;"
+													var itemName = "<td align=left>"
 															+ item.itemName
 															+ "</td>";
 
