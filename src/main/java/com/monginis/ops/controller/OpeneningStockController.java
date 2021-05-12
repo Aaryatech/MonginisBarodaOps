@@ -40,13 +40,13 @@ public class OpeneningStockController {
 		RestTemplate restTemplate = new RestTemplate();
 		ModelAndView model = new ModelAndView("stock/fropeningstock");
 
-/*map = new LinkedMultiValueMap<String, Object>();
+map = new LinkedMultiValueMap<String, Object>();
 map.add("settingKey", "ALLOW_FR_OP_STOCK");
 map.add("delStatus", 0);
 NewSetting isFrAllowToOPStock=restTemplate.postForObject(Constant.URL + "getNewSettingByKey", map,
 		NewSetting.class);
 try {
-if(isFrAllowToOPStock.getSettingValue1().equalsIgnoreCase("1")) {*/
+if(isFrAllowToOPStock.getSettingValue1().equalsIgnoreCase("1")) {
 		
 		CategoryListResponse itemsWithCategoryResponseList = restTemplate.getForObject(Constant.URL + "showAllCategory",
 				CategoryListResponse.class);
@@ -75,10 +75,10 @@ if(isFrAllowToOPStock.getSettingValue1().equalsIgnoreCase("1")) {*/
 
 		model.addObject("catList", itemsWithCategoriesList);
 
-		/*
-		 * }else { model.addObject("errorMsg", "Access Denied"); } }catch (Exception e)
-		 * { model.addObject("errorMsg", "Access Denied"); }
-		 */
+		
+		  }else { model.addObject("errorMsg", "Access Denied"); } }catch (Exception e)
+		  { model.addObject("errorMsg", "Access Denied"); }
+		 
 
 		
 		// ---------------------------------4-jan-2019------------------------------------
