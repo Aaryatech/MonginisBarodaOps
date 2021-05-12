@@ -727,7 +727,7 @@ table, th, td {
 						function(data) {
 							$('#loader').hide();
 							
-							alert(JSON.stringify(data));
+							//alert(JSON.stringify(data));
 
 							document.getElementById("expExcel").disabled = false;
 							document.getElementById("PDFButton").disabled = false;

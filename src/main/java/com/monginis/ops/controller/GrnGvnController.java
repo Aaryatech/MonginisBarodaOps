@@ -63,6 +63,7 @@ import com.monginis.ops.model.GetCurrentStockDetails;
 import com.monginis.ops.model.Item;
 import com.monginis.ops.model.MCategory;
 import com.monginis.ops.model.MCategoryList;
+import com.monginis.ops.model.PostFrItemStockDetail;
 import com.monginis.ops.model.PostFrItemStockHeader;
 import com.monginis.ops.model.SellBillDetailList;
 import com.monginis.ops.model.creditnote.CreditNoteHeaderPrint;
@@ -1677,6 +1678,14 @@ int p1=-1,p2=-1;
 
 			grnGvnConfResponse = restTemplate.postForObject(Constant.URL + "getGvnItemConfig", map,
 					GetGrnGvnConfResponse.class);
+			
+			modelAndView.addObject("selectedCatId", 0);
+			
+			CategoryListResponse itemsWithCategoryResponseList = restTemplate.getForObject(Constant.URL + "showAllCategory",
+					CategoryListResponse.class);
+
+			List<MCategoryList> itemsWithCategoriesList = itemsWithCategoryResponseList.getmCategoryList();
+			modelAndView.addObject("catList", itemsWithCategoriesList);
 			}else {
 				String fd=request.getParameter("fd");
 				String td=request.getParameter("td");
@@ -1696,13 +1705,35 @@ int p1=-1,p2=-1;
 				grnGvnConfResponse = restTemplate.postForObject(Constant.URL + "getGvnItemConfigAsPerProd", map,
 						GetGrnGvnConfResponse.class);
 				
+				
+				MultiValueMap<String, Object> menuMap = new LinkedMultiValueMap<String, Object>();
+				List<PostFrItemStockDetail> detailList = new ArrayList<PostFrItemStockDetail>();
+
+				menuMap.add("frId", frDetails.getFrId());
+				menuMap.add("catId", catId);
+
+				ParameterizedTypeReference<List<PostFrItemStockDetail>> typeRef = new ParameterizedTypeReference<List<PostFrItemStockDetail>>() {
+				};
+				ResponseEntity<List<PostFrItemStockDetail>> responseEntity = restTemplate
+						.exchange(Constant.URL + "getCurrentOpStock", HttpMethod.POST, new HttpEntity<>(menuMap), typeRef);
+				detailList = responseEntity.getBody();
+				modelAndView.addObject("itemList", detailList);
+				modelAndView.addObject("selectedItemArray", itemArray);
+				modelAndView.addObject("selectedCatId", catId);
+				
+				CategoryListResponse itemsWithCategoryResponseList = restTemplate.getForObject(Constant.URL + "showAllCategory",
+						CategoryListResponse.class);
+
+				List<MCategoryList> itemsWithCategoriesList = itemsWithCategoryResponseList.getmCategoryList();
+				modelAndView.addObject("catList", itemsWithCategoriesList);
+				
 			}
 
 			grnConfList = new ArrayList<>();
 
 			grnConfList = grnGvnConfResponse.getGetGrnItemConfigs();
 
-			//modelAndView.addObject("frBillList", frBillList);
+			modelAndView.addObject("frBillList", frBillList);
 			modelAndView.addObject("selctedBillNo", billNo);
 
 			objShowGvnList = new ArrayList<>();

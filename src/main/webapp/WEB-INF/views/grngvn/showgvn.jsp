@@ -239,7 +239,15 @@ table, th, td {
                                  <select class="select-css" id="catId" name="catId" onchange="getItems()">
                                  <option selected value="">Select Category</option>
 			<c:forEach var="catList" items="${catList}">
-			<option value="${catList.catId}">${catList.catName}</option>   
+			<c:choose>
+			<c:when test="${catList.catId==selectedCatId}">
+						<option selected value="${catList.catId}">${catList.catName}</option>   
+			</c:when>
+			<c:otherwise>
+			<option value="${catList.catId}">${catList.catName}</option> 
+			</c:otherwise>
+			</c:choose>
+			  
 			</c:forEach>
                                     </select>
                             </div>
@@ -253,6 +261,25 @@ table, th, td {
 							<div class="date_one increse" id="d9" ${divStyleQ}>
                             	<!-- <div class="form_field"> -->
                                  <select   id="items" name="items" multiple="multiple"  class="chosen-select">
+                                 
+                                 <c:forEach items="${itemList}" var="itemList">
+                                 <c:set var="isFound" value="0"></c:set>
+                                 <c:forEach var="selItem" items="${selectedItemArray}">
+                                 <c:if test="${selItem==itemList.itemId}">
+                                 <c:set var="isFound" value="1"></c:set>
+                                 </c:if>
+                                 </c:forEach>
+                                 <c:choose>
+                                 <c:when test="${isFound==1}">
+                                                                 <option selected value="${itemList.itemId}">${itemList.itemName}</option>
+                                 
+                                 </c:when>
+                                 <c:otherwise>
+                                                                 <option value="${itemList.itemId}">${itemList.itemName}</option>
+                                 
+                                 </c:otherwise>
+                                 </c:choose>
+                                 </c:forEach>
                                     </select>
                             <!-- </div> -->
                             </div>
@@ -260,11 +287,17 @@ table, th, td {
                             <div class="date_one" id="d10" ${divStylep2}>
                             	<div class="form_field">
                                  <select class="select-css" id="bills" name="bills">
-                                   <!--  <option>Select Bills</option>
-                                    <option>Bills 1</option>
-                                    <option>Bills 2</option>
-                                    <option>Bills 3</option>
-                                    <option>Bills 4</option> -->
+                                   <c:forEach var="frBillList" items="${frBillList}">
+			<c:choose>
+			<c:when test="${frBillList.billNo==selctedBillNo}">
+						<option selected value="${frBillList.billNo}">${frBillList.invoiceNo}- Inv Date${frBillList.billDate}</option>   
+			</c:when>
+			<c:otherwise>
+			<option value="${frBillList.billNo}">${frBillList.invoiceNo}- Inv Date${frBillList.billDate}</option> 
+			</c:otherwise>
+			</c:choose>
+			  
+			</c:forEach>
                                     </select>
                             </div>
                             </div>

@@ -239,6 +239,11 @@ label:before {
 	<c:url var="getCustCreditBills" value="/getCustCreditBills" />
 	<c:url var="getCustBills" value="/getCustBills" />
 	<c:url var="getCustBillsTransaction" value="/getCustBillsTransaction" />
+		<c:url var="submitBillByPaymentOption" value="/submitBillByPaymentOption" />
+	
+	
+	
+	
 	<div style="display: none;">
 		<a href="${pageContext.request.contextPath}/newPos" id="relod"></a>
 	</div>
@@ -1084,7 +1089,7 @@ label:before {
 						<div class="one_row bg_3">
 							<div class="radio_l">							
 								<div class="radio_row one popup_radio" style="margin:3px 0px 0 0;">
-									<div class="gnd">Gendor</div>
+									<div class="gnd">Credit</div>
 											<ul>
 												<li class="gend_rad"><input type="radio" type="radio" name="creditBill"
 													id="creditBillyes" onclick="modeOfPayDivHideShow(1)"    > <label
@@ -1100,7 +1105,7 @@ label:before {
 							</div>
 							
 							<div class="remark_bx">
-								<div id="modeOfPayDiv" style="display: none">
+								<div id="modeOfPayDiv">
 							<div class="radio_left"  id="singleDiv">							
 								<div class="radio_row">
 									<div class="gnd_mode ">Mode</div>
@@ -1110,7 +1115,7 @@ label:before {
 									<!-- <option value="1" style="text-align: left;" selected>Cash</option>
 									<option value="2" style="text-align: left;">Card</option>
 									<option value="3" style="text-align: left;">E-Pay</option> -->
-									<option value="0" style="text-align: left;">Select Payment Mode</option>
+									<option selected value="0" style="text-align: left;">Select Payment Mode</option>
 									<c:forEach items="${payModeList}" var="payModeList">
 										<option value="${payModeList.modeId}"
 											style="text-align: left;">${payModeList.modeName}</option>
@@ -1123,10 +1128,10 @@ label:before {
 							<div class="radio_right">
 								<div class="total_one remark" id="cardTypeDiv" style="margin: 0;"> 
 								<div class="gnd_mode">Sub Mode</div> 
-							<select name="cardType" id="cardType"
+							<select  name="cardType" id="cardType"
 									data-placeholder="Card Type" class="input_add mode one"
 									style="text-align: left; font-size: 13px;">
-									<option value="" style="text-align: left;">Select Card</option>
+									<option selected value="0" style="text-align: left;">Select Card</option>
 
 									<!-- <option value="4" style="text-align: left;">Debit Card</option>
 									<option value="5" style="text-align: left;">Credit
@@ -1247,8 +1252,8 @@ label:before {
 							<button id="payment1"
 								class="hold print_btn   initialism payment_open"
 								style="display: none;">Payment</button>
-							<a href="#" class="hold print_btn  initialism  "
-								onclick="openPaymentPopup()">Payment Option</a>
+							<!-- <a href="#" class="hold print_btn  initialism  "
+								onclick="openPaymentPopup()">Payment Option</a> -->
 							<!-- 	<a href="#" class="hold print_btn"  >Print Order</a>  -->
 							<!-- <button  id="payment1" class="hold bill_btn   "  style="display: none;">Print Bill</button> -->
 							<a href="#" class="hold bill_btn" onclick="submitBill(2)">Print
@@ -1920,7 +1925,7 @@ label:before {
 							<div class="radio_row popup_radio">
 								<ul>
 									<li><input type="radio" id="single12" name="modePay1"
-										value="1" onclick="getCustBills(1)" checked="checked">
+										value="1" onclick="getCustBills(1)" >
 										<label for="single12">Bills</label>
 										<div class="check"></div></li>
 									<li><input type="radio" id="split12" name="modePay1"
@@ -2057,7 +2062,7 @@ label:before {
 								<!-- <option value="1" style="text-align: left;" selected>Cash</option>
 								<option value="2" style="text-align: left;">Card</option>
 								<option value="3" style="text-align: left;">E-Pay</option> -->
-								<option value="0" style="text-align: left;">Select
+								<option value="0" selected style="text-align: left;">Select
 									Payment Mode</option>
 								<c:forEach items="${payModeList}" var="payModeList">
 									<option value="${payModeList.modeId}" style="text-align: left;">${payModeList.modeName}</option>
@@ -2073,7 +2078,7 @@ label:before {
 							<select name="cardType1" id="cardType1"
 								data-placeholder="Card Type" class="input_add "
 								style="text-align: left; font-size: 16px;">
-								<option value="" style="text-align: left;">Select Card</option>
+								<option value="0" selected style="text-align: left;">Select Card</option>
 
 								<option value="4" style="text-align: left;">Debit Card</option>
 								<option value="5" style="text-align: left;">Credit Card</option>
@@ -4143,29 +4148,21 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 							 
 							 if(flag==0){
 							 document.getElementById("overlay2").style.display = "block";
-							 
-							 
-							 var fd=new FormData();
-								fd.append('key',key);
-								fd.append('custId',custId);
-										fd.append('creditBill',creditBill);
-										fd.append('paymentMode',single);
-									fd.append('billType',billType);
-											fd.append('payType',payType);
-										fd.append('payTypeSplit',payTypeSplit);
-														fd.append('cashAmt',cashAmt);
-											fd.append('cardAmt',cardAmt);
-															fd.append('epayAmt',epayAmt);
-														fd.append('selectedText',selectedText);
-														fd.append('payAmt',payAmt);
-															fd.append('discPer',discPer);
-															fd.append('discAmt',discAmt);
-															fd.append('billAmtWtDisc',billAmtWtDisc);
-															fd.append('advAmt',advAmt);
-															fd.append('remark',remark);
+															
+															var creditBill = 1;
+															if (document.getElementById('creditBillno').checked) {
+															creditBill = 2;
+															}
+															var discPer =  $('#discPer').val() ;
+															var discAmt =  $('#discAmt').val() ;
+															var amt=parseFloat($('#totalAmt').text());
+
+															var totalPayableAmt=parseFloat($('#totalPayableAmt').text());
+
+															//submitBill	 //submitBillByPaymentOption		
 							   $
 								.post(
-										'${submitBill}',
+										'${submitBillByPaymentOption}', 
 										{
 											key : key,  
 											custId : custId,
@@ -4173,6 +4170,19 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 					 						advAmt:advAmt,
 					 						advOrderDate : '',
 					 						isAdvanceOrder : 0,
+					 						creditBill: creditBill,
+					 						paymentMode : 1,
+					 						billType : $('#billType').val(),
+					 						payType : $('#cardType').val() ,
+					 						payTypeSplit : 0,
+					 						cashAmt : totalPayableAmt,
+					 						cardAmt :0,
+					 						epayAmt : 0,
+					 						discPer :discPer,
+					 						discAmt :discAmt,
+					 						billAmtWtDisc : amt,
+					 						payAmt :totalPayableAmt,
+					 						remark :'sachin',
 											ajax : 'true'
 										},
 										function(data) {
