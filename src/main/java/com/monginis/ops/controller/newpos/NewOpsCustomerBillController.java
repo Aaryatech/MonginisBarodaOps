@@ -12,12 +12,14 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
@@ -136,7 +138,7 @@ public class NewOpsCustomerBillController {
 
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
-
+System.err.println("calStock " +calStock);
 			if (calStock == 1) {
 				ParameterizedTypeReference<List<PostFrItemStockHeader>> typeRef1 = new ParameterizedTypeReference<List<PostFrItemStockHeader>>() {
 				};
@@ -312,6 +314,8 @@ public class NewOpsCustomerBillController {
 			model.addObject("customerList", custometList);
 			model.addObject("calStock", calStock);
 			model.addObject("ItemList", showItemList);
+			String strDate=new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+			model.addObject("date2", strDate);
 		} catch (Exception e) {
 			System.out.println("Excep in /newPos : " + e.getMessage());
 			e.printStackTrace();
@@ -581,7 +585,14 @@ public class NewOpsCustomerBillController {
 				}
 
 			}
-			Collections.reverse(itemList);
+			//System.err.println("itemList 1 "+itemList);
+			//Collections.reverseOrder();
+			////System.err.println("itemList 2 "+itemList);
+
+			//Collections.sort(itemList, itemList.size());
+			//System.err.println("itemList 3"+itemList);
+			itemList=reverseList(itemList);
+			System.err.println("itemList 3"+itemList);
 			errorMsg.setItemList(itemList);
 
 		} catch (Exception e) {
@@ -594,7 +605,31 @@ public class NewOpsCustomerBillController {
 
 		return errorMsg;
 	}
-
+	 public static<T> List<T> reverseList(List<T> list)
+	    {
+	        
+		/*
+		 * return list.stream() .collect(Collectors.collectingAndThen(
+		 * Collectors.toCollection(ArrayList::new), lst -> { Collections.reverse(lst);
+		 * return lst.stream(); } )).collect(Collectors.toCollection(ArrayList::new));
+		 */
+		 
+		/*
+		 * return IntStream.range(0, list.size()) .map(i -> (list.size() - 1 - i)) //
+		 * IntStream .mapToObj(list::get) // Stream<T>
+		 * .collect(Collectors.toCollection(ArrayList::new));
+		 */
+		 
+		 List<T> reverse = new ArrayList<>(list.size());
+		 
+	        list.stream()
+	            .collect(Collectors.toCollection(LinkedList::new))
+	            .descendingIterator()
+	            .forEachRemaining(reverse::add);
+	 
+	        return reverse;
+	        
+	    }
 	@RequestMapping(value = "/getCustomerList", method = RequestMethod.GET)
 	@ResponseBody
 	public List<CustomerForOps> getCustomerList(HttpServletRequest request, HttpServletResponse response) {
@@ -1185,8 +1220,19 @@ public class NewOpsCustomerBillController {
 			int custId = Integer.parseInt(request.getParameter("custId"));
 			int creditBill = Integer.parseInt(request.getParameter("creditBill"));
 			int paymentMode = Integer.parseInt(request.getParameter("paymentMode"));
-			int billType = Integer.parseInt(request.getParameter("billType"));
-			int payType = Integer.parseInt(request.getParameter("payType"));
+			
+			int billType = 0;
+			try {
+				billType = Integer.parseInt(request.getParameter("billType"));
+			}catch (Exception e) {
+				 billType = 0;
+			}
+			int payType = 0;//Integer.parseInt(request.getParameter("payType"));
+			try {
+				 payType = Integer.parseInt(request.getParameter("payType"));
+			}catch (Exception e) {
+				payType = 0;
+			}
 			String payTypeSplit = request.getParameter("payTypeSplit");
 			float cashAmt = Float.parseFloat(request.getParameter("cashAmt"));
 			float cardAmt = Float.parseFloat(request.getParameter("cardAmt"));

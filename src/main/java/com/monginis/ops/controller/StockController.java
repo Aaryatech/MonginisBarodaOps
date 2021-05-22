@@ -139,6 +139,9 @@ public class StockController {
 			}catch (Exception e) {
 				model.addObject("allow_fr_op_stock", 0);
 			}
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+
 			frItemStockHeader = restTemplate.postForObject(Constant.URL + "getRunningMonth", map,
 					PostFrItemStockHeader.class);
 			System.out.println("Fr Opening Stock " + frItemStockHeader.toString());

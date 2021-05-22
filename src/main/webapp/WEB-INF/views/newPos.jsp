@@ -854,20 +854,20 @@ label:before {
 								<select name="custId" id="custId"
 									data-placeholder="Select Bill No" style="width: 100%%;"
 									class="input_add chosen-select" onchange="setCustAmt()">
-									<option value="0">Select Customer</option>
+									<option value="0">Select Customer111</option>
 
 									<c:choose>
 										<c:when test="${key>0}">
 											<c:forEach items="${customerList}" var="customerList">
 												<c:choose>
-													<c:when test="${customerList.custId==holdBill.custId}">
+													<c:when test="${customerList.custId==holdBill.custId or customerList.frId==0}">
 														<option value="${customerList.custId}"
-															style="text-align: left;" selected>${customerList.custName}
+															style="text-align: left;" selected>A${customerList.custName}
 															&nbsp;${customerList.phoneNumber}</option>
 													</c:when>
 													<c:otherwise>
 														<option value="${customerList.custId}"
-															style="text-align: left;">${customerList.custName}
+															style="text-align: left;">A${customerList.custName}
 															&nbsp;${customerList.phoneNumber}</option>
 													</c:otherwise>
 												</c:choose>
@@ -877,14 +877,14 @@ label:before {
 										<c:when test="${tempCust>0}">
 											<c:forEach items="${customerList}" var="customerList">
 												<c:choose>
-													<c:when test="${customerList.custId==tempCust}">
+													<c:when test="${customerList.custId==tempCust or customerList.frId==0}">
 														<option value="${customerList.custId}"
-															style="text-align: left;" selected>${customerList.custName}
+															style="text-align: left;" selected>B${customerList.custName}
 															&nbsp;${customerList.phoneNumber}</option>
 													</c:when>
 													<c:otherwise>
 														<option value="${customerList.custId}"
-															style="text-align: left;">${customerList.custName}
+															style="text-align: left;">B${customerList.custName}
 															&nbsp;${customerList.phoneNumber}</option>
 													</c:otherwise>
 												</c:choose>
@@ -894,14 +894,14 @@ label:before {
 										<c:otherwise>
 											<c:forEach items="${customerList}" var="customerList">
 												<c:choose>
-													<c:when test="${customerList.custId==defaultCustomer}">
+													<c:when test="${customerList.frId==0}">
 														<option value="${customerList.custId}"
-															style="text-align: left;" selected>${customerList.custName}
+															style="text-align: left;" selected>C${customerList.custName}
 															&nbsp;${customerList.phoneNumber}</option>
 													</c:when>
 													<c:otherwise>
 														<option value="${customerList.custId}"
-															style="text-align: left;">${customerList.custName}
+															style="text-align: left;">C${customerList.custName}
 															&nbsp;${customerList.phoneNumber}</option>
 													</c:otherwise>
 												</c:choose>
@@ -1115,8 +1115,8 @@ label:before {
 									<!-- <option value="1" style="text-align: left;" selected>Cash</option>
 									<option value="2" style="text-align: left;">Card</option>
 									<option value="3" style="text-align: left;">E-Pay</option> -->
-									<option selected value="0" style="text-align: left;">Select Payment Mode</option>
-									<c:forEach items="${payModeList}" var="payModeList">
+<!-- 									<option selected value="0" style="text-align: left;">Select Payment Mode</option>
+ -->									<c:forEach items="${payModeList}" var="payModeList">
 										<option value="${payModeList.modeId}"
 											style="text-align: left;">${payModeList.modeName}</option>
 									</c:forEach>
@@ -1903,7 +1903,7 @@ label:before {
 							<div class="add_customer_one all_width">
 								Date:<span style="color: red; width: 80%">&nbsp;&nbsp;<input
 									autocomplete="off" placeholder="Date" name="dt" id="dt"
-									type="date" class="input_add" value="${date2}"
+									type="date" class="input_add" 
 									onChange="fetchRecord()" style="width: 200px;" /></span><input
 									type="hidden" id="todaysDate" value="${date2}"
 									style="display: none;">
@@ -2062,8 +2062,8 @@ label:before {
 								<!-- <option value="1" style="text-align: left;" selected>Cash</option>
 								<option value="2" style="text-align: left;">Card</option>
 								<option value="3" style="text-align: left;">E-Pay</option> -->
-								<option value="0" selected style="text-align: left;">Select
-									Payment Mode</option>
+							<!-- 	<option value="0" selected style="text-align: left;">Select
+									Payment Mode</option> -->
 								<c:forEach items="${payModeList}" var="payModeList">
 									<option value="${payModeList.modeId}" style="text-align: left;">${payModeList.modeName}</option>
 								</c:forEach>
@@ -2727,7 +2727,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 										//alert(data.addCustomerId);
 										for (var i = 0; i < len; i++) {
 
-											if (data[i].custId == val) {
+											if (data[i].custId == val||data[i].frId==0) {
 												html += '<option value="' + data[i].custId + '" selected>'
 														+ data[i].custName
 														+ '&nbsp;'
@@ -3974,6 +3974,10 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 								if(creditBill==2 && single==1 && payAmt==""){
 									alert("Please Enter Amount");
 								}else
+									if(creditBill==1){
+										billType=0;
+										payType=0;
+									}
 									if(payTypeFlag==1){
 										 alertify.error(msg); 
 									}else{
@@ -4245,9 +4249,9 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 													
 													 	var defaultCustomer =  1;
 													 	//alert(defaultCustomer)
-													 	document.getElementById("custId").value = defaultCustomer;
+													 	//document.getElementById("custId").value = defaultCustomer;
 													 	cancelBill(0); 
-														$('.chosen-select').trigger('chosen:updated');
+														//$('.chosen-select').trigger('chosen:updated');
 														document.getElementById("overlay2").style.display = "none";	 
 												 }else{
 													 if(printbilltype==1){
@@ -4291,10 +4295,10 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 													 
 														// var defaultCustomer =  $('#defaultCustomer').val() ;
 													 	//alert(defaultCustomer)
-													 	document.getElementById("custId").value = 1;
+													 	//document.getElementById("custId").value = 1;
 													 	cancelBill(0); 
-														$('.chosen-select').trigger(
-														'chosen:updated');
+														//$('.chosen-select').trigger(
+														//'chosen:updated');
 														document.getElementById("overlay2").style.display = "none";	 
 														document.getElementById("key").value = 0; 
 														
@@ -4318,12 +4322,21 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		  
 	}
 </script>
+
 	<script type="text/javascript">
-	
+	 $(window).load(function(){
+		 setCustAmt();
+		 var billType =  $('#billType').val() ;
+		 onPayTypeChange(billType);
+
+		 onPayTypeChange1(billType);
+	 })
 	function setCustAmt() {
+		
 		var cust =  $('#custId').val() ;
+		//alert("OK"+cust)
 		//validateDefCustomer(cust);
-		document.getElementById("credAmt").innerHTML = 0; 
+		//document.getElementById("credAmt").innerHTML = 0; 
 		//document.getElementById("advCustAmt").innerHTML = 0;
 		  $
 		.get(
@@ -4383,6 +4396,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 			$('#epayTypeDiv1').hide();
 			document.getElementById("ePayType1").value="";
 			document.getElementById("cardType1").value="";
+			//setCustAmt();
 		}
 	
 		//alert(type);
@@ -4529,7 +4543,14 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 			
 			 
 	}
-	
+	function checkIsCheckBoxOn(){
+		if ($('input[type=checkbox]').is(":checked")) {
+		     return true;
+		}
+		else {
+		return false;
+		}
+	}
 	function  getCustBills(tempType) {
 		
 		
@@ -4539,7 +4560,10 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		
 		var date = document.getElementById("dt").value;
 		//alert(date);
-
+		if(date==null||date==""){
+			date = document.getElementById("todaysDate").value;
+		}
+		//alert(date);
 		var custId = document.getElementById("custId").value;
 		var tabType = document.getElementById("popupType").value;
 			  var tr_count=0; 
@@ -4871,7 +4895,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 			$('#cardTypeDiv1').hide();
 			document.getElementById("ePayType1").value=7;
 		} */
-		
+		//alert(type)
 		var fd=new FormData();
 		fd.append('type',type);  
 		  $.ajax({
@@ -4883,7 +4907,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		       contentType: false, 
 		       success: function(data, textStatus, jqXHR)
 		       { 
-		    	   var html = '';
+		    	   var html ='';
 					var len = data.length;
 												//alert(data.addCustomerId);
 												for (var i = 0; i < len; i++) {
@@ -4896,8 +4920,8 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 												}
 												$('#cardType1').html(html);
 
-												/* $("#custId").trigger("chosen:updated");
-												$('.chosen-select').trigger(
+												//$("#cardType1").trigger("chosen:updated");
+												/* $('.chosen-select').trigger(
 														'chosen:updated'); */
 		       },
 		       error: function(jqXHR, textStatus, errorThrown)
@@ -5134,7 +5158,8 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 	}
 	
 	$('#sbtbtn').click(function() {
-		
+		var x=checkIsCheckBoxOn();
+		//alert(x)
 		var billType =  $('#modType1').val() ;
 		var cardType1 =  $('#cardType1').val() ;
 		//alert(billType);
@@ -5143,6 +5168,12 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		
 		if(cardType1=="" || cardType1==null) {
 			alertify.error("Select mode type.");
+			isValid=0;
+		}
+		if(x){
+			
+		}else{
+			alertify.error("Check atleast one bill");
 			isValid=0;
 		}
 		/* if(billType==2) {
