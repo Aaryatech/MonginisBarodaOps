@@ -243,7 +243,7 @@ public class GrnGvnController {
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
 		RestTemplate restTemplate = new RestTemplate();
-
+		String searchDate = request.getParameter("searchDate");// ---//
 		try {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
@@ -458,7 +458,12 @@ public class GrnGvnController {
 			DateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Calendar cale = Calendar.getInstance();
 			System.out.println("************* Date Time " + dateFmt.format(cale.getTime()));
-
+			if (searchDate != null && searchDate != "") {
+				SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+				java.util.Date dateConverted = formatter.parse(searchDate);
+				cale.setTime(dateConverted);
+				modelAndView.addObject("searchDate", searchDate);
+			}
 			for (int i = 0; i < grnConfList.size(); i++) {
 
 				stockMap = new LinkedMultiValueMap<String, Object>();

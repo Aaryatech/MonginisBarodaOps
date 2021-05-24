@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.time.LocalDate,java.util.*"%>
@@ -594,7 +594,11 @@ select {
                 
         </div>
 	</div>
-	
+	 <script type="text/javascript">
+	 $(window).load(function(){
+		 $("select#spFlavour").change();
+	 })
+						  </script>
     <div class="colOuter">
 		<div class="col1"><div class="col1title">Flavour</div></div>
 		<div class="col2full" >
@@ -623,18 +627,20 @@ select {
 		          <input type="hidden" name="spBackendRate" id="spBackendRate" value="${spBackendRate}">
 		 
           <select name="spwt" id="spwt" onchange="onChange()"required>
+                       <option value="${spCakeOrder.spSelectedWeight}" selected>${spCakeOrder.spSelectedWeight}</option>
+          
             <c:forEach items="${weightList}" var="weightList">
-            <c:choose>
+            <%-- <c:choose>
               <c:when test="${spCakeOrder.spSelectedWeight eq weightList}">
                             <option value="${weightList}" selected>${weightList}</option>
               
               </c:when>
               <c:otherwise>
-                         <option value="${weightList}">${weightList}</option>
+                       
               
               </c:otherwise>
-              </c:choose>
-                  
+              </c:choose> --%>
+                    <option value="${weightList}">${weightList}</option>
             </c:forEach> 
            
           </select>
@@ -973,10 +979,19 @@ $(document).ready(function() {
 	
 	</div>
 	
-	<div class="colOuter" id="ctype1">
-			<div class="col1"><div class="col1title" id="cktype">Cake Type</div></div>
+	<div class="colOuter" id="ctype2">
+			<div class="col1"><div class="col1title" id="cktype">Cake Type Shape</div></div>
 	
-			<div class="col2full"><input class="texboxitemcode" placeholder="Cake Type"  value="${spCakeOrder.exVar1}" name="ctype" type="text" id="ctype" required autocomplete="off"></div>
+			<div class="col2full">
+			<%-- <input class="texboxitemcode" placeholder="Cake Type"  value="${spCakeOrder.exVar1}" name="ctype" type="text" id="ctype" required autocomplete="off"> --%>
+			
+			<select name="ctype"  tabindex="-1"  id="ctype" required>
+                  <option selected value="${spCakeOrder.exVar1}">${spCakeOrder.exVar1}</option>
+                   <c:forEach items="${selectedShapes}" var="shape">
+                     <option    value="${shape.shapeName}">${shape.shapeName}</option>
+                   </c:forEach>
+                 </select>
+			</div>
 	
 	</div>
 	<div class="colOuter" >
@@ -1337,7 +1352,7 @@ $(document).ready(function() {
 <script type="text/javascript">
 $(document).ready(function() { 
 	$(function () {
-	    $("select#spFlavour").change();
+	    //$("select#spFlavour").change();
 	});
 	
 	$('#spFlavour').change(

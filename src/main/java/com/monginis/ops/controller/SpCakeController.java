@@ -2110,10 +2110,19 @@ public class SpCakeController {
 			menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
-			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
-			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
-			model.addObject("customerList", customerList);
+			/*
+			 * Customer[] customer = restTemplate.getForObject(Constant.URL +
+			 * "/getAllCustomers", Customer[].class); List<Customer> customerList = new
+			 * ArrayList<>(Arrays.asList(customer)); model.addObject("customerList",
+			 * customerList);
+			 */
 
+			MultiValueMap<String, Object>  mapforCust=new LinkedMultiValueMap<>();
+			mapforCust.add("frId", frDetails.getFrId());
+			CustomerForOps[] customer = restTemplate.postForObject(Constant.URL + "/getAllCustomerForPosByfrId",mapforCust, CustomerForOps[].class);
+			List<CustomerForOps> customerList = new ArrayList<>(Arrays.asList(customer));
+			model.addObject("customerList", customerList);
+			
 			// --------------------------------------------------Sp Message
 			// List----------------------------------------------------------
 			AllspMessageResponse allspMessageList = restTemplate.getForObject(Constant.URL + "getAllSpMessage",
@@ -2127,6 +2136,7 @@ public class SpCakeController {
 			map.add("spOrderNo", spOrderNo);
 			SpCakeOrder spCakeOrder = restTemplate.postForObject(Constant.URL + "/getSpOrderBySpOrderNo", map,
 					SpCakeOrder.class);
+			System.err.println("spCakeOrder  for edit "+spCakeOrder.toString());
 			try {
 				String photoArray[] = spCakeOrder.getOrderPhoto().split("<");
 				model.addObject("photoArray", photoArray);
@@ -2285,6 +2295,26 @@ public class SpCakeController {
 				model.addObject("addonRatePerKG", specialCake.getSprAddOnRate());
 			}
 
+			
+
+List<Shape> shapeList = new ArrayList<>();
+			Shape[] shapeArr = restTemplate.getForObject(Constant.URL + "getAllChef", Shape[].class);
+			shapeList = new ArrayList<>(Arrays.asList(shapeArr));
+			String[] selectedShapeArr = specialCake.getSpeIdlist().split(",");
+			List<Shape> selShapes = new ArrayList<>();
+			for (int i = 0; i < selectedShapeArr.length; i++) {
+				int shapeid = Integer.parseInt(selectedShapeArr[i]);
+				for (Shape shapeObj : shapeList) {
+					// System.err.println("ShapeId=="+shapeid+"\t"+"shape=="+shapeObj.getShapeId());
+					if (shapeid == shapeObj.getShapeId()) {
+						selShapes.add(shapeObj);
+					}
+				}
+			}
+
+			model.addObject("selectedShapes", selShapes);
+			
+			
 			model.addObject("specialCake", specialCake);
 			model.addObject("spBookb4", Integer.parseInt(specialCake.getSpBookb4()));
 			model.addObject("configuredSpCodeList", configuredSpCodeList);

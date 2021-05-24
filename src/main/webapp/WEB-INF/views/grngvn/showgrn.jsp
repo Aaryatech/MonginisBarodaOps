@@ -10,7 +10,12 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/loader.css">
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-
+<script>
+	$(function() {
+		$("#fromdatepicker").datepicker({ dateFormat: 'dd-mm-yy' });
+	});
+	
+</script>
 <style>
 table, th, td {
 	border: 1px solid #9da88d;
@@ -139,6 +144,32 @@ table, th, td {
 					<!-- here would be a message with a result of processing -->
 					<div class="messages messagesErr">${alert}</div>
 				</c:if>
+				<div class="row">
+					<div class="col-md-12">
+						<h3 class="pageTitle">Request GRN</h3>
+						<form action="${pageContext.request.contextPath}/showGrn"
+							name="search_form" id="search_form" method="get">
+							<div class='colOuter' style="float: right;">
+								<div class="col1" style="width: 10%;">Select Date</div>
+								<div class="col1" style="width: 19.333333%;">
+									<input id="fromdatepicker" class="texboxitemcode texboxcal "
+										style="width: 250px;" autocomplete="off"
+										placeholder="Search Date" name="searchDate" type="text"
+										value="${searchDate}">
+								</div>
+								<div class="col1">
+									<input type="submit" name="" class="buttonsaveorder"
+										value="Search">
+								</div>
+								<div class="col1" style="float: right; width: 13.333333%;">
+									<a href='${pageContext.request.contextPath}/showGrn'> <input
+										type="button" name="" class="buttonsaveorder"
+										value="Todays GRN"></a>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<h2 class="pageTitle"><i class="fa fa-refresh" aria-hidden="true"></i>GRN Based on Stock</h2>
