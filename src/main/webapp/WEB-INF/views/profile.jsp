@@ -132,7 +132,7 @@
 	<c:url var="updateAdminPassword" value="/updateAdminPassword" />
 	<c:url var="getCurrentEmpCodeValue" value="/getCurrentEmpCodeValue" />
 	<c:url var="verifyUniqueContactNo" value="/verifyUniqueContactNo" />
-	<c:url value="/getCountOfEmpByFrid" var="getCountOfEmpByFrid" ></c:url>
+	<c:url value="/getCountOfEmpByFrid" var="getCountOfEmpByFrid"></c:url>
 	<!--topLeft-nav-->
 	<div class="sidebarOuter"></div>
 	<!--topLeft-nav-->
@@ -175,9 +175,10 @@
 						</div>
 						<div class="title_r">
 							<div class="order-right" style="float: right;">
-								<a href="javascript:void(0)" class="btn additem_btn addcust_open"
-									style="margin: 0;" onclick="openAddEmpPopup()">Add Employee</a>
-								<a href="javascript:void(0)" class="btn additem_btn slide_open"
+								<a href="javascript:void(0)"
+									class="btn additem_btn addcust_open" style="margin: 0;"
+									onclick="openAddEmpPopup()">Add Employee</a> <a
+									href="javascript:void(0)" class="btn additem_btn slide_open"
 									onclick="getData()" style="margin: 0;">Employee List</a>
 							</div>
 						</div>
@@ -288,7 +289,7 @@
 											</div>
 
 										</div>
-										<div class="profile">
+										<div class="profile" style="display: none;">
 											<div class="profilefildset">1/2 KG Limit</div>
 											<div class="profileinput mardis">${frDetails.frKg2}</div>
 
@@ -310,7 +311,8 @@
 										</div>
 
 										<div class="profile">
-											<div class="profilefildset">Edit Admin Password</div>
+											<div class="profilefildset">Edit Shop/Franchiseee
+												Password</div>
 											<div class="col2">
 												<input class="texboxitemcode"
 													placeholder="Enter new Password" name="fr_password"
@@ -431,7 +433,7 @@
 
 
 										<div class="profile">
-											<div class="profilefildset">Confirm Admin Password</div>
+											<div class="profilefildset">Shop/Franchisee Password</div>
 											<div class="col2">
 												<input class="texboxitemcode"
 													placeholder="Confirm new Password" name="fr_password"
@@ -445,7 +447,7 @@
 											<div class="form-group">
 
 												<input name="" class="btn additem_btn"
-													value="Change Admin Password" type="button" id="changePwd1"
+													value="Change  Password" type="button" id="changePwd1"
 													onclick="showDiv()" style="margin: 0; padding: 5px 4px">
 
 											</div>
@@ -568,7 +570,8 @@
 		</div>
 
 		<div class="modal-content" style="width: 75%">
-			<span class="close" onclick="closeAddEmpPopup()" style="opacity: 2;">&times;</span>
+			<span class="close" onclick="closeAddEmpPopup();clearForm();"
+				style="opacity: 2;">&times;</span>
 
 			<h3 class="pop_head">Add Employee</h3>
 			<div>
@@ -690,10 +693,10 @@
 							<div class="profile">
 								<div class="profilefildset">Is Active</div>
 								<div class="profileinput">
-									<input type="radio" id="emp_status_yes"
+									<input type="radio" id="emp_status_yes" checked="checked"
 										${emp.delStatus==0 ? 'checked' : ''} name="emp_status"
-										value="0"> Yes &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<input type="radio" id="emp_status_no"
+										value="0"> Yes &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
+										type="radio" id="emp_status_no"
 										${emp.delStatus==1 ? 'checked' : ''} name="emp_status"
 										value="1"> NO
 								</div>
@@ -705,7 +708,8 @@
 						<table class="responsive-table" id="table_grid1">
 							<thead>
 								<tr class="bgpink">
-									<th>Sr.No.</th>
+									<th>Sr.No.<input type="checkbox" id="selAllChkbx"
+										name="selAllChkbx"></th>
 									<th>Module Name</th>
 								</tr>
 							</thead>
@@ -786,26 +790,40 @@
 		</div>
 	</div>
 </body>
-
+<script type="text/javascript">
+	$('#selAllChkbx').click(function(event) {
+		//alert("Hiii")//chk
+		if (this.checked) {
+			// Iterate each checkbox
+			$(':checkbox').each(function() {
+				this.checked = true;
+			});
+		} else {
+			$(':checkbox').each(function() {
+				this.checked = false;
+			});
+		}
+	});
+</script>
 
 <script>
-var ChkFlag=0;
+	var ChkFlag = 0;
 	$(document).ready(function() {
-		
+
 		$("#fr_emp_form").trigger("reset");
 	});
 	function openAddEmpPopup() {
-		
+
 		//ChkFlag=1;
 		document.getElementById("emp_contact").value = "";
 		$.getJSON('${getCountOfEmpByFrid}', {
 			ajax : 'true'
 		}, function(data) {
-			
-			//alert(JSON.stringify(data)); 
-		document.getElementById("emp_code").value = data.message;
 
-		}); 
+			//alert(JSON.stringify(data)); 
+			document.getElementById("emp_code").value = data.message;
+
+		});
 		var modal = document.getElementById("addEmpModal");
 		modal.style.display = "block";
 
@@ -898,28 +916,31 @@ var ChkFlag=0;
 		document.getElementById('sbtbtn4').disabled = true;
 		document.getElementById('cls_btn').disabled = true;
 
-		$.ajax({
-			type : "POST",
-			url : "${pageContext.request.contextPath}/saveFranchiseeEmp",
-			data : $("#fr_emp_form").serialize(),
-			dataType : 'json',
-			success : function(data) {
-				if (data.frEmpName != null) {
+		$
+				.ajax(
+						{
+							type : "POST",
+							url : "${pageContext.request.contextPath}/saveFranchiseeEmp",
+							data : $("#fr_emp_form").serialize(),
+							dataType : 'json',
+							success : function(data) {
+								if (data.frEmpName != null) {
 
-					document.getElementById('sbtbtn4').disabled = false;
-					document.getElementById('cls_btn').disabled = false;
+									document.getElementById('sbtbtn4').disabled = false;
+									document.getElementById('cls_btn').disabled = false;
 
-					$("#fr_emp_form").trigger("reset");
-					getCurrentEmpCode();
-					closeAddEmpPopup();
-					alert("Employee Saved Successfylly");
-					window.open("${pageContext.request.contextPath}/logout");
-				}
-			}
-		}).done(function() {
-			setTimeout(function() {
-			}, 500);
-		});
+									$("#fr_emp_form").trigger("reset");
+									getCurrentEmpCode();
+									closeAddEmpPopup();
+									alert("Employee Saved Successfully");
+									window.location
+											.replace("${pageContext.request.contextPath}/showeditprofile");
+								}
+							}
+						}).done(function() {
+					setTimeout(function() {
+					}, 500);
+				});
 	}
 
 	function getData() {
@@ -942,34 +963,47 @@ var ChkFlag=0;
 												//alert(JSON.stringify(emp));
 												$('#loader').hide();
 
-												if(emp.delStatus == 0){
+												if (emp.delStatus == 0) {
 													var tr = $('<tr></tr>');
-													tr.append($('<td></td>').html(
-															key + 1));
-													tr.append($('<td></td>').html(
-															emp.frEmpName));
-													tr.append($('<td></td>').html(
-															emp.frEmpContact));
-													tr.append($('<td></td>').html(
-															emp.frEmpAddress));
-													tr.append($('<td></td>').html(
-															emp.frEmpJoiningDate));
+													tr.append($('<td></td>')
+															.html(key + 1));
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			emp.frEmpName));
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			emp.frEmpContact));
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			emp.frEmpAddress));
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			emp.frEmpJoiningDate));
 													var stat = '';
 													if (emp.delStatus == 0) {
 														stat = 'Active'
 													} else {
 														stat = 'In-Active'
 													}
-													tr.append($('<td ></td>').html(
-															stat));
+													tr.append($('<td ></td>')
+															.html(stat));
 													tr
-															.append($('<td></td>')
+															.append($(
+																	'<td></td>')
 																	.html(
 																			"<a href='#' onclick=editFrEmp("
 																					+ emp.frEmpId
 																					+ ") title='Edit' class='addcust_open'><i class='fa fa-edit'></i></a>"));
-													$('#table_grid tbody').append(
-															tr);
+													$('#table_grid tbody')
+															.append(tr);
 												}
 
 											});
@@ -1098,14 +1132,14 @@ var ChkFlag=0;
 								$('#table_grid1 td').remove();
 
 								var opsAccess = data.emp.opsAccessList;
-								
+
 								var check;
 								for (var i = 0; i < data.modulList.length; i++) {
 
 									var flag = 0;
 
 									for (var j = 0; j < opsAccess.length; j++) {
-										
+
 										if (data.modulList[i].moduleId == opsAccess[j].moduleId) {
 											check = '<input type="checkbox" checked value="'+data.modulList[i].moduleId+'" id="modId$'+data.modulList[i].moduleId+'" name="modId'+data.modulList[i].moduleId+'">';
 											flag = 1;
@@ -1118,9 +1152,15 @@ var ChkFlag=0;
 										check = '<input type="checkbox" value="'+data.modulList[i].moduleId+'" id="modId$'+data.modulList[i].moduleId+'" name="modId'+data.modulList[i].moduleId+'">';
 
 									}
-									var cnt = i+1;
+									var cnt = i + 1;
 									var tr1 = $('<tr></tr>');
-									tr1.append($('<td style="display: flex;"></td>').html(cnt+'&nbsp;&nbsp;&nbsp;&nbsp;'+check));
+									tr1
+											.append($(
+													'<td style="display: flex;"></td>')
+													.html(
+															cnt
+																	+ '&nbsp;&nbsp;&nbsp;&nbsp;'
+																	+ check));
 									tr1.append($('<td></td>').html(
 											data.modulList[i].moduleName));
 									$('#table_grid1 tbody').append(tr1);
@@ -1146,33 +1186,27 @@ var ChkFlag=0;
 </script>
 <script type="text/javascript">
 	function checkContactNo() {
-		
+
 		//alert("checkContactNo()")
-		
+
 		var empId = $('#fr_emp_id').val();
 
-		
 		var mobNo = $('#emp_contact').val();
 
-		
-	
-		
-		if (mobNo != "" || mobNo != null && empId != " "  ) {
+		if (mobNo != "" || mobNo != null && empId != " ") {
 
 			$.getJSON('${verifyUniqueContactNo}', {
 				mobNo : mobNo,
 				ajax : 'true'
 			}, function(data) {
 
-				
-				
 				//alert("Info : "+JSON.stringify(data)); 
 				if (data.error == false) {
 
 					if (data.message != empId) {
 
 						document.getElementById("emp_contact").value = "";
-						alert("Contact No. already exist.");
+						alert("Mobile Number  already exist.");
 						$('#emp_contact').focus();
 						return true;
 					}
@@ -1337,40 +1371,47 @@ var ChkFlag=0;
 		var adminPwd = document.getElementById('txtNewPassword').value;
 		var confirmPass = document.getElementById('txtConfirmPassword').value;
 		//alert(adminPwd+"\t Hii \t"+confirmPass.length);
-		if(adminPwd.length==0){
+		if (adminPwd.length == 0) {
 			alert("Password Can't Be Blank!!!");
-		}else if(confirmPass.length==0){
+		} else if (confirmPass.length == 0) {
 			alert("Password Can't Be Blank!!!");
-		}else{
-			$.getJSON('${updateAdminPassword}', {
+		} else {
+			$
+					.getJSON(
+							'${updateAdminPassword}',
+							{
 
-				adminPwd : adminPwd,
+								adminPwd : adminPwd,
 
-				ajax : 'true'
-			}, function(data) {
+								ajax : 'true'
+							},
+							function(data) {
 
-				if (data.error == false) {
-					document.getElementById('changePwd1').removeAttribute(
-							'disabled');
-					document.getElementById('txtNewPassword').disabled = true;
-					document.getElementById('txtConfirmPassword').disabled = true;
-					document.getElementById("btnupdate_profile").disabled = false;
+								if (data.error == false) {
+									document.getElementById('changePwd1')
+											.removeAttribute('disabled');
+									document.getElementById('txtNewPassword').disabled = true;
+									document
+											.getElementById('txtConfirmPassword').disabled = true;
+									document
+											.getElementById("btnupdate_profile").disabled = false;
 
-					$('#txtNewPassword').css('background-color', 'LightGrey'); // change the background color
-					$('#txtConfirmPassword').css('background-color', 'LightGrey'); // 
-					document.getElementById('updateDiv').style.display = "none";
-					document.getElementById('changePwd1').style.display = "block";
-					document.getElementById('changePwd2').style.display = "block";
-					alert("Admin Password Updated Successfully");
-					$("#divCheckPasswordMatch").html("");
-				}
+									$('#txtNewPassword').css(
+											'background-color', 'LightGrey'); // change the background color
+									$('#txtConfirmPassword').css(
+											'background-color', 'LightGrey'); // 
+									document.getElementById('updateDiv').style.display = "none";
+									document.getElementById('changePwd1').style.display = "block";
+									document.getElementById('changePwd2').style.display = "block";
+									alert("Admin Password Updated Successfully");
+									$("#divCheckPasswordMatch").html("");
+									window.location
+									.replace("${pageContext.request.contextPath}/logout");
+								}
 
-			});
+							});
 		}
-		
-		
-		
-		
+
 	}
 </script>
 <script>

@@ -56,7 +56,7 @@
 				<!-- <form id="form-login" action="loginProcess" method="post"> -->
 				<div class="loginInner">
 				
-					<div class="login_l light_height"><a href=""><img
+					<div class="login_l light_height"><a href="${pageContext.request.contextPath}/"><img
 						src="${pageContext.request.contextPath}/resources/images/monginis1.png"
 						alt="monginis"></a>
 						<p class="login_txt">Delivering with Professional Excellence To be preferred Chartered Accountant, Advisor or Consultant to Business across India; and provide utility oriented legal compliance. </p>	

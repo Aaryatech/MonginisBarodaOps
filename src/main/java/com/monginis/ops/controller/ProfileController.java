@@ -504,7 +504,7 @@ public class ProfileController {
 			map.add("frId", frDetails.getFrId());
 			int MaxCnt=restTemplate.postForObject(Constant.URL+"getCountOfEmpByFrid", map, Integer.class);
 			MaxCnt++;
-			info.setMessage(frDetails.getFrCode()+MaxCnt);
+			info.setMessage(frDetails.getFrCode()+"-"+MaxCnt);
 			 System.err.println("Emp Count-->"+MaxCnt);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -519,6 +519,8 @@ public class ProfileController {
 			HttpSession session) {
 		FrEmpModules frEmpModules = new FrEmpModules();
 		FrEmpMaster emp = new FrEmpMaster();
+		HttpSession ses=req.getSession();
+		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
 		try {
 			RestTemplate rest = new RestTemplate();
 			int empId = Integer.parseInt(req.getParameter("empId"));
@@ -551,8 +553,16 @@ public class ProfileController {
 			
 			System.out.println("FR Emp ----------------- "+emp);
 			
-			OpsAccessRight[] opsArr = rest.getForObject(Constant.URL + "/getAllOpsAccessRole", OpsAccessRight[].class);
+			map.add("frId", frDetails.getFrId());
+			FrSetting frSetting = rest.postForObject(Constant.URL + "/getFrSettingValue", map, FrSetting.class);
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("isFrPosAppicale", frSetting.getExVarchar());
+			OpsAccessRight[] opsArr = rest.postForObject(Constant.URL + "/getAllowedOpsMappings", map, OpsAccessRight[].class);
 			List<OpsAccessRight> opsList = new ArrayList<OpsAccessRight>(Arrays.asList(opsArr));
+			
+			//OpsAccessRight[] opsArr = rest.getForObject(Constant.URL + "/getAllOpsAccessRole", OpsAccessRight[].class);
+			//List<OpsAccessRight> opsList = new ArrayList<OpsAccessRight>(Arrays.asList(opsArr));
 
 			frEmpModules.setModulList(opsList);
 		} catch (Exception e) {
@@ -598,6 +608,38 @@ public class ProfileController {
 		
 		
 	}
+	
+	@RequestMapping(value="/matchPassword",method=RequestMethod.GET)
+	public @ResponseBody int  matchPassword(HttpServletRequest request){
+		System.err.println("In /matchPassword");
+		RestTemplate restTemplate=new RestTemplate();
+		MultiValueMap<String, Object> map=new LinkedMultiValueMap<>();
+		int flag=0;
+		try {
+			Integer empId=Integer.parseInt(request.getParameter("empId"));
+			String OldPass=request.getParameter("oldPass");
+			map.add("empId",empId);
+			map.add("empPass",OldPass);
+			FrEmpMaster resp=restTemplate.postForObject(Constant.URL+"getEmpByIdAndPass", map, FrEmpMaster.class);
+			if(resp!=null) {
+				flag=1;
+			}else {
+				flag=0;
+			}
+			
+			
+		} catch (Exception e) {
+			flag=0;
+			// TODO: handle exception
+			System.err.println("Excep In /matchPassword");
+			e.printStackTrace();
+			
+		}
+		
+		return flag;
+	}
+	
+	
 	
 	@RequestMapping(value = "/updateFrEmpPassword")
 	public String updatePassword(HttpSession session, HttpServletRequest req, HttpServletResponse res) {

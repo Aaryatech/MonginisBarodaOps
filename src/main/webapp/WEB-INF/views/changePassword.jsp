@@ -48,7 +48,7 @@
 		<div class="fullGrid center logoBarbg slideposi">
 			<div class="wrapperIn positionR">
 				<div class="logoBarLeft">
-					<a href=""><img
+					<a href="${pageContext.request.contextPath}/"><img
 						src="${pageContext.request.contextPath}/resources/images/monginis1.png"
 						alt="monginis"></a>
 				</div>

@@ -125,8 +125,8 @@ table, th, td {
 						<div class="col-md-6">
 							<div align="right">
 
-								<a href="${pageContext.request.contextPath}/showAddExpense"><input
-									type="button" value="Add Expense" class="btn additem_btn"
+								<a href="${pageContext.request.contextPath}/showExpenseList"><input
+									type="button" value="Expense List" class="btn additem_btn"
 									style="margin: 0;"> </a>
 							</div>
 						</div>
@@ -214,7 +214,7 @@ table, th, td {
 							</div>
 							<div class="col-md-7">
 								<input id="remark" class="texboxitemcode" placeholder="Remark"
-									value="${expEdit.remark}" autocomplete="off" name="amount"
+									value="${expEdit.remark}" autocomplete="off" name="remark"
 									type="text">
 								
 								<%-- <textarea id="remark" class="texboxitemcode" autocomplete="off"

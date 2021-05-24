@@ -105,6 +105,7 @@ public class PriceListController {
 			 Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 			
 			int flag=Integer.parseInt(request.getParameter("flag"));
+			System.err.println("Flag-->"+flag);
 			String ids=request.getParameter("ids");
 			ids = ids.substring(1, ids.length() - 1);
 			ids = ids.replaceAll("\"", "");
@@ -119,7 +120,7 @@ public class PriceListController {
 			}else if(flag==1) {
 				map=new LinkedMultiValueMap<>();
 					//map.add("frId", frDetails.getFrId());
-					map.add("spIds", ids);
+					map.add("flavIds", ids);
 					FlavourConf[] resArr=restTemplate.postForObject(Constant.URL+"getSpBySpId", map, FlavourConf[].class);
 					resp=new ArrayList<>(Arrays.asList(resArr));
 				System.err.println("Resp-->"+resp.toString());

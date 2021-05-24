@@ -156,27 +156,28 @@
 				<div class="sidebarright">
 
 					<div class="title_row">
-						<div class="title_l">
-							<div class="order-left"  style=" width:70% !important"  >
-								<h2 class="pageTitle" style="margin: 0; padding: 0;">
+						<div class="title_l" style="width: 100%">
+							<div class="order-left"  style=" width:100% !important"  >
+								<h2 class="pageTitle" style="margin: 0; padding: 20px;border: 1px solid #ed1c24;">
 									<i class="fa fa-pencil" aria-hidden="true"></i> Change Employee Password
 								</h2>
 								
 							</div>
 							<%-- <c:if test="${not empty sessionScope.passMsg}"> --%>
 
-									<h4 class="pageTitle"
-										style="text-align: center; float: none; border: 1px solid #ed1c24; color: #ff0000;">Old Password not Matched<%-- ${sessionScope.passMsg} --%></h4>
+									
 									<br>
 									
 								<%-- </c:if> --%>
 								<%-- <%
 									session.removeAttribute("passMsg");
 								%> --%>
-						</div>						
+						</div>	
+						<h4 class="pageTitle" 
+										style="text-align: center;padding : 10px; float: right;  color: #ff0000;"><p id="passMatch" style="display: none;" >Old Password not Matched</p><%-- ${sessionScope.passMsg} --%></h4>					
 						<div class="clr"></div>
 					</div>
-
+<c:url value="/matchPassword" var="matchPassword" ></c:url>
 					<div class="topSlide">
 						<div class="textcen">
 							<div class="profileinsite">							
@@ -190,8 +191,8 @@
 									<div class="profile">
 											<div class="profilefildset">Previous Password</div>
 											<div class="profileinput">
-												<input class="texboxitemcode" placeholder="Previous Password"
-													name="oldPassword" id="oldPassword" type="password">
+												<input class="texboxitemcode" placeholder="Previous Password" onchange="matchPassword()"
+													name="oldPassword" id="oldPassword" type="password" required="required">
 											</div>
 										</div>
 
@@ -199,7 +200,7 @@
 											<div class="profilefildset">New Password</div>
 											<div class="profileinput">
 												<input class="texboxitemcode" placeholder="New Password"
-													name="txtNewPassword" id="txtNewPassword" type="password">
+													name="txtNewPassword" id="txtNewPassword" type="password" required="required">
 											</div>
 										</div>
 
@@ -210,7 +211,7 @@
 											<div class="profileinput">
 
 												<input class="texboxitemcode" placeholder="Confirm Password" onblur="checkPasswordMatch()"
-													name="txtConfirmPassword" id="txtConfirmPassword" type="password">
+													name="txtConfirmPassword" id="txtConfirmPassword" type="password" required="required">
 
 											</div>
 										</div>
@@ -254,6 +255,33 @@
 	<!--Emp List popup-->
 	
 </body>
+<script>
+function matchPassword() {
+	var oldPass=$('#oldPassword').val();
+	var empId=$('#frEmpId').val();
+	$.getJSON('${matchPassword}',
+
+			{
+				//fr_id_list : JSON.stringify(selectedFr),
+				oldPass : oldPass,
+				empId : empId,
+				ajax : 'true'
+
+			}, function(data) {
+				//alert(data)
+				if(data==0){
+					//alert("Password Dosen't Match")
+					document.getElementById("oldPassword").value="";
+					
+					 document.getElementById("passMatch").style.display = "block"; 
+				}else{
+					 document.getElementById("passMatch").style.display = "none"; 	
+				}
+				
+			});
+	
+}
+</script>
 
 <script type="text/javascript">
 	function checkPasswordMatch() {

@@ -199,16 +199,16 @@ table, th, td {
 
 								<thead>
 									<tr class="bgpink">
-										<th class="col-sm-1" style="text-align: center;">Sr No</th>
-										<th class="col-md-1" style="text-align: center;">Chalan
+										<th style="text-align: center;">Sr No</th>
+										<th  style="text-align: center;">Chalan
 											No.</th>
-										<th class="col-md-1" style="text-align: center;">Date</th>
-										<th class="col-md-1" style="text-align: center;">Amount</th>
-										<th class="col-md-1" style="text-align: center;">Remark</th>
-										<th class="col-md-1" style="text-align: center;">Attachment</th>
-										<th class="col-md-1" style="text-align: center;">User</th>
-										<th class="col-md-1" style="text-align: center;">Status</th>
-										<th class="col-md-1" style="text-align: center;">Action</th>
+										<th  style="text-align: center;">Date</th>
+										<th  style="text-align: center;">Amount</th>
+										<th  class="col-md-3" style="text-align: center;">Remark</th>
+										<th style="text-align: center;">Attachment</th>
+										<th  style="text-align: center;">User</th>
+										<th  style="text-align: center;">Status</th>
+										<th  style="text-align: center;">Action</th>
 
 									</tr>
 								</thead>

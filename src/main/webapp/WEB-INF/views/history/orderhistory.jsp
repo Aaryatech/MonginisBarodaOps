@@ -429,7 +429,7 @@ jQuery(document).ready(function(){
 													<th class="col-md-1" style="text-align: center;">Total</th>
 													<th class="col-md-1" style="text-align: center;">Disc%</th>
 													<th class="col-md-1" style="text-align: center;">Grn%</th>
-													<th class="col-md-1" style="text-align: center;">Menu</th>
+													<th class="col-md-1" style="text-align: center;">Menu Tittle</th>
 													<c:choose>
 														<c:when test="${catId==42||catId==80}">
 															<th class="col-md-1" style="text-align: center;">Order
@@ -568,8 +568,8 @@ jQuery(document).ready(function(){
 													<th class="col-md-1" style="text-align: center;">Advance</th>
 													<th class="col-md-1" style="text-align: center;">Remaining</th>
 													<th class="col-md-1" style="text-align: center;">Disc%</th>
-													<th class="col-md-1" style="text-align: center;">GRN%</th>
-													<th class="col-md-1" style="text-align: center;">Menu</th>
+													<!-- <th class="col-md-1" style="text-align: center;">GRN%</th> -->
+													<th class="col-md-1" style="text-align: center;">Menu Tittle</th>
 													<th class="col-md-1" style="text-align: center;">Memo
 														& Bill</th>
 
@@ -635,8 +635,8 @@ jQuery(document).ready(function(){
 																
 														<td class="col-md-1" style="text-align: right;"><c:out
 																value="${orderList.discPer}" /></td>
-																<td class="col-md-1" style="text-align: right;"><c:out
-																value="${orderList.grnPer}" /></td>
+																<%-- <td class="col-md-1" style="text-align: right;"><c:out
+																value="${orderList.grnPer}" /></td> --%>
 																<td class="col-md-1" style="text-align: right;"><c:out
 																value="${orderList.menuTitle}" /></td>		
 																
@@ -694,8 +694,8 @@ jQuery(document).ready(function(){
 														</c:when>
 													</c:choose>
 													<th class="col-sm-1" style="text-align: center;">Disc%</th>
-													<th class="col-sm-1" style="text-align: center;">GRN%</th>
-													<th class="col-sm-1" style="text-align: center;">MENU</th>
+												<!-- 	<th class="col-sm-1" style="text-align: center;">GRN%</th> -->
+													<th class="col-sm-1" style="text-align: center;">Menu Tittle</th>
 												
 													<th class="col-md-1" style="text-align: center;">Total</th>
 													<c:choose>
@@ -728,8 +728,8 @@ jQuery(document).ready(function(){
 																		
 																<td class="col-md-1" style="text-align: right;"><c:out
 																		value="${orderList.discPer}" /></td>
-																<td class="col-md-1" style="text-align: right;"><c:out
-																		value="${orderList.grnPer}" /></td>
+																<%-- <td class="col-md-1" style="text-align: right;"><c:out
+																		value="${orderList.grnPer}" /></td> --%>
 																		
 																<td class="col-md-1" style="text-align: right;"><c:out
 																		value="${orderList.menuTitle}" /></td>
