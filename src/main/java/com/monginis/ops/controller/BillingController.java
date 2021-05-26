@@ -39,6 +39,7 @@ import org.zefer.pd4ml.PD4Constants;
 import org.zefer.pd4ml.PD4ML;
 import org.zefer.pd4ml.PD4PageMark;
 
+
 import com.monginis.ops.billing.GetBillDetail;
 import com.monginis.ops.billing.GetBillDetailsResponse;
 import com.monginis.ops.billing.GetBillHeader;
@@ -533,7 +534,7 @@ public class BillingController {
 	public ModelAndView showBillPdf(@PathVariable String transportMode, @PathVariable String vehicleNo,
 			@PathVariable String[] selectedBills, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("IN Show bill PDF Method :/showBillPdf");
-		ModelAndView model = new ModelAndView("billing/frBillPdf");
+		ModelAndView model = new ModelAndView("billing/" + Constant.billFile);
 
 		List<FrBillPrint> billPrintList = new ArrayList<>();
 

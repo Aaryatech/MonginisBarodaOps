@@ -331,15 +331,7 @@ jQuery(document).ready(function(){
 					</div> --%>
 					<div class="clr"></div>
 					</div>
-					
-					<div class="colOuter" id="regCakeDiv">
-						<!-- copy div kalpesh -->
-						
-						
-						<div class="row">
-							<input type="hidden" name="mod_ser" id="mod_ser"
-							value="search_result">
-							<div class="col-md-1 flav_txt"> Type</div>
+					<div class="col-md-1 flav_txt"> Type</div>
 							<div class="col-md-2">
 								<select name="typeOfOrder" id="typeOfOrder" 
 									required onchange="priceListType(this.value)">
@@ -348,6 +340,15 @@ jQuery(document).ready(function(){
 									<option value="2"><c:out value="Sp Cake"></c:out></option>
 								</select>
 							</div>
+					
+					<div class="colOuter" id="regCakeDiv">
+						<!-- copy div kalpesh -->
+						
+						
+						<div class="row">
+							<input type="hidden" name="mod_ser" id="mod_ser"
+							value="search_result">
+							
 							
 							<div class="col-md-1 flav_txt"> Category</div>
 							<div class="col-md-2">
@@ -385,7 +386,23 @@ jQuery(document).ready(function(){
 					<div class="colOuter" id="spCakeDiv" style="display: none;">
 						<!-- copy div kalpesh -->
 						
+						<div id="serchByDiv"  >
+						<div class="col-md-1 flav_txt">Search By</div>
+							<div class="col-md-3">
+								<select  name="searchId" id="searchId"
+									data-placeholder="Choose Sp Flavour" class="chosen-select"
+									style="text-align: left;" tabindex="6"  onchange="searchBy()" required>
+									<option value="1" >By Flavour</option>
+									<option value="2" >By Cake</option>
+									
+									
+									
+								</select>
+							</div>
+							</div>
 						<div class="row">
+						
+							<div id="flavDiv"  >
 							<div class="col-md-1 flav_txt">Flavour</div>
 							<div class="col-md-3">
 								<select multiple="multiple" name="flavourId" id="flavourId"
@@ -398,6 +415,9 @@ jQuery(document).ready(function(){
 								</select>
 							</div>
 							
+							</div>
+							
+							<div id="cakeDiv" style="display: none;">
 							<div class="col-md-1 flav_txt">Cake</div>
 							<div class="col-md-3">
 								<select multiple="multiple" name="cakeId" id="cakeId"
@@ -408,6 +428,7 @@ jQuery(document).ready(function(){
 										<option value="${spCake.spId}"><c:out value="${spCake.spName}"></c:out></option>
 									</c:forEach>
 								</select>
+							</div>
 							</div>
 							
 							<div class="col-md-1">
@@ -894,11 +915,27 @@ function searchSpCall(){
 	//alert("In Sp Cake Search");
 	var flavId=$('#flavourId').val();
 	var cakeIds=$('#cakeId').val();
+	var serchBy=$('#searchId').val();
 	//alert("flav-->"+flavId)
 	//alert("cake-->"+cakeId)
 	var byFlag=0;
 	var ids="";
-	if(flavId==null && cakeIds.length>0){
+	if(serchBy==1){
+		byFlag=2;
+		ids=flavId;
+		//alert(ids)
+		
+	//	alert("Search By Flav")
+		
+	}else if(serchBy==2){
+		byFlag=1;
+		ids=cakeIds;
+	//	alert(ids)
+		
+	//	alert("Search By Cake")
+		
+	}
+	/* if(flavId==null && cakeIds.length>0){
 		
 		byFlag=1;
 		ids=cakeIds;
@@ -912,7 +949,7 @@ function searchSpCall(){
 		ids=flavId;
 		alert(ids)
 		//alert("Search By Flav")
-	}
+	} */
 	
 	$.post('${searchSpPrice}', {
     	ids : JSON.stringify(ids),
@@ -1172,6 +1209,29 @@ function exportToExcel()
 		                });
 		          
 	}
+	
+	</script>
+	
+	<script type="text/javascript">
+	function searchBy() {
+var serchBy=$('#searchId').val();
+if(serchBy==1){
+	$('#table1 td').remove();
+	document.getElementById("flavDiv").style.display = "block"
+		document.getElementById("cakeDiv").style.display = "none"
+}else if(serchBy==2){
+	$('#table1 td').remove();
+	document.getElementById("flavDiv").style.display = "none"
+		document.getElementById("cakeDiv").style.display = "block"
+}else{
+	document.getElementById("flavDiv").style.display = "none"
+		document.getElementById("cakeDiv").style.display = "none"
+}
+ 	// serchByDiv
+		//alert(serchBy)
+		
+	}
+	
 	
 	</script>
 	<%-- 

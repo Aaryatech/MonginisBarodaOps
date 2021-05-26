@@ -408,7 +408,7 @@ jQuery(document).ready(function(){
 
 								<div class="clearfix"></div>
 
-
+	
 								<div id="table-scroll" class="table-scroll">
 									<div id="faux-table" class="faux-table" aria="hidden"></div>
 									<div class="table-wrap">
@@ -465,6 +465,7 @@ jQuery(document).ready(function(){
 															</tr>
 														</c:forEach>
 													</c:when>
+												
 													<c:otherwise>
 
 														<c:forEach items="${orderHistory}" var="orderList"
@@ -487,7 +488,7 @@ jQuery(document).ready(function(){
 																		minFractionDigits="2" groupingUsed="false"
 																		value="${orderList.orderQty * orderList.orderRate}" />
 																</td>
-																<td class="col-md-1">${orderList.discPer}</td>
+																<td class="col-md-1">${orderList.isPositive}</td>
 																<td class="col-md-1">${orderList.grnPer}</td>
 																<td class="col-md-2"><c:out
 																		value="${orderList.menuTitle}" /></td>

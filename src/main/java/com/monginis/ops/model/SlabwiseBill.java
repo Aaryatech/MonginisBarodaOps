@@ -26,6 +26,9 @@ public class SlabwiseBill{
 	private int billDetailNo;
 	
 	
+	private float igstAmt;//SAC 05-04-2021
+	
+	
 	
 	public float getCessAmt() {
 		return cessAmt;
@@ -107,10 +110,21 @@ public class SlabwiseBill{
 		this.grandTotal = grandTotal;
 	}
 
+	public float getIgstAmt() {
+		return igstAmt;
+	}
+
+	public void setIgstAmt(float igstAmt) {
+		this.igstAmt = igstAmt;
+	}
+
 	@Override
 	public String toString() {
 		return "SlabwiseBill [itemHsncd=" + itemHsncd + ", taxPer=" + taxPer + ", billQty=" + billQty + ", taxableAmt="
 				+ taxableAmt + ", cgstAmt=" + cgstAmt + ", sgstAmt=" + sgstAmt + ", cessAmt=" + cessAmt + ", totalTax="
-				+ totalTax + ", grandTotal=" + grandTotal + ", billDetailNo=" + billDetailNo + "]";
+				+ totalTax + ", grandTotal=" + grandTotal + ", billDetailNo=" + billDetailNo + ", igstAmt=" + igstAmt
+				+ "]";
 	}
+
+	
 }

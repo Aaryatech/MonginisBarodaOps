@@ -158,7 +158,7 @@
 					<div class="title_row">
 						<div class="title_l" style="width: 100%">
 							<div class="order-left"  style=" width:100% !important"  >
-								<h2 class="pageTitle" style="margin: 0; padding: 20px;border: 1px solid #ed1c24;">
+								<h2 class="pageTitle" style="margin: 0; padding: 20px;">
 									<i class="fa fa-pencil" aria-hidden="true"></i> Change Employee Password
 								</h2>
 								
@@ -174,7 +174,7 @@
 								%> --%>
 						</div>	
 						<h4 class="pageTitle" 
-										style="text-align: center;padding : 10px; float: right;  color: #ff0000;"><p id="passMatch" style="display: none;" >Old Password not Matched</p><%-- ${sessionScope.passMsg} --%></h4>					
+										style="text-align: center;padding : 10px; float: right;  color: #ff0000;"><%-- ${sessionScope.passMsg} --%></h4>					
 						<div class="clr"></div>
 					</div>
 <c:url value="/matchPassword" var="matchPassword" ></c:url>
@@ -194,7 +194,9 @@
 												<input class="texboxitemcode" placeholder="Previous Password" onchange="matchPassword()"
 													name="oldPassword" id="oldPassword" type="password" required="required">
 											</div>
+											
 										</div>
+										<div style="float: inline-end;" ><span id="passMatch" style="display: none; color: red;" >Old Password not Matched</span></div>
 
 										<div class="profile">
 											<div class="profilefildset">New Password</div>

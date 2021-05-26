@@ -49,12 +49,12 @@ th {
 
 </head>
 <body onload="myFunction()">
-<h3 align="center">${FACTORYNAME}</h3>
-<p align="center">${FACTORYADDRESS}</p>
-<h4 align="center">${frName}</h4>
-<h5 align="center">${toDate}</h5>
+<h3 align="center">${FACTORYNAME},${FACTORYADDRESS}</h3>
+
+<h4 align="center">${frName},Price List(${toDate})</h4>
+<h5 align="center"></h5>
 	
-<div align="center"> <h5> Price List&nbsp;&nbsp;&nbsp;&nbsp; <%-- From &nbsp; ${fromDate}  &nbsp;To &nbsp; ${toDate} --%></h5></div>
+<div align="center"> </div>
 	<table id="table1" class="table table-advance" border="1">
 															<thead>
 																<tr class="bgpink">
