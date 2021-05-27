@@ -2,6 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/loader.css">
@@ -221,7 +223,7 @@ table, th, td {
 						
 						<div class="input_row">
 						 <c:set var="divStyleP" value="style=display:none"></c:set>
-					            <c:if test="${p1==0}">
+					            <c:if test="${p1==1}">
 					            <c:set var="divStyleP" value=""></c:set>
 					            </c:if>
 					            
@@ -273,7 +275,28 @@ table, th, td {
 							<div class="date_one increse" id="d9" ${divStyleQ}>
                             	<!-- <div class="form_field"> -->
                                  <select   id="items" name="items" multiple="multiple"  class="chosen-select">
+                                 <c:choose>
+                                 <c:when test="${selectedCatId==5}">
+                                 <c:forEach items="${itemList}" var="itemList">
+                                 <c:set var="isFound" value="0"></c:set>
+                                 <c:forEach var="selItem" items="${selectedItemArray}">
+                                 <c:if test="${selItem==itemList.spId}">
+                                 <c:set var="isFound" value="1"></c:set>
+                                 </c:if>
+                                 </c:forEach>
+                                 <c:choose>
+                                 <c:when test="${isFound==1}">
+                                                                 <option selected value="${itemList.spId}">${itemList.spName}-${itemList.spCode}</option>
                                  
+                                 </c:when>
+                                 <c:otherwise>
+                                                                 <option value="${itemList.spId}">${itemList.spName}-${itemList.spCode}</option>
+                                 
+                                 </c:otherwise>
+                                 </c:choose>
+                                 </c:forEach>
+                                 </c:when>
+                                 <c:otherwise>
                                  <c:forEach items="${itemList}" var="itemList">
                                  <c:set var="isFound" value="0"></c:set>
                                  <c:forEach var="selItem" items="${selectedItemArray}">
@@ -292,6 +315,9 @@ table, th, td {
                                  </c:otherwise>
                                  </c:choose>
                                  </c:forEach>
+                                 </c:otherwise>
+                                 </c:choose>
+                                 
                                     </select>
                             <!-- </div> -->
                             </div>
@@ -393,6 +419,7 @@ table, th, td {
 
 											<th style="text-align: center; white-space: nowrap;">Select</th>
 											<th style="text-align: center; white-space: nowrap;">Item Name</th>
+											<th style="text-align: center; white-space: nowrap;">Invoice</th>
 											<th style="text-align: center; white-space: nowrap;">Purchase</th>
 
 											<th style="text-align: center; white-space: nowrap;">GVN Qty</th>
@@ -417,6 +444,10 @@ table, th, td {
 													value="${gvnConfList.billDetailNo}"  /></td>
 
 												<td style="white-space: nowrap;">${gvnConfList.itemName}</td>
+												<fmt:formatDate pattern = "yyyy-MM-dd" 
+         value = "${gvnConfList.billDate}" var="invDate" />
+												<td style="white-space: nowrap;">${gvnConfList.invoiceNo}-${invDate}</td>
+												
 												<td style="text-align: right; white-space: nowrap;">${gvnConfList.billQty}</td>
 												<td style="text-align: center; white-space: nowrap;"><input type="text"
 													name="gvn_qty${gvnConfList.billDetailNo}"
@@ -565,16 +596,25 @@ $
 		},
 		function(data) {
 			var len=data.length;
+		
 			$('#items')
 		    .find('option')
 		    .remove()
 		    .end()
 			 $("#items").append($("<option></option>").attr( "value",-1).text("ALL"));
 			for ( var i = 0; i < len; i++) {
-               $("#items").append(
-                       $("<option></option>").attr(
-                           "value", data[i].itemId).text(data[i].itemName)
-                   );
+				if(parseInt(catId)==5){
+					 $("#items").append(
+		                       $("<option></option>").attr(
+		                           "value", data[i].spId).text(data[i].spName+" "+data[i].spCode)
+		                   );
+				}else{
+					 $("#items").append(
+		                       $("<option></option>").attr(
+		                           "value", data[i].itemId).text(data[i].itemName)
+		                   );
+				}
+              
 			}
 			   $("#items").trigger("chosen:updated");
 			   $('#loader').hide();

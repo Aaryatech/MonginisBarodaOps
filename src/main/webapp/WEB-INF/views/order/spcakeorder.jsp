@@ -807,7 +807,7 @@ ${currentTime}
  
  
 	<div class="colOuter">
-	<div class="col1"><div class="col1title">DOB11</div></div>
+	<div class="col1"><div class="col1title">DOB</div></div>
 		
 		<div class="col2full"><input id="dob" class="texboxitemcode texboxcal" autocomplete="off" placeholder="<%=fDate %>" name="dob" type="text"required></div>
       </div>
@@ -2167,6 +2167,9 @@ if(exDate!=null){
   $( function() {
     $( "#datepicker5" ).datepicker({ dateFormat: 'dd-mm-yy' });
   } );
+  $( function() {
+	    $( "#dateOfBirth" ).datepicker({ dateFormat: 'dd-mm-yy' });
+	  } );
   </script>
   <!-----------------------------------------END----------------------------------------------------->
   <!-------------------------Getting Available Slots On Submit Click -------------------------------->
@@ -2627,8 +2630,8 @@ function setData(flavourAdonRate,mrp,profitPer) {
 							<div class="profile">
 								<div class="profilefildset">DOB</div>
 								<div class="profileinput">
-									<input name="dateOfBirth" type="date" class="texboxitemcode"
-										id="dateOfBirth" value=""  placeholder="Date Of Birth"/>
+									<input name="dateOfBirth" type="date"  class="texboxitemcode texboxcal"
+										id="dateOfBirth"     placeholder="Date Of Birth"/>
 								</div>
 							</div>
 							
@@ -2887,6 +2890,7 @@ function addCustomer() {
 							//alert(JSON.stringify(data.customerList));
 
 							if (data.error == false) {
+								$("#sp_cust_id").empty().trigger('change')
 
 								//var html = '<option value="0" selected>Select Customer</option>';
 								var html = '';
@@ -2895,6 +2899,7 @@ function addCustomer() {
 								for (var i = 0; i < len; i++) {
 
 									if (data.customerList[i].custId == data.addCustomerId) {
+										//alert("In OK")
 										html += '<option value="' + data.customerList[i].custId + '" selected>'
 												+ data.customerList[i].custName
 												+ '&nbsp;'
@@ -2914,12 +2919,16 @@ function addCustomer() {
 									}
 
 								}
-								$('#loader').hide();
-								$('#sp_cust_id').html(html);
+								//$('#sp_cust_id').html(html);
+								//$("#sp_cust_id").trigger("chosen:updated");
+								$("#sp_cust_id").append(html).trigger('change');
 
-								$("#sp_cust_id").trigger("chosen:updated");
-								/* $('.chosen-select').trigger(
-										'chosen:updated'); */
+								$('#loader').hide();
+								
+
+								
+								/*  $('.chosen-select').trigger(
+										'chosen:updated');  */
 								
 								document.getElementById("pincode").value = "";
 								document.getElementById("remark").value = "";

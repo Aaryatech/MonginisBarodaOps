@@ -3687,9 +3687,9 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 			 document.getElementById('single').checked = true;
 			 changeSplitSingle(1);
 			$("#modeOfPayDiv").hide();
-			
-			 let element = document.getElementById('billType');
-			    element.value = 1;
+			//sac commented on 27-05-2021
+			 //let element = document.getElementById('billType');
+			   // element.value = 1;
 			    
 		}
 
@@ -3756,7 +3756,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 			   });
 	}
 	function submitBillByPaymentOption(printbilltype) {
-		 
+		// alert("Ok")
 								var advAmt = 0;  
 								var flagPayable=0;
 								
@@ -3893,9 +3893,11 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 									alert("Please Enter Amount");
 								}else
 									if(creditBill==1){
-										billType=0;
-										payType=0;
+										alert("billType" +billType+ "payType " +payType);
+										//billType=0;
+										//payType=0;
 									}
+								alert("billType" +billType+ "payType " +payType);
 									if(payTypeFlag==1){
 										 alertify.error(msg); 
 									}else{
@@ -4081,8 +4083,9 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 
 															var totalPayableAmt=parseFloat($('#totalPayableAmt').text());
 
-															//submitBill	 //submitBillByPaymentOption		
-							   $
+															//submitBill	 //submitBillByPaymentOption
+															//alert("a"+$('#billType').val()+ "b" +$('#cardType').val())
+							   $ 
 								.post(
 										'${submitBillByPaymentOption}', 
 										{

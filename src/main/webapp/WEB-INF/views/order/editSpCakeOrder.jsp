@@ -569,7 +569,7 @@ select {
               
             </select>
 			</div> --%>
-			<div class="col3" >
+			<div class="col3" style="display: none;" >
 			<c:choose>
 			<c:when test="${delFlag==true}">
 			<select name="spMenuId" data-placeholder="Menu"  tabindex="-1" id="spMenuId" required>
@@ -957,11 +957,11 @@ $(document).ready(function() {
 				</c:forEach>
 				
 			  </select>
-			  &nbsp; &nbsp; &nbsp;
+			<!--   &nbsp; &nbsp; &nbsp;
 			    <button class="plus_btn addcust_open" type="button"
 						onclick="openNewCustPopUp()">
 				<i class="fa fa-plus" aria-hidden="true"></i>
-			</button> 
+			</button>  -->
 		<div class="col2full"><input class="texboxitemcode texboxcal2" autocomplete="off"  placeholder="Customer Name" name="sp_cust_name" type="hidden" id="sp_cust_name" value="${spCakeOrder.spCustName}" required></div>
 		</div> 	
 <%-- 		<div class="col3"><input id="datepicker4" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker4" type="text"required></div>
@@ -980,7 +980,7 @@ $(document).ready(function() {
 	</div>
 	
 	<div class="colOuter" id="ctype2">
-			<div class="col1"><div class="col1title" id="cktype">Cake Type Shape</div></div>
+			<div class="col1"><div class="col1title" id="cktype22">Cake Type Shape</div></div>
 	
 			<div class="col2full">
 			<%-- <input class="texboxitemcode" placeholder="Cake Type"  value="${spCakeOrder.exVar1}" name="ctype" type="text" id="ctype" required autocomplete="off"> --%>
@@ -995,13 +995,13 @@ $(document).ready(function() {
 	
 	</div>
 	<div class="colOuter" >
-			<div class="col1"><div class="col1title" id="cktype">Email</div></div>
+			<div class="col1"><div class="col1title" id="cktype33">Email</div></div>
 	
 			<div class="col2full"><input class="texboxitemcode" placeholder="Email" name="email_id" type="text" value="${spCakeOrder.custEmail}" id="email_id" required autocomplete="off"></div>
 	
 	</div>
 	<div class="colOuter" >
-			<div class="col1"><div class="col1title" id="cktype">GST NO.</div></div>
+			<div class="col1"><div class="col1title" id="cktype32">GST NO.</div></div>
 	
 			<div class="col2full"><input class="texboxitemcode"  placeholder="GST NO." name="gstin" value="${spCakeOrder.custGstin}" type="text" id="gstin" required autocomplete="off"></div>
 	
