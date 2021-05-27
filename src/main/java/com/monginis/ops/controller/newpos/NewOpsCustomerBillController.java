@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -547,7 +548,9 @@ System.err.println("calStock " +calStock);
 								it.setTax2(tax2);
 								it.setCatId(catId);
 								it.setAviableQty(avQty);
+								it.setItemKeyIndex(itemList.size());
 								itemList.add(it);
+								
 								errorMsg.setItemList(itemList);
 								errorMsg.setError(false);
 								errorMsg.setMsg("Item added in cart.");
@@ -578,6 +581,7 @@ System.err.println("calStock " +calStock);
 					it.setTax2(tax2);
 					it.setCatId(catId);
 					it.setAviableQty(avQty);
+					it.setItemKeyIndex(itemList.size());
 					itemList.add(it);
 					errorMsg.setItemList(itemList);
 					errorMsg.setError(false);
@@ -591,8 +595,17 @@ System.err.println("calStock " +calStock);
 
 			//Collections.sort(itemList, itemList.size());
 			//System.err.println("itemList 3"+itemList);
-			itemList=reverseList(itemList);
+			//itemList=reverseList(itemList);
 			System.err.println("itemList 3"+itemList);
+			
+			Collections.sort(itemList, new Comparator<BillItemList>() {
+			    @Override
+			    public int compare(BillItemList o1, BillItemList o2) {
+			        return o2.getItemKeyIndex().compareTo(o1.getItemKeyIndex());
+			    }
+			});
+			System.err.println("itemList final"+itemList);
+
 			errorMsg.setItemList(itemList);
 
 		} catch (Exception e) {
@@ -1233,6 +1246,7 @@ System.err.println("calStock " +calStock);
 			}catch (Exception e) {
 				payType = 0;
 			}
+			System.err.println("billType " +billType+ "payType " +payType);
 			String payTypeSplit = request.getParameter("payTypeSplit");
 			float cashAmt = Float.parseFloat(request.getParameter("cashAmt"));
 			float cardAmt = Float.parseFloat(request.getParameter("cardAmt"));

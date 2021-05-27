@@ -36,6 +36,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.monginis.ops.billing.SellBillDetail;
 import com.monginis.ops.billing.SellBillHeader;
+import com.monginis.ops.common.Common;
 import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.AddCustemerResponse;
@@ -652,7 +653,11 @@ public class OpsController {
 			save.setCustName(customerName);
 			save.setPhoneNumber(mobileNo);
 			save.setIsBuissHead(Integer.parseInt(buisness));
-			save.setCustDob(dateOfBirth);
+			try {
+			save.setCustDob(DateConvertor.convertToDMY(dateOfBirth));
+			}catch (Exception e) {
+				
+			}
 			save.setCompanyName(companyName);
 			save.setAddress(custAdd);
 			save.setGstNo(gstNo);

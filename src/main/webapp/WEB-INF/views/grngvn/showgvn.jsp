@@ -420,6 +420,7 @@ table, th, td {
 											<th style="text-align: center; white-space: nowrap;">Select</th>
 											<th style="text-align: center; white-space: nowrap;">Item Name</th>
 											<th style="text-align: center; white-space: nowrap;">Invoice</th>
+											<th style="text-align: center; white-space: nowrap;">Expiry Date</th>
 											<th style="text-align: center; white-space: nowrap;">Purchase</th>
 
 											<th style="text-align: center; white-space: nowrap;">GVN Qty</th>
@@ -447,6 +448,7 @@ table, th, td {
 												<fmt:formatDate pattern = "yyyy-MM-dd" 
          value = "${gvnConfList.billDate}" var="invDate" />
 												<td style="white-space: nowrap;">${gvnConfList.invoiceNo}-${invDate}</td>
+												<td style="white-space: nowrap;">${gvnConfList.expiryDate}</td>
 												
 												<td style="text-align: right; white-space: nowrap;">${gvnConfList.billQty}</td>
 												<td style="text-align: center; white-space: nowrap;"><input type="text"

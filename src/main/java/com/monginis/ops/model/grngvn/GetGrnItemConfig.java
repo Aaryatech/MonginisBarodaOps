@@ -28,7 +28,18 @@ public class GetGrnItemConfig {
     private float discPer;
     private String hsnCode;
     
-    
+	private String expiryDate;
+	
+	
+
+	public String getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(String expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
 	public float getCessPer() {
 		return cessPer;
 	}

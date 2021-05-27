@@ -66,6 +66,8 @@ import com.monginis.ops.model.MCategoryList;
 import com.monginis.ops.model.PostFrItemStockDetail;
 import com.monginis.ops.model.PostFrItemStockHeader;
 import com.monginis.ops.model.SellBillDetailList;
+import com.monginis.ops.model.SpCakeResponse;
+import com.monginis.ops.model.SpecialCake;
 import com.monginis.ops.model.creditnote.CreditNoteHeaderPrint;
 import com.monginis.ops.model.creditnote.CreditPrintBean;
 import com.monginis.ops.model.creditnote.CrnDetailsSummary;
@@ -1723,6 +1725,13 @@ int p1=-1,p2=-1;
 						.exchange(Constant.URL + "getCurrentOpStock", HttpMethod.POST, new HttpEntity<>(menuMap), typeRef);
 				detailList = responseEntity.getBody();
 				modelAndView.addObject("itemList", detailList);
+				
+				if(catId==5) {
+					SpCakeResponse spCakeResponse = restTemplate.getForObject(Constant.URL + "showSpecialCakeList",
+							SpCakeResponse.class);
+					List<SpecialCake>  spList=spCakeResponse.getSpecialCake();
+					modelAndView.addObject("itemList", spList);
+				}
 				modelAndView.addObject("selectedItemArray", itemArray);
 				modelAndView.addObject("selectedCatId", catId);
 				
@@ -1748,7 +1757,7 @@ int p1=-1,p2=-1;
 			for (int i = 0; i < grnConfList.size(); i++) {
 
 				objShowGvn = new ShowGrnBean();
-
+				objShowGvn.setExpiryDate(grnConfList.get(i).getExpiryDate());
 				objShowGvn.setBillDate(grnConfList.get(i).getBillDate());
 				objShowGvn.setBillDetailNo(grnConfList.get(i).getBillDetailNo());
 				objShowGvn.setBillNo(grnConfList.get(i).getBillNo());

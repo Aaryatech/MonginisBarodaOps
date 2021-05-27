@@ -2,7 +2,20 @@ package com.monginis.ops.model.newpos;
 
 public class BillItemList {
 	
+	private Integer itemKeyIndex;
 	
+	 
+
+	public Integer getItemKeyIndex() {
+		return itemKeyIndex;
+	}
+
+
+	public void setItemKeyIndex(int itemKeyIndex) {
+		this.itemKeyIndex = itemKeyIndex;
+	}
+
+
 	private int itemId;
 	
 	private String itemName;

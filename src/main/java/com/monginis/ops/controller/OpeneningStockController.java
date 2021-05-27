@@ -26,6 +26,8 @@ import com.monginis.ops.model.CategoryListResponse;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.MCategoryList;
 import com.monginis.ops.model.PostFrItemStockDetail;
+import com.monginis.ops.model.SpCakeResponse;
+import com.monginis.ops.model.SpecialCake;
 import com.monginis.ops.model.setting.NewSetting;;
 
 @Controller
@@ -87,7 +89,7 @@ if(isFrAllowToOPStock.getSettingValue1().equalsIgnoreCase("1")) {
 	}
 
 	@RequestMapping(value = "/getItemListById", method = RequestMethod.GET)
-	public @ResponseBody List<PostFrItemStockDetail> getItems(HttpServletRequest request,
+	public @ResponseBody Object getItems(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
@@ -98,7 +100,7 @@ if(isFrAllowToOPStock.getSettingValue1().equalsIgnoreCase("1")) {
 		RestTemplate restTemplate = new RestTemplate();
 
 		MultiValueMap<String, Object> menuMap = new LinkedMultiValueMap<String, Object>();
-
+if(catId!=5) {
 		menuMap.add("frId", frDetails.getFrId());
 		menuMap.add("catId", catId);
 
@@ -107,10 +109,15 @@ if(isFrAllowToOPStock.getSettingValue1().equalsIgnoreCase("1")) {
 		ResponseEntity<List<PostFrItemStockDetail>> responseEntity = restTemplate
 				.exchange(Constant.URL + "getCurrentOpStock", HttpMethod.POST, new HttpEntity<>(menuMap), typeRef);
 		detailList = responseEntity.getBody();
-
-		System.out.println("Item List " + detailList.toString());
-
 		return detailList;
+}else {
+	SpCakeResponse spCakeResponse = restTemplate.getForObject(Constant.URL + "showSpecialCakeList",
+			SpCakeResponse.class);
+	List<SpecialCake>  spList=spCakeResponse.getSpecialCake();
+	return spList;
+}
+		 
+		
 	}
 
 	@RequestMapping(value = "/saveFrOpeningStockProcess", method = RequestMethod.POST)
