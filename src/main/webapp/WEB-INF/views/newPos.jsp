@@ -316,7 +316,9 @@ label:before {
 							class="slider round"></span>
 					</label>
 
-					</span> <select name="holdBillNo" id="holdBillNo"
+					</span> 
+					<div class="choose_drop">
+					<select name="holdBillNo" id="holdBillNo"
 						data-placeholder="Select Bill No" class="input_add chosen-select"
 						onchange="revertHoldBillOnCurrent()">
 						<option value="" disabled="disabled" selected>Select Bill
@@ -333,7 +335,7 @@ label:before {
 							</c:choose>
 						</c:forEach>
 
-					</select>
+					</select></div>
 				</div>
 				<div class="clr"></div>
 			</header>
@@ -816,7 +818,7 @@ label:before {
 					<div class="add_customer_bx">
 						<!--customer row 1-->
 						<div class="pending_row">
-							<a href="#" class="    pending_btn"
+							<a href="#" class="pending_btn"
 								onclick="openMyModal('myModalForCredit',0)">Pending Amt : <span
 								id="credAmt">00.00</span>
 							</a><a href="#" class="pending_btn"
@@ -1151,122 +1153,47 @@ label:before {
 							</div>
 						</div>
 						
-						<%-- <div class="one_row bg_3 SAC" id="modeOfPayDiv" style="display: none">
-							<div class="radio_l"  id="singleDiv">							
-								<div class="radio_row popup_radio" style="margin:3px 0px 0 0;">
-									<div class="gnd">Mode</div>
-											<select name="billType" id="billType" data-placeholder="Type"
-									onchange="onPayTypeChange(this.value)" class="input_add "
-									style="text-align: left; font-size: 16px;">
-									<!-- <option value="1" style="text-align: left;" selected>Cash</option>
-									<option value="2" style="text-align: left;">Card</option>
-									<option value="3" style="text-align: left;">E-Pay</option> -->
-									<option value="0" style="text-align: left;">Select
-										Payment Mode</option>
-									<c:forEach items="${payModeList}" var="payModeList">
-										<option value="${payModeList.modeId}"
-											style="text-align: left;">${payModeList.modeName}</option>
-									</c:forEach>
-
-								</select>
-										</div>
-							</div>
-							
-							<div class="remark_bx">
-								<div class="total_one remark" id="cardTypeDiv"> Sub Mode 
-							<select name="cardType" id="cardType"
-									data-placeholder="Card Type" class="input_add "
-									style="text-align: left; font-size: 16px;">
-									<option value="" style="text-align: left;">Select Card</option>
-
-									<!-- <option value="4" style="text-align: left;">Debit Card</option>
-									<option value="5" style="text-align: left;">Credit
-										Card</option> -->
-								</select>
-</div>
-							</div>
-						</div> --%>
+						<div class="one_row bg_2">
+							<label style="font-weight: 700; padding: 5px 5px 0 0;" class="gnd">Remark&nbsp;</label>
+								
+								<input type="text"  name="payRemark" id="payRemark" class="form-control single_feeld" placeholder="Remark"
+								style="text-align: left; border-radius: 3px; border:1px solid #d2d6de; padding: 2px 5px; font-size:14px;" />
+						</div>
+						
+						
 					
 						<table>
-							 <%-- <tr bgcolor="#ffe5e6">
-								<td width="40%">Total Items :</td>
-								<td id="totalCnt">${totalItemCount}</td>
-								<td width="40%">Total :</td>
-								<td align="right" style="text-align: right; font-weight: bold;" id="totalAmt"><fmt:formatNumber
-										type="number" groupingUsed="false" value="${totalTaxableAmt}"
-										maxFractionDigits="2" minFractionDigits="2" /></td>
-							</tr>  --%>
-							<%-- <tr bgcolor="#ffe5e6" style="border-top: 1px solid #f4f4f4;">
-								<!-- <td>Discount :</td>
-								<td>(0.00) 0.00</td> -->
-								<td>
-								 Discount % 
-					 
-						<input type="text" name="discPer" id="discPer" step="0.01"
-							oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-							onchange="itemDiscPerCalculation(1)"
-							onkeyup="itemDiscPerCalculation(1)" class="form-control"
-							value="0" placeholder="Disc %"
-							style="text-align: center; width: 90px; border-radius: 20px;" />
-						
-						<label for="discAmtLabel"
-							style="font-weight: 700; padding-left: 5px;">&nbsp;Disc
-							Amt&nbsp;</label> <input type="text" name="discAmt" id="discAmt"
-							oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-							onchange="itemDiscPerCalculation(2)"
-							onkeyup="itemDiscPerCalculation(2)" class="form-control"
-							value="0" placeholder="Disc Amt"
-							style="text-align: center; width: 90px; border-radius: 20px;" />
-					 </td>
-								
-								<td style="display: none">Order Tax :</td>
-								<td  align="right" style="text-align: right;display: none;" id="totalTax"><fmt:formatNumber
-										type="number" groupingUsed="false" value="${totalTaxAmt}"
-										maxFractionDigits="2" minFractionDigits="2" /></td>
-										
-										<input type="hidden"   id="totalTax"><fmt:formatNumber
-										type="number"  groupingUsed="false" value="${totalTaxAmt}"
-										maxFractionDigits="2" minFractionDigits="2" />
-							</tr> --%>
-							 <%-- <tr bgcolor="#fefcd5" style="border-top: 1px solid #f4f4f4;">
-								<td style="font-weight: 600;">Total Payable :</td>
+							 
 							
-								<td style="font-weight: 600; text-align: right;" align="right"
-									id="finalAmount"><fmt:formatNumber type="number"
-										groupingUsed="false" value="${totalAmt+totalTaxAmt}"
-										maxFractionDigits="2" minFractionDigits="2" /></td>
-							</tr> --%> 
 						</table>
 					</div>
 
 
 					<!--five button here-->
-					<div class="buttons_row">
+					<div class="four_button">
+						<ul>
+							<li><a href="#" class="hold hold_btn" onclick="billOnHold()">Hold</a></li>
+							<li><a href="#" class="hold can_btn" onclick="cancelFromHoldBill(${key})">Cancel Bill</a></li>
+							<li><a href="#" class="hold bill_btn" onclick="submitBill(2)">Print Bill</a></li>
+							<li><a href="#" class="hold pay_btn initialism " onclick="submitBill(10)">Bill</a></li>
+						</ul>
+					</div>
+					
+					
+					<%-- <div class="buttons_row">
 						<div class="button_one">
 							<a href="#" class="hold hold_btn" onclick="billOnHold()">Hold</a>
-							<a href="#" class="hold can_btn"
-								onclick="cancelFromHoldBill(${key})">Cancel Hold Bill</a>
-							<!-- onclick="cancelBill(1)" -->
+							<a href="#" class="hold can_btn" onclick="cancelFromHoldBill(${key})">Cancel Hold Bill</a>
 						</div>
 						<div class="button_one">
-							<button id="payment1"
-								class="hold print_btn   initialism payment_open"
-								style="display: none;">Payment</button>
-							<!-- <a href="#" class="hold print_btn  initialism  "
-								onclick="openPaymentPopup()">Payment Option</a> -->
-							<!-- 	<a href="#" class="hold print_btn"  >Print Order</a>  -->
-							<!-- <button  id="payment1" class="hold bill_btn   "  style="display: none;">Print Bill</button> -->
-							<a href="#" class="hold bill_btn" onclick="submitBill(2)">Print
-								GST Bill</a>
+							<button id="payment1" class="hold print_btn   initialism payment_open" style="display: none;">Payment</button>
+							<a href="#" class="hold bill_btn" onclick="submitBill(2)">Print GST Bill</a>
 						</div>
 						<div class="button_two">
-							<!-- 	<button  id="payment1" class="hold pay_btn  initialism payment_open"  style="display: none;">Payment</button>
-							<a href="#"   class="hold pay_btn  initialism " onclick="paymentClick()">Payment</a> -->
-							<a href="#" class="hold pay_btn  initialism "
-								onclick="submitBill(10)">Bill</a>
+							<a href="#" class="hold pay_btn initialism" onclick="submitBill(10)">Bill</a>
 						</div>
 
-					</div>
+					</div> --%>
 
 					<!-- <div class="text_count">
 						Paid Amount :
@@ -1289,10 +1216,7 @@ label:before {
 									class="form-control one_feeld" value="0" placeholder="Amount"
 									style="text-align: center; border-radius: 20px;" />
 									
-								&nbsp;&nbsp; <label style="font-weight: 700; padding-left: 5px;">Remark&nbsp;</label>
-								
-								<input type="text"  name="payRemark" id="payRemark" class="form-control two_feeld" placeholder="Remark"
-								style="text-align: left; border-radius: 3px; border:1px solid #d2d6de; padding: 2px 5px;" />
+								&nbsp;&nbsp; 
 								
 									
 
@@ -1872,7 +1796,7 @@ label:before {
 
 	</form>
 
-	<div id="custBills" class="add_customer">
+	<div id="custBills" class="add_customer full">
 		<div id="overlay">
 			<div class="clock"></div>
 		</div>
@@ -1995,7 +1919,7 @@ label:before {
 
 	</div>
 
-	<div id="myModalForCredit" class="add_customer">
+	<div id="myModalForCredit" class="add_customer full">
 		<div id="overlay">
 			<div class="clock"></div>
 		</div>
@@ -2052,30 +1976,23 @@ label:before {
 				</div>
 
 				<div class="add_frm">
-
-					<div class="add_frm_one">
-						<div class="add_customer_one">Type</div>
-						<div class="add_input">
-							<select name="modType1" id="modType1" data-placeholder="Type"
+					<div class="one_line_frm">
+						<div class="pop_one_frm">
+							<div class="type_txt">Type</div>
+							<div class="a">
+								<select name="modType1" id="modType1" data-placeholder="Type"
 								onchange="onPayTypeChange1(this.value)" class="input_add "
-								style="text-align: left; font-size: 16px;">
-								<!-- <option value="1" style="text-align: left;" selected>Cash</option>
-								<option value="2" style="text-align: left;">Card</option>
-								<option value="3" style="text-align: left;">E-Pay</option> -->
-							<!-- 	<option value="0" selected style="text-align: left;">Select
-									Payment Mode</option> -->
+								style="text-align: left; font-size: 16px;">								
 								<c:forEach items="${payModeList}" var="payModeList">
 									<option value="${payModeList.modeId}" style="text-align: left;">${payModeList.modeName}</option>
 								</c:forEach>
 							</select>
-
+							</div>
 						</div>
-					</div>
-
-					<div class="add_frm_one">
-						<div class="add_customer_one">Card Type</div>
-						<div class="add_input">
-							<select name="cardType1" id="cardType1"
+						<div class="pop_one_frm">
+							<div class="type_txt">Card Type</div>
+							<div class="a">
+								<select name="cardType1" id="cardType1"
 								data-placeholder="Card Type" class="input_add "
 								style="text-align: left; font-size: 16px;">
 								<option value="0" selected style="text-align: left;">Select Card</option>
@@ -2083,17 +2000,11 @@ label:before {
 								<option value="4" style="text-align: left;">Debit Card</option>
 								<option value="5" style="text-align: left;">Credit Card</option>
 							</select>
-
+							</div>
 						</div>
-						<div class="clr"></div>
-					</div>
-
-					
-
-						<div class="add_frm_one" id="epayTypeDiv1"
-							style="display: none; margin: 0px;">
-							<div class="add_customer_one">E-Pay Type</div>
-							<div class="add_input">
+						<div class="pop_one_frm"  id="epayTypeDiv1" style="display: none; ">
+							<div class="type_txt">E-Pay Type</div>
+							<div class="a">
 								<select name="ePayType1" id="ePayType1"
 									data-placeholder="E-Pay Type" class="input_add"
 									style="text-align: left; font-size: 16px;">
@@ -2105,23 +2016,30 @@ label:before {
 									<option value="9" style="text-align: left;">Amazon Pay</option>
 								</select>
 							</div>
-							<div class="clr"></div>
 						</div>
-					
-
-					<div class="add_frm_one" >
-						<div class="" style="margin: 0px;">
-							<div class="add_customer_one">Received Amt</div>
-							<div class="add_input">
+						<div class="pop_one_frm">
+							<div class="type_txt">Received Amt</div>
+							<div class="a">
 								<input placeholder="Received Amt" name="receivedAmt"
 									onchange="settleCustBill()" id="receivedAmt" type="text"
 									value="0" class="input_add" style="font-size: 16px;"
 									onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+									
+									<input type="hidden" name="finTotal" id="total" value="0">
 							</div>
-							<div class="clr"></div>
 						</div>
-						<input type="hidden" name="finTotal" id="total" value="0">
 					</div>
+
+					
+
+					
+
+					
+
+						
+					
+
+					
 				</div>
 
 				<div class="pop_btns">
@@ -2129,7 +2047,7 @@ label:before {
 						<button class="addcust_close close_btn" onclick="closeMyModal('myModalForCredit')">Close</button>
 					</div>
 					<div class="close_r">
-						<button type="button" class="buttonsaveorderpos" id="sbtbtn"
+						<button type="button" class="btn additem_btn" id="sbtbtn"
 							disabled="disabled">Submit</button>
 							
 						

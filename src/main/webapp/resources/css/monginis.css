@@ -784,6 +784,9 @@ background-position: right .7em top 50%, 0 0;}
 .tableFixHead thead th.bgpink{padding: 4px 16px;}
 
 
+.radio_owen{float: left; width:50%;}
+
+
 
 /*--css-divices--*/
 @media screen and (max-width:1366px){

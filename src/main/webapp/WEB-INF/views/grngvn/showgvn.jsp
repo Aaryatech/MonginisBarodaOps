@@ -182,16 +182,21 @@ table, th, td {
 					<div class="col-md-12">
 						<div class="radio_row">
 							<div class="input_row">
-					            <div class="radio_one" id="d1">
+								
+								<div class="radio_owen">
+									<div class="radio_one" id="d1">
 					            <input type="radio" id="bill" name="prodBill" ${p1==1 ? 'checked' : ''} value="1" onchange="setDiv(1,this.value)">
 					            <label for="bill" class="checkbox_txt"> As Per Bill</label>
 					            </div>
-					
+					            
 					            <div class="radio_one" id="d2">
 					            <input type="radio" id="product" name="prodBill" ${p1==0 ? 'checked' : ''} value="0" onchange="setDiv(2,this.value)">
 					            <label for="product" class="checkbox_txt"> As per Product</label>
 					            </div>
-					            <c:set var="divStylep2" value="style=display:none"></c:set>
+					            
+								</div>
+								<div class="radio_owen">
+									<c:set var="divStylep2" value="style=display:none"></c:set>
 					            <c:if test="${p1==1}">
 					            <c:set var="divStylep2" value=""></c:set>
 					            </c:if>
@@ -204,6 +209,13 @@ table, th, td {
 					            <input type="radio" id="datewise" name="billdatewise" value="0" ${p2==0 ? 'checked' : ''} onchange="setDiv(4,this.value)">
 					            <label for="datewise" class="checkbox_txt"> Datewise</label>
 					            </div>
+								</div>
+							
+							
+					            
+					
+					            
+					            
 					        </div>
 						</div>
 						
