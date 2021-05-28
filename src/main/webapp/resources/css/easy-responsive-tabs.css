@@ -3,7 +3,7 @@
   width:100%; float:left;
   max-width:100%;
 }
-.cd-tabs-content{ border:1px solid #ccc; text-align:left; margin-top:-1px;}
+.cd-tabs-content{ border:1px solid #ccc; text-align:left; margin-top:-1px; height:auto !important;}
 .cd-tabs-content li{ padding:15px /* 27px 27px 5px 27px */;height:auto;}
 .cd-tabs-content .bgpink th{ text-align:center;}
 .table-body{background-color:gray !important;}
@@ -219,9 +219,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
   margin-bottom: 2em;
 }
 .additem_btn{
-	
+	border:none;
 	font-size:16px;
-	padding:3px 12px;/* !important */
+	padding:5px 12px;/* !important */
 	background-color: #343690 !important;
 	color:#fff;
 	

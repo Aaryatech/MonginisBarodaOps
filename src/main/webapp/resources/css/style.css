@@ -134,7 +134,7 @@ margin: 0px auto;
 	z-index:1;
 	
 height: auto;
-max-height: 590px;
+max-height: 80vh /* 590px */;
 min-height: 90px;
 
 }
@@ -154,7 +154,7 @@ font-size: 16px;
 }
 
 .table-scroll th, .table-scroll td {
-	padding:5px 10px /* 8px 10px */  /* 8px 3px */;
+	padding:5px 10px /* 8px 10px */  /* 8px 3px */; border:1px solid #ccc;
 	vertical-align: top;
 	text-align: left;
 	font-size: 15px /* 18px */;
@@ -442,6 +442,8 @@ width:100px
 @media screen and (max-width:700px){
 	.content{height: auto;}
 	.faux-table{height: 71px;}
+	.pageTitle {padding-bottom: 5px ;
+}
 }
 
 

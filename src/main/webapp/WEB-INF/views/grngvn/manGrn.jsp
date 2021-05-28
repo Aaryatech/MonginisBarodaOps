@@ -81,7 +81,7 @@ table, th, td {
 							<i class="fa fa-refresh" aria-hidden="true"></i>GRN Based on Expiry of Product</h6>
 						</div>
 						<label for="search" class="col-md-3" id="search" style="margin:-10px 0 0 0 ;"> <i
-							class="fa fa-search" style="font-size: 20px"></i> <input
+							class="fa fa-search" ></i> <input
 							type="text" style="border-radius: 25px;" id="myInput"
 							onkeyup="myFunction()" placeholder="Search items by name.."
 							title="Type in a name">
@@ -89,68 +89,25 @@ table, th, td {
 <c:set var="flag" value="0" />
 
 						<div class="clearfix"></div>
-
-						<div id="table-scroll">
-							<!-- class="table-scroll" -->
-							<div id="faux-table" class="faux-table" aria="hidden"
-								style="display: none;">
-								<table id="table_grid1" class="main-table">
-									<thead>
-										<tr class="bgpink">
-											<!--	<th class="col-md-1">Sr No.</th>
-											<th class="col-md-1">Bill No</th>
-											<th class="col-md-1">Date</th>
-<th class="col-md-1">SELECT</th>
-											<th class="col-md-1">Invoice No</th>
-										<th class="col-md-2">Name</th>
-										<th class="col-md-1">Type</th>
-										<th class="col-md-2">Pur Qty</th>
-										<th class="col-md-1">Rate</th>
-										<th class="col-md-1">Grn Rate</th>
-										<th class="col-md-1">Qty</th>
-										<th class="col-md-1">Tax %</th>
-										<th class="col-md-2">Taxable Amt</th>
-										<th class="col-md-1">Tax Amt</th>
-										<th class="col-md-1">Amount</th>
-										<th class="col-md-1">Remark</th>
--->
-										</tr>
-
-									</thead>
-								</table>
-
-
-
-
-							</div>
-							
-							<div class="table-wrap">
-								<table id="table_grid" class="responsive-table" style="font-size: 16px;">
-									<thead>
-										<tr class="bgpink" style="font-size: 15px;">
-											<!-- 	<th class="col-md-1">Sr No.</th>
-											<th class="col-md-1">Bill No</th>
-											<th class="col-md-1">Date</th> -->
-											<th style=" white-space: nowrap;">Select </th>
-											<th style="text-align: center; white-space: nowrap;">Invoice No</th>
-											<th style="text-align: center;  white-space: nowrap;">Invoice Date</th>
-											<th style="text-align: center; white-space: nowrap;">Name</th>
-											<th style="text-align: center; white-space: nowrap;">Type</th>
-											<th style="text-align: center; white-space: nowrap;">Pur Qty</th>
-											<th style="text-align: center; white-space: nowrap;">Rate</th>
-											<!-- 	<th class="col-md-1">Grn Rate</th> -->
-											<th cstyle="text-align: center; white-space: nowrap;">Qty</th>
-											<!-- <th class="col-md-1" style="text-align: center;">Tax %</th>
-											<th class="col-md-2" style="text-align: center;">Taxable
-												Amt</th>
-											<th class="col-md-1" style="text-align: center;">Tax Amt</th> -->
-											<th width="50" style="text-align: center; white-space: nowrap;">Amount</th>
-											<th style="text-align: center;  white-space: nowrap;">Remark</th>
-
-										</tr>
-
-									</thead>
-									<tbody>
+						
+						<div class="tableFixHead">
+	<table id="table_grid">         
+	<thead style="background-color: #f3b5db;">
+		<tr class="bgpink">
+			<th style=" white-space: nowrap;">Select </th>
+			<th style="text-align: center; white-space: nowrap;">Invoice No</th>
+			<th style="text-align: center;  white-space: nowrap;">Invoice Date</th>
+			<th style="text-align: center; white-space: nowrap;">Name</th>
+			<th style="text-align: center; white-space: nowrap;">Type</th>
+			<th style="text-align: center; white-space: nowrap;">Pur Qty</th>
+			<th style="text-align: center; white-space: nowrap;">Rate</th>											
+			<th style="text-align: center; white-space: nowrap;">Qty</th>											
+			<th style="text-align: center; white-space: nowrap;">Amount</th>
+			<th style="text-align: center;  white-space: nowrap;">Remark</th>
+		</tr>
+	</thead>
+	
+	<tbody>
 
 										<c:forEach items="${grnConfList}" var="grnConfList"
 											varStatus="count">
@@ -161,7 +118,7 @@ table, th, td {
 												<td style="text-align: center; white-space: nowrap;"><input
 													type="checkbox" name="select_to_grn"
 													id="${grnConfList.billDetailNo}"
-													value="${grnConfList.billDetailNo}" /></td>
+													value="${grnConfList.billDetailNo}" style="display: inline-block !important;" /></td>
 													
 												<td style="text-align: center;font-size: 15px;  white-space: nowrap;"><c:out
 														value="${grnConfList.invoiceNo}"></c:out></td>
@@ -171,45 +128,19 @@ table, th, td {
 												
 												
 														
-												<td style="text-align: center;font-size: 15px;  white-space: nowrap;"><c:out
+												<td style="text-align: left; font-size: 15px;  white-space: nowrap;"><c:out
 														value="${grnConfList.itemName}"></c:out></td>
-														<td style="text-align: center;  white-space: nowrap;"><c:out
+														<td style="text-align: right;  white-space: nowrap;"><c:out
 																value="${grnConfList.grnType}"></c:out></td>
-												<%-- <c:choose>
-													<c:when test="${grnConfList.grnType==0}">
-														<td class="col-md-1" style="text-align: center;font-size: 16px;"><c:out
-																value="GRN 1(85%)"></c:out></td>
-													</c:when>
-													<c:when test="${grnConfList.grnType==1}">
-														<td class="col-md-1" style="text-align: center;font-size: 16px;"><c:out
-																value="GRN 2(75%)"></c:out></td>
-													</c:when>
-													<c:when test="${grnConfList.grnType==2}">
-														<td class="col-md-1" style="text-align: center;font-size: 16px;"><c:out
-																value="GRN 3(100%)"></c:out></td>
-													</c:when>
-													<c:when test="${grnConfList.grnType==3}">
-														<td class="col-md-1" style="text-align: center;font-size: 16px;"><c:out
-																value="No GRN"></c:out></td>
-													</c:when>
+												
 
-													<c:when test="${grnConfList.grnType==4}">
-														<td class="col-md-1" style="text-align: center;font-size: 16px;"><c:out
-																value="GRN 3(100%)"></c:out></td>
-													</c:when>
-													<c:otherwise>
-														<c:out value="No GRN"></c:out>
-													</c:otherwise>
-
-												</c:choose> --%>
-
-												<td style="text-align: center;font-size: 15px;  white-space: nowrap;"><c:out
+												<td style="text-align: right;font-size: 15px;  white-space: nowrap;"><c:out
 														value="${grnConfList.billQty}"></c:out> <input
 													type="hidden" name="grnqty${grnConfList.billDetailNo}"
 													id="grnqty${grnConfList.billDetailNo}" size="3"
 													readonly="readonly" value="${grnConfList.autoGrnQty}" /></td>
 
-												<td style="text-align: center;font-size: 15px;  white-space: nowrap;"
+												<td style="text-align: right;font-size: 15px;  white-space: nowrap;"
 													id="grn_rate${grnConfList.billDetailNo}"><c:out
 														value="${grnConfList.rate}"></c:out></td>
 
@@ -223,24 +154,7 @@ table, th, td {
 
 
 												</td>
-<%-- 
-												<td class="col-md-1" style="text-align: center;font-size: 16px;"
-													id="tax_per${grnConfList.billDetailNo}"><c:out
-														value="${grnConfList.taxPer}"></c:out></td>
 
-												<fmt:formatNumber var="taxableAmt" type="number"
-													minFractionDigits="2" maxFractionDigits="2"
-													value="${grnConfList.taxableAmt}" />
-
-												<c:set var="taxableAmt" value="${taxableAmt}" />
-
-												<td style="font-size: 16px;" id='taxable_amt${grnConfList.billDetailNo}'
-													style="text-align: center;" class="col-md-1"><c:out
-														value="${taxableAmt}"></c:out></td>
-
-
-												<td style="font-size: 16px;" id='tax_amt${grnConfList.billDetailNo}' class="col-md-1"><c:out
-														value="${grnConfList.taxAmt}"></c:out></td> --%>
 
 												<fmt:formatNumber var="grnAmt" type="number"
 													minFractionDigits="2" maxFractionDigits="2"
@@ -267,10 +181,10 @@ table, th, td {
 											</tr>
 										</c:forEach>
 									</tbody>
-								</table>
-							</div>
-						</div>
+	</table>
+</div>
 
+						
 						<div class="form-group">
 
 							<c:choose>

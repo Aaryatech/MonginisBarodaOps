@@ -45,10 +45,10 @@ jQuery(document).ready(function(){
 
 <style>
 .myInput1 {
-	margin-top: 10px;
+	margin-top: 5px;
 	margin-bottom: 0px;
 	margin-left: 0px;
-	padding: 5px 5px 5px 38px;
+	padding: 5px 5px 5px 30px;
 	width: 100%;
 	background-position: 10px 10px;
 	background-repeat: no-repeat;
@@ -137,38 +137,48 @@ a:hover {
 						</c:if>
 					</c:when>
 				</c:choose>
-				<div class="order-left">
-					<h2 class="pageTitle">
-						<i class="fa fa-birthday-cake" aria-hidden="true"></i>
-						${menuTitle}
-					</h2>
-					<h3 class="pageTitle2">Order Date :
-						${orderDate}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delivery Date :
-						${deliveryDate}</h3>
-
-
-					<form
+				
+				<div class="row_one">
+					<div class="row_one_l">
+						<h2 class="pageTitle">
+							<i class="fa fa-birthday-cake" aria-hidden="true"></i> 
+							${menuTitle}
+						</h2>
+					</div>
+					<div class="row_one_r">
+							<div class="orderclose">Order Closing Time :</div>
+							<div class="ordercloser2">
+								<span>${toTime}</span>
+							</div>
+					</div>
+					<div class="clr"></div>
+				</div>
+				
+				<div class="row_two">
+					<div class="row_date">
+						<span>Order Date : ${orderDate}</span>
+						<span>Delivery Date : ${deliveryDate}</span>
+					</div>
+					
+					<div class="row_previous">
+						<form
 						action="${pageContext.request.contextPath}/showSavouries/${con_index}"
 						name="form2" method="get">
 						<c:if test="${prevDateFlag==1}">
 							<c:set var="prev_ord_del_date" value="${prevDate}">	</c:set>
 						</c:if>
 						
-						<c:if test="${prevDateFlag==0}">
+						<c:if test="${prevDateFlag==0}"> 
 							<c:set var="prev_ord_del_date" value="${deliveryDate}">	</c:set>
 						</c:if>
-					
-					
 						<h3 class="pageTitle2">
-							Previous Delivery Date: <input id="prevdatepicker" autocomplete="off"
-								style="width: 30%" placeholder="Previous Order Date"
+							Previous  Date: &nbsp; &nbsp;<input id="prevdatepicker" autocomplete="off"
+								style="width: 40%" placeholder="Previous Order Date"
 								name="prevdatepicker" type="text"
 								class="texboxitemcode texboxcal" value="${prev_ord_del_date}"
 								onchange="onChangePrevOrderDate(this.value,${con_index});"
-								min="${prev_ord_del_date}"> <input type="submit" vlaue="submit" class="btn additem_btn">
+								min="${prev_ord_del_date}"> <input type="submit" vlaue="submit" class="btn additem_btn" style="margin:0;">
 						</h3>
-
 
 					</form>
 
@@ -177,30 +187,20 @@ a:hover {
 						type="hidden" name="rateCat" value="${frDetails.frRateCat}">
 					<input type="hidden" value="${isSameDayApplicable}"
 						id="isSameDayApplicable" />
-
-				</div>
-
-
-
-
-				<div class="order-right">
-					<div class="ordermto2px">
-						<div class="orderclose">Order Closing Time :</div>
-						<div class="ordercloser2">
-							<span>${toTime}</span>
-						</div>
 					</div>
-					<div class="ordermto20px">
+					
+					<div class="row_amount">
+						
 						<div class="order-price">Total Amount :</div>
 						<div class="order-amount">
-
-							<fmt:formatNumber type="number" minFractionDigits="2"
-								maxFractionDigits="2" value="${grandTotal}" />
+							<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${grandTotal}" />
 						</div>
-
-
+					
 					</div>
+					
+					<div class="clr"></div>
 				</div>
+				
 
 				<c:if test="${not empty message}">
 					<!-- here would be a message with a result of processing -->
@@ -278,64 +278,37 @@ a:hover {
 
 								<div class="col-md-9"></div>
 								<label for="search" class="col-md-3" id="search"> <i
-									class="fa fa-search" style="font-size: 20px"></i> <input
+									class="fa fa-search" ></i> <input
 									class="myInput1" type="text" id="myInput${loop.index}"
 									onkeyup="myFunction1(${loop.index})"
 									style="border-radius: 25px;" placeholder="Search items by name"
 									title="Type item name">
 								</label>
-								<div id="table-scroll" class="table-scroll responsive-table-one">
-									<!-- class="table-scroll" -->
-
-									<div id="faux-table" class="faux-table" aria="hidden">
-										<!-- style="display:none" -->
-										<table id="table_grid" class="main-table">
-											<thead>
-												<tr class="bgpink">
-													<th style="text-align: center; white-space: nowrap; width: 40%;">Item Name</th>	
-													<th style="text-align: center; white-space: nowrap;">Quantity</th>												
-													<th style="text-align: center; white-space: nowrap;">Mul Quantity</th>
-													<th style="text-align: center; white-space: nowrap;">Min Quantity</th>
-													
-													<th style="text-align: center; white-space: nowrap;">Max Quantity</th>
-													
-													<th style="text-align: center; white-space: nowrap;">MRP</th>
-													<th style="text-align: center; white-space: nowrap;">Rate</th>
-													<th style="text-align: center; white-space: nowrap;">Total</th>
-													<c:choose>
-														<c:when test="${menuIdFc eq menuIdShow}">
-															<th class="col-md-1">Order1</th>
-														</c:when>
-													</c:choose>
-												</tr>
-											</thead>
-										</table>
-
-									</div>
-									<div class="table-wrap">
-
-										<table id="table_grid${loop.index}" class="responsive-table"
-											style="margin: 0px;">
-											<!--   class="main-table" -->
-											<thead>
-												<tr class="bgpink">
-													<th style="text-align: center; white-space: nowrap;  width: 40%;">Item Name</th>
-													<th style="text-align: center; white-space: nowrap;">Quantity</th>
-													<th style="text-align: center; white-space: nowrap;">Mul Quantity</th>
-													<th style="text-align: center; white-space: nowrap;">Min Quantity</th>
-													<th style="text-align: center; white-space: nowrap;">Max Quantity</th>
-													
-													<th style="text-align: center; white-space: nowrap;">MRP</th>
-													<th style="text-align: center; white-space: nowrap;">Rate</th>
-													<th style="text-align: center; white-space: nowrap;">Total</th>
-													<c:choose>
-														<c:when test=" ${menuIdFc eq menuIdShow}">
-															<th style="white-space: nowrap;">Order1</th>
-														</c:when>
-													</c:choose>
-												</tr>
-											</thead>
-											<tbody>
+								
+								
+								
+								<div class="tableFixHead">
+	<table id="table_grid${loop.index}">         
+	<thead style="background-color: #ec268f;">
+		<tr class="bgpink">
+			<th style="text-align: center; width:40%;">Item Name</th>
+			<th style="text-align: center;">Quantity</th>
+			<th style="text-align: center;">Mul Quantity</th>
+			<th style="text-align: center;">Min Quantity</th>
+			<th style="text-align: center;">Max Quantity</th>
+			
+			<th style="text-align: center;">MRP</th>
+			<th style="text-align: center;">Rate</th>
+			<th style="text-align: center;">Total</th>
+			<c:choose>
+				<c:when test=" ${menuIdFc eq menuIdShow}">
+					<th style="text-align: center;">Order1</th>
+				</c:when>
+			</c:choose>
+		</tr>
+	</thead>
+	
+	<tbody>
 												<c:set var="menuTime" value="${menu.timing}" />
 
 												<c:forEach var="items" items="${itemList}" varStatus="loop">
@@ -397,334 +370,24 @@ a:hover {
 																			maxFractionDigits="2" value="${rate * qty}" /></td>
 
 
-																	<%-- <c:choose>
-																		<c:when test="${menuIdFc eq menuIdShow}">
-
-																			<c:choose>
-																				<c:when test="${flagRes==1}">
-																					<c:set var="orderQty" value="0" />
-																					<c:forEach var="orderListRes" items="${orderList}"
-																						varStatus="cnt">
-																						<c:choose>
-																							<c:when test="${orderListRes.id==items.id}">
-																								<c:set var="orderQty"
-																									value="${orderListRes.orderQty}" />
-																							</c:when>
-
-																						</c:choose>
-
-																					</c:forEach>
-																					<td style="white-space: nowrap;">A ${orderQty}</td>
-																				</c:when>
-																				<c:otherwise>
-																					<td style="white-space: nowrap;">A 0</td>
-																				</c:otherwise>
-																			</c:choose>
-																		</c:when>
-																	</c:choose> --%>
+																	
 
 																</tr>
 														
 													
-														<%-- <c:choose>
-															<c:when test="${frDetails.frRateCat=='1'}">
-																<tr>
-
-																	<td class="col-md-2" style="text-align: left;"><c:choose>
-																			<c:when test="${items.itemImage!=''}">
-																				<a href="${url}${items.itemImage}"
-																					data-lightbox="image-1" tabindex="-1"
-																					style="color: #000000;">${items.itemName} ${items.itemGrp3}</a>
-																			</c:when>
-																			<c:otherwise>
-																	${items.itemName} ${items.itemGrp3}
-																	</c:otherwise>
-																		</c:choose></td>
-
-																	<td class="col-md-1" style="text-align: center;"><c:set
-																			value="0" var="temp"></c:set> <c:forEach var="shelf"
-																			items="${itemStock}">
-
-																			<c:if test="${temp==0}">
-																				<c:if test="${shelf.id==items.id}">
-																					<c:set value="1" var="temp"></c:set>
-																					<c:out value='${shelf.itemShelfLife}' />
-
-																				</c:if>
-																			</c:if>
-																		</c:forEach></td>
-
-																	<td class="col-md-1" style="text-align: center;"><c:out
-																			value='${items.minQty}' /></td>
-
-																	<td class="col-md-1" style="text-align: right;"><c:set
-																			value="0" var="temp"></c:set> <c:forEach var="stock"
-																			items="${itemStock}">
-
-																			<c:if test="${temp==0}">
-																				<c:if test="${stock.id==items.id}">
-																					<c:set value="1" var="temp"></c:set>
-																					<c:out value='${stock.currentStock}' />
-
-																				</c:if>
-																			</c:if>
-																		</c:forEach></td>
-
-
-																	<td class="col-md-1" style="text-align: center;"><input
-																		name='${items.id}' id='${items.id}'
-																		value='${items.itemQty}' class="tableInput"
-																		type="text" onkeydown="myFunction()"
-																		onkeypress='return event.charCode >= 48 && event.charCode <= 57'
-																		onchange="onChange('${items.itemRate1}',${items.id},'${items.itemGrp3}')">
-
-																		<input type="hidden" value="${items.minQty}"
-																		id="minqty${items.id}" /></td>
-																	<td class="col-md-1" style="text-align: center;"><c:out
-																			value='${items.itemMrp1}' /></td>
-
-
-																	<td class="col-md-1" style="text-align: center;"><c:out
-																			value='${items.itemRate1}' /></td>
-																	<c:set var="rate" value="${items.itemRate1}" />
-																	<c:set var="qty" value="${items.itemQty}" />
-																	<td class="col-md-1" id="total${items.id}"
-																		style="text-align: center;"><fmt:formatNumber
-																			type="number" minFractionDigits="2"
-																			maxFractionDigits="2" value="${rate * qty}" /></td>
-
-
-																	<c:choose>
-																		<c:when test="${menuIdFc eq menuIdShow}">
-
-																			<c:choose>
-																				<c:when test="${flagRes==1}">
-																					<c:set var="orderQty" value="0" />
-																					<c:forEach var="orderListRes" items="${orderList}"
-																						varStatus="cnt">
-																						<c:choose>
-																							<c:when test="${orderListRes.id==items.id}">
-																								<c:set var="orderQty"
-																									value="${orderListRes.orderQty}" />
-																							</c:when>
-
-																						</c:choose>
-
-																					</c:forEach>
-																					<td class="col-md-1">A ${orderQty}</td>
-																				</c:when>
-																				<c:otherwise>
-																					<td class="col-md-1">A 0</td>
-																				</c:otherwise>
-																			</c:choose>
-																		</c:when>
-																	</c:choose>
-
-																</tr>
-															</c:when>
-
-															<c:when test="${frDetails.frRateCat=='2'}">
-																<tr>
-
-																	<td class="col-md-1" style="text-align: left;"><c:choose>
-																			<c:when test="${items.itemImage!=''}">
-																				<a href="${url}${items.itemImage}"
-																					data-lightbox="image-1" tabindex="-1"
-																					style="text-decoration: underline; color: #000000;">${items.itemName}${items.itemGrp3}</a>
-																			</c:when>
-																			<c:otherwise>
-																	${items.itemName} ${items.itemGrp3}
-																	</c:otherwise>
-																		</c:choose></td>
-
-
-																	<td class="col-md-1" style="text-align: center;"><c:set
-																			value="0" var="temp"></c:set> <c:forEach var="shelf"
-																			items="${itemStock}">
-
-																			<c:if test="${temp==0}">
-																				<c:if test="${shelf.id==items.id}">
-																					<c:set value="1" var="temp"></c:set>
-																					<c:out value='${shelf.itemShelfLife}' />
-
-																				</c:if>
-																			</c:if>
-																		</c:forEach></td>
-
-																	<td class="col-md-1" style="text-align: center;"><c:out
-																			value='${items.minQty}' /></td>
-
-																	<td class="col-md-1" style="text-align: right;"><c:set
-																			value="0" var="temp"></c:set> <c:forEach var="stock"
-																			items="${itemStock}">
-
-																			<c:if test="${temp==0}">
-																				<c:if test="${stock.id==items.id}">
-																					<c:set value="1" var="temp"></c:set>
-																					<c:out value='${stock.currentStock}' />
-
-																				</c:if>
-																			</c:if>
-																		</c:forEach></td>
-
-
-
-
-																	<td class="col-md-1" style="text-align: center;"><input
-																		name='${items.id}' id='${items.id}'
-																		value='${items.itemQty}' class="tableInput"
-																		type="text"
-																		onkeypress='return event.charCode >= 48 && event.charCode <= 57'
-																		onchange="onChange('${items.itemRate2}',${items.id},'${items.itemGrp3}')">
-
-																		<input type="hidden" value="${items.minQty}"
-																		id="minqty${items.id}" /></td>
-																	<td class="col-md-1" style="text-align: center;"><c:out
-																			value='${items.itemMrp2}' /></td>
-
-																	<td class="col-md-1" style="text-align: center;"><c:out
-																			value='${items.itemRate2}' /></td>
-																	<c:set var="rate" value="${items.itemRate2}" />
-																	<c:set var="qty" value="${items.itemQty}" />
-																	<td id="total${items.id}" style="text-align: center;"><fmt:formatNumber
-																			type="number" minFractionDigits="2"
-																			maxFractionDigits="2" value="${rate * qty}" /></td>
-																	<c:choose>
-																		<c:when test="${menuIdFc eq menuIdShow}">
-																			<c:choose>
-																				<c:when test="${flagRes==1}">
-																					<c:set var="orderQty" value="0" />
-																					<c:forEach var="orderListRes" items="${orderList}"
-																						varStatus="cnt">
-																						<c:choose>
-																							<c:when test="${orderListRes.id==items.id}">
-																								<c:set var="orderQty"
-																									value="${orderListRes.orderQty}" />
-																							</c:when>
-
-																						</c:choose>
-
-																					</c:forEach>
-																					<td class="col-md-1">B ${orderQty}</td>
-																				</c:when>
-																				<c:otherwise>
-																					<td class="col-md-1">B 0</td>
-																				</c:otherwise>
-																			</c:choose>
-																		</c:when>
-																	</c:choose>
-
-																</tr>
-															</c:when>
-
-															<c:when test="${frDetails.frRateCat=='3'}">
-																<tr>
-
-																	<td class="col-md-1" style="text-align: left;"><c:choose>
-																			<c:when test="${items.itemImage!=''}">
-																				<a href="${url}${items.itemImage}"
-																					data-lightbox="image-1" tabindex="-1"
-																					style="text-decoration: underline; color: #000000;">${items.itemName} ${items.itemGrp3}</a>
-																			</c:when>
-																			<c:otherwise>
-																	${items.itemName} ${items.itemGrp3}
-																	</c:otherwise>
-																		</c:choose></td>
-
-
-																	<td class="col-md-1" style="text-align: center;"><c:set
-																			value="0" var="temp"></c:set> <c:forEach var="shelf"
-																			items="${itemStock}">
-
-																			<c:if test="${temp==0}">
-																				<c:if test="${shelf.id==items.id}">
-																					<c:set value="1" var="temp"></c:set>
-																					<c:out value='${shelf.itemShelfLife}' />
-
-																				</c:if>
-																			</c:if>
-																		</c:forEach></td>
-
-																	<td class="col-md-1" style="text-align: center;"><c:out
-																			value='${items.minQty}' /></td>
-
-																	<td class="col-md-1" style="text-align: right;"><c:set
-																			value="0" var="temp"></c:set> <c:forEach var="stock"
-																			items="${itemStock}">
-
-																			<c:if test="${temp==0}">
-																				<c:if test="${stock.id==items.id}">
-																					<c:set value="1" var="temp"></c:set>
-																					<c:out value='${stock.currentStock}' />
-
-																				</c:if>
-																			</c:if>
-																		</c:forEach></td>
-
-
-																	<td class="col-md-1" style="text-align: center;"><input
-																		name='${items.id}' id='${items.id}'
-																		value='${items.itemQty}' class="tableInput"
-																		type="text"
-																		onkeypress='return event.charCode >= 48 && event.charCode <= 57'
-																		onchange="onChange('${items.itemRate3}',${items.id},'${items.itemGrp3}')">
-
-																		<input type="hidden" value="${items.minQty}"
-																		id="minqty${items.id}" /></td>
-																	<td class="col-md-1" style="text-align: center;"><c:out
-																			value='${items.itemMrp3}' /></td>
-
-																	<td class="col-md-1" style="text-align: center;"><c:out
-																			value='${items.itemRate3}' /></td>
-																	<c:set var="rate" value="${items.itemRate3}" />
-																	<c:set var="qty" value="${items.itemQty}" />
-																	<td class="col-md-1" id="total${items.id}"
-																		style="text-align: center;"><fmt:formatNumber
-																			type="number" minFractionDigits="2"
-																			maxFractionDigits="2" value="${rate * qty}" /></td>
-
-																	<c:choose>
-																		<c:when test="${menuIdFc eq menuIdShow}">
-																			<c:choose>
-																				<c:when test="${flagRes==1}">
-																					<c:set var="orderQty" value="0" />
-																					<c:forEach var="orderListRes" items="${orderList}"
-																						varStatus="cnt">
-																						<c:choose>
-																							<c:when test="${orderListRes.id==items.id}">
-																								<c:set var="orderQty"
-																									value="${orderListRes.orderQty}" />
-																							</c:when>
-
-																						</c:choose>
-
-																					</c:forEach>
-																					<td class="col-md-1">${orderQty}</td>
-																				</c:when>
-																				<c:otherwise>
-																					<td class="col-md-1">0</td>
-																				</c:otherwise>
-																			</c:choose>
-																		</c:when>
-																	</c:choose>
-																</tr>
-															</c:when>
-														</c:choose> --%>
+														
 
 													</c:if>
 												</c:forEach>
 
 											</tbody>
-
-										</table>
-									</div>
-								</div>
-
-
-
-
-
-
+	</table>
+</div>
+								
+								
+								
+								
+							
 							</c:forEach>
 
 

@@ -189,7 +189,7 @@ select {
 	color: #aaaaaa;
 	float: right;
 	font-size: 28px;
-	font-weight: bold;
+	font-weight: bold; position: absolute; right:16px; top:6px;
 }
 
 .close:hover, .close:focus {
@@ -801,8 +801,7 @@ ${currentTime}
 			</button>
 		 <input class="texboxitemcode texboxcal2" autocomplete="off" placeholder="Customer Name" name="sp_cust_name" type="hidden" id="sp_cust_name" >
 	</div>
-<%-- 		<div class="col3"><input id="datepicker4" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker4" type="text"required></div>
- --%>	
+
  </div>
  
  
@@ -2518,7 +2517,7 @@ function setData(flavourAdonRate,mrp,profitPer) {
 			<div class="clock"></div>
 		</div>
 
-		<div class="modal-content" style="width: 75%">
+		<div class="modal-content customer" >
 			<span class="close" onclick="closeNewCustPopUp()" style="opacity: 2;">&times;</span>
 
 			<h3 class="pageTitle">Add Customer</h3>
@@ -2546,141 +2545,153 @@ function setData(flavourAdonRate,mrp,profitPer) {
 						<div class="col-lg-12">
 
 						<input type="hidden" name="custId" id="custId" value="0" />
-
-							<div class="profile">
-								<div class="profilefildset">Customer Name* </div>
-								<div class="profileinput">
-									<input type="text" class="texboxitemcode"
-										placeholder="Enter Customer Name" name="customerName"
+						
+							<div class="pop_row_one">
+								<div class="pop_row_left">
+									<div class="customer_txt">Customer Name*</div>
+									<div class="a">
+										<input type="text" class="texboxitemcode" placeholder="Enter Customer Name" name="customerName"
 										onchange="trim(this)" id="customerName" />
+									</div>
 								</div>
-							</div>
-							
-							<div class="profile">
-								<div class="profilefildset">Mobile Number</div>
-								<div class="profileinput">
-									<input type="text" class="texboxitemcode" placeholder="Enter Mobile No."
+								<div class="pop_row_right">
+									<div class="customer_txt">Mobile Number</div>
+									<div class="a">
+										<input type="text" class="texboxitemcode" placeholder="Enter Mobile No."
 									name="mobileNo" id="mobileNo" onchange="trim(this)" maxlength="10" autocomplete="off"
 									oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"/>
+									</div>
 								</div>
+								<div class="clr"></div>
 							</div>
 							
-							<div class="profile"  style="display: none;">
-								<div class="profilefildset">Pin Code</div>
-								<div class="profileinput">
-									<input type="text" class="texboxitemcode" placeholder="Enter Pin Code" value="0"
+							<div class="pop_row_one" style="display: none;">
+								<div class="pop_row_left">
+									<div class="customer_txt">Pin Code</div>
+									<div class="a">
+										<input type="text" class="texboxitemcode" placeholder="Enter Pin Code" value="0"
 							name="pincode" id="pincode" onchange="trim(this)" maxlength="6"
 							pattern="[0-9]" />
+									</div>
 								</div>
-							</div>
-							
-							<div class="profile" style="display: none;">
-								<div class="profilefildset">Distance(In Kms)</div>
-								<div class="profileinput">
-									<input type="text" class="texboxitemcode" 
+								<div class="pop_row_right">
+									<div class="customer_txt">Distance(In Kms)</div>
+									<div class="a">
+										<input type="text" class="texboxitemcode" 
 									placeholder="Enter distance in kms" name="kms" id="kms" value="0">
+									</div>
 								</div>
+								<div class="clr"></div>
 							</div>
 							
-							
-
-							<div class="profile">
-								<div class="profilefildset">Gender*</div>
-								<div class="profileinput">
-								<input type="radio" type="radio" name="gender"
+							<div class="pop_row_one">
+								<div class="pop_row_left">
+									<div class="customer_txt">Gender*</div>
+									<div class="a">
+										<input type="radio" type="radio" name="gender"
 									id="moption" checked value="1"> <label for="moption">M</label>
 									
 								<input type="radio" id="foption" name="gender"
 									value="2"> <label for="foption">F </label>
-
-								</div>								
-							</div>
-							
-							
-							<div class="profile" style="display: none;">
-								<div class="profilefildset">Type</div>
-								<div class="profileinput">
-									<select name="custType" id="custType"
-										data-placeholder="Customer Type" class="texboxitemcode"
-										class="input_add " style="text-align: left;">
-										<option value="1" style="text-align: left;">Owner</option>
-										<option value="2" style="text-align: left;">Employee</option>
-										<option value="3" style="text-align: left;" selected>Customer</option>
-									</select>
+									</div>
 								</div>
-							</div>
-
-							<div class="profile">
-								<div class="profilefildset">Age Group*</div>
-								<div class="profileinput">
-									<select name="ageRange" id="ageRange"
-										data-placeholder="Age-Group" class="texboxitemcode"
-										class="input_add " style="text-align: left;">
-										<option value="14-21" style="text-align: left;">14-21 Years</option>
-										<option value="22-28" style="text-align: left;">22-28 Years</option>
-										<option value="29-35" style="text-align: left;">29-35 Years</option>
-										<option value="36-42" style="text-align: left;">36-42 Years</option>
-										<option value="43-49" style="text-align: left;">43-49 Years</option>
-										<option value="50-56" style="text-align: left;">50-56 Years</option>
-										<option value="57 & above" style="text-align: left;">57 & above</option>
-									</select>
-								</div>
-							</div>
+								<div class="pop_row_right">
+										<div class="customer_txt">Age Group*</div>
+										<div class="a">
+											<select name="ageRange" id="ageRange"
+												data-placeholder="Age-Group" class="texboxitemcode"
+												class="input_add " style="text-align: left;">
+												<option value="14-21" style="text-align: left;">14-21 Years</option>
+												<option value="22-28" style="text-align: left;">22-28 Years</option>
+												<option value="29-35" style="text-align: left;">29-35 Years</option>
+												<option value="36-42" style="text-align: left;">36-42 Years</option>
+												<option value="43-49" style="text-align: left;">43-49 Years</option>
+												<option value="50-56" style="text-align: left;">50-56 Years</option>
+												<option value="57 & above" style="text-align: left;">57 & above</option>
+											</select>
+										</div>
+									</div>
+							</div>	
 							
-							<div class="profile">
-								<div class="profilefildset">DOB</div>
-								<div class="profileinput">
-									<input name="dateOfBirth" type="date"  class="texboxitemcode texboxcal"
-										id="dateOfBirth"     placeholder="Date Of Birth"/>
-								</div>
-							</div>
 							
-						<div class="profile">
-								<div class="profilefildset">Business</div>
-								<div class="profileinput">
-								<input type="radio" type="radio" name="selector"
+								<div class="pop_row_one" style="display: none;">
+									<div class="pop_row_left">
+										<div class="customer_txt">Type</div>
+										<div class="a">
+											<select name="custType" id="custType"
+												data-placeholder="Customer Type" class="texboxitemcode"
+												class="input_add " style="text-align: left;">
+												<option value="1" style="text-align: left;">Owner</option>
+												<option value="2" style="text-align: left;">Employee</option>
+												<option value="3" style="text-align: left;" selected>Customer</option>
+											</select>
+										</div>
+									</div>
+									
+								</div>
+								
+								<div class="pop_row_one">
+									<div class="pop_row_left">
+										<div class="customer_txt">DOB</div>
+										<div class="a">
+											<input name="dateOfBirth" type="date"  class="texboxitemcode texboxcal"
+											id="dateOfBirth" placeholder="Date Of Birth"/>
+										</div>
+									</div>
+									<div class="pop_row_right">
+										<div class="customer_txt">Business</div>
+										<div class="a">
+											<input type="radio" type="radio" name="selector"
 									id="y-option" onclick="isBuissness(1)"> <label for="y-option">Yes</label>
 									
 								<input type="radio" id="n-option" name="selector" onclick="isBuissness(0)"
 								checked>  <label for="n-option">No </label>
+										</div>
+									</div>
+								</div>
+							
+						
 
-								</div>								
-							</div>
+
 							
 							<div style="display: none;" id="isbuissnessdiv">
-								<div class="profile">
-									<div class="profilefildset">Company Name*</div>
-									<div class="profileinput">
-										<input placeholder="Enter Company Name" name="companyName"
+								
+								<div class="pop_row_one">
+									<div class="pop_row_left">
+										<div class="customer_txt">Company Name*</div>
+										<div class="a">
+											<input placeholder="Enter Company Name" name="companyName"
 									onchange="trim(this)" id="companyName"  type="text" class="texboxitemcode" />
+										</div>
+									</div>
+									<div class="pop_row_right">
+										<div class="customer_txt">GST Number*</div>
+										<div class="a">
+											<input placeholder="Enter GST Number" name="gstNo" id="gstNo"
+									onchange="trim(this)" type="text" maxlength="15" class="texboxitemcode" />
+										</div>
 									</div>
 								</div>
 								
-								<div class="profile">
-									<div class="profilefildset">Address</div>
-									<div class="profileinput">
+								<div class="pop_row_one">
+									<div class="customer_txt">Address</div>
+									<div class="a">
 										<input  placeholder="Enter Address" name="custAdd" id="custAdd"
 									onchange="trim(this)"  class="texboxitemcode" />
 									</div>
 								</div>
 								
-								<div class="profile">
-									<div class="profilefildset">GST Number*</div>
-									<div class="profileinput">
-										<input placeholder="Enter GST Number" name="gstNo" id="gstNo"
-									onchange="trim(this)" type="text" maxlength="15" class="texboxitemcode" />
-									</div>
-								</div>
-								
 							</div>
 							
-							<div class="profile">
-								<div class="profilefildset">Remark</div>
-								<div class="profileinput">
-									<input placeholder="Enter Remark"
+							<div class="pop_row_one">
+									<div class="customer_txt">Remark</div>
+									<div class="a">
+										<input placeholder="Enter Remark"
 							name="remark" id="remark" onchange="trim(this)" class="texboxitemcode" required />
+									</div>
 								</div>
-							</div>
+							
+							
 
 						</div>
 
@@ -2691,8 +2702,8 @@ function setData(flavourAdonRate,mrp,profitPer) {
 
 			<div class="pop_btns">
 				<div class="close_l" style="text-align: center;">
-					<input type="submit" class="btn additem_btn" id="saveCust" value="Save" onclick="addCustomer()">
-					<!-- <button class="btn additem_btn" onclick="closeNewCustPopUp()" id="cls_btn">Close</button> -->
+					<input type="submit" class="btn additem_btn" id="saveCust" value="Save" onclick="addCustomer()" style="margin:0;">
+					<!-- <button class="btn additem_btn" onclick="closeNewCustPopUp()" id="cls_btn">Close</button> --> 
 				</div>				
 				<div class="clr"></div>
 			</div>

@@ -167,50 +167,34 @@ table, th, td {
 
 				</form>
 
-				<!--tabNavigation-->
-				<!-- <div class="cd-tabs">
-						tabMenu
-
-						tabMenu
-						<ul class="cd-tabs-content">
-							tab1
-							<li data-content="tab1" class="selected">
-								<div class="table-responsive">
-									<div class="shInnerwidth">
-
-										<table width="100%" id="table1"> my table  commment  -->
-
+				
 
 				<div class="clearfix"></div>
-				<div id="table-scroll" >
-					<!-- <div id="faux-table" class="faux-table" aria="hidden"></div> -->
-					<div> <!-- class="table-wrap"> -->
-						<table id="table_grid"  class="responsive-table" style="margin: 0;"><!-- class="main-table" -->
-
-							<thead>
-								<tr class="bgpink">
-								
-									<th style="text-align: center; white-space: nowrap;">Invoice No<input type="checkbox" name="selAll"
-										id="selAllChk"  onclick="selAll()" /></th>
-									<th style="text-align: center; white-space: nowrap;">Date</th>
-
-									<th style="text-align: center; white-space: nowrap;">Taxable Amt</th>
-									<th style="text-align: center; white-space: nowrap;">Tax Amt</th>
-									<th style="text-align: center; white-space: nowrap;"> Total</th>
-
-									<th style="text-align: center; white-space: nowrap;">Status</th>
-									<th style="text-align: center; white-space: nowrap;">Date & Time</th>
-									<th style="text-align: center; white-space: nowrap;">Action</th>
-								</tr>
-							</thead>
-							
-							<tbody>
-
-								<c:forEach items="${billHeader}" var="billHeader"
+				
+				<div class="tableFixHead">
+					<table id="table_grid">         
+					<thead style="background-color: #f3b5db;">
+						<tr class="bgpink">
+							<th style="text-align: center; white-space: nowrap;">
+							<input type="checkbox" name="selAll" id="selAllChk"  onclick="selAll()" style="display: inline-block !important; margin: 0 3px;" />
+							Invoice No </th>
+							<th style="text-align: center; white-space: nowrap;">Date</th>
+							<th style="text-align: center; white-space: nowrap;">Taxable Amt</th>
+							<th style="text-align: center; white-space: nowrap;">Tax Amt</th>
+							<th style="text-align: center; white-space: nowrap;"> Total</th>
+							<th style="text-align: center; white-space: nowrap;">Status</th>
+							<th style="text-align: center; white-space: nowrap;">Date & Time</th>
+							<th style="text-align: center; white-space: nowrap;">Action</th>
+						</tr>
+					</thead>
+					
+					<c:forEach items="${billHeader}" var="billHeader"
 									varStatus="count">
 									<tr>
-									<%-- 	<td class="col-sm-1"><c:out value="${billHeader.billNo}" /></td> --%>
-										<td style="text-align: center; white-space: nowrap;"><c:out value="${billHeader.invoiceNo}" /><input type="checkbox" class="chkcls" name="chkcls" id="catCheck+${billHeader.billNo}" value="${billHeader.billNo}"></td>
+										<td style="text-align: center; white-space: nowrap;">
+										<input type="checkbox" class="chkcls" name="chkcls" id="catCheck+${billHeader.billNo}" value="${billHeader.billNo}" style="display: inline-block !important; margin: 0 3px;">
+										<c:out value="${billHeader.invoiceNo}" />
+											</td>
 										<td style="text-align: left; white-space: nowrap;"><c:out
 												value="${billHeader.billDate}" /></td>
 										<td style="text-align: right; white-space: nowrap;"><c:out
@@ -268,31 +252,25 @@ table, th, td {
 													class="fa fa-info"></a>&nbsp;&nbsp;
 													 <a
 													href="${pageContext.request.contextPath}/billPdf?url=pdf/showBillPdf/By-Road/0/${billHeader.billNo}"	class="fa fa-file-pdf-o" target="_blank"></a>
-							 			<!--<input name="" class="buttonsaveorder" value="EXPORT TO EXCEL" type="button">-->
+							 			
 											</td>
 										<c:set var="billNo" value="${billHeader.billNo}" />
 									</tr>
 								</c:forEach>
-						</table>
-						<div class="four_txt">
-								<input name="" class="btn additem_btn" value="Received" style="margin: 15px; border:none;"
-									type="button" id="updateStatus" onclick="updateStatus()">
-					</div>
-
-					</div>
+					</table>
+					
+					
 				</div>
-
+				
+				<div class="btn_l"> <input name="" class="btn additem_btn" value="Received" style="margin: 15px; border:none;" 
+					type="button" id="updateStatus" onclick="updateStatus()">
+					</div>
 
 
 			</div>
-			<!--tabNavigation-->
-			<!--<div class="order-btn"><a href="#" class="saveOrder">SAVE ORDER</a></div>-->
-			<%-- <div class="order-btn textcenter">
-						<a
-							href="${pageContext.request.contextPath}/showBillDetailProcess/${billNo}"
-							class="buttonsaveorder">VIEW DETAILS</a>
-						<!--<input name="" class="buttonsaveorder" value="EXPORT TO EXCEL" type="button">-->
-					</div> --%>
+			
+			
+			
 
 
 		</div>

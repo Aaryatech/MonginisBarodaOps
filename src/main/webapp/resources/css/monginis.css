@@ -144,7 +144,7 @@ table.responsive-table.signle_table{margin:0;}
 .table {font-size:18px; color:#333;}
 .table tr:nth-child(even) {background:#f5f5f5;}
 .table tr:nth-child(odd) {background:#e1e1e1;}
-.tableInput{ background:#fff; border:1px solid #ccc; width:50px; padding:2px 2px; text-align:center; display:inline-table; vertical-align:middle;}
+.tableInput{ background:#fff; border:1px solid #ccc; width:50px; padding:0 2px /* 2px 2px */; text-align:center; display:inline-table; vertical-align:middle;}
 .tableInput::-webkit-input-placeholder {color: #666666 !important;opacity: 1 !important;}
 .tableInput:-moz-placeholder { color: #666666 !important;opacity: 1 !important;}
 .tableInput::-moz-placeholder {color: #666666!important;opacity: 1 !important;}
@@ -154,15 +154,15 @@ table.responsive-table.signle_table{margin:0;}
 
 .order-left{ width:50%; float:left;}
 .order-right{ width:50%; float:left;}
-.orderclose{ width:75%; float:left; color:#333; font-size:15px; text-align:right; padding-right:15px; min-height:25px; line-height:25px;}
-.ordercloser2{ width:25%; float:left;color:#333; font-size:14px; min-height:25px; line-height:25px; text-align:left;}
+.orderclose{ width:/*85%  75% */; float:left; color:#333; font-size:15px; text-align:right; padding-right:15px; min-height:25px; line-height:25px;}
+.ordercloser2{ width:/*15%  25% */; float:left;color:#333; font-size:14px; min-height:25px; line-height:25px; text-align:right;}
 .ordercloser2 span{ font-size:20px; margin-left:-3px;}
 .ordermto20px{ margin-top:10px /* 20px */; width:100%; float:left;}
 .ordermto2px{ margin-top:2px; width:100%; float:left;}
 
-.order-price{ width:75%; float:left; color:#333; font-size:15px; text-align:right; padding-right:15px; min-height:33px; line-height:33px;} 
+.order-price{ /* width:75%; float:left; */ display:inline-block;  color:#333; font-size:15px; text-align:right; padding-right:15px; min-height:33px; line-height:33px;} 
 
-.order-amount{ width:25%; float:left;color:#333; font-size:20px; min-height:25px; line-height:25px; text-align:left; background:#343690; padding:4px 10px; color:#fff; text-align:center;}
+.order-amount{ /* width:25%; float:left; */ display:inline-block; color:#333; font-size:20px; min-height:25px; line-height:25px; text-align:left; background:#343690; padding:4px 10px; color:#fff; text-align:center;}
 
 .order-btn{ width:100%; float:left; padding:20px 0px; text-align:center;}
 a.saveOrder{ display:inline-block; vertical-align:top; background:#ec268f; padding:8px 15px; text-align:center; text-decoration:none; color:#fff; font-weight:bold; font-size:18px; line-height:23px;
@@ -463,7 +463,7 @@ table.responsive-table {width:100%; border-collapse: collapse; overflow-x: auto;
 .responsive-table td{/* text-align: right; */ padding: 4px /* 10px */; font-size: 15px;}
 #insertItemButton,#printExBill {margin: 0 0 15px 0; }
 
-.responsive-table-one{width: 100%; overflow-x: scroll; display: inline-block !important;}
+.responsive-table-one{width: 100%; overflow-x: auto /* scroll */; display: inline-block !important;}
 
 .frm_txt{float: left; width: 15%; float: left; margin: 9px 0 0 0;}
 .float_l{float: left; width: 82%;}
@@ -773,19 +773,45 @@ background-position: right .7em top 50%, 0 0;}
 .flav_txt{margin: 7px 0 0 0;}
 
 
-/*responsive trable*/
-.tableFixHead {overflow-y: auto; max-height: 65vh /* 500px */; display: inline-block; width: 100%; border-bottom: 1px solid #ccc;}
-.tableFixHead thead th {position: sticky; top: -1px; z-index: 99;}
-.tableFixHead table {border-collapse: collapse; width: 100%;}
-.tableFixHead th,.tableFixHead td {padding: 4px 16px; border: 1px solid #ccc; background: #FFF;}
-.tableFixHead thead tr:nth-child(even) {background-color: #f6f6f6;}
-.tableFixHead th, .tableFixHead td a{color: #333;}
-.tableFixHead th {background: #f3b5db !important /* #eee */; color:#FFF; font-size: 15px; font-weight: 600;}
-.tableFixHead thead th.bgpink{padding: 4px 16px;}
+
 
 
 .radio_owen{float: left; width:50%;}
 
+
+.modal-content.customer{width:40%; position: relative; padding:15px 20px;}
+.pop_row_one{display: inline-block; width:100%; margin:0 0 10px 0; font-size: 15px; color: #000;}
+.pop_row_left{float: left; width:49%;}
+.pop_row_right{float: right; width:49%;}
+.customer_txt{font-size: 14px; color: #000; margin: 0 0 5px 0;}
+
+.row_one,.row_two{display: inline-block; width:100%;}
+.row_one_l{float: left;}
+.row_one_r{float: right;}
+.row_date{display:inline-block; text-align:left; vertical-align:top; width:30%; margin:8px 0 0 0;}
+.row_date span{margin: 0 15px 0 0;}
+.row_previous{display:inline-block; text-align:left; vertical-align:super; width:40%;}
+.row_amount{display:inline-block; text-align:right; vertical-align:top; width:29%; }
+
+.history_l{float: left; width:30%;}
+.history_r{float: right; width:70%;}
+.order_inline{float: left; width:30%;}
+.order_inline_two{float:left; width:10%; padding: 0 0 0 15px}
+.order_txt{float: left; width:30%; color: #333; padding:7px 10px 0 0; text-align: right;}
+.order_input{float: left; width:70%;}
+.chosen-container-single .chosen-single span,.chosen-container .chosen-results li.active-result{text-align: left !important;}
+.pageTitle.btm{padding-bottom: 0;}
+.btn_l{text-align: left;}
+
+/*responsive trable*/
+.tableFixHead {overflow-y: auto; max-height: 65vh /* 500px */; display: inline-block; width: 100%; border-bottom: 1px solid #ccc;}
+.tableFixHead thead th {position: sticky; top: -1px; z-index: 99;}
+.tableFixHead table {border-collapse: collapse; width: 100%;}
+.tableFixHead table th,.tableFixHead table td {padding: 4px 16px; border: 1px solid #ccc; }
+.tableFixHead table tr:nth-child(even) {background-color: #f9f9f9;}
+.tableFixHead table th, .tableFixHead table td a{color: #333;}
+/* .tableFixHead table tr:hover{background-color: #F00;} */
+.tableFixHead table th {background:#ec268f !important; color:#FFF; font-size: 15px; font-weight: 600;}
 
 
 /*--css-divices--*/
@@ -794,7 +820,6 @@ background-position: right .7em top 50%, 0 0;}
 .wrapperIn2{ width:100%;}
 .listarea{ padding:0px 13%;}
 .loginInner{margin: 80px auto 0 auto}
-
 }
 
 @media screen and (max-width:1280px){
@@ -803,10 +828,10 @@ background-position: right .7em top 50%, 0 0;}
 }
 
 @media screen and (max-width:1024px){
-.order-amount{ width:40%;}
-.order-price{ width:60%;}
-.ordercloser2{ width:40%;}
-.orderclose{ width:60%;}
+/* .order-amount{ width:40%;}
+.order-price{ width:60%;} 
+ .ordercloser2{ width:40%;}
+.orderclose{ width:60%;} */
 .ordercake .left{ width:50%; padding-right:30px;}
 .ordercake .center{ width:50%; padding-right:0px;}
 .ordercake .right{ float:left; width:50%; padding-top:30px;}
@@ -827,6 +852,10 @@ background-position: right .7em top 50%, 0 0;}
 .form-quarter.last{float: none; width: 100%; display: inline-block; text-align: center;}
 
 .four_txt.one .flt_one span{display: block;}
+
+.row_date{width:50%;}
+.row_previous{width:49%;}
+.row_amount{margin:0 0 15px 0; display: inline-block; width:100%; text-align: center;}
 }
 
 @media screen and (max-width:800px){
@@ -835,7 +864,7 @@ background-position: right .7em top 50%, 0 0;}
 .order-left{ width:100%;}
 .order-right{ width:100%;}
 .orderclose{ float:left; width:auto;}
-.order-price{ float:left; width:auto;}
+/* .order-price{ float:left; width:auto;} */
 .order-amount{ width:auto;}
 .ordercloser2{ width:auto;}
 .sidebarright{ padding-top:20px; padding-right:20px; padding-left:150px;}
@@ -870,6 +899,10 @@ background-position: right .7em top 50%, 0 0;}
 
 .four_txt.one {width: 25%;}
 .four_txt.two {width: 100%;}
+.history_l{float: none; width:100%;}
+.history_r{float: none; width:100%;}
+.buttonsaveorder.mob{margin:0;}
+.order_inline_two{padding: 0 0 0 5px;}
 }
 
 @media screen and (max-width:700px){
@@ -969,6 +1002,15 @@ table.responsive-table{display: block;}
 .four_txt.one,.four_txt.two{width:100%;}
 .four_txt.one .flt_one span {display: inline-block;}
 
+
+.row_one_l{float: none; width:100%;}
+.row_one_r{float: none; width:100%;}
+.row_date,.row_previous{width:100%; display: block; text-align: left; margin:0 0 10px 0;}
+.row_amount{width:100%; text-align: left;}
+.order_inline{float: none; width:100%; margin: 5px 0; display: inline-block;}
+.order_inline_two{float: none; width:100%;}
+.order_txt{width:20%;}
+.order_input{width:80%;}
 
 }
 
