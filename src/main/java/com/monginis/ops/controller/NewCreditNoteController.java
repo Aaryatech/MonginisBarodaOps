@@ -37,6 +37,7 @@ import com.monginis.ops.constant.VpsImageUpload;
 import com.monginis.ops.model.CreditNotePos;
 import com.monginis.ops.model.CreditNotePosHeaderDisp;
 import com.monginis.ops.model.Customer;
+import com.monginis.ops.model.CustomerForOps;
 import com.monginis.ops.model.Expense;
 import com.monginis.ops.model.FrEmpLoginResp;
 import com.monginis.ops.model.Franchisee;
@@ -60,12 +61,19 @@ public class NewCreditNoteController {
 	public ModelAndView insertCreditNote(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView model = null;
 		HttpSession session = request.getSession();
-
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		model = new ModelAndView("newcreditnote/insertCreditNote");
-
+/*
 		Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
 		List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
+		model.addObject("customerList", customerList);*/
+		
+		MultiValueMap<String, Object>  mapforCust=new LinkedMultiValueMap<>();
+		mapforCust.add("frId", frDetails.getFrId());
+		CustomerForOps[] customer = restTemplate.postForObject(Constant.URL + "/getAllCustomerForPosByfrId",mapforCust, CustomerForOps[].class);
+		List<CustomerForOps> customerList = new ArrayList<>(Arrays.asList(customer));
 		model.addObject("customerList", customerList);
+		System.err.println("Cust Lis--->" + customerList);
 
 		return model;
 
