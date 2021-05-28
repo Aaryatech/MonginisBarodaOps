@@ -140,12 +140,14 @@ public class OtherBillController {
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		RestTemplate rest = new RestTemplate();
 		List<String> code = new ArrayList<String>();
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		try {
 		map = new LinkedMultiValueMap<String, Object>();
 		map.add("catId",setCatVal);
 		map.add("subCatId", Integer.parseInt(request.getParameter("subCat")));
-
-		String codeStr = rest.postForObject(Constant.URL + "/getItemCode", map, String.class);
+		map.add("frCode",frDetails.getFrCode());
+		String codeStr = rest.postForObject(Constant.URL + "/getItemCodeForOps", map, String.class);
 		code.add(codeStr);
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -292,7 +294,7 @@ public class OtherBillController {
 			
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("itemId", id);
-
+			
 			GetItemSup itemSupRes = restTemplate.postForObject(Constant.URL + "/getItemSupByItemId", map, GetItemSup.class);
 			System.out.println("otheritemsRes" + itemSupRes.toString());
 			mav.addObject("itemSup", itemSupRes);
@@ -303,6 +305,7 @@ public class OtherBillController {
 
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
+			map.add("catId", setCatVal);
 			Item[] list = restTemplate.postForObject(Constant.URL + "/getOtherItemsByCatIdAndFrId",map,
 					Item[].class);
 			ArrayList<Item> itemList = new ArrayList<>(Arrays.asList(list)); 

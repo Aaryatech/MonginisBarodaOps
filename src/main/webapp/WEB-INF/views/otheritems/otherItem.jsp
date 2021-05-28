@@ -114,10 +114,10 @@ table, th, td {
 									</c:choose>
 								</select>
 							</div>
+							<div class="col-md-1">
+							 
 						</div>
-						
-						<div class="colOuter">
-						<div class="col-md-2">
+							<div class="col-md-2">
 							<div class="col1title" align="left">Item Code*: </div>
 						</div>
 						<div class="col-md-3">
@@ -132,9 +132,11 @@ table, th, td {
 							</c:otherwise>
 							</c:choose>
 						</div>
-						<div class="col-md-1">
-							 
 						</div>
+						
+						<div class="colOuter">
+						
+						
 						<div class="col-md-2">
 							<div class="col1title" align="left">Item Name*: </div>
 						</div>
@@ -142,10 +144,9 @@ table, th, td {
 							<input id="itemName" class="form-control"
 								placeholder="Item Name" name="itemName" autocomplete="off"  type="text" value="${item.itemName}" required>
 						</div>
-					 
-					</div>
-					
-					<div class="colOuter">
+						<div class="col-md-1">
+							 
+						</div>
 						<div class="col-md-2">
 							<div class="col1title" align="left">UOM*: </div>
 						</div>
@@ -168,22 +169,8 @@ table, th, td {
 												</c:forEach>
 										</select>
 						</div>
-						<div class="col-md-1">
-							 
-						</div>
-
-						<div class="col-md-2">
-							<div class="col1title" align="left">HSN Code*: </div>
-						</div>
-						<div class="col-md-3">
-							<input type="text" name="hsnCode" autocomplete="off"  id="hsnCode" 
-							maxlength="6" placeholder="HSN Code" class="form-control"
-											required value="${itemSup.itemHsncd}"/>
-
-						</div>
-				 
+					 
 					</div>
-					
 					<div class="colOuter">
 						<div class="col-md-2">
 							<div class="col1title" align="left">Purchase Rate*: </div>
@@ -209,6 +196,35 @@ table, th, td {
 					</div>
 					
 					<div class="colOuter">
+						
+						
+
+						<div class="col-md-2">
+							<div class="col1title" align="left">HSN Code*: </div>
+						</div>
+						<div class="col-md-3">
+							<input type="text" name="hsnCode" autocomplete="off"  id="hsnCode" 
+							maxlength="6" placeholder="HSN Code" class="form-control"
+											required value="${itemSup.itemHsncd}"/>
+
+						</div>
+						<div class="col-md-1">
+							 
+						</div>
+						<div class="col-md-2">
+							<div class="col1title" align="left">Tax Per*: </div>
+						</div>
+						<div class="col-md-3">
+							<input id="taxPer" class="form-control"
+								placeholder="TAX Per" autocomplete="off"  name="taxPer" type="text" value="${item.itemTax1+item.itemTax2}" onkeyup="applyTax()" required>
+
+						</div>
+				 
+					</div>
+					
+					
+					
+					<div class="colOuter" style="display: none;">
 					<%-- 	<div class="col-md-2">
 							<div class="col1title" align="left">Tax Description*: </div>
 						</div>
@@ -242,21 +258,9 @@ table, th, td {
 					
 					<div class="colOuter">
 					
-						<div class="col-md-2">
-							<div class="col1title" align="left">IGST Per*: </div>
-						</div>
-						<div class="col-md-3">
-							<input id="igstPer" class="form-control"
-								placeholder="IGST Per" autocomplete="off"  name="igstPer" type="text"  value="${item.itemTax3}"  required>
-
-						</div>
-				 
-						<div class="col-md-1">
-							 
-						</div>
-				 
-
-						<div class="col-md-2">
+					
+					
+					<div class="col-md-2">
 							<div class="col1title" align="left">Is Active?* </div>
 						</div>
 						<div class="col-md-3">
@@ -278,6 +282,23 @@ table, th, td {
 							</c:choose>				 
 						</select>
 						</div>
+						<div class="col-md-1">
+							 
+						</div>
+					
+						<div class="col-md-2" style="display: none;">
+							<div class="col1title" align="left">IGST Per*: </div>
+						</div>
+						<div class="col-md-3" style="display: none;">
+							<input id="igstPer" class="form-control"
+								placeholder="IGST Per" autocomplete="off"  name="igstPer" type="text"  value="${item.itemTax3}"  required>
+
+						</div>
+				 
+						
+				 
+
+						
 						</div>
 							<div class="colOuter">
 						<div align="center">
@@ -505,6 +526,7 @@ $('#igstPer').on('input', function() {
 
 
 	</script>
+	
 <script>
 function getSelectedLabel(sel) {
     document.getElementById("selectedUom").value = sel.options[sel.selectedIndex].text;
@@ -530,6 +552,18 @@ function changeTax()
 			  sgstPer=0;
 			  }
 	  document.getElementById("igstPer").value=(cgstPer+sgstPer).toFixed(2);
+}
+
+</script>
+<script type="text/javascript">
+function applyTax() {
+
+	 var taxPer=document.getElementById("taxPer").value;
+	 document.getElementById("igstPer").value=taxPer;
+	document.getElementById("cgstPer").value=taxPer/2;
+	document.getElementById("sgstPer").value=taxPer/2;
+	
+	//alert(taxPer/2);
 }
 
 </script>
