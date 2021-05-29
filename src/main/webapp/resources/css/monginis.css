@@ -870,7 +870,7 @@ background-position: right .7em top 50%, 0 0;}
 .four_txt.one .flt_one span{display: block;}
 
 .row_date{width:50%;}
-.row_previous{width:49%;}
+.row_previous{width:49%; }
 .row_amount{margin:0 0 15px 0; display: inline-block; width:100%; text-align: center;}
 .type_input{width: 69%;}
 }

@@ -5,8 +5,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <title>Monginis</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport"
+	content="width=device-width; initial-scale=1.0; maximum-scale=1.0" />
+<meta name="keywords" content="Monginis" />
+<meta name="description" content="Monginis" />
+<meta name="author" content="Monginis">
+
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 	rel="stylesheet">
@@ -44,53 +51,6 @@
 	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
-/* Modal Content */
-.modal-content {
-	background-color: #fefefe;
-	margin: auto;
-	padding: 8px 20px 20px 20px;
-	border: 1px solid #888;
-	width: 30%;
-}
-
-/* The Close Button */
-.close {
-	color: #aaaaaa;
-	float: right;
-	font-size: 28px;
-	font-weight: bold;
-}
-
-.close:hover, .close:focus {
-	color: #000;
-	text-decoration: none;
-	cursor: pointer;
-}
-
-#overlay2 {
-	position: fixed;
-	display: none;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: rgba(239, 219, 219, 0.5);
-	z-index: 10000;
-	cursor: pointer;
-}
-
-#text2 {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	font-size: 25px;
-	color: white;
-	transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);
-	z-index: 10000;
-}
 
  <!-- Custom styles for the popup page -->
  	/*.wellnew.popup_content{width: 25% !important; display:none; margin:0; min-height: 20px; padding: 19px;
@@ -149,7 +109,7 @@
 					<div class="items" style="border: 0px;">
 
 						<div class="icon-wrapper">
-							<i class="fa fa-user-o " style="color: #ec268f;"></i>
+							<i class="fa fa-user-o "></i> <!--  style="color: #ec268f;" -->
 						</div>
 
 						<div class="project-name">
@@ -195,7 +155,7 @@
 			style="display: none; color: red;">Invalid OTP</span>
          </div>
          <div class="row">
-          <input name="" type="submit" value="Submit" onclick="validateOtp()" class="sub_btn" />
+          <input name="" type="submit" value="Submit" onclick="validateOtp()" class="buttonsaveorder" />
           <input id="resend_btn" type="submit" value="Re Send OTP" onclick="reSendOtp()" class="sub_btn" disabled="disabled"
           style="float: right;"/>
           </div>
