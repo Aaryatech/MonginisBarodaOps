@@ -253,7 +253,7 @@ select {
 <!--rightSidebar-->
 <div class="sidebarright">
 <div class="order-left">
-<h2 class="pageTitle">${menuTitle}</h2>
+<h2 class="pageTitle">${menuTitle} </h2>
 
 </div>
  <!--formBox-->
@@ -331,11 +331,7 @@ select {
 							<div class="fullform">
 								<div class="cackleft">Earliest Delivery Date</div>
 								<div class="cackright">
-									<%-- <fmt:parseDate value="${spCakeOrder.spEstDeliDate}" pattern="yyyy-MM-dd" var="estDeliveryDateFmt"/>
-									<fmt:formatDate value="${estDeliveryDateFmt}" var="estDeliveryDateFormat" pattern="dd-MM-yyyy"/>
-                                          ${estDeliveryDateFormat}
-									<c:set var="increment" value="${spBookb4}"></c:set>
-                                    <c:set var="menuId" value="${menuId}"></c:set> --%>
+									
                                     
                                     <c:set var="increment" value="${spBookb4}"></c:set>
                                     <c:set var="menuId" value="${menuId}"></c:set>
@@ -602,7 +598,7 @@ select {
     <div class="colOuter">
 		<div class="col1"><div class="col1title">Flavour</div></div>
 		<div class="col2full" >
-                <select name="spFlavour"  tabindex="-1" id="spFlavour" required>
+                <select name="spFlavour" class="texboxitemcode" tabindex="-1" id="spFlavour" required>
                   <option value="">Select Flavour</option>
                   
                     <c:forEach items="${flavourList}" var="flavourList">
@@ -621,12 +617,12 @@ select {
 		  
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Weight</div></div>
-		<div class="col2">
+		<div class="col2full">
 		      <c:set var = "dbRate" scope = "session" value = "${sprRate}"/>
-		      <input type="hidden" name="dbRate" id="dbRate" value="${sprRate}">
-		          <input type="hidden" name="spBackendRate" id="spBackendRate" value="${spBackendRate}">
+		      <input type="hidden" name="dbRate" id="dbRate" value="${sprRate}" class="texboxitemcode">
+		          <input type="hidden" name="spBackendRate" id="spBackendRate" value="${spBackendRate}" class="texboxitemcode">
 		 
-          <select name="spwt" id="spwt" onchange="onChange()"required>
+          <select name="spwt" id="spwt" onchange="onChange()"required class="texboxitemcode"> 
                        <option value="${spCakeOrder.spSelectedWeight}" selected>${spCakeOrder.spSelectedWeight}</option>
           
             <c:forEach items="${weightList}" var="weightList">
@@ -651,7 +647,7 @@ select {
 	         
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Message </div></div>
-		<div class="col2"><select name="sp_event" id="sp_event" class="js-example-basic-single"required>
+		<div class="col2full"><select name="sp_event" id="sp_event" class="js-example-basic-single " required>
   
               <c:forEach items="${eventList}" var="eventList">
               <c:choose>
@@ -669,7 +665,7 @@ select {
 		
 	</div><div class="colOuter">
 		<div class="col1"><div class="col1title">MSG Name</div></div>
-		<div class="col2">  <select id="show" style="display: none;" class="form-control" name="text1" onchange="showDiv1(this)" required>
+		<div class="col2">  <select id="show" style="display: none;" class="texboxitemcode" name="text1" onchange="showDiv1(this)" required>
                              <!--  <option value="1" id="marathi" >Marathi</option> -->
                              
                               <option value="3" id="english" >English</option>
@@ -680,59 +676,7 @@ select {
 		<div class="col3" id="msgEnglish" style="display: none"><input class="texboxitemcode" placeholder="Name" name="event_name" type="text" id="event_name_e" autocomplete="off">
 		</div>
 		</div>
-<%-- <c:choose>
-<c:when test="${specialCake.isCustChoiceCk=='1'}">
-		
-	      <div class="colOuter">
-	         <div class="col1"><div class="col1title">Photo Cake1</div></div>
-	    	   <div class="col2full"><div class="editimg">
-	    	     <div class="editpics">
-	    	        <div class="fileUpload">
-                                <span> <i class="fa fa-pencil"></i></span>
-                                <input class="upload" type="file" id="order_photo" name="order_photo"/>
-                                
-                            </div>
-                            </div>
-                             <img id="image"  src="${URLSP}${spCakeOrder.orderPhoto}" />
-                            </div>
-                            </div>
-                            </div>
-	      <div class="colOuter">
-	        <div class="col1"><div class="col1title">Photo Cake2</div></div>
-	    	  <div class="col2full"><div class="editimg">
-	    	    <div class="editpics">
-	    	        <div class="fileUpload">
-                                <span> <i class="fa fa-pencil"></i></span>
-                                <input class="upload" type="file" id="cust_choice_ck" name="cust_choice_ck"/>   
-                            </div>
-                            </div>
-                             <img id="img"  src="${URLCUST}${spCakeOrder.orderPhoto2}"/>
-                            </div>
-                            </div>
-                            </div>
-	
-	
-   </c:when>
-   <c:when test="${specialCake.spPhoupload=='1'}">
-	
-	  <div class="colOuter">
-	      <div class="col1"><div class="col1title">Photo Cake</div></div>
-	    	 <div class="col2full">
-	    	  <div class="editimg">
-	    	    <div class="editpics">
-	    	        <div class="fileUpload">
-                                <span> <i class="fa fa-pencil"></i></span>
-                                <input class="upload" type="file" id="order_photo" name="order_photo"/>
-                                
-                     </div>
-                 </div>
-                 <img id="image" src="${URLSP}${spCakeOrder.orderPhoto}" />
-              </div>
-          </div>
-        </div>
-	
-	</c:when>
-</c:choose>  --%>
+
 
 <c:choose>
 <c:when test="${specialCake.isCustChoiceCk=='1'}">
@@ -834,7 +778,7 @@ select {
        <div class="colOuter"  style="display: none;">
 		<div class="col1"><div class="col1title">Special Instructions</div></div>
         <div class="col2full">
-                      <select id="show" class="form-control" name="showtextarea" onchange="showDiv(this)" required>
+                      <select id="show" class="texboxitemcode" name="showtextarea" onchange="showDiv(this)" required>
                            <!--    <option value="1" id="marathi" >Marathi</option> -->
                              
                               <option value="3" selected id="english" >English</option>
@@ -846,8 +790,8 @@ select {
      <div class="colOuter">
 	    <div class="col1"><div class="col1title">Special Instructions</div></div>
 		
-		<div class="col1full" id="marathiDiv">
-		<textarea id="transliterateTextarea"  name="sp_inst1" cols="" rows="" style="width:250px;height:60px"maxlength="300" autocomplete="off" >${spCakeOrder.spInstructions}</textarea>
+		<div class="col2full" id="marathiDiv">
+		<textarea id="transliterateTextarea" class="texboxitemcode"  name="sp_inst1" cols="" rows="" maxlength="" autocomplete="off" style="resize:none;">${spCakeOrder.spInstructions}</textarea>
 		</div>
 		
 	    <div class="col1full" id="englishDiv" style="display: none;">
@@ -859,15 +803,7 @@ select {
 		<div class="col1"><div class="col1title">Delivery Date</div></div>
 		<fmt:parseDate value="${spCakeOrder.spDeliveryDate}" pattern="yyyy-MM-dd" var="deliveryDateFmt"/>
 <fmt:formatDate value="${deliveryDateFmt}" var="deliveryDateFormat" pattern="dd-MM-yyyy"/>
-		<div class="col2"><%-- <c:choose><c:when test="${menuId==46}">
-			<input id="date" class="texboxitemcode texboxcal" value="${deliveryDateFormat}"  name="datepicker" type="text" readonly>
-			<input id="datepicker" class="texboxitemcode texboxcal" value="${deliveryDateFormat}"  name="datepicker" type="hidden" />
-
-		</c:when>
-		<c:otherwise>
-		<input id="datepicker" class="texboxitemcode texboxcal" value="${deliveryDateFormat}" autocomplete="off"  name="datepicker" type="text" required>
-		</c:otherwise>
-		</c:choose> --%>
+		<div class="col2 mob_divide">
 		<c:choose>
 											<c:when test="${menuDelDays<1}">
 												<input id="date" class="texboxitemcode texboxcal"
@@ -916,14 +852,10 @@ select {
 											</c:otherwise>
 
 										</c:choose>
-		</div><div class="col2"> 
+		</div><div class="col2 mob_divide"> 
         <c:if test = "${specialCake.isSlotUsed=='1'}"> <span class="cakename"id="slotUsedSpan">Check Slots availability</span> </c:if></div>
-	<!-- </div>
-	
-	
-	<div class="colOuter"> 
-		<div class="col1"><div class="col1title">Order No:</div></div>-->
-		<div class="col2"><input class="texboxitemcode" placeholder="Order No" name="sp_place" id="sp_place" type="text" value="${spCakeOrder.spDeliveryPlace}" readonly></div>
+
+		<div class="col2 mob_divide"><input class="texboxitemcode" placeholder="Order No" name="sp_place" id="sp_place" type="text" value="${spCakeOrder.spDeliveryPlace}" readonly></div>
 	</div>    
 	
 	
@@ -941,7 +873,7 @@ $(document).ready(function() {
 	<div class="colOuter">
 	    <div class="col1"><div class="col1title">Customer Name </div></div>
 	    <div class="col2full">
-	   <select id="sp_cust_id" class="form-control js-example-basic-single" name="sp_cust_id" onchange="showEmpInfo(this.value)" required style="width: 80%;">
+	   <select id="sp_cust_id" class="form-control js-example-basic-single" name="sp_cust_id" onchange="showEmpInfo(this.value)" required style="text-align: left;">
 			  <option>Select Customer</option>	
 			  	<c:forEach items="${customerList}" var="customerList">
 			  	<c:choose>
@@ -985,7 +917,7 @@ $(document).ready(function() {
 			<div class="col2full">
 			<%-- <input class="texboxitemcode" placeholder="Cake Type"  value="${spCakeOrder.exVar1}" name="ctype" type="text" id="ctype" required autocomplete="off"> --%>
 			
-			<select name="ctype"  tabindex="-1"  id="ctype" required>
+			<select name="ctype"  tabindex="-1" class="texboxitemcode" id="ctype" required>
                   <option selected value="${spCakeOrder.exVar1}">${spCakeOrder.exVar1}</option>
                    <c:forEach items="${selectedShapes}" var="shape">
                      <option    value="${shape.shapeName}">${shape.shapeName}</option>

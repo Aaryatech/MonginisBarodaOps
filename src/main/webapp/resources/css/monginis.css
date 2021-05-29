@@ -228,7 +228,7 @@ color:#000 /* #666666 */;border:1px solid #ccc; padding-left:15px;}
 -o-border-radius:8px;-ms-border-radius:8px;border-radius:8px;}
 .inrbox{width:100%; float:left; background:#fff; padding:15px 10px; text-align:center;
 -webkit-border-radius:8px 8px 0px 0px;-moz-border-radius:8px 8px 0px 0px;
--o-border-radius:8px 8px 0px 0px;-ms-border-radius:8px 8px 0px 0px;border-radius:8px 8px 0px 0px; font-size:42px; color:#343690; border-bottom:1px solid #d0d0d0;}
+-o-border-radius:8px 8px 0px 0px;-ms-border-radius:8px 8px 0px 0px;border-radius:8px 8px 0px 0px; font-size:32px /* 42px */; color:#343690; border-bottom:1px solid #d0d0d0;}
 .inrboxmiddle{ background:#eeeeee;width:100%; float:left;}
 .inrboxmiddle ul{ width:100%; float:left; margin:0px; padding:0px; list-style-type:none;}
 .inrboxmiddle li{ width:100%; float:left; margin:0px; padding:8px 15px; list-style-type:none; 
@@ -1049,12 +1049,13 @@ table.responsive-table{display: block;}
 }
 
 @media screen and (max-width:480px){
-.col1{ width:50%;}
-.col2full{ width:50%;}
+.col1{ width:100% /* 50% */;}
+.col2full{ width:100% /* 50% */;}
 /* .col2{ width:50%;} */
+.mob_divide{width:50%;}
 .weightkg{ right:15px;}
-.col3{ width:50%; float:right; margin-top:15px;}
-.inrbox{ font-size:38px; padding:10px;}
+.col3{ width:100% /* 50% */; /* float:right; margin-top:15px; */}
+.inrbox{ font-size:28px; padding:10px;}
 .remainamount .priceLeft{ font-size:14px;}
 .fullform{ font-size:13px;}
 .cackleft{ width:50%;}
