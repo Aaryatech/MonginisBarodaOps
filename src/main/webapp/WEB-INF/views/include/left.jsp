@@ -37,6 +37,94 @@ abbr:hover {cursor: pointer;}
 								<span>POS</span>
 							</div></a></li>
 				</c:if>
+				<c:if test="${moduleId==2}">
+					<li><a href="${pageContext.request.contextPath}/viewBill"><div
+								class="img">
+								<i class="fa fa-eye" aria-hidden="true"
+									style="font-size: 22px !important;"></i>
+							</div>
+							<div class="title">
+								View Sale Bill<span></span>
+							</div></a></li>
+				</c:if>
+				<c:if test="${moduleId==3}">
+					<li><a
+						href="${pageContext.request.contextPath}/insertCreditNote"><div
+								class="img">
+								<i class="fa fa-credit-card" aria-hidden="true"
+									style="font-size: 22px !important;"></i>
+							</div>
+							<div class="title">
+								Sell Credit Note<span></span>
+							</div></a></li>
+				</c:if>
+				<c:if test="${moduleId==4}">
+				<li><a href="#" onClick="openNav1()"><div class="img">
+							<i class="fa fa-refresh" aria-hidden="true"  style="font-size: 22px !important;"></i>
+						</div>
+						<div class="title">
+							Goods <span>Return</span>
+						</div></a></li>
+			</c:if>
+			<c:if test="${moduleId==5}">
+				<li><a href="${pageContext.request.contextPath}/orderHistory"><div
+							class="img">
+							<i class="fa fa-file-text-o icon"
+								style="font-size: 22px !important;"></i>
+						</div>
+						<div class="title">
+							Order <span>History</span>
+						</div></a></li>
+
+
+
+			</c:if>
+			<c:if test="${moduleId==6}">
+					<li><a href="${pageContext.request.contextPath}/showPriceList"><div
+								class="img">
+								<i class="fa fa-list icon" style="font-size: 22px !important;"></i>
+							</div>
+							<div class="title">
+								Price <span>Lists</span>
+							</div></a></li>
+				</c:if>
+				<c:if test="${moduleId==7}">
+					<li><a href="${pageContext.request.contextPath}/showBill"><div
+								class="img">
+								<i class="fa fa-money icon" style="font-size: 22px !important;"></i>
+							</div>
+							<div class="title">
+								View Purchase <span>Bills</span>
+							</div></a></li>
+				</c:if>
+				<c:if test="${moduleId==8}">								
+					<li><a
+						href="${pageContext.request.contextPath}/showExpenseList"><div
+								class="img">
+								<i class="fa fa-list icon" style="font-size: 22px !important;"></i>
+							</div>
+							<div class="title">
+								Expense <span>Lists</span>
+							</div></a></li>
+				</c:if>
+				<c:if test="${moduleId==9}">
+				<li><a
+					href="${pageContext.request.contextPath}/showOthItemStock"><div
+							class="img">
+							<i class="fa fa-file-pdf-o icon"
+								style="font-size: 22px !important;"></i>
+						</div>
+						<div class="title">Other Item Stock  ${moduleId}</div></a></li>
+			</c:if>
+			<c:if test="${moduleId==10}">
+
+				<li><a href="#" onClick="openNav4()"><div class="img">
+							<i class="fa fa-pie-chart" aria-hidden="true" style="font-size: 22px !important;"></i>
+						</div>
+						<div class="title">
+							<span>Reports</span>
+						</div></a></li>
+			</c:if>
 
 				<c:if test="${moduleId==11}">
 					<li><a href="#" onClick="openNav()">
@@ -52,74 +140,30 @@ abbr:hover {cursor: pointer;}
 					</a></li>
 				</c:if>
 
-				<c:if test="${moduleId==2}">
-					<li><a href="${pageContext.request.contextPath}/viewBill"><div
-								class="img">
-								<i class="fa fa-eye" aria-hidden="true"
-									style="font-size: 22px !important;"></i>
-							</div>
-							<div class="title">
-								View Sale Bill<span></span>
-							</div></a></li>
-				</c:if>
-
-				<c:if test="${moduleId==3}">
-					<li><a
-						href="${pageContext.request.contextPath}/insertCreditNote"><div
-								class="img">
-								<i class="fa fa-credit-card" aria-hidden="true"
-									style="font-size: 22px !important;"></i>
-							</div>
-							<div class="title">
-								Sell Credit Note<span></span>
-							</div></a></li>
-				</c:if>
-			
 				
+
+				
+			
+				<c:if test="${moduleId==12}">
+				<li><a
+					href="${pageContext.request.contextPath}/showeditprofile"><div
+							class="img">
+
+							<i class="fa fa-pencil" aria-hidden="true" style="font-size: 22px !important;"></i>
+						</div>
+						<div class="title">
+							Edit <span>Profile</span>
+						</div></a></li>
+				</c:if>
 		
 			
-			<c:if test="${moduleId==4}">
-				<li><a href="#" onClick="openNav1()"><div class="img">
-							<i class="fa fa-refresh" aria-hidden="true"  style="font-size: 22px !important;"></i>
-						</div>
-						<div class="title">
-							Goods <span>Return</span>
-						</div></a></li>
-			</c:if>
 			
-			<c:if test="${moduleId==5}">
-				<li><a href="${pageContext.request.contextPath}/orderHistory"><div
-							class="img">
-							<i class="fa fa-file-text-o icon"
-								style="font-size: 22px !important;"></i>
-						</div>
-						<div class="title">
-							Order <span>History</span>
-						</div></a></li>
+			
+			
+				
 
 
-
-			</c:if>
-				<c:if test="${moduleId==6}">
-					<li><a href="${pageContext.request.contextPath}/showPriceList"><div
-								class="img">
-								<i class="fa fa-list icon" style="font-size: 22px !important;"></i>
-							</div>
-							<div class="title">
-								Price <span>Lists</span>
-							</div></a></li>
-				</c:if>
-
-
-				<c:if test="${moduleId==7}">
-					<li><a href="${pageContext.request.contextPath}/showBill"><div
-								class="img">
-								<i class="fa fa-money icon" style="font-size: 22px !important;"></i>
-							</div>
-							<div class="title">
-								View Purchase <span>Bills</span>
-							</div></a></li>
-				</c:if>				
+								
 				
 				<c:if test="${moduleId==13}">								
 					<li><a
@@ -128,42 +172,61 @@ abbr:hover {cursor: pointer;}
 								<i class="fa fa-list icon" style="font-size: 22px !important;"></i>
 							</div>
 							<div class="title">
-								Other Purchase <span>Bill</span>
+								Other Purchase  <span>Bill</span>
+				</div></a></li>
+				</c:if>
+				
+				<c:if test="${moduleId==14}">								
+					<li><a
+						href="${pageContext.request.contextPath}/"><div
+								class="img">
+								<i class="fa fa-refresh" style="font-size: 22px !important;"></i>
+							</div>
+							<div class="title">
+								GRN <span>GVN</span>
 				</div></a></li>
 				</c:if>
 				
 				
-				<c:if test="${moduleId==8}">								
+				<c:if test="${moduleId==15}">								
 					<li><a
-						href="${pageContext.request.contextPath}/showExpenseList"><div
+						href="${pageContext.request.contextPath}/showstockdatail"><div
 								class="img">
-								<i class="fa fa-list icon" style="font-size: 22px !important;"></i>
+								<i class="fa fa-bar-chart-o" style="font-size: 22px !important;"></i>
 							</div>
 							<div class="title">
-								Expense <span>Lists</span>
-							</div></a></li>
+								Stock <span>Detail</span>
+				</div></a></li>
 				</c:if>
+				
+				<c:if test="${moduleId==16}">								
+					<li><a
+						href="${pageContext.request.contextPath}/showPattyCashMgmnt"><div
+								class="img">
+								<i class="fa fa-suitcase" style="font-size: 22px !important;"></i>
+							</div>
+							<div class="title">
+								 Cash <span>Management</span>
+				</div></a></li>
+				</c:if>
+				
+				<c:if test="${moduleId==17}">								
+					<li><a
+						href="${pageContext.request.contextPath}/dashboarddemo"><div
+								class="img">
+								<i class="fa fa-dashboard" style="font-size: 22px !important;"></i>
+							</div>
+							<div class="title">
+								Dashboard<span></span>
+				</div></a></li>
+				</c:if>
+				
+				
 
 
-			<c:if test="${moduleId==9}">
-				<li><a
-					href="${pageContext.request.contextPath}/showOthItemStock"><div
-							class="img">
-							<i class="fa fa-file-pdf-o icon"
-								style="font-size: 22px !important;"></i>
-						</div>
-						<div class="title">Other Item Stock  ${moduleId}</div></a></li>
-			</c:if>
 			
-			<c:if test="${moduleId==10}">
-
-				<li><a href="#" onClick="openNav4()"><div class="img">
-							<i class="fa fa-pie-chart" aria-hidden="true" style="font-size: 22px !important;"></i>
-						</div>
-						<div class="title">
-							<span>Reports</span>
-						</div></a></li>
-			</c:if>
+			
+			
 			
 			
 		
@@ -184,17 +247,7 @@ abbr:hover {cursor: pointer;}
 
 			
 
-				<c:if test="${moduleId==12}">
-				<li><a
-					href="${pageContext.request.contextPath}/showeditprofile"><div
-							class="img">
-
-							<i class="fa fa-pencil" aria-hidden="true" style="font-size: 22px !important;"></i>
-						</div>
-						<div class="title">
-							Edit <span>Profile</span>
-						</div></a></li>
-				</c:if>
+				
 			
 			</c:forEach>
 			<li><a

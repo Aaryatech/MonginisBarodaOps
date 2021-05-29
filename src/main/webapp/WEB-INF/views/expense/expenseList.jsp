@@ -207,7 +207,7 @@ table, th, td {
 										<th  class="col-md-3" style="text-align: center;">Remark</th>
 										<th style="text-align: center;">Attachment</th>
 										<th  style="text-align: center;">User</th>
-										<th  style="text-align: center;">Status</th>
+										<th  style="text-align: center;">Type</th>
 										<th  style="text-align: center;">Action</th>
 
 									</tr>

@@ -122,6 +122,102 @@ public class BillingController {
 	}
 	
 	
+	@RequestMapping(value="/getBillDetailForPrintPdfOps/{elemntIds}/",method=RequestMethod.GET)
+	public String getBillDetailForPrintPdfOps(HttpServletRequest request,@PathVariable String elemntIds) {
+		System.err.println("In /getBillDetailForPrintPdfOps");
+		RestTemplate restTemplate = new RestTemplate();
+		List<FrBillPrint> billPrintList = new ArrayList<>();
+		try {
+			System.err.println("Sel Bills-->"+elemntIds);
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("billNoList", elemntIds);
+
+			ParameterizedTypeReference<List<GetBillDetailPrint>> typeRef = new ParameterizedTypeReference<List<GetBillDetailPrint>>() {
+			};
+			ResponseEntity<List<GetBillDetailPrint>> responseEntity = restTemplate.exchange(
+					Constant.URL + "getBillDetailsForPrint", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+			// List<GetBillDetailPrint> billDetailsResponse =new ArrayList<>();
+
+			List<GetBillDetailPrint> billDetailsResponse = responseEntity.getBody();
+			
+			List<FrBillHeaderForPrint>	billHeadersListForPrint = new ArrayList<>();
+			
+			
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("billNoList", elemntIds);
+
+			ParameterizedTypeReference<List<FrBillHeaderForPrint>> typeRef2 = new ParameterizedTypeReference<List<FrBillHeaderForPrint>>() {
+			};
+			ResponseEntity<List<FrBillHeaderForPrint>> responseEntity2 = restTemplate.exchange(
+					Constant.URL + "getFrBillHeaderForPrintSelectedBill", HttpMethod.POST, new HttpEntity<>(map),
+					typeRef2);
+			billHeadersListForPrint = new ArrayList<>();
+			// List<GetBillDetail> billDetailsResponse = responseEntity.getBody();
+			billHeadersListForPrint = responseEntity2.getBody();
+			
+			List<GetBillDetailPrint> 	billDetailsListForPrint = new ArrayList<GetBillDetailPrint>();
+			billDetailsListForPrint = billDetailsResponse;
+			System.out.println(" *** get Bill detail for Print response :: " + billDetailsListForPrint.toString());
+
+			System.out.println("Size Here Now  " + billHeadersListForPrint.size());
+
+			FrBillPrint billPrint;
+			for (int i = 0; i < billHeadersListForPrint.size(); i++) {
+				System.out.println("Inside outer for " + i);
+				billPrint = new FrBillPrint();
+				List<GetBillDetailPrint> billDetails = new ArrayList<>();
+
+				for (int j = 0; j < billDetailsListForPrint.size(); j++) {
+					System.out.println("Inside inner for " + j);
+					System.out.println("Header bill no  " + billHeadersListForPrint.get(i).getBillNo());
+					System.out.println("detail bill no " + billDetailsListForPrint.get(j).getBillNo());
+
+					if (billHeadersListForPrint.get(i).getBillNo().equals(billDetailsListForPrint.get(j).getBillNo())) {
+
+						System.out.println("Inside If  Bill no  = " + billHeadersListForPrint.get(i).getBillNo());
+
+						billPrint.setBillNo(billHeadersListForPrint.get(i).getBillNo());
+						billPrint.setFrAddress(billHeadersListForPrint.get(i).getFrAddress());
+						billPrint.setFrId(billHeadersListForPrint.get(i).getFrId());
+						billPrint.setFrName(billHeadersListForPrint.get(i).getFrName());
+						billPrint.setInvoiceNo(billHeadersListForPrint.get(i).getInvoiceNo());
+						billPrint.setIsSameState(billHeadersListForPrint.get(i).getIsSameState());
+						billPrint.setBillDate(billHeadersListForPrint.get(i).getBillDate());
+
+						billDetails.add(billDetailsListForPrint.get(j));
+
+						// FrBillTax billTax=new FrBillTax(); not used
+
+					} // end of if
+
+				}
+				billPrint.setBillDetailsList(billDetails);
+				// billPrintList=new ArrayList<>();
+
+				if (billPrint != null)
+					billPrintList.add(billPrint);
+
+			}
+
+			System.out.println(" after adding detail List : bill Print List " + billPrintList.toString());
+		
+			
+			
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.err.println("Excep In /getBillDetailForPrintPdfOps");
+		e.printStackTrace();
+		}
+		
+		return "redirect:/billPdf?url=pdf/showBillPdf/ByRoad/0/" + elemntIds;
+	}
+	
+	
 	@RequestMapping(value = "/showBillProcess", method = RequestMethod.POST)
 	public ModelAndView   showBillProcess(HttpServletRequest request,
 			HttpServletResponse response) {

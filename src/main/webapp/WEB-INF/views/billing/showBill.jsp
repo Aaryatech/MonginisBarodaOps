@@ -264,6 +264,9 @@ table, th, td {
 				
 				<div class="btn_l"> <input name="" class="btn additem_btn" value="Received" style="margin: 15px; border:none;" 
 					type="button" id="updateStatus" onclick="updateStatus()">
+					<input name="" class="btn additem_btn" value="Print Bills" style="margin: 15px; border:none;float: right;"
+									type="button" id="printMul" onclick="printMultiBills()">
+					
 					</div>
 
 
@@ -321,6 +324,33 @@ function updateStatus() {
     } 
 }*/  
 </script>
+<script>
+function printMultiBills() {
+	var elemntIds = [];	
+	$(".chkcls:checkbox:checked").each(function() {
+		elemntIds.push($(this).val());
+	});
+	//alert(elemntIds);
+	if(elemntIds==""){
+		alert("Select Atleast One Bill!!!");
+	}else{
+		//document.getElementById("validation-form").target = "_blank";
+
+		//var form = document.getElementById("validation-form");
+		window.open(
+				  '${pageContext.request.contextPath}/getBillDetailForPrintPdfOps/'+elemntIds+'/',
+				  '_blank' // <- This is what makes it open in a new window.
+				);
+		//form.action = "${pageContext.request.contextPath}/getBillDetailForPrintPdfOps";
+		//form.submit();
+		
+		//alert("Hii")
+		window.location.reload();
+	}
+}
+
+</script>
+
 <script>
 $(document).on('click','#selAllChk',function(){
 	//alert()

@@ -255,7 +255,7 @@ jQuery(document).ready(function(){
 	});
 </script>
 </head>
-<body>
+<body  >
 	<!--datepicker-->
 	<c:url var="getMenus" value="/getMenus" />
 	<c:url var="getGroup2ByCatId" value="/getSubcat2ByCatId" />
@@ -872,7 +872,9 @@ function selectFlav(val){
 					   	
 					   
 				});
+		
 	}
+	
 }
 
 
@@ -910,6 +912,10 @@ function selectCake(val){
 }
 
 </script>
+
+
+
+
 <script type="text/javascript">
 function searchSpCall(){
 	//alert("In Sp Cake Search");
@@ -923,7 +929,7 @@ function searchSpCall(){
 	if(serchBy==1){
 		byFlag=2;
 		ids=flavId;
-		//alert(ids)
+		alert(flavId)
 		
 	//	alert("Search By Flav")
 		
