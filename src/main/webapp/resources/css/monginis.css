@@ -802,6 +802,7 @@ background-position: right .7em top 50%, 0 0;}
 .chosen-container-single .chosen-single span,.chosen-container .chosen-results li.active-result{text-align: left !important;}
 .pageTitle.btm{padding-bottom: 0;}
 .btn_l{text-align: left;}
+.marg_top{margin-top: 20px;}
 
 /*responsive trable*/
 .tableFixHead {overflow-y: auto; max-height: 65vh /* 500px */; display: inline-block; width: 100%; border-bottom: 1px solid #ccc;}

@@ -89,8 +89,9 @@ table, th, td {
 <c:set var="flag" value="0" />
 
 						<div class="clearfix"></div>
+						<div class="clr"></div>
 						
-						<div class="tableFixHead">
+						<div class="tableFixHead marg_top">
 	<table id="table_grid">         
 	<thead style="background-color: #f3b5db;">
 		<tr class="bgpink">
@@ -137,7 +138,7 @@ table, th, td {
 												<td style="text-align: right;font-size: 15px;  white-space: nowrap;"><c:out
 														value="${grnConfList.billQty}"></c:out> <input
 													type="hidden" name="grnqty${grnConfList.billDetailNo}"
-													id="grnqty${grnConfList.billDetailNo}" size="3"
+													id="grnqty${grnConfList.billDetailNo}" size="5" 
 													readonly="readonly" value="${grnConfList.autoGrnQty}" /></td>
 
 												<td style="text-align: right;font-size: 15px;  white-space: nowrap;"
@@ -145,9 +146,9 @@ table, th, td {
 														value="${grnConfList.rate}"></c:out></td>
 
 
-												<td style="font-size: 15px;  white-space: nowrap;" ><input type="text"
+												<td style="font-size: 15px; white-space: nowrap;" ><input type="text"
 													name="grnqtyauto${grnConfList.billDetailNo}" value="0"
-													id='grnqtyauto${grnConfList.billDetailNo}' size="3"
+													id='grnqtyauto${grnConfList.billDetailNo}' size="5"
 													style="text-align: center;" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
 													onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
 																	${grnConfList.sgstPer},${grnConfList.cgstPer},${grnConfList.cessPer},${grnConfList.billQty},${grnConfList.billDetailNo},${grnConfList.discPer})" />
@@ -162,7 +163,7 @@ table, th, td {
 
 												<c:set var="grnAmt" value="${grnAmt}" />
 
-												<td style="font-size: 15px; width:80px; white-space: nowrap; " id="grn_amt${grnConfList.billDetailNo}"><c:out
+												<td style="font-size: 15px; text-align:right; width:80px; white-space: nowrap; " id="grn_amt${grnConfList.billDetailNo}"><c:out
 														value="${grnAmt}"></c:out></td>
 
 												<td style="font-size: 15px; white-space: nowrap;"><select
@@ -185,7 +186,7 @@ table, th, td {
 </div>
 
 						
-						<div class="form-group">
+						<div class="form-group btn_l">
 
 							<c:choose>
 								<c:when test="${isOpen==1 || flag==0}">
@@ -196,7 +197,7 @@ table, th, td {
 								</c:when>
 								<c:otherwise>
 									<button type="submit" class="btn additem_btn">
-										<i class="fa fa-check"></i> Save
+										 Save
 									</button>
 								</c:otherwise>
 							</c:choose>
