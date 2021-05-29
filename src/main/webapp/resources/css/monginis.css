@@ -115,7 +115,7 @@ height:44px; line-height:44px; background:#ec268f; padding: 0 0 0 150px;}
 border-radius:50%;}
 
 .sidebarOuter{ position:fixed; z-index:0; left:0px; top:0px; bottom:0px; width:130px; background:#ec268f; height:100%;box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 3px 1px -2px, rgba(0, 0, 0, 0.2) 0px 1px 5px 0px;}
-.sidebarhome{float:left; width:130px; position:absolute; left:0px; z-index:999;}
+.sidebarhome{float:left; width:130px; position:absolute; left:0px; z-index:100 /* 999 */;}
 .sidebarhome ul{ margin:0px; padding:66px 0px 0px 0px; list-style-type:none; width:100%; float:left;}
 .sidebarhome li{ margin:0px; padding:0px; list-style-type:none; width:100%; float:left; position:relative; 
 display:table; /* box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 3px 1px -2px, rgba(0, 0, 0, 0.2) 0px 1px 5px 0px; */
@@ -153,7 +153,7 @@ table.responsive-table.signle_table{margin:0;}
 
 
 .order-left{ width:50%; float:left;}
-.order-right{ width:50%; float:left;}
+.order-right{ width:50%; /* float:left; */ float: right; text-align: right;}
 .orderclose{ width:/*85%  75% */; float:left; color:#333; font-size:15px; text-align:right; padding-right:15px; min-height:25px; line-height:25px;}
 .ordercloser2{ width:/*15%  25% */; float:left;color:#333; font-size:14px; min-height:25px; line-height:25px; text-align:right;}
 .ordercloser2 span{ font-size:20px; margin-left:-3px;}
@@ -192,7 +192,8 @@ a.saveOrder:hover{background:#343690;}
 .searchrecord{ position:absolute; right:0px; top:1px; z-index:10;}
 .btnsearch{ width:30px; height:34px; background:#ec268f url(../images/search-icon.png) no-repeat; background-position:center; text-align:center; margin:0px; padding:0px; cursor:pointer; border:none;-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
 .btnsearch:hover{background:#343690 url(../images/search-icon.png) no-repeat; background-position:center;-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
-.texboxitemcode{ background:#fff;min-height:30px; line-height:30px; width:100%;font-size:13px;color:#666666;border:1px solid #ccc; padding-left:15px;}
+.texboxitemcode{ background:#fff;min-height:30px; line-height:30px; width:100%; font-size:15px /* 13px */;
+color:#000 /* #666666 */;border:1px solid #ccc; padding-left:15px;}
 
 .texboxitemcode::-webkit-input-placeholder {color: #666666 !important;opacity: 1 !important;}
 .texboxitemcode:-moz-placeholder { color: #666666 !important;opacity: 1 !important;}
@@ -354,14 +355,14 @@ line-height:22px;color:#fff; white-space: nowrap; overflow: hidden; text-overflo
 .profileinsite{ display:inline-block; vertical-align:top; width:100%; text-align:left; padding:0px 50px;}
 .textcen{ text-align:center;}
 .profile{ width:100%; float:left; margin:10px 0px; position:relative; font-size:15px; color:#000;}
-.profilefildset{ width:35%; float:left; padding-right:15px; margin:7px 0px;}
+.profilefildset{ width:35%; float:left; padding-right:15px; margin:7px 0px; text-align: right;}
 .profileinput{ width:65%; float:right;}
 .editimg{ width:110px; float:left; position:relative;}
 .editimg img{max-width: 80px; height: 80px; width: 80px; /* max-width:110px; height:110px; width:110px; */}
 
 .profileinsiteLeft{ width:50%; padding-right:50px; float:left;}
 .profileinsiteRight{ width:50%; float:left;}
-.mardis{ margin:7px 0px;}
+.mardis{ margin:7px 0px; text-align: left;}
 .editpics{ position:absolute; right:-40px; top:0px; width:33px; height:33px; background:#ec268f; text-align:center; font-size:18px; color:#fff; cursor:pointer;-webkit-border-radius:50%;-moz-border-radius:50%;-o-border-radius:50%;-ms-border-radius:50%;border-radius:50%;}
 .editpics i{ margin-top:7px;}
 .editpics:hover{background:#343690;}
@@ -807,6 +808,8 @@ background-position: right .7em top 50%, 0 0;}
 .password_row{display: inline-block; width:100%; margin:20px 0 0 0;}
 .password_one{width: 33.3333%; float: left; padding: 0 10px;}
 .password_txt{text-align: left; margin:0 0 5px 0;}
+.modal-content.employee{width:75%; position: relative;}
+.modal-content.employee.close{position: absolute; right:10px; top: 10px;}
 
 /*responsive trable*/
 .tableFixHead {overflow-y: auto; max-height: 65vh /* 500px */; display: inline-block; width: 100%; border-bottom: 1px solid #ccc;}
@@ -1017,13 +1020,16 @@ table.responsive-table{display: block;}
 .order_txt{width:20%;}
 .order_input{width:80%;}
 .password_one{width: 100%; padding:0; margin: 10px 0;}
+.order-right{float: none; width: 100%; text-align: left;}
+.profilefildset{text-align: left;}
+.modal-content.employee{width:100%;}
 
 }
 
 @media screen and (max-width:480px){
 .col1{ width:50%;}
 .col2full{ width:50%;}
-.col2{ width:50%;}
+/* .col2{ width:50%;} */
 .weightkg{ right:15px;}
 .col3{ width:50%; float:right; margin-top:15px;}
 .inrbox{ font-size:38px; padding:10px;}

@@ -174,7 +174,7 @@
 							</div>
 						</div>
 						<div class="title_r">
-							<div class="order-right" style="float: right;">
+							<div class="order-right" ><!-- style="float: right;" -->
 								<a href="javascript:void(0)"
 									class="btn additem_btn addcust_open" style="margin: 0;"
 									onclick="openAddEmpPopup()">Add Employee</a> <a
@@ -223,7 +223,7 @@
 
 
 
-							<div class="profileinsite">
+							
 								<form name="updateprofile" id="updateprofile" method="post"
 									action="${pageContext.request.contextPath}/updateprofile"
 									enctype="multipart/form-data">
@@ -544,7 +544,7 @@
 
 								</form>
 
-							</div>
+							
 						</div>
 					</div>
 
@@ -569,11 +569,11 @@
 			<div class="clock"></div>
 		</div>
 
-		<div class="modal-content" style="width: 75%">
+		<div class="modal-content employee">
 			<span class="close" onclick="closeAddEmpPopup();clearForm();"
 				style="opacity: 2;">&times;</span>
 
-			<h3 class="pop_head">Add Employee</h3>
+			<h3 class="pageTitle">Add Employee</h3>
 			<div>
 				<div class="row">
 					<form action="saveFranchiseeEmp" id="fr_emp_form" method="post"
@@ -703,30 +703,35 @@
 							</div>
 
 						</div>
-
-
-						<table class="responsive-table" id="table_grid1">
-							<thead>
-								<tr class="bgpink">
-									<th>Sr.No.<input type="checkbox" id="selAllChkbx"
-										name="selAllChkbx"></th>
-									<th>Module Name</th>
-								</tr>
-							</thead>
-							<tbody>
+						
+						<div class="clr"></div>
+						
+						<div class="tableFixHead">
+	<table id="table_grid1">         
+	<thead style="background-color: #f3b5db;">
+		<tr class="bgpink">
+			<th width="100"><input type="checkbox" id="selAllChkbx" name="selAllChkbx" style="display: inline-block !important;"> Sr.No. </th>
+			<th>Module Name</th>
+		</tr>
+	</thead>
+	
+	<tbody>
 								<c:forEach items="${opsList}" var="list" varStatus="count">
 									<tr>
-										<td style="display: inline-flex;">${count.index+1}
-											&nbsp;&nbsp;&nbsp; <input type="checkbox"
+										<td><input type="checkbox"
 											value="${list.moduleId}" id="modId${list.moduleId}"
-											name="modId${list.moduleId}">
+											name="modId${list.moduleId}"  style="display: inline-block !important;"> &nbsp; ${count.index+1}
 										</td>
 										<td>${list.moduleName }</td>
 									</tr>
 								</c:forEach>
 
 							</tbody>
-						</table>
+	</table>
+</div>
+
+
+						
 
 
 					</form>
@@ -756,29 +761,34 @@
 			<div class="clock"></div>
 		</div>
 
-		<div class="modal-content" style="width: 75%">
+		<div class="modal-content employee">
 			<span class="close" onclick="closeEmpListPopUp()" style="opacity: 2;">&times;</span>
 
-			<h3 class="pop_head">Employee List</h3>
+			<h3 class="pageTitle">Employee List</h3>
 			<div>
 				<div class="row">
-					<table class="responsive-table" id="table_grid">
-						<thead>
-							<tr class="bgpink">
-								<th>Sr.No.</th>
-								<th>Employee Name</th>
-								<th>Contact No</th>
-								<th>Address</th>
-								<th>Joining Date</th>
-								<!-- <th>Code</th> -->
-								<th>Status</th>
-								<th>Action</th>
-							</tr>
-						</thead>
-						<tbody>
-
-						</tbody>
-					</table>
+				
+					<div class="tableFixHead">
+	<table id="table_grid">         
+	<thead style="background-color: #f3b5db;">
+		<tr class="bgpink">
+			<th style="text-align: center;">Sr.No.</th>
+			<th style="text-align: center;">Employee Name</th>
+			<th style="text-align: center;">Contact No</th>
+			<th style="text-align: center;">Address</th>
+			<th style="text-align: center;">Joining Date</th>
+			<th style="text-align: center;">Status</th>
+			<th style="text-align: center;">Action</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+	
+	</tbody>
+	</table>
+</div>
+				
+					
 				</div>
 			</div>
 			<div class="pop_btns">
@@ -965,7 +975,7 @@
 
 												if (emp.delStatus == 0) {
 													var tr = $('<tr></tr>');
-													tr.append($('<td></td>')
+													tr.append($('<td style="text-align:center;"></td>')
 															.html(key + 1));
 													tr
 															.append($(
@@ -993,11 +1003,11 @@
 													} else {
 														stat = 'In-Active'
 													}
-													tr.append($('<td ></td>')
+													tr.append($('<td style="text-align:center;"></td>')
 															.html(stat));
 													tr
 															.append($(
-																	'<td></td>')
+																	'<td style="text-align:center;"></td>')
 																	.html(
 																			"<a href='#' onclick=editFrEmp("
 																					+ emp.frEmpId
