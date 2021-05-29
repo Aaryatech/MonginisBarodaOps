@@ -152,11 +152,11 @@
 			<div class="row">
 				<input name="otp" type="text" class="input_one" placeholder="Enter OTP" id="otp" maxlength="6"/>
           	 <span class="error_form text-danger" id="invalid_otp"
-			style="display: none; color: red;">Invalid OTP</span>
+			style="display: none; color: red; font-size: 14px; margin: 0 0 10px 0; display: inline-block;">Invalid OTP</span>
          </div>
          <div class="row">
           <input name="" type="submit" value="Submit" onclick="validateOtp()" class="buttonsaveorder" />
-          <input id="resend_btn" type="submit" value="Re Send OTP" onclick="reSendOtp()" class="sub_btn" disabled="disabled"
+          <input id="resend_btn" type="submit" value="Re Send OTP" onclick="reSendOtp()" class="buttonsaveorder" class="sub_btn" disabled="disabled"
           style="float: right;"/>
           </div>
 			

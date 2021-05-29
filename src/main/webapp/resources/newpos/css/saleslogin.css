@@ -240,7 +240,8 @@ body {
     .mob_no{font-family: arial; font-size: 20px; color: #333; text-align: center; margin: 0 0 15px 0;}
     .frm_bx{display: block; width: 100%;}
     .frm_one{width: 100%;}
-    .input_one{width: 100%; padding: 10px 0; text-indent: 10px; margin: 0 0 15px 0; font-size: 14px; color: #333;}
+    .input_one{width: 100%; padding: 10px 0; text-indent: 10px; margin: 0 0 15px 0; font-size: 14px; color: #000; border-radius: 3px;
+     border:2px solid #ec268f;}
     .sub_btn{background: #8d2117; border: 0; font-size: 14px; text-transform: uppercase; color: #FFF; cursor: pointer;
     padding: 9px 22px; outline: none;}
     .sub_btn:hover{background: #a72c20; color: #FFF;}
