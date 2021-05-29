@@ -5,35 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
-<%-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-<title>Monginis</title>
-<link
-	href="${pageContext.request.contextPath}/resources/css/monginis.css"
-	rel="stylesheet" type="text/css" />
-<link rel="icon"
-	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
-	type="image/x-icon" />
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
 
-<!--rightNav-->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
-<script type="text/javascript">
-	jQuery(document).ready(function() {
-		jQuery("#menuzord").menuzord({
-			align : "left"
-		});
-	});
-	$(".toggle").on("click", function() {
-		$(".marquee").toggleClass("microsoft");
-	});
-</script> --%>
 <style>
 .fileUpload1 input.upload1 {
 	position: absolute;
@@ -134,10 +106,7 @@
 	<div class="wrapper">
 
 		<!--topHeader-->
-		<%-- <jsp:include page="/WEB-INF/views/include/header.jsp">
 		
-			<jsp:param name="fr" value="${frDetails}"/>
-		</jsp:include> --%>
 
 		<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 		<!--topHeader-->
@@ -156,12 +125,10 @@
 				<div class="sidebarright">
 
 					<div class="title_row">
-						<div class="title_l" style="width: 100%">
-							<div class="order-left"  style=" width:100% !important"  >
-								<h2 class="pageTitle" style="margin: 0; padding: 20px;">
+							<div class="order-left"  >
+								<h2 class="pageTitle" style="margin: 0; ">
 									<i class="fa fa-pencil" aria-hidden="true"></i> Change Employee Password
 								</h2>
-								
 							</div>
 							<%-- <c:if test="${not empty sessionScope.passMsg}"> --%>
 
@@ -172,23 +139,59 @@
 								<%-- <%
 									session.removeAttribute("passMsg");
 								%> --%>
-						</div>	
-						<h4 class="pageTitle" 
-										style="text-align: center;padding : 10px; float: right;  color: #ff0000;"><%-- ${sessionScope.passMsg} --%></h4>					
+							
+						<%-- <h4 class="pageTitle" 
+										style="text-align: center;padding : 10px; float: right;  color: #ff0000;">${sessionScope.passMsg}</h4> --%>					
 						<div class="clr"></div>
 					</div>
 <c:url value="/matchPassword" var="matchPassword" ></c:url>
-					<div class="topSlide">
+					
 						<div class="textcen">
-							<div class="profileinsite">							
+												
 								<form name="updateprofile" id="updateprofile" method="post"
 									action="${pageContext.request.contextPath}/updateFrEmpPassword"
 									enctype="multipart/form-data">
-									<div class="profileinsiteLeft">
+									
 									
 									<input type="hidden" id="frEmpId" name="frEmpId" value="${sessionScope.frEmpId}">
 									
-									<div class="profile">
+									
+									<div class="password_row">
+										<div class="password_one">
+											<div class="password_txt">Previous Password</div>
+											<div class="a">
+												<input class="texboxitemcode" placeholder="Previous Password" onchange="matchPassword()"
+													name="oldPassword" id="oldPassword" type="password" required="required">
+											</div>
+											<div style="float: inline-end;" ><span id="passMatch" style="display: none; color: red; margin:3px 0 0 0; text-align: left;" >Old Password not Matched</span></div>
+										</div>
+										
+										<div class="password_one">
+											<div class="password_txt">New Password</div>
+											<div class="a">
+												<input class="texboxitemcode" placeholder="New Password"
+													name="txtNewPassword" id="txtNewPassword" type="password" required="required">
+											</div>
+										</div>
+										
+										<div class="password_one">
+											<div class="password_txt">Confirm Password</div>
+											<div class="a">
+												<input class="texboxitemcode" placeholder="Confirm Password" onblur="checkPasswordMatch()"
+													name="txtConfirmPassword" id="txtConfirmPassword" type="password" required="required">
+											</div>
+											<div style="text-align: left; margin: 3px 0px 0px;"><span id="divCheckPasswordMatch"></span></div>
+										</div>
+										
+										<!-- <div class="profile">											
+											<div class="profileinput">
+												<span id="divCheckPasswordMatch"></span>
+											</div>
+										</div> -->
+										
+									</div>
+									
+									<!-- <div class="profile">
 											<div class="profilefildset">Previous Password</div>
 											<div class="profileinput">
 												<input class="texboxitemcode" placeholder="Previous Password" onchange="matchPassword()"
@@ -196,19 +199,19 @@
 											</div>
 											
 										</div>
-										<div style="float: inline-end;" ><span id="passMatch" style="display: none; color: red;" >Old Password not Matched</span></div>
+										<div style="float: inline-end;" ><span id="passMatch" style="display: none; color: red;" >Old Password not Matched</span></div> -->
 
-										<div class="profile">
+										<!-- <div class="profile">
 											<div class="profilefildset">New Password</div>
 											<div class="profileinput">
 												<input class="texboxitemcode" placeholder="New Password"
 													name="txtNewPassword" id="txtNewPassword" type="password" required="required">
 											</div>
-										</div>
+										</div> -->
 
 										
 										
-										<div class="profile">
+										<!-- <div class="profile">
 											<div class="profilefildset">Confirm Password</div>
 											<div class="profileinput">
 
@@ -216,16 +219,16 @@
 													name="txtConfirmPassword" id="txtConfirmPassword" type="password" required="required">
 
 											</div>
-										</div>
+										</div> -->
 										
-										<div class="profile">											
+										<!-- <div class="profile">											
 											<div class="profileinput">
 												<span id="divCheckPasswordMatch"></span>
 											</div>
-										</div>
-									</div>
+										</div> -->
+									
 
-									<div class="profile">
+									<div >
 										<div class="" style="text-align: center;">
 											<input name="" class="btn additem_btn" value="Save"
 												type="submit" id="btnupdate_profile">
@@ -234,8 +237,8 @@
 
 								</form>
 
-							</div>
-						</div>
+							
+						
 					</div>
 					<!--latestNews-->
 				</div>

@@ -804,6 +804,10 @@ background-position: right .7em top 50%, 0 0;}
 .btn_l{text-align: left;}
 .marg_top{margin-top: 20px;}
 
+.password_row{display: inline-block; width:100%; margin:20px 0 0 0;}
+.password_one{width: 33.3333%; float: left; padding: 0 10px;}
+.password_txt{text-align: left; margin:0 0 5px 0;}
+
 /*responsive trable*/
 .tableFixHead {overflow-y: auto; max-height: 65vh /* 500px */; display: inline-block; width: 100%; border-bottom: 1px solid #ccc;}
 .tableFixHead thead th {position: sticky; top: -1px; z-index: 99;}
@@ -1012,6 +1016,7 @@ table.responsive-table{display: block;}
 .order_inline_two{float: none; width:100%;}
 .order_txt{width:20%;}
 .order_input{width:80%;}
+.password_one{width: 100%; padding:0; margin: 10px 0;}
 
 }
 
