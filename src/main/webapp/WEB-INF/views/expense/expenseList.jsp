@@ -113,25 +113,22 @@ table, th, td {
 
 				<!--rightSidebar-->
 				<div class="sidebarright">
-
-					<div class="row" style="margin: 0 0 20px 0;">
-						<div class="col-md-6">
-
+				
+					<div class="row_one">
+						<div class="row_one_l">
 							<h2 class="pageTitle">
 								<i class="fa fa-suitcase" aria-hidden="true"></i> Expense List
 							</h2>
-							<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
-
 						</div>
-						<div class="col-md-6">
-							<div align="right">
-
-								<a href="${pageContext.request.contextPath}/showAddExpense"><input
-									type="button" value="Add Expense" class="btn additem_btn"
-									style="margin: 0;"> </a>
-							</div>
+						<div class="row_one_r">
+							<a href="${pageContext.request.contextPath}/showAddExpense"><input
+							type="button" value="Add Expense" class="btn additem_btn" style="margin: 0;"> </a>
 						</div>
+						<div class="clr"></div>
 					</div>
+				
+
+					
 
 
 					<form name="frm_search" id="frm_search" method="get"
@@ -174,7 +171,7 @@ table, th, td {
 							</div>
 							
 							<div class="col-md-1">
-								<div align="center">
+								<div class="marg_tp" align="center">
 								<input class="btn additem_btn" value="Submit" type="submit" id="btnsub" style="margin: 0;">
 								</div>
 							</div>
@@ -193,43 +190,43 @@ table, th, td {
 
 
 
-						<div>
-							<!-- class="table-wrap" -->
-							<table id="table_grid" class="responsive-table">
+						<div class="marg_top">
+						
+						<div class="tableFixHead ">
+	<table id="table_grid">         
+	<thead style="background-color: #f3b5db;">
+		<tr class="bgpink">
+			<th style="text-align: center;">Sr No</th>
+			<th style="text-align: center;">Chalan No.</th>
+			<th style="text-align: center;">Date</th>
+			<th style="text-align: center;">Amount</th>
+			<th style="text-align: center;">Remark</th>
+			<th style="text-align: center;">Attachment</th>
+			<th style="text-align: center;">User</th>
+			<th style="text-align: center;">Type</th>
+			<th style="text-align: center;">Action</th>
 
-								<thead>
-									<tr class="bgpink">
-										<th style="text-align: center;">Sr No</th>
-										<th  style="text-align: center;">Chalan
-											No.</th>
-										<th  style="text-align: center;">Date</th>
-										<th  style="text-align: center;">Amount</th>
-										<th  class="col-md-3" style="text-align: center;">Remark</th>
-										<th style="text-align: center;">Attachment</th>
-										<th  style="text-align: center;">User</th>
-										<th  style="text-align: center;">Type</th>
-										<th  style="text-align: center;">Action</th>
-
-									</tr>
-								</thead>
-								<tbody>
+		</tr>
+	</thead>
+	
+	<tbody>
 
 									<c:forEach items="${expList}" var="expList" varStatus="count">
 
 										<tr>
-											<td class="col-sm-1" style="text-align: center;"><c:out
+											<td style="text-align: center;"><c:out
 													value="${count.index+1}" /></td>
-											<td class="col-md-2" style="text-align: center;"><c:out
+											<td style="text-align: center;"><c:out
 													value="${expList.chalanNo}" /></td>
 
-											<td class="col-md-2" style="text-align: center;"><c:out
+											<td style="text-align: center;"><c:out
 													value="${expList.expDate}" /></td>
-											<td class="col-md-1"><c:out value="${expList.chAmt}" /></td>
+											<td><c:out value="${expList.chAmt}" /></td>
 
-											<td class="col-md-1" style="text-align: left;"><c:out
+											<td style="text-align: left;"><c:out
 													value="${expList.remark}" /></td>
 
-											<td  class="col-md-1" style="text-align: left;"><a
+											<td style="text-align: left;"><a
 												href="${imageUrl}${expList.imgName}" download><img
 													src="${imageUrl}${expList.imgName}"
 													style="width: 80px; height: 80px;"
@@ -237,10 +234,10 @@ table, th, td {
 
 											</td>
 
-											<td class="col-md-1" style="text-align: left;"><c:out
+											<td style="text-align: left;"><c:out
 													value="${expList.exVar2}" /></td>
 
-											<td class="col-md-2" style="text-align: center;"><c:choose>
+											<td style="text-align: center;"><c:choose>
 													<c:when test="${expList.expType==1}">
  														Regular						
  												    </c:when>
@@ -250,7 +247,7 @@ table, th, td {
 												</c:choose></td>
 
 
-											<td class="col-md-2" style="text-align: center;"><div>
+											<td style="text-align: center;">
 
 													<c:if
 														test="${expList.expType==1  && (currDate == expList.expDate)}">
@@ -283,54 +280,15 @@ table, th, td {
 
 
 
-												</div></td>
-
-
-											<%-- <td class="col-md-2" style="text-align: center;"><div>
-
-													<c:if
-														test="${expList.expType==1 && sessionScope.frEmpDetails.frEmpId==expList.exInt2 && (currDate == expList.expDate)}">
-														<a
-															href="${pageContext.request.contextPath}/showEditExpense/${expList.expId}">
-															<abbr title='Edit'><i class='fa fa-edit'></i></abbr>
-														</a> &nbsp;&nbsp; <a
-															href="${pageContext.request.contextPath}/deleteExpense/${expList.expId}"
-															onClick="return confirm('Are you sure want to delete this record');">
-															<abbr title='Delete'><i class='fa fa-trash'></i></abbr>
-														</a>
-													</c:if>
-
-													<c:if
-														test="${expList.expType==2 && sessionScope.frEmpDetails.frEmpId==expList.exInt2 && (currDate == expList.expDate)}">
-														<c:if test="${expList.status==2}">
-
-															<a
-																href="${pageContext.request.contextPath}/showEditExpense/${expList.expId}">
-																<abbr title='Edit'><i class='fa fa-edit'></i></abbr>
-															</a> &nbsp;&nbsp; <a
-																href="${pageContext.request.contextPath}/deleteExpense/${expList.expId}"
-																onClick="return confirm('Are you sure want to delete this record');">
-																<abbr title='Delete'><i class='fa fa-trash'></i></abbr>
-															</a>
-														</c:if>
-
-													</c:if>
-
-
-													<c:if test="${expList.expType==2 && expList.exInt3==1}">
-														&nbsp;&nbsp;
-														<a href=""
-															onclick="showDetailsForBillReceipt(${expList.expId})">
-															<abbr title='Bill Receipt Details' class="slide_open"><i
-																class='fa fa-bars'></i></abbr>
-														</a>
-													</c:if>
-
-												</div></td> --%>
+												</td>
 										</tr>
 									</c:forEach>
 								</tbody>
-							</table>
+	</table>
+</div>
+						
+						
+							
 
 						</div>
 

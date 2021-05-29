@@ -911,6 +911,8 @@ background-position: right .7em top 50%, 0 0;}
 .history_r{float: none; width:100%;}
 .buttonsaveorder.mob{margin:0;}
 .order_inline_two{padding: 0 0 0 5px;}
+.col1title{text-align: left;}
+.marg_tp{margin:15px 0 0 0 ;}
 }
 
 @media screen and (max-width:700px){
@@ -1012,7 +1014,7 @@ table.responsive-table{display: block;}
 
 
 .row_one_l{float: none; width:100%;}
-.row_one_r{float: none; width:100%;}
+.row_one_r{float: none; width:100%; text-align: left;}
 .row_date,.row_previous{width:100%; display: block; text-align: left; margin:0 0 10px 0;}
 .row_amount{width:100%; text-align: left;}
 .order_inline{float: none; width:100%; margin: 5px 0; display: inline-block;}

@@ -112,25 +112,21 @@ table, th, td {
 
 				<!--rightSidebar-->
 				<div class="sidebarright">
-
-					<div class="row" style="margin: 0 0 20px 0;">
-						<div class="col-md-6">
-
+				
+					<div class="row_one">
+						<div class="row_one_l">
 							<h2 class="pageTitle">
-								<i class="fa fa-suitcase" aria-hidden="true"></i> Add Expense 
+								<i class="fa fa-suitcase" aria-hidden="true"></i> Add Expense
 							</h2>
-							<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
-
 						</div>
-						<div class="col-md-6">
-							<div align="right">
-
-								<a href="${pageContext.request.contextPath}/showExpenseList"><input
-									type="button" value="Expense List" class="btn additem_btn"
-									style="margin: 0;"> </a>
-							</div>
+						<div class="row_one_r">
+							<a href="${pageContext.request.contextPath}/showExpenseList"><input
+							type="button" value="Expense List" class="btn additem_btn" style="margin: 0;"> </a>
 						</div>
+						<div class="clr"></div>
 					</div>
+					
+
 
 
 					<form name="frm_search" id="frm_search" method="post"
@@ -138,7 +134,7 @@ table, th, td {
 						action="${pageContext.request.contextPath}/addSubmitExpense">
 
 
-						<div class="row">
+						<div class="row marg_top">
 							<div class="col-md-1">
 								<div class="col1title">Challan No</div>
 							</div>
