@@ -172,7 +172,7 @@ body {
 .buttonsaveorder:hover{background:#343690;border:2px solid #343690;-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
 
 /* Modal Content */
-.modal-content {
+.modal-content {border-radius:5px;
 	background-color: #fefefe;
 	margin: auto;
 	padding: 8px 20px 20px 20px;
