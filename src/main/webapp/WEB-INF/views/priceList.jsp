@@ -95,25 +95,7 @@ table, th, td {
 }
 </style>
 
-<%-- <!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-<title>Monginis</title>
-<link href="${pageContext.request.contextPath}/resources/css/monginis.css" rel="stylesheet" type="text/css"/>
-<link rel="icon" href="${pageContext.request.contextPath}/resources/images/feviconicon.png" type="image/x-icon"/> 
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
 
-<!--rightNav-->
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
-<script type="text/javascript">
-jQuery(document).ready(function(){
-	jQuery("#menuzord").menuzord({
-		align:"left"
-	});
-});
-</script> --%>
 <!--rightNav-->
 
 <!--selectlistbox-->
@@ -304,54 +286,30 @@ jQuery(document).ready(function(){
 				
 					<div class="title_row">
 					<div class="title_l high">
-					
-						
-							<h2 class="pageTitle" ><i class="fa fa-file-text-o"></i> Price List</h2>
-						
+							<h2 class="pageTitle" ><i class="fa fa-file-text-o"></i> Price List </h2>
 					</div>
-					
-					
-					<%-- <div class="title_r high">
-						<input type="hidden" name="mod_ser" id="mod_ser"
-							value="search_result">
-						<div class="frm_l_one">
-						<div class="frm_l high">Select Type </div>
-						<div class="frm_r_one high">
-							<select name="typeOfOrder" id="typeOfOrder" 
-									required onchange="priceListType(this.value)">
-									<option selected>Select Type</option>
-									<option value="1"><c:out value="Regular"></c:out></option>
-									<option value="2"><c:out value="Sp Cake"></c:out></option>
-															
-
-								</select>
-						</div>
-						</div>
-					
-					</div> --%>
 					<div class="clr"></div>
 					</div>
-					<div class="col-md-1 flav_txt"> Type</div>
-							<div class="col-md-2">
-								<select name="typeOfOrder" id="typeOfOrder" 
-									required onchange="priceListType(this.value)">
-									<option selected>Select Type</option>
-									<option value="1"><c:out value="Regular"></c:out></option>
-									<option value="2"><c:out value="Sp Cake"></c:out></option>
-								</select>
-							</div>
 					
-					<div class="colOuter" id="regCakeDiv">
-						<!-- copy div kalpesh -->
-						
-						
-						<div class="row">
+					<div class="type_row">
+						<div class="type_one">
+							<div class="type_txt">Type</div>
+							<div class="type_input">
+								<select name="typeOfOrder" id="typeOfOrder" 
+										required onchange="priceListType(this.value)">
+										<option selected>Select Type</option>
+										<option value="1"><c:out value="Regular"></c:out></option>
+										<option value="2"><c:out value="Sp Cake"></c:out></option>
+									</select>
+							</div>
+						</div>
+						<div class="hiddn_div" id="regCakeDiv">
 							<input type="hidden" name="mod_ser" id="mod_ser"
 							value="search_result">
 							
-							
-							<div class="col-md-1 flav_txt"> Category</div>
-							<div class="col-md-2">
+							<div class="categ_one">
+							<div class="type_txt">Category</div>
+							<div class="type_input">
 								<select name="orderType" id="orderType" 
 									required ">
 									<option selected>Select Category</option>
@@ -360,51 +318,45 @@ jQuery(document).ready(function(){
 									</c:forEach>
 								</select>
 							</div>
-							
-							<div class="col-md-1"> Sub-Category</div>
-							<div class="col-md-4">
+						</div>
+						
+						<div class="categ_one">
+							<div class="type_txt">Sub-Category</div>
+							<div class="type_input">
 								<select multiple="multiple" name="item_grp2" id="item_grp2"
 									data-placeholder="Choose Subcategory" class="chosen-select"
 									style="text-align: left;" tabindex="6" required>
 								</select>
 							</div>
-							
-							<div class="col-md-1"> 
-								<input type="hidden" id="Mrp" name="Mrp" value="1">
-								<input name="" class="btn additem_btn" value="Search" style="margin: 0;" type="submit" onclick="searchCall()">
-							</div>
 						</div>
-
-						<!-- <div class="col-sm-2">
-							<label>OR GRN Sr No</label>
-							<input type="checkbox" class="form-control" id="headerCheckBox"
-						 name="headerCheckBox" id="headerCheckBox"
-							/>
-						</div> -->
-					</div>
-					
-					<div class="colOuter" id="spCakeDiv" style="display: none;">
-						<!-- copy div kalpesh -->
 						
-						<div id="serchByDiv"  >
-						<div class="col-md-1 flav_txt">Search By</div>
-							<div class="col-md-3">
+						<div class="categ_search">
+							<input type="hidden" id="Mrp" name="Mrp" value="1">
+							<input name="" class="btn additem_btn" value="Search" style="margin: 0;" type="submit" onclick="searchCall()">
+						</div>
+							
+						</div>
+						
+						
+						<div class="hiddn_div" id="spCakeDiv" style="display: none;">
+							<input type="hidden" name="mod_ser" id="mod_ser"
+							value="search_result">
+							
+							<div class="categ_one"  id="serchByDiv">
+							<div class="type_txt">Search By</div>
+							<div class="type_input">
 								<select  name="searchId" id="searchId"
 									data-placeholder="Choose Sp Flavour" class="chosen-select"
 									style="text-align: left;" tabindex="6"  onchange="searchBy()" required>
 									<option value="1" >By Flavour</option>
 									<option value="2" >By Cake</option>
-									
-									
-									
 								</select>
 							</div>
-							</div>
-						<div class="row">
+						</div>
 						
-							<div id="flavDiv"  >
-							<div class="col-md-1 flav_txt">Flavour</div>
-							<div class="col-md-3">
+						<div class="categ_one" id="flavDiv">
+							<div class="type_txt">Flavour</div>
+							<div class="type_input">
 								<select multiple="multiple" name="flavourId" id="flavourId"
 									data-placeholder="Choose Sp Flavour" class="chosen-select"
 									style="text-align: left;" tabindex="6" onchange="selectFlav(this.value)" required>
@@ -414,12 +366,11 @@ jQuery(document).ready(function(){
 									</c:forEach>
 								</select>
 							</div>
-							
-							</div>
-							
-							<div id="cakeDiv" style="display: none;">
-							<div class="col-md-1 flav_txt">Cake</div>
-							<div class="col-md-3">
+						</div>
+						
+						<div class="categ_one" id="cakeDiv" style="display: none;">
+							<div class="type_txt">Cake</div>
+							<div class="type_input">
 								<select multiple="multiple" name="cakeId" id="cakeId"
 									data-placeholder="Choose Sp Cake" class="chosen-select"
 									style="text-align: left;" tabindex="6" onchange="selectCake(this.value)"  required>
@@ -429,98 +380,17 @@ jQuery(document).ready(function(){
 									</c:forEach>
 								</select>
 							</div>
-							</div>
-							
-							<div class="col-md-1">
-								<input type="hidden" id="Mrp" name="Mrp" value="1">
-								<input name="" class="btn additem_btn" value="Search" style="margin: 0;" type="submit" onclick="searchSpCall()">
-							</div>
 						</div>
 						
 						
-
-						<%-- <div class="frm_l_one">
 						
-						
-						
-						<div class="frm_l high">Select flavour </div>
-						<div class="frm_r_one high">
-							
-							<select multiple="multiple" name="flavourId" id="flavourId"
-									data-placeholder="Choose Sp Flavour" class="chosen-select"
-									style="text-align: left;" tabindex="6" onchange="selectFlav(this.value)" required>
-									<option value="-1" >Select All</option>
-
-																<c:forEach items="${flavourList}" var="flavour">
-
-
-																	<option value="${flavour.spfId}"><c:out
-																			value="${flavour.spfName}"></c:out></option>
-																</c:forEach>
-
-								
-								</select>
-							
-						</div>  OR 
-						</div> --%>
-						
-						<%-- <div class="frm_l_one">
-						<div class="frm_l high">Select Cake</div>
-						<div class="frm_r_one high">
-							<select multiple="multiple" name="cakeId" id="cakeId"
-									data-placeholder="Choose Sp Cake" class="chosen-select"
-									style="text-align: left;" tabindex="6" onchange="selectCake(this.value)"  required>
-									<option value="-1" >Select All</option>
-
-																<c:forEach items="${specialCakeList}" var="spCake">
-
-
-																	<option value="${spCake.spId}"><c:out
-																			value="${spCake.spName}"></c:out></option>
-																</c:forEach>
-
-								
-								</select>
-						</div>
-						</div> --%>
-						
-						
-
-
-
-						<!-- <div class="col-sm-2">
-							<label>OR GRN Sr No</label>
-							<input type="checkbox" class="form-control" id="headerCheckBox"
-						 name="headerCheckBox" id="headerCheckBox"
-							/>
-						</div> -->
-						<!-- <div class="frm_single">
+						<div class="categ_search">
 							<input type="hidden" id="Mrp" name="Mrp" value="1">
+								<input name="" class="btn additem_btn" value="Search" style="margin: 0;" type="submit" onclick="searchSpCall()">
 						</div>
-						
-						<div class="frm_single">
-						<input name="" class="btn additem_btn" value="Search" style="margin: 0;"
-									type="submit" onclick="searchSpCall()">
-								
-							
-
-						</div> -->
-
+						</div>
 					</div>
 					
-					
-				
-					
-				
-				
-				
-					
-
-					
-						
-						
-					
-
 					<!--tabNavigation-->
 					<div class="cd-tabs">
 						<!--tabMenu-->
@@ -534,29 +404,27 @@ jQuery(document).ready(function(){
 							<c:when test="${orderType==1}">
 
 								<div class="clearfix"></div>
-
-
-								<div id="table-scroll" class="table-scroll">
-									<div id="faux-table" class="faux-table" aria="hidden"></div>
-									<div class="table-wrap">
-										<table id="table1" class="main-table"  style="margin:0;">
-											<thead>
-												<tr class="bgpink">
-													<th style="text-align: center; white-space: nowrap;">Sr No</th>
-													<th style="text-align: center; white-space: nowrap;">Item Name</th>
-													<th style="text-align: center; white-space: nowrap;">MRP</th>
-													
-												</tr>
-											</thead>
-											<tbody>
+								
+								<div class="tableFixHead">
+	<table id="table1">         
+	<thead style="background-color: #f3b5db;">
+		<tr class="bgpink">
+			<th style="text-align: center; white-space: nowrap; width:80px;">Sr No</th>
+			<th style="text-align: center; white-space: nowrap;">Item Name</th>
+			<th style="text-align: center; white-space: nowrap;">MRP</th>
+			
+		</tr>
+	</thead>
+	
+	<tbody>
 												<c:choose>
 													<c:when test="${catId==42||catId==80}">
 														<c:forEach items="${orderHistory}" var="orderList"
 															varStatus="count">
 
 															<tr>
-																<td style="white-space: nowrap;">${count.index+1}</td>
-																<td style="white-space: nowrap;"><c:out
+																<td style="white-space: nowrap; text-align: center">${count.index+1}</td>
+																<td style="white-space: nowrap; text-align: left"><c:out
 																		value="${orderList.itemName}" /></td>
 																<td style="text-align: right; white-space: nowrap;"><c:out
 																		value="${orderList.rate}" /></td>
@@ -575,14 +443,14 @@ jQuery(document).ready(function(){
 															</tr>
 														</c:forEach>
 													</c:when>
-													<c:otherwise>
+													<c:otherwise> 
 
 														<c:forEach items="${orderHistory}" var="orderList"
 															varStatus="count">
 
 															<tr>
-																<td style="white-space: nowrap;">${count.index+1}</td>
-																<td style="white-space: nowrap;"><c:out
+																<td style="white-space: nowrap; width:80px; text-align: center">${count.index+1}</td>
+																<td style="white-space: nowrap; text-align: left"><c:out
 																		value="${orderList.itemName}" /></td>
 																<td style="text-align: right; white-space: nowrap;"><c:out
 																		value="${orderList.orderMrp}" /></td>
@@ -603,78 +471,29 @@ jQuery(document).ready(function(){
 													</c:otherwise>
 												</c:choose>
 											</tbody>
-
-										</table>
-									</div>
-								</div>
-
-
-
-								<br />
+	</table>
+</div>		
 							</c:when>
-							<%--  <c:when test="${selectedMenu.mainCatId !='5'}">
-       
-    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tr class="bgpink">
-    <td style="width:130px;">Type</td>
-    <td style="width:130px;">Item Code</td>
-    <td>Item Name</td>
-    <td>MRP</td>
-    <td>Quantity</td>
-    <td>Rate</td>
-    <td>Total</td>
-  </tr>
-
- <c:forEach items="${orderHistory}" var="orderList"> 
-  <tr>
-    <td><c:out value="${orderList.orderType}"/></td>
-    <td><c:out value="${orderList.itemId}"/></td>
-    <td><c:out value="${orderList.itemName}"/></td>
-    <td><c:out value="${orderList.orderMrp}"/></td>
-    <td><c:out value="${orderList.orderQty}"/></td>
-    <td><c:out value="${orderList.orderRate}"/></td>
-    <td><c:out value="00"/></td>
-  </tr>
-  </c:forEach>   
-  
- 
-  
-
-</table>
-        <br />
-    </c:when>     --%>
+							
 							<c:otherwise>
 								<div class="clearfix"></div>
-								<div class="table-wrap">
-
-									<div id="table-scroll">
-										<!-- class="table-scroll"> -->
-										<div id="faux-table" aria="hidden">
-											<!-- class="faux-table1" -->
-										</div>
-										<!-- 					<div class="table-wrap">
- -->
-										<table id="table1" class="responsive-table" style="margin: 0;">
-											<!-- class="main-table" -->
-											<thead>
-												<tr class="bgpink">
-													<th style="text-align: center; white-space: nowrap;">Sr No</th>
-													<th style="text-align: center; white-space: nowrap;">Item Name</th>
-													<th style="text-align: center; white-space: nowrap;">MRP
-														</th>
-													
-
-												</tr>
-											</thead>
-											<tbody>
+								
+								<div class="tableFixHead">
+	<table id="table1">         
+	<thead style="background-color: #f3b5db;">
+		<tr class="bgpink">
+			<th style="text-align: center; white-space: nowrap; width:80px;">Sr No</th>
+			<th style="text-align: center; white-space: nowrap;">Item Name</th>
+			<th style="text-align: center; white-space: nowrap; width:120px">MRP </th>
+		</tr>
+	</thead>
+	
+	<tbody>
 												<c:forEach items="${orderHistory}" var="orderList"
 													varStatus="count">
 													<tr>
-														<td style="white-space: nowrap;">${count.index+1}<c:choose>
+														<td style="white-space: nowrap; width:80px; text-align: center;">${count.index+1}<c:choose>
 																<c:when test="${fn:length(orderList.spBookForMobNo)==1}">
-																	<%-- <button class="btn btn-info" value="Generate"
-																		id="genBill${orderList.spOrderNo}"
-																		onclick="genBill(${orderList.spOrderNo})">Generate</button> --%>
 																	<button class="btn btn-info" value="Generate"
 																		id="genBill${orderList.spOrderNo}"
 																		onclick="openPaymentPopup(${orderList.spOrderNo})">Generate</button>
@@ -684,7 +503,7 @@ jQuery(document).ready(function(){
 																</c:otherwise>
 															</c:choose>
 														</td>
-														<td>&nbsp;&nbsp;&nbsp;&nbsp; <c:out
+														<td style="text-align: left;"> <c:out
 																value="${orderList.spName}" /> <c:choose>
 																<c:when test="${orderList.isBillGenerated==0}">
 												&nbsp;&nbsp;<a href="editSpOrder/${orderList.spOrderNo}"><span
@@ -710,9 +529,6 @@ jQuery(document).ready(function(){
 
 														<td  style="text-align: right; white-space: nowrap;"><c:out
 																value="${orderList.spSelectedWeight}" /></td>
-														<%-- 	<td class="col-md-1" style="text-align: right;"><fmt:formatNumber type = "number" maxFractionDigits = "2" minFractionDigits = "2"  groupingUsed = "false" value = "${price}" /></td> --%>
-														<%-- <td class="col-md-1"style="text-align: right;"><c:out
-														value="${orderList.spTotalAddRate}" /></td> --%>
 														<td  style="text-align: right; white-space: nowrap;"><fmt:formatNumber
 																type="number" maxFractionDigits="2"
 																minFractionDigits="2" groupingUsed="false"
@@ -723,11 +539,11 @@ jQuery(document).ready(function(){
 																type="number" maxFractionDigits="2"
 																minFractionDigits="2" groupingUsed="false"
 																value="${orderList.spGrandTotal-orderList.spAdvance}" /></td>
-														<td  style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														<td  style="text-align: left;">
 															<a
 															href="${pageContext.request.contextPath}/showSpCakeOrderHisPDF/${orderList.spOrderNo}"
 															target="_blank"> <abbr title="Order Memo"><i
-																	class="fa fa-file-pdf-o"></i></abbr></a> &nbsp;&nbsp;&nbsp;&nbsp;
+																	class="fa fa-file-pdf-o"></i></abbr></a> ;&nbsp;&nbsp;
 															<c:choose>
 																<c:when test="${fn:length(orderList.spBookForMobNo)>1}">
 																	<a
@@ -742,13 +558,10 @@ jQuery(document).ready(function(){
 												</c:forEach>
 
 											</tbody>
-
-
-										</table>
-									</div>
-
-								</div>
-								<br />
+	</table>
+</div>
+								
+								
 							</c:otherwise>
 						</c:choose>
 
@@ -766,15 +579,7 @@ jQuery(document).ready(function(){
 						<button class="btn additem_btn" value="PDF" id="PDFButton"
 						onclick="genSpPdf()">SP PDF</button>
 				</div>
-				<!--tab1-->
-
-				<!--tab2-->
-
-				<!--tab2-->
-
-				<!--tab3-->
-
-				<!--tab4-->
+				
 				</ul>
 			</div>
 			<!--tabNavigation-->
@@ -969,12 +774,12 @@ function searchSpCall(){
 				$.each(data,function(key, item) {
 					var tr = $('<tr ></tr>');
 					//alert(JSON.stringify(item))
-							tr.append($('<td width="27" style="width:  28px;" align="left" id="sr" ></td>').html(
+							tr.append($('<td style="width:  80px; text-align:Center;" id="sr" ></td>').html(
 									key+1));
-							tr.append($('<td width="100" align="left" id="fr" ></td>').html(
+							tr.append($('<td style="text-align:left;" id="fr" ></td>').html(
 									item.exVar1));
 					
-							tr.append($('<td width="101" align="left" id="menu" ></td>').html(
+							tr.append($('<td style="width:120px; text-align:center;" id="menu" ></td>').html(
 									item.mrp1));
 							
 						
@@ -1037,12 +842,12 @@ function searchCall() {
 				$.each(data,function(key, item) {
 					var tr = $('<tr ></tr>');
 					//alert(JSON.stringify(item))
-							tr.append($('<td width="27" style="width:  28px;" align="left" id="sr" ></td>').html(
+							tr.append($('<td style="width:  80px; text-align:center;" id="sr" ></td>').html(
 									key+1));
-							tr.append($('<td width="100" align="left" id="fr" ></td>').html(
+							tr.append($('<td style="text-align:left;" id="fr" ></td>').html(
 									item.itemName));
 					
-							tr.append($('<td width="101" align="left" id="menu" ></td>').html(
+							tr.append($('<td style="text-align:center; width:120px;" id="menu" ></td>').html(
 									item.itemMrp1));
 							
 						

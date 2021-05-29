@@ -811,6 +811,14 @@ background-position: right .7em top 50%, 0 0;}
 .modal-content.employee{width:75%; position: relative;}
 .modal-content.employee.close{position: absolute; right:10px; top: 10px;}
 
+.type_row{display: inline-block; width:100%;}
+.type_one{float: left; width:25%; padding:0 15px 0 0;}
+.type_txt{float: left; width:27%; margin: 7px 7px 0 0; font-size: 14px; color: #333; }
+.type_input{float: left; width:70%;}
+.hiddn_div{float: left; width:65%;}
+.categ_one{width: 45%; float: left; padding: 0 15px 0 0;}
+.categ_search{float: left; width:10%;}
+
 /*responsive trable*/
 .tableFixHead {overflow-y: auto; max-height: 65vh /* 500px */; display: inline-block; width: 100%; border-bottom: 1px solid #ccc;}
 .tableFixHead thead th {position: sticky; top: -1px; z-index: 99;}
@@ -864,6 +872,7 @@ background-position: right .7em top 50%, 0 0;}
 .row_date{width:50%;}
 .row_previous{width:49%;}
 .row_amount{margin:0 0 15px 0; display: inline-block; width:100%; text-align: center;}
+.type_input{width: 69%;}
 }
 
 @media screen and (max-width:800px){
@@ -913,6 +922,14 @@ background-position: right .7em top 50%, 0 0;}
 .order_inline_two{padding: 0 0 0 5px;}
 .col1title{text-align: left;}
 .marg_tp{margin:15px 0 0 0 ;}
+
+.type_one,.hiddn_div{float: none; width:100%;}
+.categ_one{float: none; width:100%; padding:0;}
+.type_txt{width:20%; text-align: left;}
+.type_input{width:78%;}
+.categ_one,.type_one{margin:0 0 15px 0; display: inline-block; width: 100%; padding:0;}
+.categ_search{float: none; width:100%; text-align: center;}
+
 }
 
 @media screen and (max-width:700px){
@@ -1025,6 +1042,9 @@ table.responsive-table{display: block;}
 .order-right{float: none; width: 100%; text-align: left;}
 .profilefildset{text-align: left;}
 .modal-content.employee{width:100%;}
+
+.type_txt{width:25%:}
+.type_input{width: 73%;}
 
 }
 
