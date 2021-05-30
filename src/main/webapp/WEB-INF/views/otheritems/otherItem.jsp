@@ -258,9 +258,20 @@ table, th, td {
 					
 					<div class="colOuter">
 					
+					<div class="col-md-2" >
+							<div class="col1title" align="left">Cess Per*: </div>
+						</div>
+						<div class="col-md-3" >
+							<input id="cessPer" class="form-control"
+								placeholder="cess Per" autocomplete="off"  name="cessPer" type="text"  value="${item.itemTax3}"  required>
+
+						</div>
 					
 					
-					<div class="col-md-2">
+						<div class="col-md-1">
+							 
+						</div>
+						<div class="col-md-2">
 							<div class="col1title" align="left">Is Active?* </div>
 						</div>
 						<div class="col-md-3">
@@ -281,9 +292,6 @@ table, th, td {
 							</c:otherwise>	
 							</c:choose>				 
 						</select>
-						</div>
-						<div class="col-md-1">
-							 
 						</div>
 					
 						<div class="col-md-2" style="display: none;">

@@ -145,6 +145,13 @@ table, th, td {
 					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
 				
 					</div>
+					<div class="col-md-9" style="text-align: right;">
+					<a href="${pageContext.request.contextPath}/showOtherBill"><input
+								type="button" value="Other Purchase Bills" class="btn additem_btn" style="margin: 0;">
+							</a>
+					
+					
+					</div>
 					<div class="col-md-8">
 						<div class="col-md-3">
 						<div class="col1title">Select View Option</div>

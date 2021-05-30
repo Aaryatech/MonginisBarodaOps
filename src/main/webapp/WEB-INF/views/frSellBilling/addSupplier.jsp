@@ -85,9 +85,160 @@ table, th, td {
 				</div>
 
 					
+						<!-- ******************************New Form Starts***************************** -->
+						<div class="colOuter">
+
+							<div class="col-md-2">
+								<div class="col1title" align="left">Supplier Name*:</div>
+							</div>
+							<div class="col-md-3">
+								<input id="suppName" class="form-control"
+									placeholder="Supplier Name" name="suppName" type="text"
+									autocomplete="off" required> <input id="suppId"
+									class="form-control" name="suppId" type="hidden">
+
+							</div>
+							<div class="col-md-1"></div>
+
+
+							<div class="col-md-2">
+								<div class="col1title" align="left">Mobile No*:</div>
+							</div>
+							<div class="col-md-3">
+								<input id="mob" class="form-control" placeholder="Mobile No"
+									name="mob" pattern="^\d{10}$" autocomplete="off" maxlength="10"
+									type="text" required>
+
+							</div>
+
+
+
+
+
+						</div>
+
+						<div class="colOuter">
+
+							<div class="col-md-2">
+								<div class="col1title" align="left">E-Mail*:</div>
+							</div>
+
+							<div class="col-md-3">
+								<input id="email" class="form-control"
+									onblur="validateEmail(this.value)" placeholder="Email"
+									name="email" type="email" autocomplete="off"
+									required="required">
+
+							</div>
+
+							<div class="col-md-1"></div>
+
+							<div class="col-md-2">
+								<div class="col1title" align="left">Supplier Address*:</div>
+							</div>
+							<div class="col-md-3">
+								<input id="suppAdd" class="form-control"
+									placeholder="Supplier Address" name="suppAdd" type="text"
+									autocomplete="off" required>
+
+							</div>
+
+
+
+
+
+
+						</div>
+
+
+
+						<div class="colOuter">
+
+							<div class="col-md-2">
+								<div class="col1title" align="left">Supplier City*:</div>
+							</div>
+							<div class="col-md-3">
+								<input id="city" class="form-control"
+									placeholder="Supplier City" name="city" type="text"
+									autocomplete="off" required>
+
+							</div>
+							<div class="col-md-1"></div>
+
+
+							<div class="col-md-2">
+								<div class="col1title" align="left">Is Same State*:</div>
+							</div>
+							<div class="col-md-3">
+								<select class="form-control" data-live-search="true"
+									title="Please Select" name="isSameState" id="isSameState"
+									required>
+									<option value="">Select Option</option>
+									<option value="1" selected>Yes</option>
+									<option value="2">No</option>
+								</select>
+
+							</div>
+
+						</div>
+
+
+						<div class="colOuter">
+
+							<div class="col-md-2">
+								<div class="col1title" align="left">Credit Days*:</div>
+							</div>
+							<div class="col-md-3">
+								<input id="creditDays" class="form-control"
+									placeholder="Credit Days" name="creditDays" autocomplete="off"
+									pattern="[+-]?([0-9]*[.])?[0-9]+" type="text"
+									required="required">
+
+							</div>
+
+							<div class="col-md-1"></div>
+							<div class="col-md-2">
+								<div class="col1title" align="left">GSTN No:</div>
+							</div>
+							<div class="col-md-3">
+								<input id="gstnNo" class="form-control" placeholder="GSTN No"
+									name="gstnNo" type="text" autocomplete="off"
+									required="required">
+
+							</div>
+
+						</div>
+
+						<div class="colOuter">
+
+							<div class="col-md-2">
+								<div class="col1title" align="left">FDA Licence*:</div>
+							</div>
+							<div class="col-md-3">
+								<input id="liceNo" class="form-control"
+									placeholder="FDA Licence" name="liceNo" type="text"
+									autocomplete="off" required>
+
+							</div>
+							<div class="col-md-1"></div>
+							<div class="col-md-2">
+								<div class="col1title" align="left">Pan No:</div>
+							</div>
+							<div class="col-md-3">
+								<input id="panNo" class="form-control" maxlength="10"
+									style="text-transform: uppercase;" placeholder="Pan No"
+									name="panNo" type="text" autocomplete="off">
+
+							</div>
+
+
+
+						</div>
+
+
+						<!-- **************************New Form End****************** -->
 						
-						
-					<div class="colOuter">
+					<!-- <div class="colOuter">
 						<div class="col-md-2">
 							<div class="col1title" align="left">Supplier Name*: </div>
 						</div>
@@ -159,7 +310,7 @@ table, th, td {
 						</div>
 						<div class="col-md-3">
 							<input id="email" class="form-control" onblur="validateEmail(this.value)"
-								placeholder="Email" name="email" type="email"  autocomplete="off" required>
+								placeholder="Email" name="email" type="email"    autocomplete="off" required="required">
 
 						</div>
 				 
@@ -171,7 +322,7 @@ table, th, td {
 						</div>
 						<div class="col-md-3">
 							<input id="gstnNo" class="form-control"
-								placeholder="GSTN No" name="gstnNo" type="text"  autocomplete="off">
+								placeholder="GSTN No" name="gstnNo" type="text"  autocomplete="off" required="required">
 
 						</div>
 						<div class="col-md-1">
@@ -207,11 +358,11 @@ table, th, td {
 						</div>
 						<div class="col-md-3">
 							<input id="creditDays" class="form-control"
-								placeholder="Credit Days" name="creditDays"  autocomplete="off" pattern="[+-]?([0-9]*[.])?[0-9]+" type="text" required>
+								placeholder="Credit Days" name="creditDays"  autocomplete="off" pattern="[+-]?([0-9]*[.])?[0-9]+" type="text" required="required">
 
 						</div>
 				 
-					</div> 
+					</div> --> 
 					<div class="colOuter">
 						<div align="center">
 							<input name="submit" class="btn additem_btn" value="Submit"

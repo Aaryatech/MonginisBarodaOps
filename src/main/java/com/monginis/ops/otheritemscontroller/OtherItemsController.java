@@ -724,6 +724,7 @@ public class OtherItemsController {
 			map = new LinkedMultiValueMap<String, Object>();
 			//	map.add("itemGrp1", 7); 
 			map.add("frId", frDetails.getFrId()); 
+			map.add("catId", 7);
 			Item[] items  = rest.postForObject(Constant.URL + "/getOtherItemsByCatIdAndFrId", map,
 						Item[].class);  
 			

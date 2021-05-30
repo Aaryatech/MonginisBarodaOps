@@ -237,8 +237,16 @@ body {
 						action="${pageContext.request.contextPath}/insertOtherStockBill">
 						
 						<div class="row">
-					<div class="col-md-5"><h2 class="pageTitle"><i class="fa fa-plus-circle" aria-hidden="true"></i> Other Item Opening Stock</h2></div>
-					<div class="col-md-7" style="text-align: right;">
+							<div class="col-md-5">
+								<h2 class="pageTitle">
+									<i class="fa fa-plus-circle" aria-hidden="true"></i> Other Item
+									Opening Stock
+								</h2>
+							</div>
+							<div class="col-md-7" style="text-align: right;">
+					<a href="${pageContext.request.contextPath}/showOtherBill"><input
+								type="button" value="Other Purchase Bills" class="btn additem_btn" style="margin: 0;">
+							</a>
 					
 					<a href="${pageContext.request.contextPath}/addSupplier"><input
 								type="button" value="Add Supplier" class="btn additem_btn" style="margin: 0;">

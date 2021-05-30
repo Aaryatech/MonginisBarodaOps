@@ -282,6 +282,14 @@ function serchOtherBill()
 }
 
 	</script>
+	
+	<script>
+	$(document).ready( function () {
+		serchOtherBill();
+		//alert(":Ok")
+		});
+	
+	</script>
 
 
 

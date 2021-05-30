@@ -149,7 +149,7 @@ public class OtherItemStockController {
 
 			map = new LinkedMultiValueMap<>();
 			map.add("frId", frDetails.getFrId());
-
+			
 			OtherItemStockHeader othStkHead = new OtherItemStockHeader();
 
 			List<OtherItemStockHeader> stockHeader = null;
@@ -171,6 +171,8 @@ public class OtherItemStockController {
 			map.add("month", stockHeader.get(0).getMonth());
 			map.add("catId", 7);
 
+			System.err.println("In If Current Stock "+map.toString());
+			
 			OtherItemCurStock[] list = rest.postForObject(Constant.URL + "/getOtherItemCurStock", map,
 					OtherItemCurStock[].class);
 			otherStockList = new ArrayList<>(Arrays.asList(list));
@@ -231,7 +233,7 @@ public class OtherItemStockController {
 			map.add("prevToDate", prevToDate);
 			map.add("catId", 7);
 			map.add("month", month);
-
+			System.err.println("In Eles For Sel Dates "+map.toString());
 			OtherItemCurStock[] list = rest.postForObject(Constant.URL + "/getOtherItemStockBetDate", map,
 					OtherItemCurStock[].class);
 			otherStockList = new ArrayList<>(Arrays.asList(list));

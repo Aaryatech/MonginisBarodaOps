@@ -195,7 +195,7 @@ public class OtherBillController {
 			
 			float igstPer= Float.parseFloat(request.getParameter("igstPer"));
 			
-			//float cessPer= Float.parseFloat(request.getParameter("cessPer"));
+			float cessPer= Float.parseFloat(request.getParameter("cessPer"));
 			
 			int isActive = Integer.parseInt(request.getParameter("isActive"));
 			
@@ -223,6 +223,7 @@ public class OtherBillController {
 			item.setShelfLife(1);
 			item.setGrnTwo(0);
 			item.setDelStatus(0);
+			
 
 			RestTemplate restTemplate = new RestTemplate();
 
@@ -249,6 +250,8 @@ public class OtherBillController {
 				itemSup.setIsTallySync(0);
 				itemSup.setCutSection(0);
 				itemSup.setShortName("");
+				itemSup.setItemCess(cessPer);
+				
 
 				Info infoRes = restTemplate.postForObject(Constant.URL + "/saveItemSup", itemSup, Info.class);
 				System.out.println("Response: " + info.toString());
