@@ -844,6 +844,8 @@ background-position: right .7em top 50%, 0 0;}
 .month_txt{float: left; font-weight: bold; margin:9px 0 0 0;}
 .colOuter_bx{float: left; width:70%;}
 .form_one.date{width:40%;}
+.re-order-red{background: none; color: #f4353f;}
+.padd_zero{padding-top:0;}
 
 /*--css-divices--*/
 @media screen and (max-width:1366px){
@@ -949,6 +951,9 @@ background-position: right .7em top 50%, 0 0;}
 
 .button_one {width: 40%;}
 .colOuter_bx{float: left; width:100%; display: inline-block;}
+.mobile_left{text-align: left;}
+.mob_marg{margin:0 0 15px 0; } 
+.floatright{float: right;}
 
 }
 
@@ -1068,6 +1073,8 @@ table.responsive-table{display: block;}
 .form_one{float: none; width:100%;}
 .button_one{width:100%; margin: 10px 0;}
 .form_one.date{float: none; width:100%; margin: 0 0 15px 0; display: inline-block;}
+
+.button_margin{display:block; margin: 15px 0 0 0; width:100%;}
 
 }
 

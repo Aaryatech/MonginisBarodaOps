@@ -67,38 +67,6 @@ table, th, td {
 		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 </style>
-<%-- <!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-<title>Monginis</title>
-<link
-	href="${pageContext.request.contextPath}/resources/css/monginis.css"
-	rel="stylesheet" type="text/css" />
-<link rel="icon"
-	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
-	type="image/x-icon" />
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
-
-<link
-	href="${pageContext.request.contextPath}/resources/css/monginis.css"
-	rel="stylesheet" type="text/css" />
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
-	rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/resources/css/custom.css"
-	rel="stylesheet" type="text/css" />
-
-<!--rightNav-->
-
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/loader.css">
-
-</head>
-<body> --%>
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <link rel="stylesheet"
@@ -155,47 +123,33 @@ table, th, td {
 
 
 			<!--leftNav-->
-			<%-- <div class="colOuter">
-				<div class="col-md-2"></div>
-				<div class="col-md-8">
-					<c:if test="${not empty message}">
-						<div class="alert1">
-							<span class="closebtn"
-								onclick="this.parentElement.style.display='none';">&times;</span>
-							${message}
-						</div>
-					</c:if>
-				</div>
-			</div> --%>
 
 			<!--rightSidebar-->
-			<div class="sidebarright" style="padding-top: 0px;">
-				<div class="col-md-4">
+			<div class="sidebarright padd_zero">
+				
 					<div class="order-left">
 						<h2 class="pageTitle">
-							<i class="fa fa-bar-chart-o" aria-hidden="true"></i> Stock
-							Details
+							<i class="fa fa-bar-chart-o" aria-hidden="true"></i> Stock Details 
 						</h2>
 						<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
 					</div>
-				</div>
+				
 				<c:if test="${allow_fr_op_stock==1}">
-				<div class="col-md-8">
-					<div align="right">
+				
+					<div class="order-right mobile_left">
 
 						<a href="${pageContext.request.contextPath}/showFrOpeningStock"><input
 							type="button" value="Add Opening Stock" class="btn additem_btn"
 							style="margin: 0; text-align: right;"> </a>
 
 					</div>
-				</div>
+				
 				</c:if>
 
 
 
 				<div class="colOuter">
-					<div class="col-md-1" style="margin: 5px 0 0 0;">Current
-						Month:</div>
+					<div class="col-md-1" style="margin: 5px 0 0 0; text-align: left;">Month:</div><!-- Current -->
 					<div class="col-md-11" style="text-align: left;">
 
 						<c:forEach items="${category}" var="category" varStatus="count">
@@ -284,7 +238,7 @@ table, th, td {
 						</select>
 					</div>
 					<div class="col-md-1">
-						<div class="col1title">View Option</div>
+						<div class="col1title"> Option</div><!-- View -->
 					</div>
 					<div class="col-md-2">
 						<select name="selectStock" class="form-control chosen"
@@ -301,7 +255,7 @@ table, th, td {
 						<div class="col1title">Type</div>
 					</div>
 					<div class="col-md-2">
-						<select name="st_type" class="form-control chosen" tabindex="4"
+						<select name="st_type" class="form-control chosen mob_marg" tabindex="4"
 							id="st_type" required>
 
 							<option value="">Select Type</option>
@@ -323,8 +277,8 @@ table, th, td {
 
 						</select>
 					</div>
-					<div class="col-md-1">
-						<input name="search_stock" class="btn additem_btn" value="Search"
+					<div class="col-md-1 button_margin">
+						<input name="search_stock" class="btn additem_btn " value="Search"
 							type="button" onclick="searchStock()" style="margin: 0;">
 					</div>
 
@@ -397,141 +351,49 @@ table, th, td {
 							onsubmit="substk.disabled = true; return confirm('Do you want to Month End ?');">
 							<div class="clearfix"></div>
 							<div class="col-md-9"></div>
-							<label for="search" class="col-md-3" id="search"> <i
-								class="fa fa-search" style="font-size: 20px"></i> <input
+							<label for="search" class="col-md-3 floatright" id="search"> <i
+								class="fa fa-search"></i> <input
 								type="text" id="myInput" onkeyup="myFunction()"
 								style="border-radius: 25px;" placeholder="Search items by name"
 								title="Type item name">
 							</label>
-
-
-							<div id="table-scroll" class="table-scroll responsive-table-one">
-								<!-- class="table-scroll" -->
-								<div id="faux-table" class="faux-table responsive-table"
-									aria="hidden" style="display: none;">
-									<div class="table-wrap">
-										<table id="table_grid1" class="main-table responsive-table">
-											<thead>
-												<tr class="bgpink">
-													<th class="col-md-1">Item Id</th>
-													<th class="col-md-1">Item_Name</th>
-													<th class="col-md-1">Reg Op Stock</th>
-													<th class="col-md-1">Sp Op Stock</th>
-													<th class="col-md-1">Reg Pur Qty</th>
-													<th class="col-md-1">Sp Pur Qty</th>
-													<th class="col-md-1">Grn-Gvn Qty</th>
-													<th class="col-md-1">Regular Sale</th>
-													<th class="col-md-1">Sp Sale</th>
-													<th>Reorder Qty</th>
-													<th class="col-md-1">Reg Cur Stock</th>
-													<th class="col-md-1">Sp Cur Stock</th>
-
-													<c:if test="${isMonthCloseApplicable eq true}">
-														<th>Physical Stock</th>
-														<th>Stock Difference</th>
-													</c:if>
-												</tr>
-											</thead>
-										</table>
-									</div>
-								</div>
-								<div>
-									<!--  class="table-wrap" -->
-									<table id="table_grid" class="responsive-table">
-										<!-- class="main-table" -->
-										<thead>
-											<tr class="bgpink">
-												<th class="col-md-1">Item Id</th>
-												<th class="col-md-1">Item_Name</th>
-												<th class="col-md-1">Rate/MRP</th>
-												<!---->
-												<th class="col-md-1">Op Stock</th>
-												<th class="col-md-1">Op Stock Value</th>
-												<!-- 	<th class="col-md-1">Sp Op Stock</th> -->
-												<th class="col-md-1">Pur Qty</th>
-												<th class="col-md-1">Pur Value</th>
-												<!-- <th class="col-md-1">Sp Pur Qty</th> -->
-												<th class="col-md-1">Grn-Gvn Qty</th>
-												<th class="col-md-1">Grn-Gvn VAlue</th>
-												<th class="col-md-1">Reg Sale</th>
-												<th class="col-md-1">Reg Sale Value</th>
-												<th class="col-md-1">Curr Stock</th>
-												<th class="col-md-1">Curr Stock Value</th>
-												<c:if test="${isMonthCloseApplicable eq true}">
-													<th>Physical Stock</th>
-													<th>Stock Difference</th>
-												</c:if>
-
-											</tr>
-										</thead>
-										<tbody>
-
-										</tbody>
-
-										<!-- 	<tr>
-											<td></td>
-											<td></td>
-											<td class="col-md-1">Total</td>
-											<td><input type="text" id="opTotal" style="width: 80px;"
-												name="opTotal" value="0" readonly></td>
-											<td><input type="text" id="opTotalVal"
-												style="width: 80px;" name="opTotalVal" value="0" readonly></td>
-
-
-											<td><input type="text" id="purQty" style="width: 80px;"
-												name="purQty" value="0" readonly></td>
-											<td><input type="text" id="purQtyVal"
-												style="width: 80px;" name="purQtyVal" value="0" readonly></td>
-
-
-
-											<td><input type="text" id="grnGvnQty"
-												style="width: 80px;" name="grnGvnQty" value="0" readonly></td>
-											<td><input type="text" id="grnGvnQtyVal"
-												style="width: 80px;" name="grnGvnQtyVal" value="0" readonly></td>
-
-
-
-											<td><input type="text" id="regSale" style="width: 80px;"
-												name="regSale" value="0" readonly></td>
-											<td><input type="text" id="regSaleVal"
-												style="width: 80px;" name="regSaleVal" value="0" readonly></td>
-
-
-											<td><input type="text" id="reOrderQty"
-												style="width: 80px;" name="reOrderQty" value="0" readonly></td>
-
-
-
-											<td><input type="text" id="curStock"
-												style="width: 80px;" name="curStock" value="0" readonly></td>
-											<td><input type="text" id="curStockVal"
-												style="width: 80px;" name="curStockVal" value="0" readonly></td>
-
-										</tr> -->
-
-
-
-									</table>
-
-
-
-
-
-
-
-									&nbsp;
-								</div>
-
+			
+			
+							<div class="tableFixHead">
+								<table id="table_grid">         
+								<thead style="background-color: #f3b5db;">
+									<tr class="bgpink">
+										<th style="text-align: center;">Item Id</th>
+										<th style="text-align: center;">Item Name</th>
+										<th style="text-align: center;">Rate/MRP</th>
+										<th style="text-align: center;">Op Stock</th>
+										<th style="text-align: center;">Op Stock Value</th>
+										<th style="text-align: center;">Pur Qty</th>
+										<th style="text-align: center;">Pur Value</th>
+										<th style="text-align: center;">Grn Gvn Qty</th>
+										<th style="text-align: center;">Grn Gvn VAlue</th>
+										<th style="text-align: center;">Reg Sale</th>
+										<th style="text-align: center;">Reg Sale Value</th>
+										<th style="text-align: center;">Current Stock</th>
+										<th style="text-align: center;">Current Stock Value</th>
+										<c:if test="${isMonthCloseApplicable eq true}">
+											<th style="text-align: center;">Physical Stock</th>
+											<th style="text-align: center;">Stock Difference</th>
+										</c:if>
+									</tr>
+								</thead>
+								
+								<tbody>
+								
+								</tbody>
+								</table>
 							</div>
 
 
 							<div class="col-md-12">
-
 								<button type="button" class="btn additem_btn"
 									onclick="exportToExcel();" id="expExcel">Export To
 									Excel</button>
-
 								<button type="button" class="btn additem_btn" onclick="genPdf()"
 									id="PDFButton">PDF</button>
 							</div>
@@ -792,7 +654,7 @@ table, th, td {
 														var tr = $('<tr ></tr>');
 
 													} else {
-														var tr = $('<tr class="re-order" ></tr>');
+														var tr = $('<tr class="re-order-red" ></tr>');
 													}
 
 													tr
