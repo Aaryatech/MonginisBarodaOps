@@ -847,6 +847,11 @@ background-position: right .7em top 50%, 0 0;}
 .re-order-red{background: none; color: #f4353f;}
 .padd_zero{padding-top:0;}
 
+.category_right{width:70%; float: right;}
+.cat_frm{float: left; margin: 7px 10px 0 0; color: #333; width:20%;}
+.cat_input{float: left; margin: 0 10px 0 0; width:54%;}
+.cat_btn{float: left; width:20%;}
+
 /*--css-divices--*/
 @media screen and (max-width:1366px){
 .wrapperIn{ width:100%;}
@@ -892,6 +897,7 @@ background-position: right .7em top 50%, 0 0;}
 .type_input{width: 69%;}
 .form_one.date {width: 37%;}
 .button_one {width: 30%;}
+.category_right {width: 81%;}
 }
 
 @media screen and (max-width:800px){
@@ -954,6 +960,7 @@ background-position: right .7em top 50%, 0 0;}
 .mobile_left{text-align: left;}
 .mob_marg{margin:0 0 15px 0; } 
 .floatright{float: right;}
+.category_right{float: left;}
 
 }
 
@@ -1075,6 +1082,8 @@ table.responsive-table{display: block;}
 .form_one.date{float: none; width:100%; margin: 0 0 15px 0; display: inline-block;}
 
 .button_margin{display:block; margin: 15px 0 0 0; width:100%;}
+.category_right{width:100%;}
+.tableFixHead thead th {z-index:9999999 ;}
 
 }
 
@@ -1111,8 +1120,14 @@ table.responsive-table{display: block;}
 .buttonsaveorder{margin: 8px 0;}
 }
 
+@media screen and (max-width:360px){
+	.cat_input{width:50%;}	
+	
+}
+
 @media screen and (max-width:320px){
 	.checkbox {float: none; text-align: left; position: relative; width: 100%; margin: 30px 0 0 0;}
 	.sidebarhome li{ width:50% /*25%*/; float:left;}
 	.sidebarhome li a{ padding:10px; width:100%; min-height:95px;}
+	
 }

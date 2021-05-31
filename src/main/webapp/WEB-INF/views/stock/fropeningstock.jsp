@@ -41,41 +41,61 @@
 
 			<!--rightSidebar-->
 			<div class="sidebarright">
-				<div class="row">
-					<div class="col-md-7">
-						<h2 class="pageTitle">Opening Stock Details</h2>
+			
+				<div class="order-left">
+					<h2 class="pageTitle"><i class="fa fa-bar-chart-o" aria-hidden="true"></i> Opening Stock Details </h2>
 					<c:if test="${not empty errorMsg}">
 						<h2 class="pageTitle">${errorMsg}</h2>
 					</c:if>
+				</div>
+				<div class="order-right">
+					
+					<div class="category_right">
+						<div class="cat_frm">Category</div>
+						<div class="cat_input">
+							<select data-placeholder="Choose Category"
+								class="form-control chosen" tabindex="6" id="selectMenu"
+								name="selectMenu">
+								<c:forEach items="${catList}" var="catIdName"
+									varStatus="count">
+									<option value="${catIdName.catId}"><c:out
+											value="${catIdName.catName}" /></option>
+								</c:forEach>
+							</select>
+						</div>
+						<div class="cat_btn">
+							<button class="btn additem_btn" onclick="getItems()" style="margin:0;">Search</button>
+						</div>
+					</div>
+				
+					
+				</div>
+				<%-- <div class="row">
+					<div class="col-md-7">
+						
 					</div>
 					<div class="col-md-5">
 						<label class="col-md-3 control-label menu_label" style="margin:7px 0 0 0;">Category</label>
-									<div class=" col-md-7 controls menu_select">										
-										<select data-placeholder="Choose Category"
-											class="form-control chosen" tabindex="6" id="selectMenu"
-											name="selectMenu">
-											<c:forEach items="${catList}" var="catIdName"
-												varStatus="count">
-												<option value="${catIdName.catId}"><c:out
-														value="${catIdName.catName}" /></option>
-											</c:forEach>
-										</select>
-									</div>
-									<div class="col-md-2">
-										<button class="btn btn-primary" onclick="getItems()">Search</button>
+						<div class=" col-md-7 controls menu_select">										
+							<select data-placeholder="Choose Category"
+								class="form-control chosen" tabindex="6" id="selectMenu"
+								name="selectMenu">
+								<c:forEach items="${catList}" var="catIdName"
+									varStatus="count">
+									<option value="${catIdName.catId}"><c:out
+											value="${catIdName.catName}" /></option>
+								</c:forEach>
+							</select>
+						</div>
+									<div><!-- class="col-md-2" -->
+										<button class="btn additem_btn" onclick="getItems()" style="margin:0;">Search</button>
 
 									</div>
 					</div>
-				</div>
-			
-			
-				<%-- <div class="order-left">
-					<h2 class="pageTitle">Opening Stock Details</h2>
-					<c:if test="${not empty errorMsg}">
-						<h2 class="pageTitle">${errorMsg}</h2>
-					</c:if>
-					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
 				</div> --%>
+			
+			
+				
 				
 				
 
@@ -109,13 +129,7 @@
 										class="l-3"></span> <span class="l-4"></span> <span
 										class="l-5"></span> <span class="l-6"></span>
 								</div>
-								<!-- <div class="row" align="left">
-							<div class="col-md-12" style="text-align: center">
-								<button class="btn btn-primary" onclick="getItems()">Search</button>
-
-							</div>
-
-						</div> -->
+								
 							</div>
 						</div>
 					</div>
@@ -134,7 +148,7 @@
 		<tr class="bgpink">
 			<th style="width:80px; text-align: center;">Sr.No.</th>
 			<th style="text-align: center;">Item Id</th>
-			<th style="text-align: left;">Item Name</th>
+			<th style="text-align: center;">Item Name</th>
 			<th style="text-align: center; width:160px;">Opening Quantity</th>
 		</tr>
 	</thead>
@@ -146,38 +160,17 @@
 									</div>
 									
 									
-									<!-- <div class="col-md-12 table-responsive">
-										<table class="table table-bordered table-striped fill-head "
-											style="width: 50%" id="table_grid" align="left">
-											<thead>
-												<tr>
-													<th width="10">Sr.No.</th>
-													<th width="40">Item Id</th>
-													<th width="200">Item Name</th>
-													<th width="50">Opening Quantity</th>
-
-												</tr>
-											</thead>
-											<tbody>
-
-											</tbody>
-										</table>
-									</div> -->
+									
 								</div>
 
 								<div style="text-align: center;">
 											
-											<button id="submitStock" style="display: none; margin:15px 0;" class="btn btn-primary"
+											<button id="submitStock" style="display: none; margin:15px 0;" class="btn additem_btn"
 											onclick="submitForm()">Submit</button><!-- btn additem_btn -->
 										</div>
 										
 										
-								<!-- <div class="row">
-									<div class="col-md-offset-6 col-md-6">
-										<button id="submitStock"   style="display: none;" class="btn btn-info pull-center" 
-											onclick="submitForm()">Submit</button>
-									</div>
-								</div> -->
+								
 							</div>
 						</form>
 					</div>
@@ -230,10 +223,10 @@
 
 													var tr = "<tr>";
 
-													var index = "<td align=center>"
+													var index = "<td style='text-align:center;width:80px;'>"
 															+ index + "</td>";
 
-													var itemCode = "<td align=center>"
+													var itemCode = "<td style='width:120px; text-align:left;'>"
 															+ item.itemCode
 															+ "</td>";
 
