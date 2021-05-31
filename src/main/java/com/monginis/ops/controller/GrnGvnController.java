@@ -421,6 +421,7 @@ public class GrnGvnController {
 			int frId = frDetails.getFrId();
 
 			map.add("frId", frId);
+			map.add("searchDate", searchDate);
 
 			System.out.println("fr Id = " + frDetails.getFrId());
 			grnGvnConfResponse = restTemplate.postForObject(Constant.URL + "getGrnItemConfig", map,

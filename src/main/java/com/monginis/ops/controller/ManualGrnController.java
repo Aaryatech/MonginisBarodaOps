@@ -119,9 +119,14 @@ public class ManualGrnController {
 
 			HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			String searchDate = request.getParameter("searchDate");// ---//
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+			 String currentDate = dateFormat.format(new java.util.Date());
 			int frId=frDetails.getFrId();
 			map.add("frId", frId);
+			map.add("searchDate", currentDate);
+
 			grnGvnConfResponse = restTemplate.postForObject(Constant.URL + "getGrnItemConfig", map,
 					GetGrnGvnConfResponse.class);
 
