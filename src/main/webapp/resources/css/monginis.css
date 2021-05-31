@@ -829,6 +829,21 @@ background-position: right .7em top 50%, 0 0;}
 /* .tableFixHead table tr:hover{background-color: #F00;} */
 .tableFixHead table th {background:#ec268f !important; color:#FFF; font-size: 15px; font-weight: 600;}
 
+.button_row_btm{display: inline-block; width:100%; margin: 20px 0 0 0;}
+.button_left{float: left;}
+.button_right{float: right;}
+.txt_right{text-align: right;}
+.one_opt{float: left; width:30%;}
+
+.single_frm{display: inline-block; width:100%; margin:0 0 15px 0;}
+.form_one{float: left; width:30%;}
+.view_lft{float: left; width:30%; color: #333; padding: 7px 10px 0 0; text-align: right;}
+.view_frm{float: left; width:70%;}
+.button_one{float: left; width:20%;}
+.button_stock{float: left; margin: 0 5px;}
+.month_txt{float: left; font-weight: bold; margin:9px 0 0 0;}
+.colOuter_bx{float: left; width:70%;}
+.form_one.date{width:40%;}
 
 /*--css-divices--*/
 @media screen and (max-width:1366px){
@@ -873,6 +888,8 @@ background-position: right .7em top 50%, 0 0;}
 .row_previous{width:49%; }
 .row_amount{margin:0 0 15px 0; display: inline-block; width:100%; text-align: center;}
 .type_input{width: 69%;}
+.form_one.date {width: 37%;}
+.button_one {width: 30%;}
 }
 
 @media screen and (max-width:800px){
@@ -929,6 +946,9 @@ background-position: right .7em top 50%, 0 0;}
 .type_input{width:78%;}
 .categ_one,.type_one{margin:0 0 15px 0; display: inline-block; width: 100%; padding:0;}
 .categ_search{float: none; width:100%; text-align: center;}
+
+.button_one {width: 40%;}
+.colOuter_bx{float: left; width:100%; display: inline-block;}
 
 }
 
@@ -1045,6 +1065,9 @@ table.responsive-table{display: block;}
 
 .type_txt{width:25%:}
 .type_input{width: 73%;}
+.form_one{float: none; width:100%;}
+.button_one{width:100%; margin: 10px 0;}
+.form_one.date{float: none; width:100%; margin: 0 0 15px 0; display: inline-block;}
 
 }
 

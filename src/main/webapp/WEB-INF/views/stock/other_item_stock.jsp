@@ -34,38 +34,6 @@ table, th, td {
 	color: black;
 }
 </style>
-<%-- <!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-<title>Monginis</title>
-<link
-	href="${pageContext.request.contextPath}/resources/css/monginis.css"
-	rel="stylesheet" type="text/css" />
-<link rel="icon"
-	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
-	type="image/x-icon" />
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
-
-<link
-	href="${pageContext.request.contextPath}/resources/css/monginis.css"
-	rel="stylesheet" type="text/css" />
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
-	rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/resources/css/custom.css"
-	rel="stylesheet" type="text/css" />
-
-<!--rightNav-->
-
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/loader.css">
-
-</head>
-<body> --%>
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <link rel="stylesheet"
@@ -122,35 +90,22 @@ table, th, td {
 
 
 			<!--leftNav-->
-		<%-- 	<div class="colOuter">
-				<div class="col-md-2"></div>
-				<div class="col-md-8">
-					<c:if test="${not empty message}">
-						<div class="alert1">
-							<span class="closebtn"
-								onclick="this.parentElement.style.display='none';">&times;</span>
-							${message}
-						</div>
-					</c:if>
-				</div>
-			</div> --%>
+		
 
 			<!--rightSidebar-->
 			<div class="sidebarright">
+			
+				<div class="row_one">
+					<div class="history_l"><h2 class="pageTitle"><i class="fa fa-file-pdf-o "></i> Other Item Stock Details </h2></div>
+					<div class="history_r"></div>
+					<div class="clr"></div>
+				</div>
 				
-				<div class="row">
-					<div class="col-md-4">
-						
-					<h2 class="pageTitle"><i class="fa fa-file-pdf-o "></i> Other Item Stock Details</h2>
-					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
-				
-					</div>
-					<div class="col-md-8">
-						<div class="col-md-3">
-						<div class="col1title">Select View Option</div>
-					</div>
-					<div class="col-md-3">
-						<select name="selectStock" class="form-control chosen"
+				<div class="single_frm">
+					<div class="form_one">
+						<div class="view_lft">View Option</div>
+						<div class="view_frm">
+							<select name="selectStock" class="form-control chosen"
 							tabindex="6" id="selectStock" onchange="showDiv(this)" required>
 
 							<option value="-1">Select Option</option>
@@ -159,128 +114,62 @@ table, th, td {
 							<option value="3" id="dateStock">Stock Between Dates</option>
 
 						</select>
+						</div>
 					</div>
-					<div class="col-md-6">
-					<div id="crnt_stk_btn">
-					<div class="col-md-2">
+					
+					<div class="button_one">
+						<div id="crnt_stk_btn">
+					<div class="button_stock">
 						<input name="search_stock" class="btn additem_btn" value="Search"
-							type="button" onclick="searchStock()" style="margin: 0 5px;">
+							type="button" onclick="searchStock()" style="margin:0;">
 					</div>
 
-					<div class="col-md-5">
-						<button type="button" class="btn additem_btn" id='pdf'
-							onclick="genPdf()" disabled  style="margin: 0 ;">PDF</button>
+					<div class="button_stock">
+						<button type="button" class="btn additem_btn" id='pdf' style="margin:0;"
+							onclick="genPdf()" disabled >PDF</button>
 					</div>
-					 <div class="col-md-5" style="margin:7px 0 0 0;">
+					 <div class="month_txt">
 						<b>Month: ${monthName}/${year}</b>
 			     	</div>
-					</div></div>
 					</div>
-				</div>
-				
-				
-				
-				
-
-				<!-- 
-				<div class="colOuter">
-					<div class="col-md-2">
-						<div class="col1title">Current Month: </div>
 					</div>
 					
-				</div> -->
-				<div class="colOuter">
-					<!-- <div class="col-md-2">
-						<div class="col1title">Select Category</div>
-					</div> -->
-					<%-- <div class="col-md-2">
-						<select name="select_category" class="form-control chosen"
-							tabindex="4" id="selectCategory" required>
-
-							<option value="-1">Select Category</option>
-							<c:forEach items="${category}" var="category" varStatus="count">
-							<c:choose>
-							<c:when test="${category.catId != '5' and category.catId != '6' and category.catId != '7' }">  <!-- and category.catId != '6' -->
-							
-								<option value="${category.catId}"><c:out value="${category.catName}" /></option>
-							</c:when>
-							</c:choose>
-							</c:forEach>
-
-						</select>
-					</div> --%>
-
-
-
 					
-	              
-				</div>
-
-
-
-				<!-- <div class="colOuter" style="display: none" id=select_month_year>
-					<div class="col-md-2">
-						<div class="col1title">Select Month From :</div>
-					</div>
-					<div class="col-md-2" align="left">
-
-						<input type='text' placeholder="Select From Month" id='txtDate'
-							name="from_stockdate" required />
-					</div>
-
-					<div class="col3"></div>
-
-
-
-					<div class="col-md-2">
-						<div class="col1title">To :</div>
-					</div>
-					<div class="col-md-2" align="left">
-						<input type='text' placeholder="Select To Month" id=txtDateto
-							name="to_stockdate" required />
-					</div>
-
-				</div> -->
-
-
-
-				<div class="colOuter" style="display: none" id=select_date>
-					<div class="row">
-					<div class="col-md-1">
-						<div class="col1title">From Date:</div>
-					</div>
-					<div class="col-md-3" align="left">
-
-						<input id="fromdatepicker" class="texboxitemcode texboxcal"
+					<div class="colOuter_bx" style="display: none" id=select_date>
+						
+					<div class="form_one date">
+						<div class="view_lft">From Date</div>
+						<div class="view_frm">
+							<input id="fromdatepicker" class="texboxitemcode texboxcal"
 							autocomplete="off" placeholder="From Date" name="from_datepicker"
 							type="text">
-
-					</div>
-
-
-
-					<div class="col-md-1">
-						<div class="col1title">To Date:</div>
-					</div>
-					<div class="col-md-3" align="left">
-						<input id="todatepicker" class="texboxitemcode texboxcal"
-							autocomplete="off" placeholder="To Date" name="to_datepicker"
-							type="text">
+						</div>
 					</div>
 					
-					<div class="col-md-4">
+					<div class="form_one date">
+						<div class="view_lft">To Date</div>
+						<div class="view_frm">
+							<input id="todatepicker" class="texboxitemcode texboxcal"
+							autocomplete="off" placeholder="To Date" name="to_datepicker"
+							type="text">
+						</div>
+					</div>	
+					
+					<div class="button_stock">
 						<input name="search_stock" class="btn additem_btn" value="Search"
 							type="button" onclick="searchStock()" style="margin:0 10px; float: left;">
 							
 							<button type="button" class="btn additem_btn" id='date_pdf'
 							onclick="genPdf()" disabled style="margin:0; float: left;">PDF</button>
 					</div>
-
-					<div class="col-md-1">
 						
+					
 					</div>
-                   
-				</div></div>
+					
+				</div>
+		
+				
+				
 
 
 
@@ -306,78 +195,49 @@ table, th, td {
 
 			
 							<label for="search" class="col-md-3" id="search" style="float: right; "> <i
-								class="fa fa-search" style="font-size: 20px"></i> <input
+								class="fa fa-search" ></i> <input
 								type="text" id="myInput" onkeyup="myFunction()"
 								style="border-radius: 25px;" placeholder="Search items by name"
 								title="Type item name Or Code">
 							</label>
 
 
-							<div id="table-scroll"><!-- class="table-scroll" -->
-								<!-- <div id="faux-table" class="faux-table" aria="hidden"> -->
-								<%-- <div class="table-wrap">	<table id="table_grid1" class="main-table">
-										<thead>
-											<tr class="bgpink">
-							<th class="col-md-1">Item Id</th>
-												<th class="col-md-1">Item_Name</th>
-												<th class="col-md-1">Reg Op Stock</th>
-												<th class="col-md-1">Sp Op Stock</th>
-												<th class="col-md-1">Reg Pur Qty</th>
-												<th class="col-md-1">Sp Pur Qty</th>
-												<th class="col-md-1">Grn-Gvn Qty</th>
-												<th class="col-md-1">Regular Sale</th>
-												<th class="col-md-1">Sp Sale</th>
-												<th>Reorder Qty</th>
-												<th class="col-md-1">Reg Cur Stock</th>
-												<th class="col-md-1">Sp Cur Stock</th>
-
-												<c:if test="${isMonthCloseApplicable eq true}">
-													<th>Physical Stock</th>
-													<th>Stock Difference</th>
-												</c:if>
-											</tr>
-										</thead></table></div> --%>
-								<!-- </div> -->
-								<!-- class="table-wrap" -->
-									<table id="table_grid" class="responsive-table"><!-- class="main-table" -->
-										<thead>
-											<tr class="bgpink">
-												<th class="col-md-1">Item Code</th>
-												<th class="col-md-1">Item Name</th>
-												<th class="col-md-1">Opening Stock</th>
-												<th class="col-md-1">Purchase Qty</th>
-												<th class="col-md-1">Sale Qty</th>
-												<th class="col-md-1">Damage Qty</th>
-												<th class="col-md-1">Current Stock</th>
-
-
-												<%-- 	<c:if test="${isMonthCloseApplicable eq true}">
-													<th>Physical Stock</th>
-													<th>Stock Difference</th>
-												</c:if> --%>
-
-											</tr>
-
-										</thead>
-										<tbody>
-
-										</tbody>
-									</table>
-
+							<div id="table-scroll">
+								
+								<div class="tableFixHead">
+	<table id="table_grid">         
+	<thead style="background-color: #f3b5db;">
+		<tr class="bgpink">
+			<th style="text-align: center;">Item Code</th>
+			<th style="text-align: center;">Item Name</th>
+			<th style="text-align: center;">Opening Stock</th>
+			<th style="text-align: center;">Purchase Qty</th>
+			<th style="text-align: center;">Sale Qty</th>
+			<th style="text-align: center;">Damage Qty</th>
+			<th style="text-align: center;">Current Stock</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+	
+	</tbody>
+	</table>
+</div>
 
 							</div>
-							<div class="col-md-1">
-								<input type="button" id="expExcel" class="btn additem_btn"
-									value="EXPORT TO Excel" onclick="exportToExcel();"
-									disabled="disabled">
+							
+							
+							<div class="button_row_btm">
+								<div class="button_left">
+									<input type="button" id="expExcel" class="btn additem_btn" style="margin:0;"
+									value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
+								</div>
+								<div class="button_right" id="monthEnd" style="display: none;">
+									<input name="" class="buttonsaveorder" value="Month End" type="submit">
+								</div>
+								<div class="clr"></div>
 							</div>
-
-
-
-							<div class="col-md-2" id="monthEnd" style="display: none;">
-									<input name="" class="buttonsaveorder" value="Month End"
-										type="submit">
-							</div>
+							
 						</form>
 					</div>
 				</div>
