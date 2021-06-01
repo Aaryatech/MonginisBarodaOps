@@ -237,8 +237,15 @@ body {
 						action="${pageContext.request.contextPath}/insertOtherStockBill">
 						
 						<div class="row">
-					<div class="col-md-5"><h2 class="pageTitle"><i class="fa fa-plus-circle" aria-hidden="true"></i> Other Item Opening Stock</h2></div>
-					<div class="col-md-7" style="text-align: right;">
+							<div class="col-md-5">
+								<h2 class="pageTitle">
+									<i class="fa fa-plus-circle" aria-hidden="true"></i> Other Item Opening Stock 
+								</h2>
+							</div>
+							<div class="col-md-7" style="text-align: right;">
+					<a href="${pageContext.request.contextPath}/showOtherBill"><input
+								type="button" value="Other Purchase Bills" class="btn additem_btn" style="margin: 0;">
+							</a>
 					
 					<a href="${pageContext.request.contextPath}/addSupplier"><input
 								type="button" value="Add Supplier" class="btn additem_btn" style="margin: 0;">
@@ -258,63 +265,12 @@ body {
 						<!--tabNavigation-->
 						<div class="cd-tabs" style="margin:0;">
 							<!--tabMenu-->
-						<!-- 	<nav>
-								<ul class="cd-tabs-navigation">
-
-								</ul>
-							</nav> -->
+						
 							<!--tabMenu-->
 							<ul class="cd-tabs-content">
 								<!--tab1-->
 								<li data-content="tab1" class="selected" onshow="onloadTab(1)" style="padding: 10px;">
-									<!-- <div class="row"> -->
-									<!-- 	<div class="col-md-9"> -->
-									<!-- 		<div class="control-label"> -->
-
-												<%-- 										<div class="row">
-											<div class="col-md-4">
-												<h4 class="col-md-7">
-													<b>Invoice No:-</b>
-												</h4>
-												<input type="text" class="form-control"
-												placeholder="Enter Invoice No" name="invoiceNo" id="invoiceNo"
-												 required><br>
-											</div>
-
-											 
-
-											<div class="col-md-4">
-												<h4 class="col-md-8" style="margin-top: 5px">
-													<b>Supplier:-</b>
-												</h4>
-		
-												<select class="form-control" data-live-search="true" title="Please Select Item"
-																			name="suppId" id="suppId"
-																			required>
-																			<option value="">Select Supplier</option>
-																				<c:forEach items="${supplierList}" var="supplierList"> 
-																				<option value="${supplierList.suppId}">${supplierList.suppName}</option> 
-																				</c:forEach>
-
-																		</select> 
-											</div>
-											<div class="col-md-4">
-												<h4 class="col-md-8" style="margin-top: 5px">
-													<b>Bill Date:-</b>
-												</h4>
-													<div class="col-md-8">
-														<input id="datepicker" placeholder="Bill Date" class="texboxitemcode texboxcal"
-															name="billDate" type="text" required>
-													</div>
- 											</div>
- 											
-								<div class="clearfix"></div>
-									   
-
-								</div> --%>
-
-											<!-- </div> -->
-									<!-- 	</div> -->
+									
 
 
 
@@ -322,51 +278,45 @@ body {
 										<div class="col-md-2">
 											<input name="rate1" id="rate1" type="hidden" value="00" />
 
-											<%-- <center>
-											<button class="btn additem_btn" onclick="addItem();"
-												id="b1">Add Item</button>
-										</center> --%>
+											
 										</div>
 									<!-- </div> -->
 
 
 									<div class="clearfix"></div> <!-- Form End -->
-
-
-
-									<div id="table-scroll" ><!-- class="table-scroll" -->
-										<!-- <div id="faux-table" class="faux-table" aria="hidden"></div> -->
-										<div ><!-- class="table-wrap table-wrap-custbill" -->
-											<table id="table_grid1" style="margin:0;" class="responsive-table"><!--  class="main-table small-td" -->
-												<thead>
-													<tr class="bgpink">
-														<th class="col-sm-1">Sr no.</th>
-														<th class="col-md-1">Item Id</th>
-														<th class="col-md-2">Item Name</th>
-														<th class="col-md-1">Opening Stock</th>
-
-														<!-- <th class="col-md-1">Action</th> -->
-													</tr>
-												</thead>
-												<tbody>
+									
+									<div class="tableFixHead">
+	<table id="table_grid1">         
+	<thead style="background-color: #f3b5db;">
+		<tr class="bgpink">
+			<th style="text-align: center; width:80px;">Sr no.</th>
+			<th style="text-align: center; width:120px">Item Id</th>
+			<th style="text-align: center;">Item Name</th>
+			<th style="text-align: center;">Opening Stock</th>
+		</tr>
+	</thead>
+	
+	<tbody>
 													<c:forEach items="${getotherStockList}" var="itm"
 														varStatus="count">
 
 														<tr>
-															<td style="text-align: left">${count.index+1}</td>
-															<td style="text-align: left" id="item_id">${itm.otherStockItemId}</td>
-															<td style="text-align: left" id="item_name">${itm.otherStockItemName}</td>
-															<td><input type="text"
+															<td style="text-align: center; width:80px;">${count.index+1}</td>
+															<td style="text-align: left; width:120px;" id="item_id">${itm.otherStockItemId}</td>
+															<td style="text-align: left;" id="item_name">${itm.otherStockItemName}</td>
+															<td style="text-align: center;"><input type="text"
 																id="opening_stock${itm.otherStockItemId}"
 																onkeyup="changeQty(${itm.otherStockItemId})"
 																value="${itm.openingStock}" class="form-control"></td>
 														</tr>
 													</c:forEach>
 												</tbody>
+	</table>  
+</div>
 
-											</table>
-										</div>
-									</div>
+
+
+									
 
 
                                      <div  style="text-align: center;">

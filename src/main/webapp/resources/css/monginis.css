@@ -877,6 +877,7 @@ background-position: right .7em top 50%, 0 0;}
 
 .pop_left{float: left; width:50%;}
 .popup_date{float: right; text-align: right; font-weight: bold;}
+.left_button_mob{text-align: right;}
 
 /*--css-divices--*/
 @media screen and (max-width:1366px){

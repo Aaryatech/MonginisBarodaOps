@@ -75,7 +75,7 @@ table, th, td {
 						
 						<div class="row">
 					<div class="col-md-5"><h2 class="pageTitle"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Supplier</h2></div>
-					<div class="col-md-7" style="text-align: right;">
+					<div class="col-md-7 left_button_mob" >
 					
 					<a href="${pageContext.request.contextPath}/showOtherBill"><input type="button" value="Other Purchase Bill" class="btn additem_btn"
 					style="margin:0;">
@@ -222,55 +222,49 @@ table, th, td {
 				 
 					</div>
 					
-					<div id="table-scroll"><!--  class="table-scroll"> -->
-				<!-- 	<div id="faux-table" class="faux-table" aria="hidden"></div> -->
-					<div class="table-wrap">
+					<div class="clr"></div>
 					
-						<table id="table_grid" class="responsive-table"><!-- class="main-table" -->
+					<div class="tableFixHead" style="margin:15px 0 0 0;">
+	<table id="table_grid">         
+	<thead style="background-color: #f3b5db;">
+		<tr class="bgpink">	
+			<th style="text-align: center;">Sr No</th>
+			<th style="text-align: center;">Name</th> 
+			<th style="text-align: center;">Address</th>
+			<th style="text-align: center;">City</th> 
+			<th style="text-align: center;">Mobile</th>
+			<th style="text-align: center;">Email</th>
+			<th style="text-align: center;">Credit Days</th>
+			<th style="text-align: center;">Action</th>
+		</tr>
+	</thead>
+	
+	<tbody>
 
-							<thead>
-								<tr class="bgpink">
-								
-									<th class="col-sm-1" style="text-align: center;">Sr No</th>
-									<th class="col-md-1" style="text-align: center;">Name</th> 
-									<th class="col-md-1" style="text-align: center;">Address</th>
-									<th class="col-md-1" style="text-align: center;">City</th> 
-									<th class="col-md-1" style="text-align: center;">Mobile</th>
-									<th class="col-md-1" style="text-align: center;">Email</th>
-									<th class="col-md-1" style="text-align: center;">Credit Days</th>
-									<th class="col-md-1" style="text-align: center;">Action</th>
-								</tr>
-							</thead>
-							<tbody>
+		<c:forEach items="${supplierList}" var="supplierList"
+			varStatus="count">
+			<tr>
+				 <td style="text-align: center;"><c:out value="${count.index+1}" /></td>
+				<td style="text-align: left;"><c:out value="${supplierList.suppName}" /></td>
+				<td style="text-align: left;"><c:out value="${supplierList.suppAddr}" /></td>
+				<td style="text-align: left;"><c:out value="${supplierList.suppCity}" /></td>
+				<td style="text-align: left;"><c:out value="${supplierList.mobileNo}" /></td>
+				<td style="text-align: left;"><c:out value="${supplierList.email}" /></td>
+				<td style="text-align: right;"><c:out value="${supplierList.suppCreditDays}" /></td>
+				<td style="text-align: center;"><div >
+				<abbr title='Edit'><i onclick="edit(${supplierList.suppId})" class='fa fa-edit'></i> </abbr>
+<a href="${pageContext.request.contextPath}/deleteSupplier/${supplierList.suppId}" onClick="return confirm('Are you sure want to delete this record');"   >
+<abbr title='Delete'><i  class='fa fa-trash'></i></abbr></a>
+						 
+					</div></td>
+			</tr>
+		</c:forEach>
+	</tbody>
+	</table>  
+</div>
 
-								<c:forEach items="${supplierList}" var="supplierList"
-									varStatus="count">
-									<tr>
-										 <td class="col-sm-1" style="text-align: right;"><c:out value="${count.index+1}" /></td>
-										<td class="col-md-1" style="text-align: left;"><c:out
-												value="${supplierList.suppName}" /></td>
-										<td class="col-md-1" style="text-align: left;"><c:out
-												value="${supplierList.suppAddr}" /></td>
-										<td class="col-md-1" style="text-align: left;"><c:out
-												value="${supplierList.suppCity}" /></td>
-										<td class="col-md-1" style="text-align: left;"><c:out
-												value="${supplierList.mobileNo}" /></td>
-										<td class="col-md-1" style="text-align: left;"><c:out
-												value="${supplierList.email}" /></td>
-												<td class="col-md-1" style="text-align: right;"><c:out
-												value="${supplierList.suppCreditDays}" /></td>
-										<td class="col-md-1" style="text-align: center;"><div >
-												<abbr title='Edit'><i onclick="edit(${supplierList.suppId})" class='fa fa-edit'></i> </abbr>
-						<a href="${pageContext.request.contextPath}/deleteSupplier/${supplierList.suppId}" onClick="return confirm('Are you sure want to delete this record');"   >
-						<abbr title='Delete'><i  class='fa fa-trash'></i></abbr></a>
-												 
-											</div></td>
-									</tr>
-								</c:forEach>
-						</table>
-
-					</div>
-				</div>
+					
+					
 
 				</form>
 
