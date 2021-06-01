@@ -313,6 +313,7 @@ public class PettyCashController {
 					map.add("fromTime", dtf.format(localDate) + " " + "06:00:00");
 					map.add("toTime", dateFormat.format(date));
 					map.add("frId", frid);
+					System.err.println("Map For getPettyCashSellAmt"+map.toString());
 
 					SellBillHeader sellAmt = rest.postForObject(Constant.URL + "/getPettyCashSellAmt", map,
 							SellBillHeader.class);

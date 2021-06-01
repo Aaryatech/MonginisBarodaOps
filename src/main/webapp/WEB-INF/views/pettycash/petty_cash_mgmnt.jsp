@@ -694,7 +694,7 @@ table, th, td {
 														var tr = $('<tr></tr>');
 
 														tr.append($(
-																'<td style=\\"text-align:center;\"></td>')
+																'<td style=\"text-align:center;\"></td>')
 																.html(key + 1));
 														tr
 																.append($(

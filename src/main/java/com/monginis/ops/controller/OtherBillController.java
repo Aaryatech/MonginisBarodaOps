@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,6 +49,8 @@ import com.monginis.ops.model.ItemSup;
 import com.monginis.ops.model.MRule;
 import com.monginis.ops.model.OtherBillDetail;
 import com.monginis.ops.model.OtherBillHeader;
+import com.monginis.ops.model.OtherItemStockDetail;
+import com.monginis.ops.model.OtherItemStockHeader;
 import com.monginis.ops.model.Setting;
 import com.monginis.ops.model.SubCategory;
 import com.monginis.ops.model.otheritems.Otheritems;
@@ -254,9 +257,119 @@ public class OtherBillController {
 				System.out.println("Response: " + info.toString());
 
 				if (infoRes.isError() == true) {
+					
+				 
 					return "redirect:/addOtherItem";
-
 				} else {
+					
+					
+					
+					MultiValueMap<String, Object>	map = new LinkedMultiValueMap<String, Object>();
+					map.add("frId", frDetails.getFrId());
+					List<OtherItemStockHeader> stockHeader = null;
+					OtherItemStockHeader[] stockHeadObj = restTemplate.postForObject(Constant.URL + "/getOtherStockHeaderByFrId", map,
+							OtherItemStockHeader[].class);
+					stockHeader = new ArrayList<>(Arrays.asList(stockHeadObj));
+					System.out.println("Stock Header List:" + stockHeader);
+					int flag=0;
+				
+					
+					
+					if(stockHeader.size()>0) {
+						System.err.println("Old Other Item Header And New Detail");
+						for(  OtherItemStockDetail obj :stockHeader.get(0).getOtherItemStockList()) {
+							if(obj.getOtherItemId()==itemId) {
+								System.err.println("Old Item");
+								flag=1;
+							}
+							
+							
+							
+						}
+						
+						if(flag==0) {
+						OtherItemStockDetail destails=new OtherItemStockDetail();
+						
+						
+						destails.setOtherStockDetailId(0);
+						destails.setOtherStockHeaderId(stockHeader.get(0).getOtherStockHeaderId());
+						destails.setOtherItemId(itemId);
+						destails.setOpeningStock(0);
+						destails.setDamageStock(0);
+						destails.setClosingStock(0);
+						destails.setPurchaseStock(0);
+						destails.setSalesStock(0);
+						destails.setDelStatus(0);
+						destails.setExInt1(0);
+						destails.setExInt2(0);
+						destails.setExVar1("");
+						destails.setExVar2("");
+						destails.setExFloat1(0.0f);
+						destails.setExFloat2(0.0f);
+						stockHeader.get(0).getOtherItemStockList().add(destails);
+						
+						OtherItemStockHeader stockHead = restTemplate.postForObject(Constant.URL + "/insertNewOtherStock",
+								stockHeader.get(0), OtherItemStockHeader.class);
+						
+						}
+						
+					}else {
+						System.err.println("New Other Item Header And Detail");
+						
+						int month;
+						GregorianCalendar date = new GregorianCalendar();
+						month = date.get(Calendar.MONTH);
+						month = month + 1;
+						
+						
+						OtherItemStockHeader header=new OtherItemStockHeader();
+						
+						header.setOtherStockHeaderId(0);
+						header.setFrId(frDetails.getFrId());
+						header.setMonth(month);
+						header.setYear(Calendar.getInstance().get(Calendar.YEAR));
+						header.setDelStatus(0);
+						header.setStatus(0);
+						header.setExInt1(0);
+						header.setExInt2(0);
+						header.setExFloat1(0.0f);
+						header.setExFloat2(0.0f);
+						header.setExVar1("");
+						header.setExVar2("");
+						
+						OtherItemStockDetail detailObj=new  OtherItemStockDetail();
+						
+						detailObj.setOtherStockDetailId(0);
+						detailObj.setOtherStockHeaderId(0);
+						detailObj.setOtherItemId(itemId);
+						detailObj.setOpeningStock(0);
+						detailObj.setDamageStock(0);
+						detailObj.setClosingStock(0);
+						detailObj.setPurchaseStock(0);
+						detailObj.setSalesStock(0);
+						detailObj.setDelStatus(0);
+						detailObj.setExInt1(0);
+						detailObj.setExInt2(0);
+						detailObj.setExVar1("");
+						detailObj.setExVar2("");
+						detailObj.setExFloat1(0.0f);
+						detailObj.setExFloat2(0.0f);
+						
+						
+						header.getOtherItemStockList().add(detailObj);
+						
+						
+						OtherItemStockHeader stockHead = restTemplate.postForObject(Constant.URL + "/insertNewOtherStock",
+								header, OtherItemStockHeader.class);
+						
+						
+					}
+					
+					
+					
+					
+					
+					
 					return "redirect:/addOtherItem";
 				}
 
@@ -265,6 +378,7 @@ public class OtherBillController {
 		} catch (Exception e) {
 
 			System.out.println("Exception In Add Other Item Process:" + e.getMessage());
+			e.printStackTrace();
 
 		}
 

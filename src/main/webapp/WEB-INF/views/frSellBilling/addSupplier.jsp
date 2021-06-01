@@ -225,6 +225,7 @@ table, th, td {
 					<div id="table-scroll"><!--  class="table-scroll"> -->
 				<!-- 	<div id="faux-table" class="faux-table" aria="hidden"></div> -->
 					<div class="table-wrap">
+					
 						<table id="table_grid" class="responsive-table"><!-- class="main-table" -->
 
 							<thead>
@@ -236,6 +237,7 @@ table, th, td {
 									<th class="col-md-1" style="text-align: center;">City</th> 
 									<th class="col-md-1" style="text-align: center;">Mobile</th>
 									<th class="col-md-1" style="text-align: center;">Email</th>
+									<th class="col-md-1" style="text-align: center;">Credit Days</th>
 									<th class="col-md-1" style="text-align: center;">Action</th>
 								</tr>
 							</thead>
@@ -255,6 +257,8 @@ table, th, td {
 												value="${supplierList.mobileNo}" /></td>
 										<td class="col-md-1" style="text-align: left;"><c:out
 												value="${supplierList.email}" /></td>
+												<td class="col-md-1" style="text-align: right;"><c:out
+												value="${supplierList.suppCreditDays}" /></td>
 										<td class="col-md-1" style="text-align: center;"><div >
 												<abbr title='Edit'><i onclick="edit(${supplierList.suppId})" class='fa fa-edit'></i> </abbr>
 						<a href="${pageContext.request.contextPath}/deleteSupplier/${supplierList.suppId}" onClick="return confirm('Are you sure want to delete this record');"   >
