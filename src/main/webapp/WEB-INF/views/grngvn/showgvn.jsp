@@ -123,56 +123,9 @@ table, th, td {
 			
 				<div class="title_row">
 					<div class="title_l high">
-						<h2 class="pageTitle"><i class="fa fa-refresh" aria-hidden="true"></i> Request GVN<!-- Request GVN --></h2>
+						<h2 class="pageTitle"><i class="fa fa-refresh" aria-hidden="true"></i> Request GVN </h2>
 					</div>
-					<%-- <div class="title_r high">
-						<div class="frm_l_one two_btn marg_bttm">
-						<select name="view_opt" id="view_opt" class="form-control"
-							style="background-color: white;" onchange="showDate()">
-							<option value="0">Select From Bill</option>
-							<option value="1">Select From Date</option>
-
-						</select>
-						</div>
-						<div class="frm_l_one two_btn">
-							<input id="datepicker" class="texboxitemcode texboxcal" value="${curDate}" class="form-control"
-							name="bill_date" type="text" style="display: none;">
-						</div>
-						
-						<form
-							action="${pageContext.request.contextPath}/getGvnBillDetails"
-							name="grn" id="grn" method="get">
-						<div class="frm_l_one two_btn marg_bttm" id="byBillNo">
-							<select name="bill_no" id="bill_no" class="form-control"
-										style="background-color: white;">
-									
-
-										<c:forEach items="${frBillList}" var="frBillList">
-											<c:choose>
-
-												<c:when test="${selctedBillNo == frBillList.billNo}">
-													<option selected value="${frBillList.billNo}">Invoice No- ${frBillList.invoiceNo} Bill Date- ${frBillList.billDate}</option>
-												</c:when>
-
-												<c:otherwise>
-													<option value="${frBillList.billNo}">Invoice No- ${frBillList.invoiceNo} Bill Date- ${frBillList.billDate}</option>
-												</c:otherwise>
-
-											</c:choose>
-										</c:forEach>
-
-									</select>
-						</div>
-						<div class="frm_single">
-							<button type="submit" class="btn additem_btn" style="margin:0 0 0 10px; float: left;">Bill Detail</button>
-							<button type="button" class="btn additem_btn" style="display: none; margin:0 0 0 10px;  float: left;" id='searchButton' onclick="getViewOption()">Search</button>
-						</div>
-						</form>
-						
-						<div class="frm_single">
-							
-						</div>
-					</div> --%>
+					
 					<div class="clr"></div>
 				</div>
 				
@@ -185,7 +138,7 @@ table, th, td {
 						<div class="radio_row">
 							<div class="input_row">
 								
-								<div class="radio_owen">
+								<div class="radio_owen one">
 									<div class="radio_one" id="d1">
 					            <input type="radio" id="bill" name="prodBill" ${p1==1 ? 'checked' : ''} value="1" onchange="setDiv(1,this.value)">
 					            <label for="bill" class="checkbox_txt"> As Per Bill</label>
@@ -197,7 +150,7 @@ table, th, td {
 					            </div>
 					            
 								</div>
-								<div class="radio_owen">
+								<div class="radio_owen two">
 									<c:set var="divStylep2" value="style=display:none"></c:set>
 					            <c:if test="${p1==1}">
 					            <c:set var="divStylep2" value=""></c:set>
@@ -375,64 +328,31 @@ table, th, td {
 						name="grn_add" id="grn_add" method="post">
 						
 						<div class="col-md-9" ></div> 
-					<label for="search" class="col-md-3" id="search">
-    <i class="fa fa-search" style="font-size:20px"></i>
+					<label for="search" class="col-md-3 flt_rgt"  id="search">
+    <i class="fa fa-search" ></i>
 									<input type="text"  id="myInput" style="border-radius: 25px;" onkeyup="myFunction()" placeholder="Search items by name.." title="Type in a name">
 										</label> 
 						
 
 						<div class="clearfix"></div>
-
-						<div id="table-scroll"> <!--  class="table-scroll" -->
-							<div id="faux-table"  aria="hidden" style="display:none;"><!--  class="faux-table" -->
-							<table id="table_grid1" class="main-table">
-									<thead>
-										<tr class="bgpink">
-											 <!-- 	<th class="col-md-1">Sr No.</th>
-											<th class="col-md-1">Bill No</th>
-											<th class="col-md-1">Date</th> -->
-
-										<!--	<th class="col-md-1">SELECT</th>
-											<th class="col-md-3">Item Name</th>
-											<th class="col-md-2">Purchase</th>
-
-											<th class="col-md-2">Gvn Qty</th>
-											<th class="col-md-2">Rate</th>
-											<th class="col-md-2">Tax %</th>
-											<th class="col-md-2">Amount</th> -->
-
-										</tr>
-									</thead>
-							</table>
+						
+						<div class="tableFixHead">
+							<table id="table_grid">         
+							<thead style="background-color: #f3b5db;">
+								<tr class="bgpink">
+									<th style="text-align: center; white-space: nowrap;">Select</th>
+									<th style="text-align: center; white-space: nowrap;">Item Name</th>
+									<th style="text-align: center; white-space: nowrap;">Invoice</th>
+									<th style="text-align: center; white-space: nowrap;">Expiry Date</th>
+									<th style="text-align: center; white-space: nowrap;">Purchase</th>
+									<th style="text-align: center; white-space: nowrap;">GVN Qty</th>
+									<th style="text-align: center; white-space: nowrap;">Rate</th>
+									<th style="text-align: center; white-space: nowrap;">Tax %</th>
+									<th style="text-align: center; white-space: nowrap;">Amount</th>
+								</tr>
+							</thead>
 							
-							
-							
-							
-							</div>
-							<div class="table-wrap">
-								<table id="table_grid" class="responsive-table">
-									<thead>
-										<tr class="bgpink">
-											<!-- 	<th class="col-md-1">Sr No.</th>
-											<th class="col-md-1">Bill No</th>
-											<th class="col-md-1">Date</th> -->
-
-											<th style="text-align: center; white-space: nowrap;">Select</th>
-											<th style="text-align: center; white-space: nowrap;">Item Name</th>
-											<th style="text-align: center; white-space: nowrap;">Invoice</th>
-											<th style="text-align: center; white-space: nowrap;">Expiry Date</th>
-											<th style="text-align: center; white-space: nowrap;">Purchase</th>
-
-											<th style="text-align: center; white-space: nowrap;">GVN Qty</th>
-											<th style="text-align: center; white-space: nowrap;">Rate</th>
-											<th style="text-align: center; white-space: nowrap;">Tax %</th>
-											<th style="text-align: center; white-space: nowrap;">Amount</th>
-
-										</tr>
-										
-									</thead>
-									<tbody>
-
+							<tbody>
 										<c:forEach items="${gvnConfList}" var="gvnConfList"
 											varStatus="count">
 
@@ -440,15 +360,15 @@ table, th, td {
 												value="${gvnConfList.billQty}" />
 
 											<tr id="row${gvnConfList.billDetailNo}">
-												<td style="text-align: center; white-space: nowrap;"><input type="checkbox" 
+												<td style="text-align: center; width:80px; white-space: nowrap;"><input type="checkbox" 
 													name="select_to_gvn" id="${gvnConfList.billDetailNo}"
 													value="${gvnConfList.billDetailNo}"  /></td>
 
-												<td style="white-space: nowrap;">${gvnConfList.itemName}</td>
+												<td style="text-align: left; white-space: nowrap;">${gvnConfList.itemName}</td>
 												<fmt:formatDate pattern = "yyyy-MM-dd" 
          value = "${gvnConfList.billDate}" var="invDate" />
-												<td style="white-space: nowrap;">${gvnConfList.invoiceNo}-${invDate}</td>
-												<td style="white-space: nowrap;">${gvnConfList.expiryDate}</td>
+												<td style="text-align: left; white-space: nowrap;">${gvnConfList.invoiceNo}-${invDate}</td>
+												<td style="text-align: right; white-space: nowrap;">${gvnConfList.expiryDate}</td>
 												
 												<td style="text-align: right; white-space: nowrap;">${gvnConfList.billQty}</td>
 												<td style="text-align: center; white-space: nowrap;"><input type="text"
@@ -469,15 +389,15 @@ table, th, td {
 										</c:forEach>
 
 									</tbody>
-
-								</table>
-							</div>
+							</table>
 						</div>
 
-                        <br>
+						
+
+                        
 						<div class="form-group">
 
-							<button type="button" class="btn additem_btn" onclick="checkAnyRecordSelected()" style="margin:0;">
+							<button type="button" class="btn additem_btn" onclick="checkAnyRecordSelected()" style="margin:15px 0 0 0;">
 								Proceed
 							</button>
 							<!--<button type="button" class="btn">Cancel</button>-->

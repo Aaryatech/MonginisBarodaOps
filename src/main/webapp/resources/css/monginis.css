@@ -901,6 +901,9 @@ background-position: right .7em top 50%, 0 0;}
 .form_one.date {width: 37%;}
 .button_one {width: 30%;}
 .category_right {width: 81%;}
+
+.radio_owen.one{width:60%;}
+.radio_owen.two{width:40%;}
 }
 
 @media screen and (max-width:800px){
@@ -966,6 +969,10 @@ background-position: right .7em top 50%, 0 0;}
 .category_right{float: left;}
 
 .search_icn{float: left !important;}
+.radio_owen.one{width:100%; float: none;}
+.radio_owen.two{width:100%; float: none;}
+.date_one{width:30%;}
+.flt_rgt{float: right;}
 
 }
 
@@ -1089,6 +1096,11 @@ table.responsive-table{display: block;}
 .button_margin{display:block; margin: 15px 0 0 0; width:100%;}
 .category_right{width:100%;}
 .tableFixHead thead th {z-index:9999999 ;}
+
+.radio_one{width:50%;}
+.date_one {width: 100%; margin: 0 0 15px 0;}
+.date_one.increse {width: 100%;}
+.date_one.increse select{width:100%;}
 
 }
 
