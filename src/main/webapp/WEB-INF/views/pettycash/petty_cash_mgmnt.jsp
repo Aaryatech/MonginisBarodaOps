@@ -398,11 +398,25 @@ table, th, td {
 										</c:forEach>
 									</select>
 								</div>
+								
+								
 
 								<div class="col-md-2 date_txt">To Employee</div>
 								<div class="col-md-2 input_marg">
+										
+									<select name="to_emp" id="to_emp"  class="chosen-select"
+										data-live-search="true" required>
+									<option style="text-align: left;" value="0">Select Employee</option>
+									<c:forEach items="${empList}" var="empList">
+											<c:if test="${empList.frEmpId != loginEmpId}">
+												<option value="${empList.frEmpId}-${empList.frEmpName}"
+													style="text-align: left;">${empList.frEmpName}</option>
+											</c:if>
+										</c:forEach>
+								</select>
 								
-									 <select name="to_emp" id="to_emp" class="chosen-select"
+									
+									 <%-- <select name="to_emp" id="to_emp" class="chosen-select"
 										data-live-search="true" required>
 										<option style="text-align: left;" value="0">Select
 											Employee</option>
@@ -413,7 +427,7 @@ table, th, td {
 											</c:if>
 										</c:forEach>
 
-									</select> 
+									</select>  --%>
 
 								</div>
 
@@ -513,7 +527,7 @@ table, th, td {
 						<table id="table_grid">         
 						<thead style="background-color: #f3b5db;">
 							<tr class="bgpink">
-								<th style="text-align: center;">Sr. No</th>
+								<th style="text-align: center; width:80px">Sr. No</th>
 								<th style="text-align: center;">Transaction Date</th>
 								<th style="text-align: center;">From Employee</th>
 								<th style="text-align: center;">To Employee</th>
@@ -522,7 +536,7 @@ table, th, td {
 								<th style="text-align: center;">Total Cash Amt</th>
 								<th style="text-align: center;">Actual Cash Hand Over</th>
 								<th style="text-align: center;">Difference</th>
-								<th style="text-align: center;">Emp Sell</th>
+								<th style="text-align: center;">Billing Employee</th>
 							</tr>
 						</thead>
 						
@@ -677,10 +691,10 @@ table, th, td {
 														//alert(JSON.stringify(cashHndOvr));
 														$('#loader').hide();
 
-														var tr = $('<tr  ></tr>');
+														var tr = $('<tr></tr>');
 
 														tr.append($(
-																'<td style='text-align:center;'></td>')
+																'<td style=\\"text-align:center;\"></td>')
 																.html(key + 1));
 														tr
 																.append($(
