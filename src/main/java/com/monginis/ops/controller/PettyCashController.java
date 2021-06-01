@@ -93,7 +93,7 @@ public class PettyCashController {
 		
 			model.addObject("currentDate", currntDat);
 			
-			DateFormat DF1 = new SimpleDateFormat("yyyy-MM-dd");
+			DateFormat DF1 = new SimpleDateFormat("dd-MM-yyyy");
 			String currntDat2 = DF1.format(new java.util.Date());
 			model.addObject("dateForSearch", currntDat2);
 			
