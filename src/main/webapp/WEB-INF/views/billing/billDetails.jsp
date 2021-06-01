@@ -138,7 +138,7 @@ th, td {
 		
 		<div class="row">
 			<div class="four_txt one">
-		    <h2 class=" pull-left flt_one">Invoice No:-  <span style="color:#ec268f;"> ${invoiceNo}</span></h2>
+		    <h2 class=" pull-left flt_one">Invoice No :-  <span style="color:#ec268f;"> ${invoiceNo}</span></h2>
 		</div>
 	
 		<div class="four_txt one" >
@@ -177,9 +177,9 @@ th, td {
 		
 		 
 		 			<div class="four_txt two">
-								<input name="" class="btn additem_btn" value="Received" style="margin: 0; border:none; font-size:14px;"
+								<input name="" class="btn additem_btn" value="Received" style="margin: 0; font-size:14px; border-radius:4px;"
 									type="button" id="updateStatus" onclick="updateStatus(${billNo})">
-									<input name="" class="btn additem_btn" value="Received & Sp Bill" style="margin: 0; border:none; font-size:14px;"
+									<input name="" class="btn additem_btn" value="Received & Sp Bill" style="margin: 0; font-size:14px; border-radius:4px;"
 									type="button" id="updateStatus1" onclick="updateStatusAndSpBill(${billNo})">
 					</div>				
 							</div>
@@ -195,64 +195,59 @@ th, td {
 
 						<!--tabMenu-->
 					<div class="clearfix"></div>
-
-
-				<div id="table-scroll" class="table-scroll" style="margin:0 0 20px 0;">
 					
-							<div class="table-wrap">
-						<table id="table_grid" class="main-table" border="0">
-							<thead>
-								
-											<tr class="bgpink">
-												<th style="width: 18px; white-space: nowrap;" align="left">No</th>
-												<th style="white-space: nowrap;">Item Name</th>
-												<th style="white-space: nowrap;">Group</th>
-												<th style="white-space: nowrap;">Order Qty</th>
-												<th style="white-space: nowrap;">Billed Qty</th>												
-												<th style="white-space: nowrap;">MRP</th>
-												<th style="white-space: nowrap;">Rate</th>
-												<th style="white-space: nowrap;">Taxable Amt</th>
-												<th style="white-space: nowrap;">GST %</th>													
-												<th style="white-space: nowrap;">Tax Amt</th>
-												<th style="white-space: nowrap;">Total</th>													
-												<th style="white-space: nowrap;">GRN Type</th>
-											</tr>
-											</thead>				
-											
-											
-							<tbody>
+					<div class="tableFixHead">
+						<table id="table_grid" >          
+						<thead style="background-color: #f3b5db;">
+							<tr class="bgpink">
+								<th style="width: 18px; white-space: nowrap;" align="left">No</th>
+								<th style="white-space: nowrap;">Item Name</th>
+								<th style="white-space: nowrap;">Group</th>
+								<th style="white-space: nowrap;">Order Qty</th>
+								<th style="white-space: nowrap;">Billed Qty</th>												
+								<th style="white-space: nowrap;">MRP</th>
+								<th style="white-space: nowrap;">Rate</th>
+								<th style="white-space: nowrap;">Taxable Amt</th>
+								<th style="white-space: nowrap;">GST %</th>													
+								<th style="white-space: nowrap;">Tax Amt</th>
+								<th style="white-space: nowrap;">Total</th>													
+								<th style="white-space: nowrap;">GRN Type</th>
+							</tr>
+						</thead>
+						
+						<tbody>
 													
 											<c:forEach items="${billDetailsList}" var="billDetailsList" varStatus="count">
 												<tr>
-													<td align="right" style="white-space: nowrap;"><c:out value="${count.index+1}" /></td>
-													<td align="right" style="white-space: nowrap;"><c:out value="${billDetailsList.itemName}" /></td>
-													<td align="right" style="white-space: nowrap;"><c:out value="${billDetailsList.catName}" /></td>
-													<td align="right" style="white-space: nowrap;"><c:out value="${billDetailsList.orderQty}" /></td>
-													<td align="right" style="white-space: nowrap;"><c:out value="${billDetailsList.billQty}" /></td>
+													<td style="text-align:right; white-space: nowrap;"><c:out value="${count.index+1}" /></td>
+													<td style="text-align:left; white-space: nowrap;"><c:out value="${billDetailsList.itemName}" /></td>
+													<td style="text-align:left; white-space: nowrap;"><c:out value="${billDetailsList.catName}" /></td>
+													<td style="text-align:right; white-space: nowrap;"><c:out value="${billDetailsList.orderQty}" /></td>
+													<td style="text-align:right; white-space: nowrap;"><c:out value="${billDetailsList.billQty}" /></td>
 <fmt:formatNumber var="formattedmrp" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.mrp}" />
 <c:set var="formattedmrp" value="${formattedmrp}" />
-													<td align="right" style="white-space: nowrap;"><c:out value="${formattedmrp}" /></td>
+													<td style="text-align:right; white-space: nowrap;"><c:out value="${formattedmrp}" /></td>
 <fmt:formatNumber var="formattedrate" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.baseRate}" />
 <c:set var="formattedrate" value="${formattedrate}" />													
-													<td align="right" style="white-space: nowrap;"><c:out value="${formattedrate}" /></td>
+													<td style="text-align:right; white-space: nowrap;"><c:out value="${formattedrate}" /></td>
 <fmt:formatNumber var="formattedtaxableAmt" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.taxableAmt}" />
 <c:set var="formattedtaxableAmt" value="${formattedtaxableAmt}" />														
-													<td align="right" style="white-space: nowrap;"><c:out value="${formattedtaxableAmt}" /></td>
+													<td style="text-align:right; white-space: nowrap;"><c:out value="${formattedtaxableAmt}" /></td>
 <fmt:formatNumber var="formattedsgstper" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.sgstPer}" />
 <c:set var="formattedsgstper" value="${formattedsgstper}" />															
 													<c:set var="sgstPer" value="${formattedsgstper}"/>
 <fmt:formatNumber var="formattedcgstPer" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.cgstPer}" />
 <c:set var="formattedcgstPer" value="${formattedcgstPer}" />													
 													<c:set var="cgstPer" value="${formattedcgstPer}"/>
-													<td align="right"><c:out value="${sgstPer+cgstPer}" /></td>
+													<td style="text-align:right;"><c:out value="${sgstPer+cgstPer}" /></td>
 <fmt:formatNumber var="formattedtotalTax" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.totalTax}" />
 <c:set var="formattedtotalTax" value="${formattedtotalTax}" />															
-													<td align="right" style="white-space: nowrap;"><c:out value="${formattedtotalTax}" /></td>
+													<td style="text-align:right; white-space: nowrap;"><c:out value="${formattedtotalTax}" /></td>
 <fmt:formatNumber var="formattedgrandTotal" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.grandTotal}" />
 <c:set var="formattedgrandTotal" value="${formattedgrandTotal}" />														
-													<td align="right" style="white-space: nowrap;"><c:out value="${formattedgrandTotal}" /></td>
+													<td style="text-align:right; white-space: nowrap;"><c:out value="${formattedgrandTotal}" /></td>
 													
-													<td align="left" style="white-space: nowrap;">
+													<td style="text-align:left; white-space: nowrap;">
 											<c:choose>
 											<c:when test="${billDetailsList.grnType==0}">
 										     <c:out value="GRN-1" />
@@ -275,9 +270,8 @@ th, td {
 												</c:forEach>
 											
 										</tbody>
-
-						</table>
-					</div></div>
+						</table>  
+					</div>
 				</div>
 				
 				<div style="clear:both"></div>

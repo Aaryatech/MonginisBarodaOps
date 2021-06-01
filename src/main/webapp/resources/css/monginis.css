@@ -697,7 +697,7 @@ min-height:330px /* 500px */;}
 .title_r.high{width:75%;}
 .frm_r_one.high{width: 62%;}
 .four_txt{float: left; width: 20%;}
-.four_txt.one{width:17%;}
+.four_txt.one{width:17%; margin: 6px 0 0 ;}
 .four_txt.two{width:30%;}
 
 
