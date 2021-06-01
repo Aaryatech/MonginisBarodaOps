@@ -204,29 +204,25 @@ table, th, td {
 
 				<!--rightSidebar-->
 				<div class="sidebarright">
-
-					<div class="row" style="margin: 0 0 20px 0;">
-						<div class="col-md-6">
-
+				
+					<div class="title_row">
+						<div class="title_l">
 							<h2 class="pageTitle">
-								<i class="fa fa-suitcase" aria-hidden="true"></i> Petty Cash
-								Management
+								<i class="fa fa-suitcase" aria-hidden="true"></i> Petty Cash Management
 							</h2>
-							<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
-
 						</div>
-						<div class="col-md-6">
-							<div align="right">
-
+						<div class="title_r alignleft">
+							
 								<a
 									href="${pageContext.request.contextPath}/getPettyCashTransactions"><input
 									type="button" value="Petty Cash Details"
 									class="btn additem_btn" style="margin: 0;"> </a>
-							</div>
+							
 						</div>
+						<div class="clr"></div>
 					</div>
 
-
+					
 
 					<form action="${pageContext.request.contextPath}/addPettyCash"
 						method="post"
@@ -236,17 +232,15 @@ table, th, td {
 							value="${pettycash.cashAmt}" name="cash_edit_amt">
 
 						<div class="row">
-							<div class="col-md-2" style="margin: 10px 0 0 0;">Date</div>
-							<div class="col-md-2">
+							<div class="col-md-2 date_txt">Date</div>
+							<div class="col-md-2 input_marg">
 								<input id="fromdatepicker" class="texboxitemcode texboxcal"
 									autocomplete="off" placeholder="Date" name="cash_date"
 									type="text" value="${pettycash.date}" readonly="readonly">
 							</div>
 
-							<div class="col-md-2" style="margin: 10px 0 0 0;">Opening
-								Amt</div>
-							<div class="col-md-2">
-
+							<div class="col-md-2 date_txt">Opening Amt</div>
+							<div class="col-md-2 input_marg">
 								<fmt:formatNumber type="number" maxFractionDigits="0"
 									minFractionDigits="0" value="${pettycash.openingAmt}"
 									groupingUsed="false" var="openingAmt" />
@@ -256,10 +250,8 @@ table, th, td {
 									placeholder="Opening Amt" name="opening_amt" type="text">
 							</div>
 
-							<div class="col-md-2" style="margin: 10px 0 0 0;">Today's
-								Amt</div>
-							<div class="col-md-2">
-
+							<div class="col-md-2 date_txt" >Today's Amt</div>
+							<div class="col-md-2 input_marg">
 								<fmt:formatNumber type="number" maxFractionDigits="0"
 									minFractionDigits="0"
 									value="${trCashAmt+advAmt-expAmt-creditNote}"
@@ -273,9 +265,8 @@ table, th, td {
 
 							<div style="clear: both;"></div>
 
-							<div class="col-md-2" style="margin: 30px 0 0 0;">Withdrawal
-								Amt</div>
-							<div class="col-md-2" style="margin: 30px 0 0 0;">
+							<div class="col-md-2 date_txt">Withdrawal Amt</div>
+							<div class="col-md-2 input_marg">
 								<input id="withdrawal_amt" class="form-control"
 									value="${pettycash.withdrawalAmt}" autocomplete="off"
 									placeholder="Withdrawal Amt" name="withdrawal_amt" type="text"
@@ -284,30 +275,28 @@ table, th, td {
 							</div>
 
 
-							<div class="col-md-2" style="margin: 30px 0 0 0;">Closing
-								Amt</div>
-							<div class="col-md-2" style="margin: 30px 0 0 0;">
+							<div class="col-md-2 date_txt">Closing Amt</div>
+							<div class="col-md-2 input_marg">
 								<input id="closing_amt" class="form-control" readonly="readonly"
 									autocomplete="off" placeholder="Closing Amt" name="closing_amt"
 									type="text">
 							</div>
 
 
-							<div class="col-md-4"
-								style="margin: 30px 0 0 0; text-align: right;">
+							<div class="col-md-4 button_rght">
 								<c:if test="${isDayEnd==1}">
-									<input class="buttonsaveorder" value="Day End" type="submit"
-										id="btnsub">
+									<input class="btn save_button" value="Day End" type="submit"
+										id="btnsub" style="margin-top: 0">
 								</c:if>
 
 								<c:if test="${isDayEnd==0}">
-									<input class="buttonsaveorder" value="Day End" type="submit"
-										id="btnsub" style="display: none;">
+									<input class="btn save_button" value="Day End" type="submit"
+										id="btnsub" style="display: none;margin-top: 0;">
 								</c:if>
 
 
 								<input class="btn additem_btn" value="Cash Hand Over"
-									style="margin-top: 0%" type="button" id="show">
+									style="margin: 0;" type="button" id="show">
 							</div>
 
 						</div>
@@ -318,24 +307,19 @@ table, th, td {
 					<div class="second_titlerow" id="pc_div" style="display: none;">
 						<br>
 						<hr>
-						<div class="row" style="margin: 0 0 20px 0;">
-							<div class="col-md-6">
-
-								<h2 class="pageTitle" style="margin-top: 20px;">
-									<i class="fa fa-suitcase" aria-hidden="true"></i> Petty Cash
-									Hand Over
-								</h2>
-								<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
-
-							</div>
-							<div class="col-md-6" style="text-align: right;">
-
-								<a href="#"><input type="button"
-									value="Cash Hand Over Details" id="popbtn"
-									class="btn additem_btn" style="display: none;"
-									onclick="openPopup()"> </a>
-							</div>
+						
+						<div class="title_row">
+						<div class="title_l">
+							<h2 class="pageTitle">
+								<i class="fa fa-suitcase" aria-hidden="true"></i> Petty Cash Hand Over
+							</h2>
 						</div>
+						<div class="title_r alignleft">
+								<a href="#"><input type="button" value="Cash Hand Over Details" id="popbtn"
+									class="btn additem_btn" style="display: none;" onclick="openPopup()"> </a>
+						</div>
+						<div class="clr"></div>
+					</div>
 
 
 
@@ -362,18 +346,16 @@ table, th, td {
 
 							<div class="row">
 
-								<div class="col-md-2" style="margin: 10px 0 0 0;">Opening
-									Amt</div>
-								<div class="col-md-2">
+								<div class="col-md-2 date_txt">Opening Amt</div>
+								<div class="col-md-2 input_marg">
 									<input id="open_amt" class="form-control"
 										value="${handoverOpeningAmt}" autocomplete="off"
 										placeholder="Opening Amt" name="open_amt" readonly="readonly"
 										type="text">
 								</div>
 
-								<div class="col-md-2" style="margin: 10px 0 0 0;">Selling
-									Amt</div>
-								<div class="col-md-2">
+								<div class="col-md-2 date_txt">Selling Amt</div>
+								<div class="col-md-2 input_marg">
 									<input id="sell_amt" class="form-control"
 										value="${sellingTotal}" autocomplete="off"
 										placeholder="Selling Amt" name="sell_amt" readonly="readonly"
@@ -381,9 +363,8 @@ table, th, td {
 								</div>
 
 
-								<div class="col-md-2" style="margin: 10px 0 0 0;">Total
-									Cash Hand Over Amt</div>
-								<div class="col-md-2">
+								<div class="col-md-2 date_txt">Total Cash Hand Over Amt</div>
+								<div class="col-md-2 input_marg">
 									<input id="total_cash_amt" class="form-control"
 										value="${handOverTotal}" autocomplete="off"
 										placeholder="Total Cash Amt" name="total_cash_amt"
@@ -395,18 +376,16 @@ table, th, td {
 
 							<div class="row">
 
-								<div class="col-md-2" style="margin: 30px 0 0 0;">Actual
-									Cash Hand Over Amt</div>
-								<div class="col-md-2" style="margin: 30px 0 0 0;">
+								<div class="col-md-2 date_txt" >Actual Cash Hand Over Amt</div>
+								<div class="col-md-2 input_marg" >
 									<input id="actual_cash_amt" class="form-control"
 										value="${actHandOverTotal}" autocomplete="off"
 										placeholder="Actual Cash Amt" name="actual_cash_amt"
 										type="text">
 								</div>
 
-								<div class="col-md-2" style="margin: 30px 0 0 0; display: none;">From
-									Employee</div>
-								<div class="col-md-2" style="margin: 30px 0 0 0; display: none;">
+								<div class="col-md-2 date_txt" style="display: none;">From Employee</div>
+								<div class="col-md-2 input_marg" style="display: none;">
 									<select name="from_emp" id="from_emp" class="form-control"
 										required>
 										<option style="text-align: left;" value="0">Select
@@ -420,10 +399,10 @@ table, th, td {
 									</select>
 								</div>
 
-								<div class="col-md-2" style="margin: 30px 0 0 0;">To
-									Employee</div>
-								<div class="col-md-2" style="margin: 30px 0 0 0;">
-									<select name="to_emp" id="to_emp" class="chosen-select"
+								<div class="col-md-2 date_txt">To Employee</div>
+								<div class="col-md-2 input_marg">
+								
+									 <select name="to_emp" id="to_emp" class="chosen-select"
 										data-live-search="true" required>
 										<option style="text-align: left;" value="0">Select
 											Employee</option>
@@ -434,16 +413,13 @@ table, th, td {
 											</c:if>
 										</c:forEach>
 
-									</select>
+									</select> 
 
 								</div>
 
-								<div class="col-md-4"
-									style="margin: 30px 0 0 0; text-align: right;">
-
-									<input class="buttonsaveorder" value="Submit" type="submit"
-										id="btnsub2"> <input class="buttonsaveorder redbtn"
-										value="Close" type="button" id="hide">
+								<div class="col-md-4 button_rght">
+									<input class="btn save_button" value="Submit" type="submit" id="btnsub2"> 
+									<input class="btn additem_btn" value="Close" type="button" id="hide">
 
 								</div>
 
@@ -480,24 +456,17 @@ table, th, td {
 			<div class="clock"></div>
 		</div>
 
-		<div class="modal-content" style="width: 75%; padding: 2%;">
+		<div class="modal-content seventyfive" >
 			<span class="close" onclick="closePopup()" style="opacity: 2;">&times;</span>
-			<br>
+			
+			<div class="popup_title"><h2 class="pageTitle">Petty Cash Hand Over Transaction</h2></div>
+			
+			
+			<div class="row" >
 
-			<div class="row">
+				
 
-				<div class="col-md-12">
-					<h3 class="pop_head">Petty Cash Hand Over Transaction</h3>
-				</div>
-
-			</div>
-			<hr>
-			<br>
-			<div class="row" style="margin-left: 0%">
-
-				<div class="row">
-
-					<div class="col-md-2" style="text-align: center;">From Date</div>
+					<div class="col-md-2 date_marging" >From Date</div>
 
 					<div class="col-md-3">
 
@@ -507,9 +476,9 @@ table, th, td {
 							value="${dateForSearch}">
 					</div>
 
-					<div class="col-md-2" style="text-align: center;">To Date</div>
+					<div class="col-md-2 date_marging">To Date</div>
 
-					<div class="col-md-3">
+					<div class="col-md-3 marg_btm">
 						<input id="toDate" class="texboxitemcode texboxcal"
 							autocomplete="off" placeholder="Date" name="toDate" type="text"
 							value="${dateForSearch}">
@@ -517,11 +486,11 @@ table, th, td {
 					</div>
 
 					<div class="col-md-2">
-						<input class="buttonsaveorder" value="Search" type="button"
+						<input class="btn additem_btn " value="Search" type="button" style="margin:0;"
 							onclick="getData()" id="search">
 					</div>
 
-				</div>
+				
 
 				<div class="row" style="text-align: center;">
 					<div align="center" id="loader" style="display: none">
@@ -538,43 +507,34 @@ table, th, td {
 
 				<br>
 
-				<div class="row" style="margin-right: 0px; margin-left: 0px;">
-
-					<div id="table-scroll" class="table-scroll responsive-table-one">
-						<!-- class="table-scroll" -->
-						<div>
-							<!--  class="table-wrap" -->
-							<table id="table_grid" class="responsive-table">
-								<!-- class="main-table" -->
-								<thead>
-									<tr class="bgpink">
-										<th style="text-align: center;">Sr. No</th>
-										<th style="text-align: center;">Transaction Date</th>
-										<th style="text-align: center;">From Employee</th>
-										<th style="text-align: center;">To Employee</th>
-										<th style="text-align: center;">Opening Amt</th>
-										<th style="text-align: center;">Selling Amt</th>
-										<th style="text-align: center;">Total Cash Amt</th>
-										<th style="text-align: center;">Actual Cash Hand Over</th>
-										<th style="text-align: center;">Difference</th>
-										<th style="text-align: center;">Emp Sell</th>
-
-
-									</tr>
-
-								</thead>
-								<tbody>
-
-
-								</tbody>
-
-							</table>
-						</div>
-
+				
+				
+					<div class="tableFixHead">
+						<table id="table_grid">         
+						<thead style="background-color: #f3b5db;">
+							<tr class="bgpink">
+								<th style="text-align: center;">Sr. No</th>
+								<th style="text-align: center;">Transaction Date</th>
+								<th style="text-align: center;">From Employee</th>
+								<th style="text-align: center;">To Employee</th>
+								<th style="text-align: center;">Opening Amt</th>
+								<th style="text-align: center;">Selling Amt</th>
+								<th style="text-align: center;">Total Cash Amt</th>
+								<th style="text-align: center;">Actual Cash Hand Over</th>
+								<th style="text-align: center;">Difference</th>
+								<th style="text-align: center;">Emp Sell</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+						
+						</tbody>
+						</table>
 					</div>
 
 
-				</div>
+
+				
 
 
 
@@ -720,21 +680,21 @@ table, th, td {
 														var tr = $('<tr  ></tr>');
 
 														tr.append($(
-																'<td  ></td>')
+																'<td style='text-align:center;'></td>')
 																.html(key + 1));
 														tr
 																.append($(
-																		'<td  ></td>')
+																		'<td  style="text-align:left"></td>')
 																		.html(
 																				cashHndOvr.transactionDate));
 														tr
 																.append($(
-																		'<td  ></td>')
+																		'<td style="text-align:left"></td>')
 																		.html(
 																				cashHndOvr.fromUsername));
 														tr
 																.append($(
-																		'<td  ></td>')
+																		'<td style="text-align:right"></td>')
 																		.html(
 																				cashHndOvr.toUsername));
 

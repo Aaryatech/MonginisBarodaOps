@@ -861,6 +861,19 @@ background-position: right .7em top 50%, 0 0;}
 .det_l{float: left; width:30%;}
 .det_r{float: right; width:70%;}
 
+.save_button{border:none; font-size:16px; padding:5px 12px; background-color: #ec268f !important; color:#fff !important;}
+.save_button:hover{background-color:#343690 !important; color:#fff !important;}
+
+.date_txt{margin:5px 0 0 0;}
+.input_marg{margin: 0 0 20px 0;}
+.button_rght{text-align: right;}
+.title_r.alignleft{text-align: right; margin: 0;}
+.seventyfive{width: 75%; position: relative;}
+.seventyfive.close{position: absolute; right:0; top: 0;}
+.popup_title{display: inline-block; width: 100%; border-bottom: 1px solid #CCC; padding: 0 0 10px 0; margin: 0 0 15px 0;}
+.popup_title .pageTitle{padding: 0px; margin:0px;}
+.date_marging{margin: 7px 0 0 0; text-align: right;}
+
 /*--css-divices--*/
 @media screen and (max-width:1366px){
 .wrapperIn{ width:100%;}
@@ -910,6 +923,7 @@ background-position: right .7em top 50%, 0 0;}
 
 .radio_owen.one{width:60%;}
 .radio_owen.two{width:40%;}
+.seventyfive{width:90%;}
 }
 
 @media screen and (max-width:800px){
@@ -983,6 +997,11 @@ background-position: right .7em top 50%, 0 0;}
 .det_l{float: none; width:100%;}
 .det_r{float: none; width:100%; text-align: left;}
 .grn_one{text-align: left;}
+.date_txt{text-align: left; margin: 0 0 5px 0;}
+.title_r.alignleft{text-align: left; margin: 0 0 15px 0;}
+
+.date_marging {margin: 10px 0 3px 0; text-align: left;}
+.marg_btm{margin: 0 0 10px 0;}
 }
 
 @media screen and (max-width:700px){
@@ -1112,6 +1131,7 @@ table.responsive-table{display: block;}
 .date_one.increse select{width:100%;}
 
 .grn_one{float: none; width:100%; text-align: left; margin: 0 0 10px 0;}
+.seventyfive {width: 96%;}
 
 }
 
