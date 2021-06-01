@@ -1015,6 +1015,8 @@ background-position: right .7em top 50%, 0 0;}
 .form_one{float: none; width:100%; margin: 15px 0 0 0; display: inline-block;}
 .btn_cen{text-align: center; margin: 15px 0 0 0; width: 100%;}
 .button_stock.inline,.month_txt.inline{float: none; display: inline-block;}
+
+.tab_marg_top{margin:15px 0 0 0;}
 }
 
 @media screen and (max-width:700px){
