@@ -44,12 +44,24 @@ table, th, td {
 
 			<!--rightSidebar-->
 			<div class="sidebarright">
-				<div class="order-left">
-					<h2 class="pageTitle">GVN Details</h2>
-					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
+			
+				<div class="det_row">
+					<div class="det_l"><h2 class="pageTitle"><i class="fa fa-refresh" aria-hidden="true"></i> GVN Details </h2></div>
+					<div class="det_r">
+						<form action="" id="gvnForm" method="get">
+							<div class="grn_one">Gvn Date :<span>${gvnDate}</span></div>
+							<div class="grn_one">Gvn SrNo :<span>${gvnSrNo}</span></div>
+							<div class="grn_one">Aprroved Amt :<span>${aprAmt}</span></div>
+						</form>
+					</div>
+					<div class="clr"></div>
 				</div>
-				<div class="colOuter">
-					<!-- copy div kalpesh -->
+			
+				<!-- <div class="order-left">
+					<h2 class="pageTitle">GVN Details</h2>
+					
+				</div> -->
+				<%-- <div class="colOuter">
 					<div class="calender-title"></div>
 
 					<div class="col-md-6">
@@ -69,13 +81,10 @@ table, th, td {
 									</tr>
 								</tbody>
 							</table>
-							<%-- 	GVN Date -<b> ${gvnDate}</b><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Grn SrNo -<b>${gvnSrNo}</b>
-				    Appproved Amt -<b>${aprAmt}</b>
-				     --%>
+							
 						</form>
 					</div>
-				</div>
+				</div> --%>
 
 				<input type="hidden" name="mod_ser" id="mod_ser"
 					value="search_result">
@@ -83,50 +92,27 @@ table, th, td {
 
 
 				<div class="clearfix"></div>
-
-
-				<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden">
-						<table id="table_grid1" class="main-table" style="width: 100%">
-							<thead>
-								<tr class="bgpink">
-									<!-- <th class="col-md-1">Invoice No</th>
-									<th class="col-md-2">Item Name</th>
-									<th class="col-md-1">Bill Rate</th>
-									<th class="col-md-1">Refund Rate</th>
-									<th class="col-md-1">Gvn Qty</th>
-									<th class="col-md-2">Total Refund Requested</th>
-									<th class="col-md-1">Approved Qty</th>
-									<th class="col-md-1">Approved total Refund</th>
-									<th class="col-md-1">Approved Base Rate</th>
-									<th class="col-md-1">Approved Tax Amount</th>
-									<th class="col-md-1">Photo 1</th>
-									<th class="col-md-1">Photo 2</th>
-									<th class="col-md-1">Status</th> -->
-								</tr>
-							</thead></table></div>
-					<div class="table-wrap">
-						<table id="table_grid" class="main-table" style="width: 100%">
-							<thead>
-								<tr class="bgpink">
-						
-									<th class="col-md-1">Invoice No</th>
-									<th class="col-md-2">Item Name</th>
-									<th class="col-md-1">Disc.%</th>
-									<th class="col-md-1">Bill Rate</th>
-									<th class="col-md-1">Refund Rate</th>
-									<th class="col-md-1">Gvn Qty</th>
-									<th class="col-md-2">Total Refund Requested</th>
-									<th class="col-md-1">Approved Qty</th>
-									<th class="col-md-1">Approved total Refund</th>
-								<!-- 	<th class="col-md-1">Approved Base Rate</th>
-									<th class="col-md-1">Approved Tax Amount</th> -->
-									<th class="col-md-1">Photo 1</th>
-									<th class="col-md-1">Photo 2</th>
-									<th class="col-md-1">Status</th>
-								</tr>
-							</thead>
-							<tbody>
+				
+				<div class="tableFixHead">
+	<table id="table_grid">         
+	<thead style="background-color: #f3b5db;">
+		<tr class="bgpink">
+			<th style="text-align: center;">Invoice No</th>
+			<th style="text-align: center;">Item Name</th>
+			<th style="text-align: center;">Disc.%</th>
+			<th style="text-align: center;">Bill Rate</th>
+			<th style="text-align: center;">Refund Rate</th>
+			<th style="text-align: center;">Gvn Qty</th>
+			<th style="text-align: center;">Total Refund Requested</th>
+			<th style="text-align: center;">Approved Qty</th>
+			<th style="text-align: center;">Approved total Refund</th>
+			<th style="text-align: center;">Photo 1</th>
+			<th style="text-align: center;">Photo 2</th>
+			<th style="text-align: center;">Status</th>
+		</tr>
+	</thead>
+	
+	<tbody>
 
 
 								<c:set var="status" value=""></c:set>
@@ -148,92 +134,40 @@ table, th, td {
 									<tr class="${color}">
 
 
-										<td class="col-md-1"><c:out value="${gvnList.invoiceNo}" /></td>
-										
-										<td class="col-md-2"><c:out value="${gvnList.itemName}" /></td>
-										<td class="col-md-1"><c:out value="${gvnList.itemMrp}" /></td>
-										<td class="col-md-1"><c:out value="${gvnList.itemRate}" /></td>
-										<td class="col-md-1"><c:out value="${gvnList.itemRate}" /></td>
-
-										<td class="col-md-1"><c:out value="${gvnList.grnGvnQty}" /></td>
-
-
-										<td class="col-md-2"><c:out value="${gvnList.grnGvnAmt}" /></td>
-								<%-- 		<td class="col-md-1"><c:out value="${gvnList.aprQtyAcc}" /></td>
-										<td class="col-md-1"><c:out
-												value="${gvnList.aprGrandTotal}" /></td> --%>
-												
-												<c:choose>
-<c:when test="${gvnList.isCreditNote==1}">
-<td class="col-md-1"><c:out value="${gvnList.aprQtyAcc}" /></td>
-
-											<td class="col-md-1"><c:out
-													value="${gvnList.aprGrandTotal}" /></td>
-</c:when>
-<c:otherwise>
-<td class="col-md-1"><c:out value="-" /></td>
-
-											<td class="col-md-1"><c:out
-													value="-" /></td>
-</c:otherwise>
-</c:choose>
-
-								<%-- 		<td class="col-md-1"><c:out
-												value="${gvnList.aprTaxableAmt}" /></td>
-										<td class="col-md-1"><c:out
-												value="${gvnList.aprTotalTax}" /></td> --%>
-
-										<td class="col-md-1"><a href="${url}${gvnList.gvnPhotoUpload1}"
-											data-lightbox="image-1">Image 1</a></td>
-										<td class="col-md-1"><a href="${url}${gvnList.gvnPhotoUpload2}"
-											data-lightbox="image-2">Image 2</a></td>
-
-								<%-- 		<c:choose>
-											<c:when test="${gvnList.grnGvnStatus==1}">
-												<c:set var="status" value="Pending"></c:set>
-											</c:when>
-
-											<c:when test="${gvnList.grnGvnStatus==2}">
-												<c:set var="status" value="Approved From Dispatch"></c:set>
-											</c:when>
-
-											<c:when test="${gvnList.grnGvnStatus==3}">
-												<c:set var="status" value="Reject From Dispatch"></c:set>
-											</c:when>
-
-											<c:when test="${gvnList.grnGvnStatus==4}">
-												<c:set var="status" value="Approved By Sales"></c:set>
-											</c:when>
-
-											<c:when test="${gvnList.grnGvnStatus==5}">
-												<c:set var="status" value="Reject From Sales"></c:set>
-											</c:when>
-
-											<c:when test="${gvnList.grnGvnStatus==6}">
-												<c:set var="status" value="Approved From Account"></c:set>
-											</c:when>
-
-											<c:when test="${gvnList.grnGvnStatus==7}">
-												<c:set var="status" value="Reject From Account"></c:set>
-											</c:when>
+										<td style="text-align: center;"><c:out value="${gvnList.invoiceNo}" /></td>
+										<td style="text-align: left;"><c:out value="${gvnList.itemName}" /></td>
+										<td style="text-align: right;"><c:out value="${gvnList.itemMrp}" /></td>
+										<td style="text-align: right;"><c:out value="${gvnList.itemRate}" /></td>
+										<td style="text-align: right;"><c:out value="${gvnList.itemRate}" /></td>
+										<td style="text-align: right;"><c:out value="${gvnList.grnGvnQty}" /></td>
+										<td style="text-align: right;"><c:out value="${gvnList.grnGvnAmt}" /></td>
+										<c:choose>
+										<c:when test="${gvnList.isCreditNote==1}">
+										<td style="text-align: right;"><c:out value="${gvnList.aprQtyAcc}" /></td>
+										<td style="text-align: right;"><c:out value="${gvnList.aprGrandTotal}" /></td>
+										</c:when>
+										<c:otherwise>
+										<td style="text-align: right;"><c:out value="-" /></td>
+										<td style="text-align: right;"><c:out value="-" /></td>
+										</c:otherwise>
 										</c:choose>
-										<td class="col-md-1"><c:out value="${status}" /></td> --%>
-										
+										<td style="text-align: right;"><a href="${url}${gvnList.gvnPhotoUpload1}" data-lightbox="image-1">Image 1</a></td>
+										<td style="text-align: right;"><a href="${url}${gvnList.gvnPhotoUpload2}" data-lightbox="image-2">Image 2</a></td>
 										<c:set var="statusGVN" value="NA"></c:set>
-												<c:forEach items="${gvStatusLst}" var="gvnStatus">
-												<c:if test="${gvnStatus.statusValue==gvnList.grnGvnStatus}">
-												<c:set var="statusGVN" value="${gvnStatus.statusName}"></c:set>
-												</c:if>
-												</c:forEach>
-												<td class="col-md-1"><c:out value="${statusGVN}"></c:out></td>
-												
+										<c:forEach items="${gvStatusLst}" var="gvnStatus">
+										<c:if test="${gvnStatus.statusValue==gvnList.grnGvnStatus}">
+										<c:set var="statusGVN" value="${gvnStatus.statusName}"></c:set>
+										</c:if>
+										</c:forEach>
+										<td style="text-align: left;"><c:out value="${statusGVN}"></c:out></td>
 								</c:forEach>
 
 							</tbody>
+	</table>
+</div>
 
-						</table>
-					</div>
-				</div>
+
+				
 
 
 
