@@ -183,19 +183,30 @@ table, th, td {
 
 				<!--rightSidebar-->
 				<div class="sidebarright">
-					<div class="order-left">
-						<h2 class="pageTitle">Petty Cash Management</h2>
-					</div>
-					<div class="order-right" align="right" style="padding-top: 0%;">
-						<a href="${pageContext.request.contextPath}/showPattyCashMgmnt"><input
-							type="button" value="Petty Cash" class="btn additem_btn">
+					
+					<div class="title_row">
+						<div class="title_l">
+							<h2 class="pageTitle">
+								<i class="fa fa-suitcase" aria-hidden="true"></i> Petty Cash Management
+							</h2>
+						</div>
+						<div class="title_r alignleft">
+							<a href="${pageContext.request.contextPath}/showPattyCashMgmnt"><input
+							type="button" value="Petty Cash" class="btn additem_btn" style="margin: 0;">
 						</a>
+						</div>
+						<div class="clr"></div>
 					</div>
+				
+				
+					
+						
+					
 					
 					
 					<!-- <form action="addPettyCash" method="post"> -->
 
-					<div class="colOuter">
+					<div class="row">
 						<div class="col-md-1">
 							<div class="col1title" align="left">From Date</div>
 						</div>
@@ -207,7 +218,7 @@ table, th, td {
 
 
 
-						<div class="col-sm-1">
+						<div class="col-md-1">
 							<div class="col1title" align="left">To Date</div>
 						</div>
 						<div class="col-md-2">
@@ -217,14 +228,14 @@ table, th, td {
 						</div>
 
 
-						<div class="col-sm-6" style="text-align: left;">
+						<div class="col-sm-6 two_button" style="text-align: left;">
 
-							<input class="buttonsaveorder" value="Submit" type="submit" style="padding: 5px 10px;"
+							<input class="btn save_button" value="Submit" type="submit" style="padding: 5px 10px; margin:0;"
 								onclick="getData()">
 
 
-							<button type="button" class="btn btn-primary" onclick="genPdf()" style="padding: 5px 10px; font-size: 16px;"
-								disabled id="pdf" style="padding: 8px 12px;">PDF</button>
+							<button type="button" class="btn additem_btn" onclick="genPdf()" style="padding: 5px 10px; font-size: 16px;  margin:0;"
+								disabled id="pdf" style="padding: 8px 12px;">Pdf</button>
 
 
 						</div>
@@ -271,48 +282,28 @@ table, th, td {
 								onsubmit="substk.disabled = true; return confirm('Do you want to Month End ?');">
 								<div class="clearfix"></div>
 								<div class="col-md-9"></div>
-								<!-- <label for="search" class="col-md-3" id="search"> <i
-								class="fa fa-search" style="font-size: 20px"></i> <input
-								type="text" id="myInput" onkeyup="myFunction()"
-								style="border-radius: 25px;" placeholder="Search items by name"
-								title="Type item name">
-							</label>
- -->
-
-								<div id="table-scroll" class="table-scroll responsive-table-one">
-									<!-- class="table-scroll" -->
-									<div>
-										<!--  class="table-wrap" -->
-										<table id="table_grid" class="responsive-table">
-											<!-- class="main-table" -->
-											<thead>
-												<tr class="bgpink">
-													<th style="text-align: center;">Sr. No</th>
-													<th style="text-align: center;">Date & Time</th>
-													<th style="text-align: center;">Day End By</th>
-													<th style="text-align: center;">Opening Amt</th>
-													<th style="text-align: center;">Cash Amt</th>
-													<th style="text-align: center;">Withdrawal Amt</th>
-													<th style="text-align: center;">Closing Amt</th>
-													<th style="text-align: center;">Action</th>
-												</tr>
-
-											</thead>
-											<tbody>
-
-
-											</tbody>
-
-										</table>
-									</div>
-
+								
+								<div class="tableFixHead">
+									<table id="table_grid">         
+									<thead style="background-color: #f3b5db;">
+										<tr class="bgpink">
+											<th style="text-align: center;">Sr. No</th>
+											<th style="text-align: center;">Date & Time</th>
+											<th style="text-align: center;">Day End By</th>
+											<th style="text-align: center;">Opening Amt</th>
+											<th style="text-align: center;">Cash Amt</th>
+											<th style="text-align: center;">Withdrawal Amt</th>
+											<th style="text-align: center;">Closing Amt</th>
+											<th style="text-align: center;">Action</th>
+										</tr>
+									</thead>
+									
+									<tbody>
+									
+									</tbody>
+									</table>
 								</div>
-
-
-
-
-
-
+								
 
 							</form>
 						</div>
@@ -341,62 +332,54 @@ table, th, td {
 			<div class="clock"></div>
 		</div>
 
-		<div class="modal-content" style="width: 75%; padding: 2%;">
+		<div class="modal-content seventyfive">
 			<span class="close" onclick="closeEditPopup()" style="opacity: 2;">&times;</span>
-			<br>
-
-			<div class="row">
-
-				<div class="col-md-6">
-					<h3 class="pop_head">Edit Petty Cash</h3>
-				</div>
-				<div class="col-md-6" style="text-align: right;">
-					<h4>Date : <input type="text" name="edit_date" id="edit_date"
-						style="border: transparent;" readonly="readonly" /></h4>
-				</div>
-
+			<div class="popup_title">
+				<h2 class="pageTitle pop_left">Edit Petty Cash </h2>
+				<div class="popup_date"><span>Date :</span> <input type="text" name="edit_date" id="edit_date"
+						style="border: transparent;" readonly="readonly" /></div>
 			</div>
-			<hr>
-			<br>
+
+			
 			<div class="row" style="margin-left: 0%">
 
 				<input type="text" style="display: none;" name="pettyId"
 					id="pettyId" />
 
-				<div class="row">
+				<div class="">
 
-					<div class="col-md-2">Opening Amount</div>
+					<div class="col-md-2 date_marging">Opening Amount</div>
 
-					<div class="col-md-4">
-						<input type="text" class="input_add" name="opening_amt"
+					<div class="col-md-4 input_marg">
+						<input type="text" class="form-control" name="opening_amt"
 							readonly="readonly" onchange="trim(this)" id="opening_amt" />
 					</div>
 
-					<div class="col-md-2">Cash Amount</div>
+					<div class="col-md-2 date_marging">Cash Amount</div>
 
-					<div class="col-md-4">
-						<input type="text" class="input_add" name="cash_amt"
+					<div class="col-md-4 input_marg">
+						<input type="text" class="form-control" name="cash_amt"
 							readonly="readonly" onchange="trim(this)" id="cash_amt" />
 					</div>
 
 				</div>
 
-				<br>
+				
 
-				<div class="row">
+				<div class="">
 
-					<div class="col-md-2">Withdrawl Amount</div>
+					<div class="col-md-2 date_marging">Withdrawl Amount</div>
 
-					<div class="col-md-4">
-						<input type="text" class="input_add"
+					<div class="col-md-4 input_marg">
+						<input type="text" class="form-control"
 							placeholder="Enter Withdrawal Amt" name="withdrawal_amt"
 							onkeyup="calClosingAmt()" id="withdrawal_amt" />
 					</div>
 
-					<div class="col-md-2">Closing Amount</div>
+					<div class="col-md-2 date_marging">Closing Amount</div>
 
-					<div class="col-md-4">
-						<input type="text" class="input_add" readonly="readonly"
+					<div class="col-md-4 input_marg">
+						<input type="text" class="form-control" readonly="readonly"
 							name="closing_amt" onchange="trim(this)" id="closing_amt" />
 					</div>
 
@@ -407,8 +390,8 @@ table, th, td {
 			</div>
 
 			<div class="pop_btns" style="text-align: center;">
-				<br> <a href="#" onclick="savePettyCash()" id="savePettyCash"
-					class="buttonsaveorder">Update</a> <br>
+				 <a href="#" onclick="savePettyCash()" id="savePettyCash"
+					class="btn additem_btn" style="margin:0;">Update</a> <br>
 
 				<div align="center" id="loader1" style="display: none">
 
@@ -524,13 +507,13 @@ table, th, td {
 
 													tr
 															.append($(
-																	'<td style="text-align:center;"></td>')
+																	'<td style="text-align:left;"></td>')
 																	.html(
 																			v.exVar1));
 
 													tr
 															.append($(
-																	'<td style="text-align:left;"></td>')
+																	'<td style="text-align:right;"></td>')
 																	.html(
 																			v.exVar2));
 

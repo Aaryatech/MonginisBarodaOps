@@ -874,6 +874,9 @@ background-position: right .7em top 50%, 0 0;}
 .popup_title .pageTitle{padding: 0px; margin:0px;}
 .date_marging{margin: 7px 0 0 0; text-align: right;}
 
+.pop_left{float: left; width:50%;}
+.popup_date{float: right; text-align: right; font-weight: bold;}
+
 /*--css-divices--*/
 @media screen and (max-width:1366px){
 .wrapperIn{ width:100%;}
@@ -1002,6 +1005,7 @@ background-position: right .7em top 50%, 0 0;}
 
 .date_marging {margin: 10px 0 3px 0; text-align: left;}
 .marg_btm{margin: 0 0 10px 0;}
+.two_button{display: inline-block; width:100%; margin:15px 0 0 0;}
 }
 
 @media screen and (max-width:700px){
