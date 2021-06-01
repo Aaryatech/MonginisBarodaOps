@@ -46,7 +46,7 @@
 			
 				<div class="row">
 					<div class="col-md-5"><h2 class="pageTitle"><i class="fa fa-file-pdf-o" ></i> Other Purchase Bills</h2></div>
-					<div class="col-md-7" style="text-align: right;">
+					<div class="col-md-7 left_button_mob">
 						<a href="${pageContext.request.contextPath}/showOtherBill"><input type="button" value="Purchase Bill" class="btn additem_btn"
 						style="margin:0; ">
 										</a>
