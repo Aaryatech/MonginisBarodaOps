@@ -56,39 +56,43 @@ table, th, td {
 
 			<!-- Place Actual content of page inside this div -->
 			<div class="sidebarright">
-
-				<div class="row">
-					
-				<!-- 	<div class="col-md-3">
-
-						<button type="button" class="buttonsaveorder"
-							style="display: none;" id='searchButton'
-							onclick="getViewOption()" style="width: 100px; height: 40px">Search
-						</button>
-						
-
-					</div>
- -->
-					
-
-				
-					<form action="${pageContext.request.contextPath}/postManualGrn"
+				<form action="${pageContext.request.contextPath}/postManualGrn"
 						onsubmit="return confirm('Do you really want to save ?');"
 						name="grn_add" id="grn_add" method="post">
-
-						<div class="col-md-9">
-							<h6 class="pageTitle" style="margin: 0; padding:0;">
-							<i class="fa fa-refresh" aria-hidden="true"></i>GRN Based on Expiry of Product</h6>
-						</div>
-						<label for="search" class="col-md-3" id="search" style="margin:-10px 0 0 0 ;"> <i
+						
+				<div class="row_one">
+					<div class="title_l">
+						<h2 class="pageTitle btm"><i class="fa fa-refresh" aria-hidden="true"></i>GRN Based on Expiry of Product</h2>
+					</div>
+					<div class="title_r right_side">
+						<label for="search" class="col-md-3 search_icn" id="search" style="margin:-10px 0 0 0 ;" > <i
 							class="fa fa-search" ></i> <input
 							type="text" style="border-radius: 25px;" id="myInput"
 							onkeyup="myFunction()" placeholder="Search items by name.."
 							title="Type in a name">
 						</label>
 <c:set var="flag" value="0" />
+					</div>
+				</div>
 
-						<div class="clearfix"></div>
+				<div class="row">
+					
+				
+					
+
+				
+					
+
+						
+						<%-- <label for="search" class="col-md-3" id="search" style="margin:-10px 0 0 0 ;"> <i
+							class="fa fa-search" ></i> <input
+							type="text" style="border-radius: 25px;" id="myInput"
+							onkeyup="myFunction()" placeholder="Search items by name.."
+							title="Type in a name">
+						</label>
+<c:set var="flag" value="0" /> --%>
+
+						
 						<div class="clr"></div>
 						
 						<div class="tableFixHead marg_top">
@@ -121,10 +125,10 @@ table, th, td {
 													id="${grnConfList.billDetailNo}"
 													value="${grnConfList.billDetailNo}" style="display: inline-block !important;" /></td>
 													
-												<td style="text-align: center;font-size: 15px;  white-space: nowrap;"><c:out
+												<td style="text-align: left;font-size: 15px;  white-space: nowrap;"><c:out
 														value="${grnConfList.invoiceNo}"></c:out></td>
 													
-												<td style="text-align: center;font-size: 15px;  white-space: nowrap;"><fmt:formatDate
+												<td style="text-align: right;font-size: 15px;  white-space: nowrap;"><fmt:formatDate
 														pattern="dd-MM-yyyy" value="${grnConfList.billDate}" /></td>
 												
 												

@@ -78,12 +78,7 @@ table, th, td {
 
 
 
-						<!-- <div class="col-sm-2">
-							<label>OR GRN Sr No</label>
-							<input type="checkbox" class="form-control" id="headerCheckBox"
-						 name="headerCheckBox" id="headerCheckBox"
-							/>
-						</div> -->
+						
 						<div class="frm_single">
 							<input type="hidden" class="form-control" id="headeIdText"
 								style="width: 120px" name="headeIdText" value="0" />
@@ -112,46 +107,26 @@ table, th, td {
 						<!--tabMenu-->
 
 						<!--tabMenu-->
-
-
-						<div id="table-scroll"> <!-- class="table-scroll" -->
-							<div id="faux-table" aria="hidden"> <!-- class="faux-table" -->
-								<table id="table_grid" class="main-table" border="1px" >
-									<thead>
-										<tr class="bgpink">
-											<!-- <th class="col-md-3" style="text-align: center;">GrnSr No</th>
-											<th  class="col-md-2" style="text-align: center;">Date</th>
-											<th class="col-md-2" style="text-align: center;">Taxable Amt</th>
-											<th class="col-md-2" style="text-align: center;">Tax Amt</th>
-											<th class="col-md-2" style="text-align: center;">Amount</th>
-											<th class="col-md-2" style="text-align: center;">Approved Amt</th>
-											<th class="col-md-2" style="text-align: center;">Status</th>
-											<th class="col-md-1" style="text-align: center;">Credited?</th>
-											<th class="col-md-2" style="text-align: center;">Credit Number</th>
-											<th class="col-md-2" style="text-align: center;">Action</th>
-										 -->
-
-										</tr>
-									</thead></table></div>
-							<div class="table-wrap">
-								<table id="table_grid" class="responsive-table" style="margin:0;">  <!-- class="main-table"  -->
-									<thead>
-										<tr class="bgpink">
-											<th style="text-align: center; white-space: nowrap;">GRN Sr No</th>
-											<th style="text-align: center; white-space: nowrap;">Date</th>
-											<th style="text-align: center; white-space: nowrap;">Taxable Amt</th>
-											<th style="text-align: center; white-space: nowrap;">Tax Amt</th>
-											<th style="text-align: center; white-space: nowrap;">Amount</th>
-											<th style="text-align: center; white-space: nowrap;">Approved Amt</th>
-											<th style="text-align: center; white-space: nowrap;">Status</th>
-											<th style="text-align: center; white-space: nowrap;">Credited?</th>
-											<th style="text-align: center; white-space: nowrap;">Credit Number</th>
-											<th style="text-align: center; white-space: nowrap;">Action</th>
-
-										</tr>
-									</thead>
-								
-									<tbody>
+						
+						<div class="tableFixHead">
+	<table id="table_grid">         
+	<thead style="background-color: #f3b5db;">
+		<tr class="bgpink">
+			<th style="text-align: center; white-space: nowrap;">GRN Sr No</th>
+			<th style="text-align: center; white-space: nowrap;">Date</th>
+			<th style="text-align: center; white-space: nowrap;">Taxable Amt</th>
+			<th style="text-align: center; white-space: nowrap;">Tax Amt</th>
+			<th style="text-align: center; white-space: nowrap;">Amount</th>
+			<th style="text-align: center; white-space: nowrap;">Approved Amt</th>
+			<th style="text-align: center; white-space: nowrap;">Status</th>
+			<th style="text-align: center; white-space: nowrap;">Credited?</th>
+			<th style="text-align: center; white-space: nowrap;">Credit Number</th>
+			<th style="text-align: center; white-space: nowrap;">Action</th>
+	
+		</tr>
+	</thead>
+	
+	<tbody>
 
 										<c:forEach items="${grnList}" var="grnList" varStatus="count">
 											
@@ -162,21 +137,20 @@ table, th, td {
 													value="${grnList.grnGvnHeaderId}"></td>
 												<td style="text-align: center; white-space: nowrap;"><c:out
 														value="${grnList.grngvnDate}" /></td>
-												<td style="text-align: center; white-space: nowrap;"><c:out
+												<td style="text-align: right; white-space: nowrap;"><c:out
 														value="${grnList.taxableAmt}" /></td>
-												<td style="text-align: center; white-space: nowrap;"><c:out value="${grnList.taxAmt}" /></td>
-												<td style="text-align: center; white-space: nowrap;"><c:out value="${grnList.totalAmt}" /></td>
+												<td style="text-align: right; white-space: nowrap;"><c:out value="${grnList.taxAmt}" /></td>
+												<td style="text-align: right; white-space: nowrap;"><c:out value="${grnList.totalAmt}" /></td>
 													<c:choose>
 													<c:when test="${grnList.isCreditNote==1}">
-													<td style="text-align: center; white-space: nowrap;"><fmt:formatNumber type="number"
+													<td style="text-align: right; white-space: nowrap;"><fmt:formatNumber type="number"
 														minFractionDigits="2" maxFractionDigits="2"
 														value="${grnList.aprGrandTotal}" /></td>
 													</c:when>
 													<c:otherwise>
-													<td style="text-align: center; white-space: nowrap;">-</td>
+													<td style="text-align: right; white-space: nowrap;">-</td>
 													</c:otherwise>
 													</c:choose>
-												 <%-- <c:out value="${grnList.taxableAmt}" /> --%>
 												<c:set var="status" value="a"></c:set>
 												<c:forEach items="${grStatusLst}" var="grnStatus">
 												<c:if test="${grnStatus.statusValue==grnList.grngvnStatus}">
@@ -185,41 +159,7 @@ table, th, td {
 												</c:if>
 												</c:forEach>
 												
-												<%-- <c:choose>
-													<c:when test="${grnList.grngvnStatus==1}">
-														<c:set var="status" value="Pending"></c:set>
-
-													</c:when>
-													<c:when test="${grnList.grngvnStatus==2}">
-														<c:set var="status" value="Approved From Dispatch"></c:set>
-													</c:when>
-
-													<c:when test="${grnList.grngvnStatus==3}">
-														<c:set var="status" value="Reject From Dispatch"></c:set>
-													</c:when>
-
-													<c:when test="${grnList.grngvnStatus==4}">
-														<c:set var="status" value="Approved From Sales"></c:set>
-													</c:when>
-
-													<c:when test="${grnList.grngvnStatus==5}">
-														<c:set var="status" value="Reject From Sales"></c:set>
-													</c:when>
-
-													<c:when test="${grnList.grngvnStatus==6}">
-														<c:set var="status" value="Approved From Account"></c:set>
-													</c:when>
-
-													<c:when test="${grnList.grngvnStatus==7}">
-														<c:set var="status" value="Reject From Account"></c:set>
-													</c:when>
-
-													<c:otherwise>
-														<c:set var="status" value="Partially Approved"></c:set>
-													</c:otherwise>
-
-												</c:choose> --%>
-												<td style="text-align: center; white-space: nowrap;"><c:out value="${status}"></c:out></td>
+												<td style="text-align: left; white-space: nowrap;"><c:out value="${status}"></c:out></td>
 														<c:set var="isCredit" value="a"></c:set>
 
 												<c:choose>
@@ -231,16 +171,16 @@ table, th, td {
 													</c:otherwise>
 												</c:choose>
 
-												<td style="text-align: center; white-space: nowrap;"><c:out
+												<td style="text-align: left; white-space: nowrap;"><c:out
 														value="${isCredit}"></c:out></td>
 
-												<td style="text-align: center;"><c:out
+												<td style="text-align: left;"><c:out
 														value="${grnList.creditNoteId}"></c:out></td>
 												
 												<c:choose>
 												<c:when test="${grnList.isCreditNote==1}">
 												
-												<td style="text-align: center; white-space: nowrap;"><a href='#' class='action_btn'
+												<td style="text-align: right; white-space: nowrap;"><a href='#' class='action_btn'
 													onclick="getGrnDetail(${grnList.grnGvnHeaderId})"><abbr
 														title='Detail'><i class='fa fa-list'></i></abbr></a> &nbsp;<a href='#' class='action_btn'
 													onclick="genPdf(${grnList.grnGvnHeaderId})"><abbr
@@ -261,24 +201,17 @@ table, th, td {
 														</td>
 												</c:otherwise>
 												</c:choose>		
-												
-
-												<%-- <td class="col-md-1"><a href='#' class='action_btn'
-													onclick="genPdf(${grnList.grnGvnHeaderId})"><abbr
-														title='Pdf'><i class='fa fa-list'></i></abbr></a></td> --%>
-
-												<%-- <input type="button" onclick="getGrnDetail(${grnList.grnGvnHeaderId})" id="grnDetailButton" value="Detail"></td> --%>
-
 											</tr>
 										</c:forEach>
 
 
 
 									</tbody>
+	</table>
+</div>
 
-								</table>
-							</div>
-						</div>
+
+						
 
 
 
@@ -354,25 +287,25 @@ document.getElementById("headeIdText").value=0;
 								}
 									
 								
-						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.grngvnSrno));
-						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.grngvnDate));
-						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.taxableAmt));
-						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.taxAmt));
-						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.totalAmt));
-						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(aprvVal));/* grndata.aprGrandTotal */
-						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.grnGvnStatusStr));
+						tr.append($('<td style="text-align: left; white-space: nowrap;"></td>').html(grndata.grngvnSrno));
+						tr.append($('<td style="text-align: left; white-space: nowrap;"></td>').html(grndata.grngvnDate));
+						tr.append($('<td style="text-align: right; white-space: nowrap;"></td>').html(grndata.taxableAmt));
+						tr.append($('<td style="text-align: right; white-space: nowrap;"></td>').html(grndata.taxAmt));
+						tr.append($('<td style="text-align: right; white-space: nowrap;"></td>').html(grndata.totalAmt));
+						tr.append($('<td style="text-align: right; white-space: nowrap;"></td>').html(aprvVal));/* grndata.aprGrandTotal */
+						tr.append($('<td style="text-align: right; white-space: nowrap;"></td>').html(grndata.grnGvnStatusStr));
 						
-						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(isCredit));
+						tr.append($('<td style="text-align: right; white-space: nowrap;"></td>').html(isCredit));
 
-						tr.append($('<td style="text-align: center; white-space: nowrap;"></td>').html(grndata.creditNoteId));	
+						tr.append($('<td style="text-align: left; white-space: nowrap;"></td>').html(grndata.creditNoteId));	
 
 
 						//tr.append($('<td class="col-md-2"></td>').html("<input type='button' onclick='getGrnDetail("+grndata.grnGvnHeaderId+")' id='grnDetailButton' value='Detail'>"));
 						if(grndata.isCreditNote==1)
 							{
-						  tr.append($('<td style="text-align: center; white-space: nowrap;" ><a href="#" class="action_btn" onclick="getGrnDetail('+grndata.grnGvnHeaderId+')"><abbr title="Detail"><i class="fa fa-list"></i></abbr></a>&nbsp; <a href="#" class="action_btn" onclick="genPdf('+grndata.grnGvnHeaderId+')"><i class="fa fa-file-pdf-o" style="color:red"></i></a>&nbsp; <a href="#" class="action_btn" onclick="genCrnPdf('+grndata.grnGvnHeaderId+')">CRN</a></td>'));
+						  tr.append($('<td style="text-align: right; white-space: nowrap;" ><a href="#" class="action_btn" onclick="getGrnDetail('+grndata.grnGvnHeaderId+')"><abbr title="Detail"><i class="fa fa-list"></i></abbr></a>&nbsp; <a href="#" class="action_btn" onclick="genPdf('+grndata.grnGvnHeaderId+')"><i class="fa fa-file-pdf-o" style="color:red"></i></a>&nbsp; <a href="#" class="action_btn" onclick="genCrnPdf('+grndata.grnGvnHeaderId+')">CRN</a></td>'));
 							}else{
-					    tr.append($('<td style="text-align: center; white-space: nowrap;" ><a href="#" class="action_btn" onclick="getGrnDetail('+grndata.grnGvnHeaderId+')"><abbr title="Detail"><i class="fa fa-list"></i></abbr></a>&nbsp; <a href="#" class="action_btn" onclick="genPdf('+grndata.grnGvnHeaderId+')"><i class="fa fa-file-pdf-o" style="color:red"></i></a></td>'));
+					    tr.append($('<td style="text-align: right; white-space: nowrap;" ><a href="#" class="action_btn" onclick="getGrnDetail('+grndata.grnGvnHeaderId+')"><abbr title="Detail"><i class="fa fa-list"></i></abbr></a>&nbsp; <a href="#" class="action_btn" onclick="genPdf('+grndata.grnGvnHeaderId+')"><i class="fa fa-file-pdf-o" style="color:red"></i></a></td>'));
 							}
 							//tr.append($('<td ><a href="#" class="action_btn" onclick="genPdf('+grndata.grnGvnHeaderId+')"><abbr title="Pdf"><i class="far fa-file-pdf"></i></abbr></a></td>'));
 

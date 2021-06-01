@@ -852,6 +852,9 @@ background-position: right .7em top 50%, 0 0;}
 .cat_input{float: left; margin: 0 10px 0 0; width:54%;}
 .cat_btn{float: left; width:20%;}
 
+.right_side{text-align: right; position: relative;}
+.search_icn{float: right !important;}
+
 /*--css-divices--*/
 @media screen and (max-width:1366px){
 .wrapperIn{ width:100%;}
@@ -961,6 +964,8 @@ background-position: right .7em top 50%, 0 0;}
 .mob_marg{margin:0 0 15px 0; } 
 .floatright{float: right;}
 .category_right{float: left;}
+
+.search_icn{float: left !important;}
 
 }
 
