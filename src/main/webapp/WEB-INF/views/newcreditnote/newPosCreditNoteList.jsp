@@ -172,26 +172,24 @@ table, th, td {
 
 				<!--rightSidebar-->
 				<div class="sidebarright">
-
-					<div class="colOuter">
-						<div class="col-md-8">
-							<h2 class="pageTitle"><i class="fa fa-credit-card" aria-hidden="true"></i> Credit Note List</h2>
-						</div>
-
-						<div class="col-md-4" style="text-align: right;">
-							<a href="${pageContext.request.contextPath}/insertCreditNote"><input
-								type="button" value="Add Credit Note" class="buttonsaveorder">
-							</a> <br> <br>
-						</div>
-
+				
+					<div class="order-left">
+						<h2 class="pageTitle"><i class="fa fa-credit-card" aria-hidden="true"></i> Credit Note List </h2>
+					</div>
+					<div class="order-right button_left_mob">
+						<a href="${pageContext.request.contextPath}/insertCreditNote"><input
+								type="button" value="Add Credit Note" class="btn additem_btn"  style="margin:0;" >
+							</a>
+						</a>
 					</div>
 
+					
 
 					<div class="colOuter">
 						<br>
 						<div class="col-md-1">
 							<div class="col1title">
-								<b>Customer</b>
+								Customer
 							</div>
 						</div>
 						<div class="col-md-3">
@@ -216,7 +214,7 @@ table, th, td {
 
 						<div class="col-md-1">
 							<div class="col1title">
-								<b>From Date</b>
+								From Date
 							</div>
 						</div>
 						<div class="col-md-2">
@@ -227,7 +225,7 @@ table, th, td {
 
 						<div class="col-md-1">
 							<div class="col1title">
-								<b>To Date</b>
+								To Date
 							</div>
 						</div>
 						<div class="col-md-2">
@@ -236,12 +234,9 @@ table, th, td {
 								value="${todaysDate}">
 						</div>
 
-
-
-
-						<div class="col-md-2">
-							<input name="" class="buttonsaveorder" value="Search"
-								type="button" onclick="getBillDetails()">
+						<div class="col-md-1 btn_marg_top" >
+							<input name="" class="btn additem_btn" value="Search"
+								type="button" onclick="getBillDetails()" style="margin:0;">
 						</div>
 					</div>
 
@@ -253,34 +248,30 @@ table, th, td {
 
 
 						<div class="clearfix"></div>
-
-
-						<div id="table-scroll" class="table-scroll">
-							<div class="table-responsive">
-								<table id="table_grid" class="main-table">
-									<thead>
-										<tr class="bgpink">
-											<th class="col-md-1" style="text-align: center;">Sr No</th>
-											<th class="col-md-1" style="text-align: center;">Crn
-												Invoice</th>
-											<th class="col-md-1" style="text-align: center;">Bill
-												Invoice</th>
-											<th class="col-md-1" style="text-align: center;">Date</th>
-											<th class="col-md-1" style="text-align: center;">Customer</th>
-											<th class="col-md-1" style="text-align: center;">Grand
-												Total</th>
-											<th class="col-md-1" style="text-align: center;">User</th>
-											<th class="col-md-1" style="text-align: center;">Action</th>
-
-										</tr>
-									</thead>
-									<tbody>
-
-									</tbody>
-
-								</table>
-							</div>
+						
+						<div class="tableFixHead">
+							<table id="table_grid">         
+							<thead style="background-color: #f3b5db;">
+								<tr class="bgpink">
+									<th style="text-align: center;">Sr No</th>
+									<th style="text-align: center;">Crn Invoice</th>
+									<th style="text-align: center;">Bill Invoice</th>
+									<th style="text-align: center;">Date</th>
+									<th style="text-align: center;">Customer</th>
+									<th style="text-align: center;">Grand Total</th>
+									<th style="text-align: center;">User</th>
+									<th style="text-align: center;">Action</th>
+								</tr>
+							</thead>
+							
+							<tbody>
+							
+							</tbody>
+							</table>  
 						</div>
+
+
+						
 
 
 						<div class="col-md-2">
@@ -302,10 +293,10 @@ table, th, td {
 	<!--wrapper-end-->
 	<div>
 		<div id="slide" class="modal">
-		<div class="modal-content" style="width: 75%;">
-			<span class="close" onclick="closeListPopUp()" style="opacity: 2; margin-top: 11px;">&times;</span>
+		<div class="modal-content seventyfive" >
+			<span class="close" onclick="closeListPopUp()" >&times;</span>
 
-				<div class="col-md-8" style="margin-top: 10px; ">
+				<div class="col-md-8">
 					<span class="pageTitle"><i class="fa fa-credit-card" aria-hidden="true"></i> Edit Credit Note</span>
 				</div>
 			
@@ -313,31 +304,35 @@ table, th, td {
 			<form name="frm_search" id="frm_search"
 				action="${pageContext.request.contextPath}/editCreditNote"
 				method="post">
-							<table class="responsive-table" id="table_grid1">
-								<thead>
-									<tr>
-										<th style="text-align: center;">Sr. No</th>
-										<th style="text-align: center;">Item Name</th>
-										<th style="text-align: center;">Rate</th>
-										<th style="text-align: center;">Prev Qty</th>
-										<th style="text-align: center;">Disc</th>
-										<th style="text-align: center;">Qty</th>
-										<th style="text-align: center;">Bill Total</th>
-										<th style="text-align: center;">Ret %</th>
-										<th style="text-align: center;">Taxable Amt</th>
-										<th style="text-align: center;">Tax Amt</th>
-										<th style="text-align: center;">Grand Total</th>
-
-									</tr>
-								</thead>
-								<tbody>
-
-								</tbody>
-							</table>
-						
-					
 				
-				<br>
+				<div class="tableFixHead">
+	<table id="table_grid1">         
+	<thead style="background-color: #f3b5db;">
+		<tr class="bgpink">
+			<th style="text-align: center;">Sr. No</th>
+			<th style="text-align: center;">Item Name</th>
+			<th style="text-align: center;">Rate</th>
+			<th style="text-align: center;">Prev Qty</th>
+			<th style="text-align: center;">Disc</th>
+			<th style="text-align: center;">Qty</th>
+			<th style="text-align: center;">Bill Total</th>
+			<th style="text-align: center;">Ret %</th>
+			<th style="text-align: center;">Taxable Amt</th>
+			<th style="text-align: center;">Tax Amt</th>
+			<th style="text-align: center;">Grand Total</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+	
+	</tbody>
+	</table>  
+</div>
+
+
+							
+				
+				
 				<div class="row" style="text-align: center;">
 					<button class="btn additem_btn" onclick="getData()" id="editSave">Save</button>
 				</div>
