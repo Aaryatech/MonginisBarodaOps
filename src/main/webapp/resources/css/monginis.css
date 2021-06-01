@@ -837,7 +837,7 @@ background-position: right .7em top 50%, 0 0;}
 .one_opt{float: left; width:30%;}
 
 .single_frm{display: inline-block; width:100%; margin:0 0 15px 0;}
-.form_one{float: left; width:30%;}
+.form_one{float: left; width:29% /* 30% */;}
 .view_lft{float: left; width:30%; color: #333; padding: 7px 10px 0 0; text-align: right;}
 .view_frm{float: left; width:70%;}
 .button_one{float: left; width:20%;}
@@ -889,6 +889,7 @@ background-position: right .7em top 50%, 0 0;}
 @media screen and (max-width:1280px){
 .remainamount .priceLeft{ font-size:13px;}
 .listarea{ padding:0px 10%;}
+.form_one{width: 28%;}
 }
 
 @media screen and (max-width:1024px){
@@ -928,6 +929,7 @@ background-position: right .7em top 50%, 0 0;}
 .radio_owen.one{width:60%;}
 .radio_owen.two{width:40%;}
 .seventyfive{width:90%;}
+.form_one {width: 27%;}
 }
 
 @media screen and (max-width:800px){
@@ -1009,6 +1011,10 @@ background-position: right .7em top 50%, 0 0;}
 .two_button{display: inline-block; width:100%; margin:15px 0 0 0;}
 .order-right.button_left_mob{text-align: left;}
 .btn_marg_top{margin: 15px 0 0 0;}
+
+.form_one{float: none; width:100%; margin: 15px 0 0 0; display: inline-block;}
+.btn_cen{text-align: center; margin: 15px 0 0 0; width: 100%;}
+.button_stock.inline,.month_txt.inline{float: none; display: inline-block;}
 }
 
 @media screen and (max-width:700px){

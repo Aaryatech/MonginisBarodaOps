@@ -96,77 +96,79 @@ table, th, td {
 			<div class="sidebarright">
 			
 				<div class="row_one">
-					<div class="history_l"><h2 class="pageTitle"><i class="fa fa-file-pdf-o "></i> Other Item Stock Details </h2></div>
-					<div class="history_r"></div>
+					<div class="order-left"><h2 class="pageTitle"><i class="fa fa-file-pdf-o "></i> Other Item Stock Details </h2></div>
+					<div class="order-right button_left_mob">
+						<a href="${pageContext.request.contextPath}/showOtherBill"><input
+								type="button" value="Other Purchase Bills" class="btn additem_btn" style="margin: 0;">
+							</a>
+					</div>
 					<div class="clr"></div>
 				</div>
 				
+
 				<div class="single_frm">
 					<div class="form_one">
 						<div class="view_lft">View Option</div>
 						<div class="view_frm">
-							<select name="selectStock" class="form-control chosen"
-							tabindex="6" id="selectStock" onchange="showDiv(this)" required>
-
+							<select name="selectStock" class="form-control chosen" tabindex="6" id="selectStock" onchange="showDiv(this)" required>
 							<option value="-1">Select Option</option>
 							<option value="1" id="currentStock">Get Current Stock</option>
-
 							<option value="3" id="dateStock">Stock Between Dates</option>
 
 						</select>
-						</div>
+					    </div>
 					</div>
 					
-					<div class="button_one">
+					<div class="form_one btn_cen">
+						
 						<div id="crnt_stk_btn">
-					<div class="button_stock">
+					<div class="button_stock inline">
 						<input name="search_stock" class="btn additem_btn" value="Search"
 							type="button" onclick="searchStock()" style="margin:0;">
 					</div>
 
-					<div class="button_stock">
+					<div class="button_stock inline">
 						<button type="button" class="btn additem_btn" id='pdf' style="margin:0;"
 							onclick="genPdf()" disabled >PDF</button>
 					</div>
-					 <div class="month_txt">
+					 <div class="month_txt inline">
 						<b>Month: ${monthName}/${year}</b>
 			     	</div>
 					</div>
+					
 					</div>
 					
-					
-					<div class="colOuter_bx" style="display: none" id=select_date>
-						
-					<div class="form_one date">
-						<div class="view_lft">From Date</div>
-						<div class="view_frm">
-							<input id="fromdatepicker" class="texboxitemcode texboxcal"
+					<div style="display: none" id="select_date">
+						<div class="form_one">
+							<div class="view_lft">From Date</div>
+							<div class="view_frm">
+								<input id="fromdatepicker" class="texboxitemcode texboxcal"
 							autocomplete="off" placeholder="From Date" name="from_datepicker"
 							type="text">
+							</div>
 						</div>
-					</div>
-					
-					<div class="form_one date">
-						<div class="view_lft">To Date</div>
-						<div class="view_frm">
-							<input id="todatepicker" class="texboxitemcode texboxcal"
+						<div class="form_one">
+							<div class="view_lft">To Date</div>
+							<div class="view_frm">
+								<input id="todatepicker" class="texboxitemcode texboxcal"
 							autocomplete="off" placeholder="To Date" name="to_datepicker"
 							type="text">
+							</div>
 						</div>
-					</div>	
-					
-					<div class="button_stock">
+						
+						<div class="button_stock btn_cen">
 						<input name="search_stock" class="btn additem_btn" value="Search"
-							type="button" onclick="searchStock()" style="margin:0 10px; float: left;">
+							type="button" onclick="searchStock()" style="margin:0 10px; ">
 							
 							<button type="button" class="btn additem_btn" id='date_pdf'
-							onclick="genPdf()" disabled style="margin:0; float: left;">PDF</button>
-					</div>
-						
-					
+							onclick="genPdf()" disabled style="margin:0; ">PDF</button>
 					</div>
 					
-				</div>
+					</div>
+					
+				</div>	
+
+				
 		
 				
 				
@@ -233,7 +235,7 @@ table, th, td {
 									value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
 								</div>
 								<div class="button_right" id="monthEnd" style="display: none;">
-									<input name="" class="buttonsaveorder" value="Month End" type="submit">
+									<input name="" class="btn save_button" value="Month End" type="submit">
 								</div>
 								<div class="clr"></div>
 							</div>
@@ -449,34 +451,34 @@ form.onsubmit = function () {
 														- (parseFloat(item.sellQty));//+parseFloat(item.damagedStock)
 												tr
 														.append($(
-																'<td class="col-md-1"></td>')
+																'<td style="text-align:left;"></td>')
 																.html(
 																		item.itemId
 																				+ '<input type="hidden" id="currStk'+item.id+'" value='+curStock+'  />'));
 												tr
 														.append($(
-																'<td class="col-md-1"></td>')
+																'<td style="text-align:left;"></td>')
 																.html(
 																		item.itemName));
 												tr
 														.append($(
-																'<td class="col-md-1"></td>')
+																'<td style="text-align:right;"></td>')
 																.html(
 																		item.openingStock));
 												tr
 														.append($(
-																'<td class="col-md-1"></td>')
+																'<td style="text-align:right;"></td>')
 																.html(
 																		item.purchaseQty));
 												tr
 														.append($(
-																'<td class="col-md-1"></td>')
+																'<td style="text-align:right;"></td>')
 																.html(
 																		item.sellQty));
 
 												if (isMonthClose == 0) {
 													tr
-															.append($('<td class="col-md-1"> <input type="text" readonly min=0 style="width:80px;text-align:center;"  onchange= updateStockDiff('
+															.append($('<td style="text-align:center;"> <input type="text" readonly min=0 style="width:80px;text-align:center;"  onchange= updateStockDiff('
 																	+ item.id
 																	+ ','
 																	+ curStock
@@ -490,7 +492,7 @@ form.onsubmit = function () {
 												} else {
 
 													tr
-															.append($('<td class="col-md-1"> <input type=text min=0 style="width:80px;text-align:center;"   onchange= updateStockDiff('
+															.append($('<td style="text-align:center;"> <input type=text min=0 style="width:80px;text-align:center;"   onchange= updateStockDiff('
 																	+ item.id
 																	+ ','
 																	+ curStock
@@ -506,7 +508,7 @@ form.onsubmit = function () {
 
 												tr
 														.append($(
-																'<td class="col-md-1" id="stockDiff'+item.id+'"></td>')
+																'<td style="text-align:right;" id="stockDiff'+item.id+'"></td>')
 																.html(curStock));
 
 												$('#table_grid tbody').append(
