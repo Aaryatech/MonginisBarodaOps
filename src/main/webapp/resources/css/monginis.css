@@ -878,6 +878,7 @@ background-position: right .7em top 50%, 0 0;}
 .pop_left{float: left; width:50%;}
 .popup_date{float: right; text-align: right; font-weight: bold;}
 .left_button_mob{text-align: right;}
+.align_left{text-align: left;}
 
 /*--css-divices--*/
 @media screen and (max-width:1366px){
@@ -1019,6 +1020,7 @@ background-position: right .7em top 50%, 0 0;}
 
 .tab_marg_top{margin:15px 0 0 0;}
 .left_button_mob{text-align: left;}
+.align_left{text-align: center;}
 }
 
 @media screen and (max-width:700px){

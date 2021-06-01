@@ -245,15 +245,15 @@ body {
 				<div class="sidebarright">
 			
 					<div class="order-left">
-						<h2 class="pageTitle">Other Purchase Bill</h2>
+						<h2 class="pageTitle">Other Purchase Bill </h2>
 
 					</div>
-					<br>
+					
 					<div class="order-right" align="right">
 					 
-						<a href="${pageContext.request.contextPath}/addSupplier"><input type="button" value="Add Supplier" class="btn additem_btn">
+						<a href="${pageContext.request.contextPath}/addSupplier"><input type="button" value="Add Supplier" class="btn additem_btn" style="margin:0;">
 										</a>
-						<a href="${pageContext.request.contextPath}/viewOtherItemBill"><input type="button" value="List Of Other Purchase Bill" class="btn additem_btn">
+						<a href="${pageContext.request.contextPath}/viewOtherItemBill"><input type="button" value="List Of Other Purchase Bill" class="btn additem_btn" style="margin:0;">
 										</a>
 					</div>
 
@@ -270,24 +270,17 @@ body {
 							<!--tab1-->
 							<li data-content="tab1" class="selected" onshow="onloadTab(1)">
 								<div class="row">
-									<div class="col-md-9">
+									<div class="col-md-12"><!-- col-md-12 -->
 										<div class="control-label">
 										
 										<div class="row">
-											<!-- <div class="col-md-4">
-												<h4 class="col-md-7">
-													<b>Invoice No:-</b>
-												</h4>
-												<input type="text" class="form-control"
-												placeholder="Enter Invoice No" name="invoiceNo" id="invoiceNo"
-												 required><br>
-											</div> -->
+											
 
 											 
 
-											<div class="col-md-4">
+											<div class="col-md-3">
 												<h4 ><!--style="margin-top: 5px" class="col-md-8"  -->
-													<b>Supplier:-</b>
+													Supplier:-
 												</h4>
 		
 												<select class="form-control" data-live-search="true" title="Please Select Item"
@@ -300,9 +293,9 @@ body {
 
 																		</select> 
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-3">
 												<h4 ><!--style="margin-top: 5px" class="col-md-8"  -->
-													<b>From Date:-</b>
+													From Date:-
 												</h4>
 													<div><!--  class="col-md-8" -->
 														<input id="datepicker1" class="texboxitemcode texboxcal" value="${fromDate}"  autocomplete="off"
@@ -310,75 +303,34 @@ body {
 													</div>
  											</div>
  											
- 											<div class="col-md-4">
-												<h4 ><!--style="margin-top: 5px" class="col-md-8"  -->
-													<b>To Date:-</b>
+ 											<div class="col-md-3">
+												<h4 >
+													To Date:-
 												</h4>
-													<div><!-- class="col-md-8" -->
+													<div>
 														<input id="datepicker2"  class="texboxitemcode texboxcal" value="${toDate}" autocomplete="off"
 															name="toDate" type="text" required>
 													</div>
+ 											</div>
+ 											
+ 											<div class="col-md-3 align_left">
+ 												<h4 >
+													&nbsp;
+												</h4>
+ 												
+									<input type="submit" class="btn additem_btn" id="insert"  onclick="showBill()" style="margin: 0;"
+										 value="Submit" >  
+								 
+								 
  											</div>
  											
 								<div class="clearfix"></div>
 									   
 
 								</div>
-								<center>
-									<input type="submit" class="btn additem_btn" id="insert"  onclick="showBill()"
-										 value="Submit" >  
-								 
-								</center>  
+								
 					
-<%-- 											<div>
-												<div class="shInnerwidth">
-													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" class="table">
-														<tr>
-															<td align="center" valign="middle" style="padding: 0px;">
-																<table width="100%" border="0" cellspacing="0"
-																	cellpadding="0">
-																	<tr class="bgpink">
-																		<td>Item Code</td>
-																		<td>Item Name</td>
-																		<td>Qty</td>
-																		<td>Rate</td>
-																		<td>Discount</td>
-																	</tr>
-																	<tr>
-																		<td><input type="text" class="form-control"
-																			id="barcode1" name="barcode1"
-																			placeholder="Enter Barcode" onchange="selectItem(1)"
-																			onkeypress="onBarcode(event,1)"></td>
-																		<td><select class="form-control" data-live-search="true" title="Please Select Item"
-																			name="itemName1" id="itemName1"
-																			data-rule-required="true">
-																			<option value="">Select Item</option> 
-																				<c:forEach items="${itemsList}" var="itemsList"> 
-																				<option value="${itemsList.id}">${itemsList.itemName}</option> 
-																				</c:forEach>
 
-																		</select> <input name="item_name1" id="item_name1"
-																			type="hidden" value="" /></td>
-																		<td><input type="number" min="0" max="500"
-																			class="form-control" name="qty" id="qty" value="1"
-																			onkeypress="onQty(event,1)"
-																			oninput="validity.valid||(value='');"></td>
-																		<td id="rateTdVal1">00</td>
-																		<td><input type="text" min="0" max="500"
-																			class="form-control" name="discPer" id="discPer" value="0"
-																			onkeypress="onQty(event,1)"
-																			oninput="validity.valid||(value='');"></td>
-																		 <td ><input type="button" class="btn additem_btn" value="Add Item" onclick="addItem();"
-												id="b1"/> </td>
-																	</tr>
-																</table>
-															</td>
-														</tr>
-
-													</table>
-												</div>
-											</div> --%>
 										</div>
 									</div>
 
@@ -398,42 +350,27 @@ body {
 
 								<div class="clearfix"></div> <br /> <!-- Form End -->
 
+							<div class="tableFixHead">
+	<table id="table_grid1">         
+	<thead style="background-color: #f3b5db;">
+		<tr class="bgpink">
+			<th style="text-align: center;">Sr no.</th>
+			<th style="text-align: center;">Invoice No</th> 
+			<th style="text-align: center;">Invoice Date</th>
+			<th style="text-align: center;">Supplier</th>
+			<th style="text-align: center;">Franchise</th>
+			<th style="text-align: center;">Grand Total</th>
+			<th style="text-align: center;">Action</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+	
+	</tbody>
+	</table>  
+</div>
 
-
-								<div id="table-scroll" ><!-- class="table-scroll" -->
-									<!-- <div id="faux-table" class="faux-table" aria="hidden"></div> -->
-									<div class="table-wrap table-wrap-custbill">
-										<table id="table_grid1" class="responsive-table" style="margin:0;"><!-- class="main-table small-td" -->
-											<thead>
-												<tr class="bgpink">
-													<th class="col-sm-1">Sr no.</th>
-													<th class="col-md-1">Invoice No</th> 
-													<th class="col-md-2">Invoice Date</th>
-													<th class="col-md-1">Supplier</th>
-													<th class="col-md-1">Franchise</th>
-													<th class="col-md-1">Grand Total</th>
-													<th class="col-md-1">Action</th>
-												</tr>
-											</thead>
-											<tbody>
-											
-											<%-- <c:forEach items="${otherBillHeaderlist}" var="itm" varStatus="count">
-											
-											<tr>
-											
-											<td style="text-align: center">${count.index+1}</td>
-											<td style="text-align: center">${itm.invoiceNo}</td>
-											<td style="text-align: center">${itm.billDate}</td>
-											<td style="text-align: center">${itm.suppName}</td>
-											<td style="text-align: center">${itm.frName}</td>
-											<td style="text-align: center">${itm.grandTotal}</td>
-											</tr>
-											</c:forEach> --%>
-											</tbody>
-
-										</table>
-									</div>
-								</div>
+								
 
 
 
@@ -545,14 +482,14 @@ body {
 
 											var tr = $('<tr></tr>');
 											 
-										  	tr.append($('<td></td>').html(key+1));
+										  	tr.append($('<td style="text-align:center;"></td>').html(key+1));
 										  	/* tr.append($('<td></td>').html(itemList.billNo)); */
-										  	tr.append($('<td></td>').html(itemList.invoiceNo));
-										  	tr.append($('<td></td>').html(itemList.billDate));
-										  	tr.append($('<td></td>').html(itemList.frName));
-										  	tr.append($('<td></td>').html(itemList.suppName));
-										  	tr.append($('<td></td>').html(itemList.grandTotal));
-										  	tr.append($('<td></td>').html('<abbr title="Edit"><i id="edit'+key+'" onclick="edit('+itemList.billNo+')" class="fa fa-edit"></i> </abbr><span style="visibility: hidden;" class="glyphicon glyphicon-ok" onclick="submit('+key+');" id="ok'+key+'"></span><abbr title="Delete"><i onclick="del('+itemList.billNo+')" class="fa fa-trash"></i></abbr>'));
+										  	tr.append($('<td style="text-align:left;"></td>').html(itemList.invoiceNo));
+										  	tr.append($('<td style="text-align:right;"></td>').html(itemList.billDate));
+										  	tr.append($('<td style="text-align:right;"></td>').html(itemList.frName));
+										  	tr.append($('<td style="text-align:left;"></td>').html(itemList.suppName));
+										  	tr.append($('<td style="text-align:right;"></td>').html(itemList.grandTotal));
+										  	tr.append($('<td style="text-align:center;"></td>').html('<abbr title="Edit"><i id="edit'+key+'" onclick="edit('+itemList.billNo+')" class="fa fa-edit"></i> </abbr><span style="visibility: hidden;" class="glyphicon glyphicon-ok" onclick="submit('+key+');" id="ok'+key+'"></span><abbr title="Delete"><i onclick="del('+itemList.billNo+')" class="fa fa-trash"></i></abbr>'));
 										    $('#table_grid1 tbody').append(tr);
 
 											 
