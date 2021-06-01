@@ -61,10 +61,10 @@ table, th, td {
 						<div class="col-md-5">
 						<c:choose>
 						<c:when test="${isEdit==1}">
-						<h2 class="pageTitle"><i class="fa fa-file-pdf-o"></i> Edit Other Item</h2>
+						<h2 class="pageTitle"><i class="fa fa-file-pdf-o"></i> Edit Other Item </h2>
 						</c:when>
 						<c:otherwise>
-						<h2 class="pageTitle"><i class="fa fa-file-pdf-o"></i> Add Other Item</h2>
+						<h2 class="pageTitle"><i class="fa fa-file-pdf-o"></i> Add Other Item </h2>
 						</c:otherwise>
 						</c:choose>
 							
@@ -72,7 +72,7 @@ table, th, td {
 					<div class="col-md-7">
 							<input id="itemId" class="form-control"	  name="itemId" value="${itemSup.id}" type="hidden" >
 							<input id="id" class="form-control"	  name="id"  value="${item.id}" type="hidden" >	
-								<div class="" align="right"> 
+								<div class="left_button_mob" align="right"> 
 						<a href="${pageContext.request.contextPath}/showOtherBill"><input type="button" value="Other Purchase Bill" 
 						class="btn additem_btn" style="margin:0;">
 							</a>
@@ -225,14 +225,7 @@ table, th, td {
 					
 					
 					<div class="colOuter" style="display: none;">
-					<%-- 	<div class="col-md-2">
-							<div class="col1title" align="left">Tax Description*: </div>
-						</div>
-						<div class="col-md-3">
-							<input id="taxDesc" class="form-control"
-								placeholder="Tax Description" name="taxDesc" type="text" value="${otherItem.taxDesc}" required>
-
-						</div> --%>
+					
 							<div class="col-md-2">
 							<div class="col1title" align="left">SGST Per*: </div>
 						</div>
@@ -258,9 +251,20 @@ table, th, td {
 					
 					<div class="colOuter">
 					
+					<div class="col-md-2" >
+							<div class="col1title" align="left">Cess Per*: </div>
+						</div>
+						<div class="col-md-3" >
+							<input id="cessPer" class="form-control"
+								placeholder="cess Per" autocomplete="off"  name="cessPer" type="text"  value="${item.itemTax3}"  required>
+
+						</div>
 					
 					
-					<div class="col-md-2">
+						<div class="col-md-1">
+							 
+						</div>
+						<div class="col-md-2">
 							<div class="col1title" align="left">Is Active?* </div>
 						</div>
 						<div class="col-md-3">
@@ -281,9 +285,6 @@ table, th, td {
 							</c:otherwise>	
 							</c:choose>				 
 						</select>
-						</div>
-						<div class="col-md-1">
-							 
 						</div>
 					
 						<div class="col-md-2" style="display: none;">
@@ -308,26 +309,26 @@ table, th, td {
 						</div>
 				 
 					</div>
-					<div id="table-scroll">  <!-- class="table-scroll"> --> 
-					<div id="faux-table" class="faux-table" aria="hidden" style="display: none;"></div>
-					<div > <!-- class="table-wrap" -->
-						 <table id="table_grid" class="responsive-table">
-
-							<thead>
-								<tr class="bgpink">
-									<th class="col-sm-1" style="text-align: center;">Sr No</th>
-									<th class="col-md-1" style="text-align: center;">Item Code</th> 
-									<th class="col-md-1" style="text-align: center;">Name</th>
-									<th class="col-md-1" style="text-align: center;">Purchase Rate</th>
-									<th class="col-md-1" style="text-align: center;">Sale Rate</th>
-									<th class="col-md-1" style="text-align: center;">SGST Per</th>
-									<th class="col-md-1" style="text-align: center;">CGST Per</th>
-									<th class="col-md-1" style="text-align: center;">IGST Per</th>
-									<th class="col-md-1" style="text-align: center;">Is Active</th>
-									<th class="col-md-1" style="text-align: center;">Action</th>
-								</tr>
-							</thead>
-							<tbody>
+					
+					
+					<div class="tableFixHead">
+	<table id="table_grid">         
+	<thead style="background-color: #f3b5db;">
+		<tr class="bgpink">
+			<th class="col-sm-1" style="text-align: center;">Sr No</th>
+			<th class="col-md-1" style="text-align: center;">Item Code</th> 
+			<th class="col-md-1" style="text-align: center;">Name</th>
+			<th class="col-md-1" style="text-align: center;">Purchase Rate</th>
+			<th class="col-md-1" style="text-align: center;">Sale Rate</th>
+			<th class="col-md-1" style="text-align: center;">SGST Per</th>
+			<th class="col-md-1" style="text-align: center;">CGST Per</th>
+			<th class="col-md-1" style="text-align: center;">IGST Per</th>
+			<th class="col-md-1" style="text-align: center;">Is Active</th>
+			<th class="col-md-1" style="text-align: center;">Action</th>
+		</tr>
+	</thead>
+	
+	<tbody>
 
 								<c:forEach items="${itemList}" var="itemList"
 									varStatus="count">
@@ -341,33 +342,25 @@ table, th, td {
 									</c:choose>
 									</c:if>
 									<tr style="${color}">
-										 <td class="col-sm-1" style="text-align: right;"><c:out value="${count.index+1}" /></td>
-										<td class="col-md-1"><c:out
-												value="${itemList.itemId}" /></td>
-										<td class="col-md-2" style="text-align: left;"><c:out
-												value="${itemList.itemName}" /></td>
-									
-										<td class="col-md-1" style="text-align: right;"><c:out
-												value="${itemList.itemRate1}" /></td>
-										<td class="col-md-1" style="text-align: right;"><c:out
-												value="${itemList.itemMrp1}" /></td>
-										<td class="col-md-1" style="text-align: right;"><c:out
-												value="${itemList.itemTax1}" /></td>
-											<td class="col-md-1" style="text-align: right;"><c:out
-												value="${itemList.itemTax2}" /></td>
-												<td class="col-md-1" style="text-align: right;"><c:out
-												value="${itemList.itemTax3}" /></td>
-										<td class="col-md-1" style="text-align: center;">
-										<c:choose>
+										 <td style="text-align: right;"><c:out value="${count.index+1}" /></td>
+										<td style="text-align: left;"><c:out value="${itemList.itemId}" /></td>
+										<td style="text-align: left;"><c:out value="${itemList.itemName}" /></td>
+										<td style="text-align: right;"><c:out value="${itemList.itemRate1}" /></td>
+										<td style="text-align: right;"><c:out value="${itemList.itemMrp1}" /></td>
+										<td style="text-align: right;"><c:out value="${itemList.itemTax1}" /></td>
+											<td style="text-align: right;"><c:out value="${itemList.itemTax2}" /></td>
+												<td style="text-align: right;"><c:out value="${itemList.itemTax3}" /></td>
+										<td style="text-align: right;">
+											<c:choose>
 													<c:when test="${itemList.itemIsUsed==1}">
  														Yes						
  												    </c:when>
 												    <c:otherwise>
 												         No
 												    </c:otherwise>
-										</c:choose>
-												</td>
-										<td class="col-md-1" style="text-align: center;"><div >
+											</c:choose>
+										</td>
+										<td style="text-align: center;"><div >
 					<a href="${pageContext.request.contextPath}/updateOtherItem/${itemList.id}"   >
 						<abbr title='Edit'><i  class='fa fa-edit'></i></abbr></a>
 												&nbsp;&nbsp;
@@ -377,10 +370,12 @@ table, th, td {
 											</div></td>
 									</tr>
 								</c:forEach>
-						</table> 
+							</tbody>
+	</table>  
+</div>
 
-					</div>
-				</div>
+					
+					
 
 				</form>
 
@@ -388,12 +383,7 @@ table, th, td {
 			</div>
 			<!--tabNavigation-->
 			<!--<div class="order-btn"><a href="#" class="saveOrder">SAVE ORDER</a></div>-->
-			<%-- <div class="order-btn textcenter">
-						<a
-							href="${pageContext.request.contextPath}/showBillDetailProcess/${billNo}"
-							class="buttonsaveorder">VIEW DETAILS</a>
-						<!--<input name="" class="buttonsaveorder" value="EXPORT TO EXCEL" type="button">-->
-					</div> --%>
+			
 
 
 		</div>
