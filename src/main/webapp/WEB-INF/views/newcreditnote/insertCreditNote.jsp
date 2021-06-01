@@ -208,31 +208,17 @@ table, th, td {
 
 				<!--rightSidebar-->
 				<br>
-				<div class="sidebarright">
-					<div class="order-left" style="width: 100%">
-
-
-
-						<div class="colOuter">
-							<div class="col-md-8">
-								<h2 class="pageTitle"><i class="fa fa-credit-card" aria-hidden="true"></i> Sell Credit Note</h2>
-							</div>
-
-							<div class="col-md-4" style="text-align: right;">
-								<a
-									href="${pageContext.request.contextPath}/creditNoteHeaderList"><input
-									type="button" value="Credit Note List" class="buttonsaveorder">
-								</a> <br>
-								<br>
-							</div>
-
-						</div>
-
-
-						<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
+				<div class="sidebarright padd_zero">
+				
+					<div class="order-left">
+						<h2 class="pageTitle"><i class="fa fa-credit-card" aria-hidden="true"></i> Sell Credit Note </h2>
 					</div>
-
-					<br>
+					<div class="order-right button_left_mob">
+						<a href="${pageContext.request.contextPath}/creditNoteHeaderList"><input
+							type="button" value="Credit Note List" class="btn additem_btn" style="margin:0;" >
+						</a>
+					</div>
+					
 
 					<form name="frm_search" id="frm_search"
 						action="${pageContext.request.contextPath}/addCreditNote"
@@ -242,7 +228,7 @@ table, th, td {
 						<div class="colOuter">
 							<div class="col-md-1">
 								<div class="col1title">
-									<b>Customer</b>
+									Customer
 								</div>
 							</div>
 							<div class="col-md-2">
@@ -263,10 +249,10 @@ table, th, td {
 
 								</select>
 							</div>
-							<div col-md-3>
+							
 								<div class="col-md-1">
-									<div class="col1title" style="text-align: right;">
-										<b>Bills</b>
+									<div class="col1title" >
+										Bills
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -280,41 +266,41 @@ table, th, td {
 									</select>
 								</div>
 
-							</div>
+							
 
 
-							<div col-md-3>
-								<div class="col-md-1" style="text-align: right;">
+							
+								<div class="col-md-1" >
 									<div class="col1title">
-										<b>Stockable</b>
+										Stockable
 									</div>
 								</div>
 								<div class="col-md-2"
 									style="text-align: left; margin-top: 7px;">
 									<input type="radio" name="stockable" id="stockable" value="0"
-										checked>NO &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <input
-										type="radio" name="stockable" id="stockable" value="1">YES
+										checked>&nbsp; No &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <input
+										type="radio" name="stockable" id="stockable" value="1">&nbsp; Yes
 								</div>
-							</div>
+							
 
-							<div col-md-3>
+							
 								<div class="col-md-1">
-									<div class="col1title" style="text-align: left;">
-										<b>Return %</b>
+									<div class="col1title" >
+										Return %
 									</div>
 								</div>
 								<div class="col-md-1" style="text-align: left; margin-top: 7px;">
 									<input type="number" id="returnPer" name="returnPer" value="0"
-										min="0" max="100" style="width: 50px;"
+										min="0" max="100" style="width: 50px; padding:0 5px;"
 										oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
 
 
 								</div>
-							</div>
+							
 
 
 							<div class="col-md-1">
-								<input name="" class="buttonsaveorder" value="Search"
+								<input name="" class="btn additem_btn" value="Search"  style="margin:0;"
 									type="button" onclick="getBillDetails()">
 							</div>
 						</div>
@@ -327,48 +313,37 @@ table, th, td {
 						<div class="cd-tabs">
 
 							<div class="clearfix"></div>
-
-
-							<div id="table-scroll" class="table-scroll">
-								<div id="faux-table" class="faux-table" aria="hidden"></div>
-								<div class="table-wrap"
-									style="max-height: none; min-height: none;">
-									<table id="table_grid" class="main-table">
-										<thead>
-											<tr class="bgpink">
-												<th class="col-md-1" style="text-align: center; display: none;">Check</th>
-												<th class="col-md-2" style="text-align: center;">Item
-													Name</th>
-												<th class="col-sm-1" style="text-align: center;">Rate</th>
-												<th class="col-md-1" style="text-align: center;">Bill
-													Qty</th>
-												<th class="col-md-1" style="text-align: center;">Disc</th>
-												<th class="col-md-1" style="text-align: center;">Qty</th>
-
-												<th class="col-md-1" style="text-align: center;">Bill
-													Total</th>
-												<th class="col-md-1" style="text-align: center;">Ret %</th>
-												<th class="col-md-1" style="text-align: center;">Taxable
-													Amt</th>
-												<th class="col-md-1" style="text-align: center;">Tax Amt</th>
-												<th class="col-md-1" style="text-align: center;">Cess</th>
-												<th class="col-md-1" style="text-align: center;">Grand
-													Total</th>
-
-											</tr>
-										</thead>
-										<tbody>
-										</tbody>
-
-									</table>
-								</div>
+							
+							
+							<div class="tableFixHead">
+								<table id="table_grid">         
+								<thead style="background-color: #f3b5db;">
+									<tr class="bgpink">
+										<th style="text-align: center; display: none;">Check</th>
+										<th style="text-align: center;">Item Name</th>
+										<th style="text-align: center;">Rate</th>
+										<th style="text-align: center;">Bill Qty</th>
+										<th style="text-align: center;">Disc</th>
+										<th style="text-align: center;">Qty</th>
+										<th style="text-align: center;">Bill Total</th>
+										<th style="text-align: center;">Ret %</th>
+										<th style="text-align: center;">Taxable Amt</th>
+										<th style="text-align: center;">Tax Amt</th>
+										<th style="text-align: center;">Cess</th>
+										<th style="text-align: center;">Grand Total</th>
+									</tr>
+								</thead>
+								
+								<tbody>
+								
+								</tbody>
+								</table>
 							</div>
-
 								
 						</div>
-								<div class="col-md-12" style="text-align: center; margin-left: 45%;  margin-top: 2%;">
-									<input name="" class="buttonsaveorder" value="Save"
-										type="submit" id="frmSubmit" style="display: none;">
+								<div class="col-md-12" style="text-align: center;">
+									<input name="" class="btn additem_btn" value="Save"
+										type="submit" id="frmSubmit" style="display: none; text-align: center; margin:0 auto;">
 								</div>
 					</form>
 
