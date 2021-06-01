@@ -32,63 +32,43 @@
 			<!--leftNav-->
 			<!--rightSidebar-->
 			<div class="sidebarright">
-				<div class="order-left">
-					<h2 class="pageTitle">GRN Details</h2>
-
-				</div>
-				<div class="colOuter">
-					<!-- copy div kalpesh -->
-					<div class="calender-title"></div>
-
-
-					<div class="col-md-6">
+				<div class="det_row">
+					<div class="det_l"><h2 class="pageTitle"><i class="fa fa-refresh" aria-hidden="true"></i> GRN Details </h2></div>
+					<div class="det_r">
 						<form action="" id="grnForm" method="get">
-
-							<table border="1">
-								<tr bgcolor="orange">
-									<th width="30%" align="left">GRN Date</th>
-									<th width="40%" align="left">GRN SrNo</th>
-									<th width="30%" align="left">Approved Amt</th>
-								</tr>
-								<tbody>
-									<tr>
-										<td align="center">${grnDate}</td>
-										<td align="center">${grnSrNo}</td>
-										<td align="center">${aprAmt}</td>
-									</tr>
-								</tbody>
-							</table>
+							<div class="grn_one">GRN Date :<span>${grnDate}</span></div>
+							<div class="grn_one">GRN SrNo :<span>${grnSrNo}</span></div>
+							<div class="grn_one">Approved Amt :<span>${aprAmt}</span></div>
 						</form>
 					</div>
+					<div class="clr"></div>
 				</div>
+				
+				
 
 				<!--tabNavigation-->
 				<div class="cd-tabs">
 					<!--tabMenu-->
-
-					<!--tabMenu-->
-					<div id="table-scroll" class="table-scroll">
-						<div id="faux-table" class="faux-table" aria="hidden"></div>
-						<div class="table-wrap">
-							<table id="table_grid" class="main-table">
-								<thead>
-									<tr class="bgpink">
-										<th class="col-md-1">Invoice No</th>
-										<th class="col-md-2">Item Name</th>
-										<th class="col-md-1">Type</th>
-										<th class="col-md-1">Disc.%</th>
-										<th class="col-md-1">Bill Rate</th>
-										<th class="col-md-1">Refund Rate</th>
-										<th class="col-md-1">Qty</th>
-										<th class="col-md-1">Tot Refund Requested</th>
-										<th class="col-md-1">Approved Qty</th>
-										<th class="col-md-1">Approved Tot Refund</th>
-									<!-- 	<th class="col-md-1">Approved Base Rate</th>
-										<th class="col-md-1">Approved Tax Amt</th> -->
-										<th class="col-md-1">Status</th>
-									</tr>
-								</thead>
-								<tbody>
+					
+					<div class="tableFixHead">
+	<table id="table_grid">         
+	<thead style="background-color: #f3b5db;">
+		<tr class="bgpink">
+			<th style="text-align: center;">Invoice No</th>
+			<th style="text-align: center;">Item Name</th>
+			<th style="text-align: center;">Type</th>
+			<th style="text-align: center;">Disc.%</th>
+			<th style="text-align: center;">Bill Rate</th>
+			<th style="text-align: center;">Refund Rate</th>
+			<th style="text-align: center;">Qty</th>
+			<th style="text-align: center;">Tot Refund Requested</th>
+			<th style="text-align: center;">Approved Qty</th>
+			<th style="text-align: center;">Approved Tot Refund</th>
+			<th style="text-align: center;">Status</th>
+		</tr>
+	</thead>
+	
+	<tbody>
 									<c:forEach items="${grnList}" var="grnList" varStatus="count">
 										<c:set var="color" value="white"></c:set>
 										<c:choose>
@@ -100,107 +80,38 @@
 											</c:otherwise>
 										</c:choose>
 										<tr class="${color}">
-											<td class="col-md-1"><c:out value="${grnList.invoiceNo}" /></td>
-											<td class="col-md-1"><c:out value="${grnList.itemName}" /></td>
-													<td class="col-md-1"><c:out value="${grnList.grnType}"></c:out></td>
-													<td class="col-md-1"><c:out value="${grnList.itemMrp}"></c:out></td>
-
-											<%-- <c:choose>
-												<c:when test="${grnList.grnType==0}">
-													<td class="col-md-1"><c:out value="GRN 1"></c:out></td>
-												</c:when>
-												<c:when test="${grnList.grnType==1}">
-													<td class="col-md-1"><c:out value="GRN 2"></c:out></td>
-												</c:when>
-												<c:when test="${grnList.grnType==2}">
-													<td class="col-md-1"><c:out value="GRN 3"></c:out></td>
-												</c:when>
-												<c:when test="${grnList.grnType==3}">
-													<td class="col-md-1"><c:out value="No GRN"></c:out></td>
-												</c:when>
-												<c:when test="${grnList.grnType==4}">
-													<td class="col-md-1"><c:out value="GRN 3"></c:out></td>
-												</c:when>
-											</c:choose> --%>
-
-											<td class="col-md-1"><c:out value="${grnList.itemRate}" /></td>
-
-											<td class="col-md-1"><c:out value="${grnList.baseRate}" /></td>
-											<td class="col-md-1"><c:out value="${grnList.grnGvnQty}" /></td>
-
-											<td class="col-md-1"><c:out value="${grnList.grnGvnAmt}" /></td>
-
-<c:choose>
-<c:when test="${grnList.isCreditNote==1}">
-<td class="col-md-1"><c:out value="${grnList.aprQtyAcc}" /></td>
-
-											<td class="col-md-1"><c:out
-													value="${grnList.aprGrandTotal}" /></td>
-</c:when>
-<c:otherwise>
-<td class="col-md-1"><c:out value="-" /></td>
-
-											<td class="col-md-1"><c:out
-													value="-" /></td>
-</c:otherwise>
-</c:choose>
-											<%-- <td class="col-md-1"><c:out value="${grnList.aprQtyAcc}" /></td>
-
-											<td class="col-md-1"><c:out
-													value="${grnList.aprGrandTotal}" /></td> --%>
-
-											<%-- <td class="col-md-1"><c:out
-													value="${grnList.aprTaxableAmt}" /></td>
-											<td class="col-md-1"><c:out
-													value="${grnList.aprTotalTax}" /></td> --%>
-													
-													
-													<c:set var="statusGRN" value="NA"></c:set>
-												<c:forEach items="${grStatusLst}" var="grnStatus">
-												<c:if test="${grnStatus.statusValue==grnList.grnGvnStatus}">
-												<c:set var="statusGRN" value="${grnStatus.statusName}"></c:set>
-												</c:if>
-												</c:forEach>
-												<td class="col-md-1"><c:out value="${statusGRN}"></c:out></td>
-											<%-- <c:choose>
-												<c:when test="${grnList.grnGvnStatus==1}">
-													<td class="col-md-1"><c:out value="Pending"></c:out></td>
-												</c:when>
-												<c:when test="${grnList.grnGvnStatus==2}">
-													<td class="col-md-1"><c:out
-															value="Approved From Dispatch"></c:out></td>
-												</c:when>
-												<c:when test="${grnList.grnGvnStatus==3}">
-													<td class="col-md-1"><c:out
-															value="Reject From Dispatch"></c:out></td>
-												</c:when>
-
-												<c:when test="${grnList.grnGvnStatus==4}">
-													<td class="col-md-1"><c:out
-															value="Approved From Sales"></c:out></td>
-												</c:when>
-
-												<c:when test="${grnList.grnGvnStatus==5}">
-													<td class="col-md-1"><c:out value="Reject From Sales"></c:out></td>
-												</c:when>
-												<c:when test="${grnList.grnGvnStatus==6}">
-													<td class="col-md-1"><c:out
-															value="Approved From Account"></c:out></td>
-												</c:when>
-												<c:when test="${grnList.grnGvnStatus==7}">
-													<td class="col-md-1"><c:out
-															value="Reject From Account"></c:out></td>
-												</c:when>
-
-											</c:choose> --%>
-
+											<td style="text-align: center;"><c:out value="${grnList.invoiceNo}" /></td>
+											<td style="text-align: left;"><c:out value="${grnList.itemName}" /></td>
+											<td style="text-align: right;"><c:out value="${grnList.grnType}"></c:out></td>
+											<td style="text-align: right;"><c:out value="${grnList.itemMrp}"></c:out></td>
+											<td style="text-align: right;"><c:out value="${grnList.itemRate}" /></td>
+											<td style="text-align: right;"><c:out value="${grnList.baseRate}" /></td>
+											<td style="text-align: right;"><c:out value="${grnList.grnGvnQty}" /></td>
+											<td style="text-align: right;"><c:out value="${grnList.grnGvnAmt}" /></td>
+											<c:choose>
+											<c:when test="${grnList.isCreditNote==1}">
+											<td style="text-align: right;"><c:out value="${grnList.aprQtyAcc}" /></td>
+											<td style="text-align: right;"><c:out value="${grnList.aprGrandTotal}" /></td>
+											</c:when>
+											<c:otherwise>
+											<td style="text-align: right;"><c:out value="-" /></td>
+											<td style="text-align: right;"><c:out value="-" /></td>
+											</c:otherwise>
+											</c:choose>
+											<c:set var="statusGRN" value="NA"></c:set>
+											<c:forEach items="${grStatusLst}" var="grnStatus">
+											<c:if test="${grnStatus.statusValue==grnList.grnGvnStatus}">
+											<c:set var="statusGRN" value="${grnStatus.statusName}"></c:set>
+											</c:if>
+											</c:forEach>
+											<td style="text-align: left;"><c:out value="${statusGRN}"></c:out></td>
 										</tr>
 									</c:forEach>
 								</tbody>
-							</table>
-						</div>
-					</div>
+	</table>
+</div>
 
+					
 				</div>
 				<!--tabNavigation-->
 			</div>

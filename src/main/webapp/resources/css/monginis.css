@@ -854,6 +854,12 @@ background-position: right .7em top 50%, 0 0;}
 
 .right_side{text-align: right; position: relative;}
 .search_icn{float: right !important;}
+.grn_row{display: inline-block; width:100%;}
+.grn_one{float: left; width:33.333%; text-align: right; font-weight: bold;}
+
+.det_row{display: inline-block; width:100%;}
+.det_l{float: left; width:30%;}
+.det_r{float: right; width:70%;}
 
 /*--css-divices--*/
 @media screen and (max-width:1366px){
@@ -974,6 +980,9 @@ background-position: right .7em top 50%, 0 0;}
 .date_one{width:30%;}
 .flt_rgt{float: right;}
 
+.det_l{float: none; width:100%;}
+.det_r{float: none; width:100%; text-align: left;}
+.grn_one{text-align: left;}
 }
 
 @media screen and (max-width:700px){
@@ -1101,6 +1110,8 @@ table.responsive-table{display: block;}
 .date_one {width: 100%; margin: 0 0 15px 0;}
 .date_one.increse {width: 100%;}
 .date_one.increse select{width:100%;}
+
+.grn_one{float: none; width:100%; text-align: left; margin: 0 0 10px 0;}
 
 }
 
