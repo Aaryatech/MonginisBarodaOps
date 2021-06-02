@@ -63,16 +63,16 @@
 }
 
 /* Modal Content */
-.modal-content {
+/* .modal-content {
 	background-color: #fefefe;
 	margin: auto;
 	padding: 8px 20px 20px 20px;
 	border: 1px solid #888;
 	width: 30%;
-}
+} */
 
 /* The Close Button */
-.close {
+/* .close {
 	color: #aaaaaa;
 	float: right;
 	font-size: 28px;
@@ -83,7 +83,7 @@
 	color: #000;
 	text-decoration: none;
 	cursor: pointer;
-}
+} */
 
 #overlay2 {
 	position: fixed;
@@ -567,12 +567,14 @@
 			<div class="clock"></div>
 		</div>
 
-		<div class="modal-content" style="width: 75%">
+		<div class="modal-content pop_width" >
 			<span class="close" onclick="closeAddEmpPopup()" style="opacity: 2;">&times;</span>
 
-			<h3 class="pop_head">Add Employee</h3>
+			<div class="popup_title">
+				<h2 class="pageTitle" style="margin: 0; padding: 0;"> Add Employee</h2>
+			</div>
 			<div>
-				<div class="row">
+				<div ><!--class="row"-->
 					<form action="saveFranchiseeEmp" id="fr_emp_form" method="post"
 						autocomplete="off">
 						<div class="col-lg-6">
@@ -622,6 +624,8 @@
 								</div>
 								<div class="clr"></div>
 							</div>
+							
+							
 
 							<div class="profile">
 								<div class="profilefildset">Designation</div>
@@ -700,29 +704,36 @@
 							</div>
 
 						</div>
-
-
-						<table class="responsive-table" id="table_grid1">
-							<thead>
-								<tr class="bgpink">
-									<th>Sr.No.</th>
-									<th>Module Name</th>
-								</tr>
-							</thead>
-							<tbody>
+						
+						<div class="clr"></div>
+						
+						<div class="tableFixHead">
+	<table id="table_grid1">         
+	<thead style="background-color: #f3b5db;">
+		<tr class="bgpink">
+			<th style="text-align: center; width:80px;">Sr.No.</th>
+			<th style="text-align: center;">Module Name</th>
+		</tr>
+	</thead>
+	
+	<tbody>
 								<c:forEach items="${opsList}" var="list" varStatus="count">
 									<tr>
-										<td style="display: inline-flex;">${count.index+1}
-											&nbsp;&nbsp;&nbsp; <input type="checkbox"
+										<td style="text-align: center;">${count.index+1}
+											 <input type="checkbox" style="float: left;"
 											value="${list.moduleId}" id="modId${list.moduleId}"
 											name="modId${list.moduleId}">
 										</td>
-										<td>${list.moduleName }</td>
+										<td style="text-align: left;">${list.moduleName }</td>
 									</tr>
 								</c:forEach>
 
 							</tbody>
-						</table>
+	</table>  
+</div>
+
+
+						
 
 
 					</form>
@@ -752,31 +763,35 @@
 			<div class="clock"></div>
 		</div>
 
-		<div class="modal-content" style="width: 75%">
+		<div class="modal-content pop_width">
 			<span class="close" onclick="closeEmpListPopUp()" style="opacity: 2;">&times;</span>
-
-			<h3 class="pop_head">Employee List</h3>
-			<div>
-				<div class="row">
-					<table class="responsive-table" id="table_grid">
-						<thead>
-							<tr class="bgpink">
-								<th>Sr.No.</th>
-								<th>Employee Name</th>
-								<th>Contact No</th>
-								<th>Address</th>
-								<th>Joining Date</th>
-								<!-- <th>Code</th> -->
-								<th>Status</th>
-								<th>Action</th>
-							</tr>
-						</thead>
-						<tbody>
-
-						</tbody>
-					</table>
-				</div>
+			
+			<div class="popup_title">
+				<h2 class="pageTitle" style="margin: 0; padding: 0;">Employee List</h2>
 			</div>
+			
+			<div class="tableFixHead">
+	<table id="table_grid">         
+	<thead style="background-color: #f3b5db;">
+		<tr class="bgpink">
+			<th style="text-align: center;">Sr.No.</th>
+			<th style="text-align: center;">Employee Name</th>
+			<th style="text-align: center;">Contact No</th>
+			<th style="text-align: center;">Address</th>
+			<th style="text-align: center;">Joining Date</th>
+			<th style="text-align: center;">Status</th>
+			<th style="text-align: center;">Action</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+	
+	</tbody>
+	</table>  
+</div>
+			
+			
+			
 			<div class="pop_btns">
 				<div class="close_l" style="text-align: center;">
 					<button class="btn additem_btn" onclick="closeEmpListPopUp()">Close</button>
@@ -945,15 +960,15 @@
 												$('#loader').hide();
 
 												var tr = $('<tr></tr>');
-												tr.append($('<td></td>').html(
+												tr.append($('<td style="text-align:center;"></td>').html(
 														key + 1));
-												tr.append($('<td></td>').html(
+												tr.append($('<td style="text-align:left;"></td>').html(
 														emp.frEmpName));
-												tr.append($('<td></td>').html(
+												tr.append($('<td style="text-align:left;"></td>').html(
 														emp.frEmpContact));
-												tr.append($('<td></td>').html(
+												tr.append($('<td style="text-align:left;"></td>').html(
 														emp.frEmpAddress));
-												tr.append($('<td></td>').html(
+												tr.append($('<td style="text-align:left;"></td>').html(
 														emp.frEmpJoiningDate));
 												var stat = '';
 												if (emp.delStatus == 0) {
@@ -961,10 +976,10 @@
 												} else {
 													stat = 'In-Active'
 												}
-												tr.append($('<td ></td>').html(
+												tr.append($('<td style="text-align:center;"></td>').html(
 														stat));
 												tr
-														.append($('<td></td>')
+														.append($('<td style="text-align:center;"></td>')
 																.html(
 																		"<a href='#' onclick=editFrEmp("
 																				+ emp.frEmpId
