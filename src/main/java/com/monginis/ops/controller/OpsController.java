@@ -1469,7 +1469,7 @@ public class OpsController {
 			String uom = request.getParameter("uom");
 			int isDecimal = Integer.parseInt(request.getParameter("isDecimal"));
 
-			System.err.println("UOM = " + uom);
+			System.err.println("qty = " + qty);
 			System.err.println("ITEM LIST = " + itemBillList);
 			/*
 			 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
@@ -1484,7 +1484,7 @@ public class OpsController {
 					itemBillList.get(i).setTaxableAmt(taxableAmt);
 					itemBillList.get(i).setTaxAmt(total - taxableAmt);
 					itemBillList.get(i).setTaxPer(taxperHidden);
-					itemBillList.get(i).setTotal(total);
+					itemBillList.get(i).setTotal(total*qty);
 					flag = 1;
 
 				}
@@ -1496,7 +1496,7 @@ public class OpsController {
 				add.setOrignalMrp(orignalrate);
 				add.setUom(uom);
 				add.setIsDecimal(isDecimal);
-				add.setTotal(total);
+				add.setTotal(total*qty);
 				add.setQty(qty);
 				add.setTaxPer(taxperHidden);
 				Float taxableAmt = (total * 100) / (100 + add.getTaxPer());
@@ -1871,12 +1871,13 @@ public class OpsController {
 		try {
 			mode = Integer.parseInt(request.getParameter("mode"));
 		} catch (Exception e) {
-			e.printStackTrace();
+			mode = 0;
 		}
 
 		try {
 
-			int sellBillNo = Integer.parseInt(request.getParameter("sellBillNo"));
+			//int sellBillNo = Integer.parseInt(request.getParameter("sellBillNo"));
+			int sellBillNo=globalSellBillNo;
 			int index = Integer.parseInt(request.getParameter("key"));
 			int custId = Integer.parseInt(request.getParameter("custId"));
 			int creditBill = Integer.parseInt(request.getParameter("creditBill"));
@@ -1901,9 +1902,13 @@ public class OpsController {
 			}
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			//map.add("custId", custId);
+			//Customer customerById = restTemplate.postForObject(Constant.URL + "/getCustomerByCustId", map,
+				//	Customer.class);
+			
 			map.add("custId", custId);
-			Customer customerById = restTemplate.postForObject(Constant.URL + "/getCustomerByCustId", map,
-					Customer.class);
+			CustomerForOps customerById = restTemplate.postForObject(Constant.URL + "/getCustomerByCustIdForOps", map,
+					CustomerForOps.class);
 
 			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
 			mvm.add("itemList", items);
@@ -1936,8 +1941,8 @@ public class OpsController {
 
 			System.err.println("oldDetailItemIds ----------TREE SET---------- " + oldDetailItemIds);
 
-			System.err.println("itemsListByIds -------------------- " + itemsListByIds);
-			System.err.println("itemBillList -------------------- " + itemBillList);
+			System.err.println("itemsListByIds A  -------------------- " + itemsListByIds);
+			System.err.println("itemBillList  B -------------------- " + itemBillList);
 
 			List<SellBillDetail> sellbilldetaillist = new ArrayList<>();
 
@@ -2145,6 +2150,7 @@ public class OpsController {
 							sellBillDetail.setItemName(itemBillList.get(i).getItemName());
 							sellBillDetail.setDiscAmt(detailDiscAmt);
 							sellBillDetail.setExtFloat1(itemBillList.get(i).getTotal());
+							System.err.println("sellBillDetail -------------------- " + sellBillDetail);
 
 							System.err.println("ITEM ADD -------------------- " + itemsListByIds.get(j).getExtVar2());
 
@@ -2660,6 +2666,17 @@ public class OpsController {
 			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
 			model.addAttribute("customerList", customerList);
 
+			  List<CustomerForOps> custometList = new ArrayList<CustomerForOps>();
+	
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			
+			CustomerForOps[] custResp = restTemplate.postForObject(Constant.URL + "getAllCustomersForOps",map,
+					CustomerForOps[].class);
+			custometList = new ArrayList<CustomerForOps>(Arrays.asList(custResp));
+			model.addAttribute("customerList", custometList);
+			
 			ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("allMenuList");
 
 			String items;
@@ -2844,5 +2861,41 @@ public class OpsController {
 		}
 		return item;
 	}
+int globalSellBillNo=0;
+	@RequestMapping(value = "/getItemsFromSellBill", method = RequestMethod.POST)
+	@ResponseBody
+	public SellBillHeader getItemsFromSellBill(HttpServletRequest request, HttpServletResponse responsel) {
 
+		MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+		SellBillHeader sellBillHeaderRes =new SellBillHeader();
+		try {
+
+			int sellBillNo = Integer.parseInt(request.getParameter("sellBillNo"));
+			System.err.println("sellBillNo ID - " + sellBillNo);
+			globalSellBillNo=sellBillNo;
+			mvm = new LinkedMultiValueMap<String, Object>();
+			mvm.add("sellBillNo", sellBillNo);
+
+			  sellBillHeaderRes = restTemplate.postForObject(
+					Constant.URL + "/getSellBillItemsBySellBillNoForEdit", mvm, SellBillHeader.class);
+
+			mvm = new LinkedMultiValueMap<String, Object>();
+			mvm.add("sellBillNo", sellBillNo);
+
+			ItemListForCustomerBill[] itemsList1 = restTemplate.postForObject(
+					Constant.URL + "/getBillItemsBySellBillNo", mvm, ItemListForCustomerBill[].class);
+
+			System.err.println("BILL ITEM LIST ---------------------------- " + itemsList1);
+
+			itemBillList = new ArrayList<>();
+			for (int i = 0; i < itemsList1.length; i++) {
+				itemBillList.add(itemsList1[i]);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		sellBillHeaderRes.setItemBillList(itemBillList);
+		return sellBillHeaderRes;
+	}
 }

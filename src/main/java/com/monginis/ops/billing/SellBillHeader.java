@@ -3,6 +3,8 @@ package com.monginis.ops.billing;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
+import com.monginis.ops.model.newpos.ItemListForCustomerBill;
  
 
 public class SellBillHeader implements Serializable {
@@ -72,6 +74,19 @@ public class SellBillHeader implements Serializable {
 	private String extVar1;  
 	private String extVar2;
 	
+	
+	List<ItemListForCustomerBill> itemBillList;
+	
+		
+	
+	public List<ItemListForCustomerBill> getItemBillList() {
+		return itemBillList;
+	}
+
+	public void setItemBillList(List<ItemListForCustomerBill> itemBillList) {
+		this.itemBillList = itemBillList;
+	}
+
 	public String getExtVar2() {
 		return extVar2;
 	}

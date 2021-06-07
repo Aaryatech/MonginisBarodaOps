@@ -240,6 +240,11 @@ label:before {
 	<c:url var="getCustBills" value="/getCustBills" />
 	<c:url var="getCustBillsTransaction" value="/getCustBillsTransaction" />
 		<c:url var="submitBillByPaymentOption" value="/submitBillByPaymentOption" />
+				<c:url var="submitEditBillByPaymentOption" value="/submitEditBillByPaymentOption" />
+		
+	<c:url var="addItemInBillList" value="/addItemInBillList" />
+	<c:url var="getCurrentItemList" value="/getCurrentItemList" />
+	<c:url var="deleteItemInBillList" value="/deleteItemInBillList" />
 	
 	
 	
@@ -1725,6 +1730,8 @@ label:before {
 				type="hidden" name="itemTax1Hidden" id="itemTax1Hidden"> <input
 				type="hidden" name="itemTax2Hidden" id="itemTax2Hidden"> <input
 				type="hidden" name="aviableQty" id="aviableQty">
+				<input
+				type="hidden" name="isEdit" id="isEdit" value="0">
 
 
 
@@ -2487,7 +2494,15 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 	
 	
 	function addItem(flag){
-		 
+		 var isEdit= document.getElementById("isEdit").value ;
+		// alert("Ok")
+		 if(isEdit==1){
+			 var qty= document.getElementById("enterQty").value;
+			 addItemInBillList();
+				document.getElementById("closeAddcust").click();
+			// jQuery("#status").fadeOut();
+		 }else{
+			
 		if(flag>0){
 			var qty= document.getElementById("enterQty").value;
 		}else{
@@ -2632,6 +2647,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		       }
 		   });
 		  amtReturnCal();
+		 }
 	}
 	
 	function getCustomerList(val) {
@@ -3073,6 +3089,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
  
  
  function itemDiscPerCalculation(flag) {
+	 alert("Ok")
 	 document.getElementById("cashAmt").value =0;
 		document.getElementById("cardAmt").value =0;
 		document.getElementById("epayAmt").value =0;
@@ -3100,6 +3117,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 			
 		}else{
 		var totalAmt=grandTot-calDiscAmt;
+		alert(totalAmt)
 		document.getElementById("discAmt").value = calDiscAmt.toFixed(2);
 		document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
 		document.getElementById("payAmt").value = totalAmt.toFixed(0);
@@ -3391,7 +3409,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
  
  function  checkAviableQty(flag){
 	//alert("Ok");
-
+try{
 	  var avQty = parseFloat(document.getElementById("aviableQty").value);
 		if(flag>0){
 			var qty= parseFloat(document.getElementById("enterQty").value);
@@ -3407,6 +3425,10 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 			alertify.error("Enter Valid QTY ");
 			document.getElementById("enterQty").value=1;
 		}
+}catch (e) {
+	//addItem(flag);
+	//alert("Ok 3417")
+}
  }
  
 	
@@ -4085,9 +4107,14 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 
 															//submitBill	 //submitBillByPaymentOption
 															//alert("a"+$('#billType').val()+ "b" +$('#cardType').val())
+															var isEdit=document.getElementById('isEdit').value
+															var url='${submitBillByPaymentOption}';
+															if(isEdit==1){
+																url='${submitEditBillByPaymentOption}';
+															}
 							   $ 
 								.post(
-										'${submitBillByPaymentOption}', 
+										''+url, 
 										{
 											key : key,  
 											custId : custId,
@@ -5163,6 +5190,304 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		
 	}
 	});
+	</script>
+	<script type="text/javascript">
+
+function custBillPdf(sellBillNo)
+	{
+	//alert("OK")
+		//var	frtype= document.getElementById("frtype").value;
+		/* alert(frtype);
+		if(frtype<10000000){
+			window.open('${pageContext.request.contextPath}/printBillOfSupply/'+sellBillNo,'_blank');
+		}else{
+			window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+sellBillNo,'_blank');
+		}
+ */
+	//alert(frtype);
+	if(1==2){
+		window.open('${pageContext.request.contextPath}/printBillOfSupply/'+sellBillNo,'_blank');
+	}else{
+		window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+sellBillNo,'_blank');
+	}
+
+	}
+//showCustBillForEdit
+function showCustBillForEdit(sellBillNo,custId,mode){
+	document.getElementById('isEdit').value=1;
+//	alert("custId = "+custId+"              BILL = "+sellBillNo);
+	
+	// window.open("${pageContext.request.contextPath}/editcustomerbill/0/"+sellBillNo+"/"+mode,"_self");
+	
+	
+	// var modal1 = document.getElementById('custBills');
+	 $('#custBills').popup('hide');
+	 
+	 $('#itemTable tr').remove();
+		
+		var mainTrStr = '<tr>'
+			+'<th style="text-align: center;" width="2%">SrNo</th>'
+			+'<th style="text-align: center;">Product</th>'
+			+'<th style="text-align: center;" width="10%">QTY</th>' 
+			+'<th style="text-align: center;" width="13%">Price</th>' 
+			+'<th style="text-align: center;" width="13%">Total</th>'
+			+'<th style="text-align: center;" width="2%">Del</th>'
+			+'</tr>';
+		var mainTr = $(mainTrStr);
+		$('#itemTable tbody').append(
+				mainTr);
+
+var fd=new FormData();
+fd.append('sellBillNo',sellBillNo);
+fd.append('custId',custId);
+
+$.ajax({
+url: '${pageContext.request.contextPath}/getItemsFromSellBill',
+type: 'POST',
+data: fd,
+dataType: 'json',
+processData: false,
+contentType: false,
+async:false,
+success: function(data, textStatus, jqXHR)
+{
+   document.getElementById("discPer").value=data.discountPer ;		
+   document.getElementById("discAmt").value=data.discountAmt ;
+var itemCnt =0;// data.itemList.length;
+var total = 0;
+var tax = 0;
+var finalAmt =0;
+var payableAmt=0;$
+	.each(
+			data.itemBillList,
+			function(key, item) {
+				//key=len;
+				itemCnt=itemCnt+item.qty;
+		
+		//alert(JSON.stringify(item))
+		finalAmt += parseFloat(item.total);
+		total += parseFloat(item.total);
+		tax += parseFloat(item.taxAmt);
+		payableAmt += parseFloat(item.total);
+		var tr=$('<tr></tr>');
+		tr
+		.append($(
+				'<td ></td>')
+				.html(key+1));
+			tr.append($('<td  ></td>').html('<div style="width: 100%; white-space: normal;">'+item.itemName+'</div>'));
+			tr.append($('<td   style="text-align: right;"  class="initialism addcust1_open"> </td>').html(item.qty));
+			tr.append($('<td style="text-align: right;"></td>').html(item.orignalMrp.toFixed(2)));
+			tr.append($('<td style="text-align: right;" ></td>').html(item.total.toFixed(2)));
+			tr.append($('<td style="text-align: center;"></td>').html('<a href="#" class="trash_icon" onclick="deleteItemInBillList('+key+')" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>'));
+			
+			
+			$('#itemTable tbody').append(tr);
+			//len=len-1;
+			
+	});
+
+document.getElementById("totalCnt").innerHTML=itemCnt;
+	document.getElementById("totalPayableAmt").innerHTML = total.toFixed(2);
+
+	//alert(total);
+	//document.getElementById("totalAmt").innerHTML=payableAmt.toFixed(2);
+	document.getElementById("totalAmt").innerHTML=total.toFixed(2);
+	//alert(tax);
+	document.getElementById("totalTax").innerHTML=tax.toFixed(2);
+	//alert(finalAmt);
+	document.getElementById("finalAmount").innerHTML=total.toFixed(2);
+	document.getElementById("totalAmtPopup").innerHTML = total.toFixed(2); 
+	
+	document.getElementById("tblQty").value="";
+	//itemDiscPerCalculation(1)	;										
+	//document.getElementById("discPer").onchange();
+
+	// modal1.style.display = "none";
+
+},// close of success
+}) // close of $.ajax
+}//end of function
+function deleteSellBill(sellBillNo)
+{alert("sb" +sellBillNo)
+	 var modal1 = document.getElementById('deleteBillModal');
+	 modal1.style.display = "block";
+	 
+	 document.getElementById('delBillId').value=sellBillNo;
+}
+	</script>
+	
+	<script type="text/javascript">
+		
+	function addItemInBillList() {
+			//alert("ok here addItemInBillList ")
+			try{
+			var rateHidden = parseFloat($('#itemMrp').val());
+			var rate =parseFloat($('#itemMrp').val());
+			var qty = parseFloat($('#enterQty').val());
+			//alert(qty);
+			var itemIdHidden =  $('#itemIdHidden').val() ;
+			var itemNameHidden =  $('#itemNameHidden').val() ;
+			var uomHidden =  $('#itemUomHidden').val() ;
+			var taxperHidden =  $('#itemTaxHidden').val() ;
+			var isDecimalHidden = 0;// $('#isDecimalHidden').val() ;
+			var flag=0;
+			/* if(isNaN(rate) || rate==0){
+				alert("Enter Valid Rate ");
+				flag=1;
+			}else */ if(isNaN(qty) || qty==0){
+				alert("Enter Valid QTY ");
+				flag=1;
+			}/* else if(isDecimalHidden==0 && qty != Math.floor(qty))
+				{
+				alert("Please Enter Valid Number of Qty")
+				 document.getElementById("enterQty").value = "0";
+				 document.getElementById("enterRate").value = "0";
+				 flag=1;
+				} */
+			
+			 
+			if(flag==0){
+				
+				//document.getElementById("selItem").focus();
+				
+				 document.getElementById("overlay").style.display = "block";
+				$
+				.post(
+						'${addItemInBillList}',
+						{
+							rateHidden : rateHidden,
+							rate : rate,
+							qty : qty,
+							itemIdHidden : itemIdHidden, 
+							itemNameHidden : itemNameHidden,
+							taxperHidden : taxperHidden,
+							uom:uomHidden,
+							isDecimal:isDecimalHidden,
+							ajax : 'true'
+						},
+						function(data) {
+							//alert("5343 line "+data.length);
+							 document.getElementById("overlay2").style.display = "none";
+							$('#quantity').popup('hide');  
+							getCurrentItemList();
+									 
+						});
+				
+				//document.getElementById("enterQty1").value="";
+				//document.getElementById("selItem").value="";
+			
+			}
+			}catch (e) {
+				alert("In CATCH");
+				alert(e);
+			}
+		}
+	
+</script>
+<script type="text/javascript">
+	
+function getCurrentItemList() {
+		
+		$
+		.post(
+				'${getCurrentItemList}',
+				{ 
+					ajax : 'true'
+				},
+				function(data) {
+					 
+					$('#quantity').popup('hide'); 
+					$('#itemTable tr').remove();
+					
+					var mainTrStr = '<tr>'
+					+'<th style="text-align: center;" width="2%">Sr</th>'
+					+'<th style="text-align: center;">Product</th>'
+					+'<th style="text-align: center;" width="10%">QTY</th>'
+					+'<th style="text-align: center;" width="13%">Price</th>' 
+					+'<th style="text-align: center;" width="13%">Total</th>'
+					+'<th style="text-align: center;" width="2%">Del</th>'
+					+'</tr>';
+				var mainTr = $(mainTrStr);
+				$('#itemTable tbody').append(
+						mainTr);
+				
+				
+				
+				var itemCnt =0;// data.itemList.length;
+				var total = 0;
+				var tax = 0;
+				var finalAmt =0;
+				var payableAmt=0;$
+					.each(
+							data,
+							function(key, item) {
+								//key=len;
+								itemCnt=itemCnt+item.qty;
+						
+						//alert(JSON.stringify(item))
+						finalAmt += parseFloat(item.total);
+						total += parseFloat(item.total);
+						tax += parseFloat(item.taxAmt);
+						payableAmt += parseFloat(item.total);
+						var tr=$('<tr></tr>');
+						tr
+						.append($(
+								'<td ></td>')
+								.html(key+1));
+							tr.append($('<td  ></td>').html('<div style="width: 100%; white-space: normal;">'+item.itemName+'</div>'));
+							tr.append($('<td   style="text-align: right;"  class="initialism addcust1_open"> </td>').html(item.qty));
+							tr.append($('<td style="text-align: right;"></td>').html(item.orignalMrp));
+							tr.append($('<td style="text-align: right;" ></td>').html(item.total));
+							tr.append($('<td style="text-align: center;"></td>').html('<a href="#" class="trash_icon" onclick="deleteItemInBillList('+key+')" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>'));
+							
+							
+							$('#itemTable tbody').append(tr);
+							//len=len-1;
+							
+					});
+
+				document.getElementById("totalCnt").innerHTML=itemCnt;
+
+					document.getElementById("totalPayableAmt").innerHTML = total;
+
+					//alert(total);
+					//document.getElementById("totalAmt").innerHTML=payableAmt.toFixed(2);
+					document.getElementById("totalAmt").innerHTML=total.toFixed(2);
+					//alert(tax);
+				//	document.getElementById("totalTax").innerHTML=tax.toFixed(2);
+					//alert(finalAmt);
+					document.getElementById("finalAmount").innerHTML=total.toFixed(2);
+					document.getElementById("totalAmtPopup").innerHTML = total.toFixed(2); 
+					
+					document.getElementById("tblQty").value="";
+					
+					// modal1.style.display = "none";
+					itemDiscPerCalculation(0);	
+
+				}// close of success);
+		)
+
+	}
+	
+	</script>
+	<script type="text/javascript">
+	
+	function deleteItemInBillList(index) {
+		   alert("delete " +index);
+		  $
+		.post(
+				'${deleteItemInBillList}',
+				{
+					index : index, 
+					ajax : 'true'
+				},
+				function(data) {
+					  alert("Ok")
+					getCurrentItemList();
+							 
+				});   
+}
+	
 	</script>
 </body>
 
