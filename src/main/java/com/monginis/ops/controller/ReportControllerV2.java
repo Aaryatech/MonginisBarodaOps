@@ -58,6 +58,7 @@ import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.AllFrIdNameList;
 import com.monginis.ops.model.ExportToExcel;
 import com.monginis.ops.model.Franchisee;
+import com.monginis.ops.model.GetRepTaxSell;
 import com.monginis.ops.model.Tax1Report;
 import com.monginis.ops.model.Tax2Report;
 import com.monginis.ops.model.reportv2.CrNoteRegItem;
@@ -72,6 +73,9 @@ import com.monginis.ops.model.reportv2.HSNWiseReport;
 @Scope("session")
 public class ReportControllerV2 {
 	String todaysDate;
+	
+	
+	public List<GetRepTaxSell> getRepTaxSell;
 
 	public static float roundUp(float d) {
 		return BigDecimal.valueOf(d).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
@@ -102,6 +106,144 @@ public class ReportControllerV2 {
 		return model;
 
 	}
+	
+	
+	@RequestMapping(value = "/viewCrnTaxSellBill", method = RequestMethod.GET)
+		public ModelAndView viewCrnTaxSellBill(HttpServletRequest request, HttpServletResponse response) {
+
+			ModelAndView model = new ModelAndView("report/sellReport/crnTaxSummary");
+			try {
+				HttpSession ses = request.getSession();
+				Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+				model.addObject("frId", frDetails.getFrId());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return model;
+		}
+
+
+	@RequestMapping(value = "/getCRNTaxSellReport", method = RequestMethod.GET)
+		public @ResponseBody List<GetRepTaxSell> getCRNTaxSellReport(HttpServletRequest request,
+				HttpServletResponse response) {
+
+			try {
+				System.out.println("in method");
+				String fromDate = request.getParameter("fromDate");
+				String toDate = request.getParameter("toDate");
+
+				HttpSession ses = request.getSession();
+				Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+
+				RestTemplate restTemplate = new RestTemplate();
+
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				int frId = frDetails.getFrId();
+				map.add("frId", frId);
+				map.add("fromDate", fromDate);
+				map.add("toDate", toDate);
+				getRepTaxSell = new ArrayList<GetRepTaxSell>();
+				getRepTaxSell = new ArrayList<GetRepTaxSell>();
+
+				ParameterizedTypeReference<List<GetRepTaxSell>> typeRef = new ParameterizedTypeReference<List<GetRepTaxSell>>() {
+				};
+				ResponseEntity<List<GetRepTaxSell>> responseEntity = restTemplate.exchange(Constant.URL + "getCRNTaxSell",
+						HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+				getRepTaxSell = responseEntity.getBody();
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(e.getMessage());
+			}
+
+			System.out.println("Sell Bill Header " + getRepTaxSell.toString());
+
+			// export to excel
+
+			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+			ExportToExcel expoExcel = new ExportToExcel();
+			List<String> rowData = new ArrayList<String>();
+			rowData.add("Sr. No.");
+			/*
+			 * rowData.add("Sell Bill No"); rowData.add("Franchise Id");
+			 */
+			rowData.add("Franchise Name");
+			rowData.add("From Bill");
+			rowData.add("To Bill");
+			rowData.add("Tax %");
+			rowData.add("Taxable Amount");
+			rowData.add("CGST");
+			rowData.add("SGST");
+			rowData.add("IGST");
+			rowData.add("CESS");
+			rowData.add("Bill Amount");
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+			float taxableTotal = 0;
+			float cgstTotal = 0;
+			float sgstTotal = 0;
+			float igstTotal = 0;
+			float cessTotal = 0;
+			float billTotal = 0;
+
+			for (int i = 0; i < getRepTaxSell.size(); i++) {
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+				rowData.add("" + (i + 1));
+
+				rowData.add("" + getRepTaxSell.get(i).getFrName());
+				rowData.add("" + getRepTaxSell.get(i).getFromBill());
+				rowData.add("" + getRepTaxSell.get(i).getToBill());
+
+				rowData.add("" + roundUp(getRepTaxSell.get(i).getTax_per()));
+				rowData.add("" + roundUp(getRepTaxSell.get(i).getTax_amount()));
+				rowData.add("" + roundUp(getRepTaxSell.get(i).getCgst()));
+				rowData.add("" + roundUp(getRepTaxSell.get(i).getSgst()));
+				//rowData.add("" + roundUp(getRepTaxSell.get(i).getIgst()));
+				rowData.add("" + roundUp(0));
+				rowData.add("" + roundUp(getRepTaxSell.get(i).getCess()));
+				rowData.add("" + roundUp(getRepTaxSell.get(i).getBill_amount()));
+
+				taxableTotal = taxableTotal + getRepTaxSell.get(i).getTax_amount();
+				cgstTotal = cgstTotal + getRepTaxSell.get(i).getCgst();
+				sgstTotal = sgstTotal + getRepTaxSell.get(i).getSgst();
+				igstTotal = igstTotal + 0;
+				cessTotal = cessTotal + getRepTaxSell.get(i).getCess();
+				billTotal = billTotal + getRepTaxSell.get(i).getBill_amount();
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+			}
+
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+			rowData.add("");
+
+			rowData.add("Total");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("" + roundUp(taxableTotal));
+			rowData.add("" + roundUp(cgstTotal));
+			rowData.add("" + roundUp(sgstTotal));
+			rowData.add("" + roundUp(igstTotal));
+			rowData.add("" + roundUp(cessTotal));
+			rowData.add("" + roundUp(billTotal));
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+			HttpSession session = request.getSession();
+			session.setAttribute("exportExcelList", exportToExcelList);
+			session.setAttribute("excelName", "TaxReportSell");
+
+			return getRepTaxSell;
+
+		}
 
 	List<HSNWiseReport> hsnListBill = null;
 

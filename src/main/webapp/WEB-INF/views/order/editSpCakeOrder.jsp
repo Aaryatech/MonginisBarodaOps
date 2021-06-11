@@ -938,7 +938,23 @@ $(document).ready(function() {
 			<div class="col2full"><input class="texboxitemcode"  placeholder="GST NO." name="gstin" value="${spCakeOrder.custGstin}" type="text" id="gstin" required autocomplete="off"></div>
 	
 	</div>
-<!-- 	<div class="colOuter">
+								<c:if test="${imageFlag>0}">
+								<div id="imageDiv">
+								<c:forEach items="${imageArr}" var="imge">
+									<div class="fullform">
+										<div class="cackimg">
+											<div class="cackimglable"></div>
+											<img src="${url}${imge}"
+												onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';">
+										</div>
+									</div>
+									</c:forEach>
+									
+								</div>
+								
+								
+								</c:if>
+								<!-- 	<div class="colOuter">
 			<div class="col1"><div class="col1title">Cake Type1</div></div>
 	
 			<div class="col2full"><input class="texboxitemcode"  name="ctype1" type="text" id="ctype1" required ></div>

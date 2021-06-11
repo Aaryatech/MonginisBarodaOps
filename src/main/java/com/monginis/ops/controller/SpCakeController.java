@@ -2136,6 +2136,7 @@ public class SpCakeController {
 			map.add("spOrderNo", spOrderNo);
 			SpCakeOrder spCakeOrder = restTemplate.postForObject(Constant.URL + "/getSpOrderBySpOrderNo", map,
 					SpCakeOrder.class);
+			
 			System.err.println("spCakeOrder  for edit "+spCakeOrder.toString());
 			try {
 				String photoArray[] = spCakeOrder.getOrderPhoto().split("<");
@@ -2301,6 +2302,18 @@ List<Shape> shapeList = new ArrayList<>();
 			Shape[] shapeArr = restTemplate.getForObject(Constant.URL + "getAllChef", Shape[].class);
 			shapeList = new ArrayList<>(Arrays.asList(shapeArr));
 			String[] selectedShapeArr = specialCake.getSpeIdlist().split(",");
+			int imageFlag=0;
+			
+			String[] imageArr=specialCake.getSpImage().split(">");
+			imageFlag=imageArr.length;
+			for(int i=0;i<imageArr.length;i++) {
+				System.err.println("Cake Image No"+i+"-->"+imageArr[i]);
+			}
+			
+			model.addObject("imageArr", imageArr);
+			model.addObject("imageFlag", imageFlag);
+			
+			
 			List<Shape> selShapes = new ArrayList<>();
 			for (int i = 0; i < selectedShapeArr.length; i++) {
 				int shapeid = Integer.parseInt(selectedShapeArr[i]);

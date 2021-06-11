@@ -21,7 +21,7 @@ abbr:hover {cursor: pointer;}
 			    
 			
 			
-			<c:forEach items="${sessionScope.empModule}" var="list" varStatus="count">	
+			<%-- <c:forEach items="${sessionScope.empModule}" var="list" varStatus="count">	
 				<c:set var="moduleId" value="${list.moduleId}"></c:set>
 
 				<c:if test="${moduleId==1}">
@@ -233,7 +233,7 @@ abbr:hover {cursor: pointer;}
 
 			
 		
-			<%-- <c:if test="${ flag==1}">
+			<c:if test="${ flag==1}">
 				<li><a
 					href="${pageContext.request.contextPath}/showRuleFilePdf"><div
 							class="img">
@@ -243,13 +243,61 @@ abbr:hover {cursor: pointer;}
 						<div class="title">
 							Rule And Regulation <span></span>
 						</div></a></li>
-			</c:if>	 --%>	
+			</c:if>		
 
 			
 
 				
 			
-			</c:forEach>
+			</c:forEach> --%>
+			<li><a href="#" onClick="openNav()">
+
+							<div class="img">
+								<img
+									src="${pageContext.request.contextPath}/resources/images/nav-orderbook.png"
+									alt="img">
+							</div>
+							<div class="title">
+								Order <span>Booking</span>
+							</div>
+					</a></li>
+					<li><a href="#" onClick="openNav1()"><div class="img">
+							<i class="fa fa-refresh" aria-hidden="true"  style="font-size: 22px !important;"></i>
+						</div>
+						<div class="title">
+							Goods <span>Return</span>
+						</div></a></li>
+						<li><a href="${pageContext.request.contextPath}/orderHistory"><div
+							class="img">
+							<i class="fa fa-file-text-o icon"
+								style="font-size: 22px !important;"></i>
+						</div>
+						<div class="title">
+							Order <span>History</span>
+						</div></a></li>
+						<li><a href="${pageContext.request.contextPath}/showPriceList"><div
+							class="img">
+							<i class="fa fa-list icon"
+								style="font-size: 22px !important;"></i>
+						</div>
+						<div class="title">
+							Price <span>Lists</span>
+						</div></a></li>
+							<li><a href="${pageContext.request.contextPath}/showBill"><div
+							class="img">
+							<i class="fa fa-money icon" style="font-size: 22px !important;"></i>
+						</div>
+						<div class="title">
+							View Purchase <span>Bills</span>
+						</div></a></li>
+							
+							
+							<li><a href="#" onClick="openNav4()"><div class="img">
+							<i class="fa fa-pie-chart" aria-hidden="true" style="font-size: 22px !important;"></i>
+						</div>
+						<div class="title">
+							<span>Reports</span>
+						</div></a></li>
 			<li><a
 					href="${pageContext.request.contextPath}/changeEmpPassword"><div
 							class="img">
@@ -580,7 +628,7 @@ abbr:hover {cursor: pointer;}
 				alt="monginis"></a>
 			<div class="listarea">
 				<ul><div class="row">
-					<li class="small-box">
+					<%-- <li class="small-box">
 
 						<div class="ibox">
 							<div class="ibox-head">
@@ -616,7 +664,7 @@ abbr:hover {cursor: pointer;}
 								
 						</div>
 								
-					</li>
+					</li> --%>
 							
 					<li class="small-box">
 
@@ -698,12 +746,9 @@ abbr:hover {cursor: pointer;}
 								href="${pageContext.request.contextPath}/grnReport"><i
 								class="fa fa-files-o icon"></i> GRN Report (Sale)</a> <a
 								href="${pageContext.request.contextPath}/gvnReport"><i
-								class="fa fa-files-o icon"></i> GVN Report (Sale)</a> <a
+								class="fa fa-files-o icon"></i> GVN Report (Sale)</a> <%-- <a
 								href="${pageContext.request.contextPath}/showCutomerList"><i
-								class="fa fa-files-o icon"></i>Customer List(Sale)</a> 
-								<a
-								href="${pageContext.request.contextPath}/showCutomerPendingList"><i
-								class="fa fa-files-o icon"></i>Customer Pending Amt Report</a>
+								class="fa fa-files-o icon"></i>Customer List(Sale)</a> --%> 
 						</div>
 					</li>
 </div>

@@ -73,7 +73,9 @@ import com.monginis.ops.model.BillWisePurchaseList;
 import com.monginis.ops.model.BillWisePurchaseReport;
 import com.monginis.ops.model.BillWiseTaxReport;
 import com.monginis.ops.model.BillWiseTaxReportList;
+import com.monginis.ops.model.CRNSaleTaxBillReport;
 import com.monginis.ops.model.CategoryList;
+import com.monginis.ops.model.CustomerForOps;
 import com.monginis.ops.model.ExportToExcel;
 import com.monginis.ops.model.Franchisee;
 
@@ -82,6 +84,7 @@ import com.monginis.ops.model.GetRepFrItemwiseSellResponse;
 import com.monginis.ops.model.GetRepMenuwiseSellResponse;
 import com.monginis.ops.model.GetRepTaxSell;
 import com.monginis.ops.model.GetSellBillHeader;
+import com.monginis.ops.model.HSNItemWiseReport;
 import com.monginis.ops.model.Item;
 import com.monginis.ops.model.ItemRes;
 import com.monginis.ops.model.ItemWiseDetail;
@@ -92,6 +95,7 @@ import com.monginis.ops.model.MCategory;
 import com.monginis.ops.model.Main;
 import com.monginis.ops.model.MonthWiseReport;
 import com.monginis.ops.model.MonthWiseReportList;
+import com.monginis.ops.model.SellBillHeaderNew;
 import com.monginis.ops.model.SpCakeResponse;
 import com.monginis.ops.model.SpecialCake;
 import com.monginis.ops.model.grngvn.GrnGvnHeader;
@@ -112,6 +116,7 @@ public class ReportsController {
 
 	public List<GetRepTaxSell> getRepTaxSell;
 	public List<GetRepFrDatewiseSellResponse> getRepFrDatewiseSellResponse;
+	public List<SellBillHeaderNew> getSellBillHeaderListNew;
 	public List<GetSellBillHeader> getSellBillHeaderList;
 	// List<GetRepFrDatewiseSellResponse> getRepFrDatewiseSellResponse;
 	public List<GetRepMenuwiseSellResponse> getRepFrMenuwiseSellResponseList;
@@ -139,7 +144,382 @@ public class ReportsController {
 		}
 		return model;
 	}
+	
+	
+		@RequestMapping(value = "/showCutomerPendingList", method = RequestMethod.GET)
+		public ModelAndView showCutomerPendingList(HttpServletRequest request, HttpServletResponse response) {
 
+			ModelAndView model = new ModelAndView("report/sellReport/custRemainAmt");
+			try {
+				RestTemplate restTemplate = new RestTemplate();
+
+				HttpSession ses = request.getSession();
+				Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+				model.addObject("frId", frDetails.getFrId());
+
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+				Calendar cal = Calendar.getInstance();
+				String toDate = sdf.format(cal.getTimeInMillis());
+
+				cal.set(Calendar.DAY_OF_MONTH, 1);
+				String fromDate = sdf.format(cal.getTimeInMillis());
+
+				model.addObject("fromDate", fromDate);
+				model.addObject("toDate", toDate);
+
+				MultiValueMap<String, Object>  mapforCust=new LinkedMultiValueMap<>();
+				mapforCust.add("frId", frDetails.getFrId());
+				CustomerForOps[] customer = restTemplate.postForObject(Constant.URL + "/getAllCustomerForPosByfrId",mapforCust, CustomerForOps[].class);
+				List<CustomerForOps> customerList = new ArrayList<>(Arrays.asList(customer));
+				model.addObject("customerList", customerList);
+				System.err.println("Cust Lis--->" + customerList);
+
+				
+				
+				String[] cust = request.getParameterValues("cust");
+
+				//type = Integer.parseInt(request.getParameter("rdType"));
+				//subType = Integer.parseInt(request.getParameter("rdSubType"));
+
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				int frId = frDetails.getFrId();
+				map.add("frId", frId);
+				map.add("cust", cust);
+
+				getSellBillHeaderListNew = new ArrayList<SellBillHeaderNew>();
+
+				ParameterizedTypeReference<List<SellBillHeaderNew>> typeRef = new ParameterizedTypeReference<List<SellBillHeaderNew>>() {
+				};
+				ResponseEntity<List<SellBillHeaderNew>> responseEntity = restTemplate
+						.exchange(Constant.URL + "getRemainingAmtByCust", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+				getSellBillHeaderListNew = responseEntity.getBody();
+
+				model.addObject("getSellBillHeaderList", getSellBillHeaderListNew);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return model;
+			
+		}
+		
+		
+		
+		
+		
+		
+	/*********************************************************************************************************************/	
+		
+		
+		
+		@RequestMapping(value = "/getCustPendingAmtReport", method = RequestMethod.GET)
+		public @ResponseBody List<SellBillHeaderNew> getCustPendingAmtReport(HttpServletRequest request,
+				HttpServletResponse response) {
+			System.out.println("in method");
+			// int type = 0, subType = 0;
+			try {
+				HttpSession ses = request.getSession();
+				Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+
+				RestTemplate restTemplate = new RestTemplate();
+
+				int custId = Integer.parseInt(request.getParameter("custId"));
+
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				int frId = frDetails.getFrId();
+				map.add("frId", frId);
+				map.add("custId", custId);
+
+				getSellBillHeaderListNew = new ArrayList<SellBillHeaderNew>();
+
+				ParameterizedTypeReference<List<SellBillHeaderNew>> typeRef = new ParameterizedTypeReference<List<SellBillHeaderNew>>() {
+				};
+				ResponseEntity<List<SellBillHeaderNew>> responseEntity = restTemplate
+						.exchange(Constant.URL + "getCustRemainingAmt", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+				getSellBillHeaderListNew = responseEntity.getBody();
+
+				List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+				ExportToExcel expoExcel = new ExportToExcel();
+				List<String> rowData = new ArrayList<String>();
+
+				rowData.add("Sr. No.");
+				rowData.add("Invoice No");
+				rowData.add("Bill Date");
+				rowData.add("Grand Total");
+				rowData.add("Paid Amt");
+				rowData.add("Remaining Amt");
+				rowData.add("Payment Mode");
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+				float ttlGrndTtl = 0;
+				float ttlPaidAmt = 0;
+				float ttlRemainAmt = 0;
+
+				float ttlCash = 0;
+				float ttlCard = 0;
+				float ttlEPay = 0;
+				String custName = new String();
+
+				for (int i = 0; i < getSellBillHeaderListNew.size(); i++) {
+					expoExcel = new ExportToExcel();
+					rowData = new ArrayList<String>();
+
+					rowData.add("" + (i + 1));
+					rowData.add("" + getSellBillHeaderListNew.get(i).getInvoiceNo());				
+					rowData.add("" + getSellBillHeaderListNew.get(i).getBillDate());
+					/*
+					 * rowData.add("" + getSellBillHeaderList.get(i).getCustName() + "_" +
+					 * getSellBillHeaderList.get(i).getPhoneNumber());
+					 */
+					rowData.add("" + roundUp(getSellBillHeaderListNew.get(i).getGrandTotal()));
+					rowData.add("" + roundUp(getSellBillHeaderListNew.get(i).getPaidAmt()));
+					rowData.add("" + roundUp(getSellBillHeaderListNew.get(i).getRemainingAmt()));
+
+					rowData.add("" + getSellBillHeaderListNew.get(i).getPaymentMode());
+
+					expoExcel.setRowData(rowData);
+					exportToExcelList.add(expoExcel);
+
+					ttlGrndTtl = ttlGrndTtl + getSellBillHeaderListNew.get(i).getGrandTotal();
+					ttlPaidAmt = ttlPaidAmt + getSellBillHeaderListNew.get(i).getPaidAmt();
+					ttlRemainAmt = ttlRemainAmt + getSellBillHeaderListNew.get(i).getRemainingAmt();
+
+					ttlCash = ttlCash + getSellBillHeaderListNew.get(i).getCash();
+					ttlCard = ttlCard + getSellBillHeaderListNew.get(i).getCard();
+					ttlEPay = ttlEPay + getSellBillHeaderListNew.get(i).getePay();
+					custName = getSellBillHeaderListNew.get(i).getCustName() + "_" +
+							 getSellBillHeaderListNew.get(i).getPhoneNumber();
+				}
+
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+
+				rowData.add("Total");
+				rowData.add("");
+				rowData.add("");
+
+				rowData.add("" + roundUp(ttlGrndTtl));
+				rowData.add("" + roundUp(ttlPaidAmt));
+				rowData.add("" + roundUp(ttlRemainAmt));
+				rowData.add("" + roundUp(ttlCash) + "-Cash, " + roundUp(ttlCard) + "-Card, " + roundUp(ttlEPay) + "-EPay");
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+				HttpSession session = request.getSession();
+				session.setAttribute("exportExcelListNew", exportToExcelList);
+				session.setAttribute("excelNameNew", "Customer Remaining Amount");
+				session.setAttribute("reportNameNew", "Customer Remaining Amount Details Report");
+				session.setAttribute("searchByNew", "Customer Name : "+custName);
+				session.setAttribute("mergeUpto1", "$A$1:$G$1");
+				session.setAttribute("mergeUpto2", "$A$2:$G$2");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return getSellBillHeaderListNew;
+
+		}
+		
+		
+		
+		@RequestMapping(value = "pdf/showCustRemainAmtRepPdf/{frId}/{cust}", method = RequestMethod.GET)
+		public ModelAndView showCustRemainAmtRepPdf(@PathVariable int frId,@PathVariable String cust, HttpServletRequest request, HttpServletResponse response) {
+			System.out.println("BILL LIST pdf");
+
+			ModelAndView model = new ModelAndView("report/sellReport/sellReportPdf/custRemainAmtDetailPdf");
+			try {
+				System.out.println("BILL LIST try");
+
+				
+				RestTemplate restTemplate = new RestTemplate();
+				
+				
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				// int frId=frDetails.getFrId();
+				map.add("frId", frId);
+				
+				map.add("custId", cust);
+
+				getSellBillHeaderListNew = new ArrayList<SellBillHeaderNew>();
+
+				ParameterizedTypeReference<List<SellBillHeaderNew>> typeRef = new ParameterizedTypeReference<List<SellBillHeaderNew>>() {
+				};
+				ResponseEntity<List<SellBillHeaderNew>> responseEntity = restTemplate
+						.exchange(Constant.URL + "getCustRemainingAmt", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+				getSellBillHeaderListNew = responseEntity.getBody();
+				String custName = new String();
+				for (int i = 0; i < getSellBillHeaderListNew.size(); i++) {
+					custName = getSellBillHeaderListNew.get(i).getCustName()+" - "+getSellBillHeaderListNew.get(i).getPhoneNumber();
+				}
+				
+				
+				map.add("frId", frId);
+				Franchisee franchisee = restTemplate.getForObject(Constant.URL + "getFranchisee?frId={frId}",
+						Franchisee.class, frId);
+				model.addObject("frName", franchisee.getFrName());
+				model.addObject("custName", custName);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(e.getMessage());
+			}
+
+			model.addObject("reportList", getSellBillHeaderListNew);
+			return model;
+		}
+		
+	@RequestMapping(value = "/viewFrCRNTaxSellBill", method = RequestMethod.GET)
+	public ModelAndView viewFrCRNTaxSellBill(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("report/sellReport/repFrCRNTaxSell");
+		try {
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			model.addObject("frId", frDetails.getFrId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
+	List<CRNSaleTaxBillReport> crnReport = new ArrayList<CRNSaleTaxBillReport>();
+	
+	
+	
+	@RequestMapping(value = "/getCRNBillTaxSellReport", method = RequestMethod.GET)
+	public @ResponseBody List<CRNSaleTaxBillReport> getCRNBillTaxSellReport(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		crnReport = new ArrayList<CRNSaleTaxBillReport>();
+		
+		try {
+			System.out.println("in method");
+			String fromDate = request.getParameter("fromDate");
+			String toDate = request.getParameter("toDate");
+
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			int frId = frDetails.getFrId();
+			map.add("frId", frId);
+			map.add("fromDate", fromDate);
+			map.add("toDate", toDate);
+			// getFrGrnDetail
+			System.out.println(frId + fromDate + toDate);
+			
+
+			ParameterizedTypeReference<List<CRNSaleTaxBillReport>> typeRef = new ParameterizedTypeReference<List<CRNSaleTaxBillReport>>() {
+			};
+			ResponseEntity<List<CRNSaleTaxBillReport>> responseEntity = restTemplate
+					.exchange(Constant.URL + "getRepCRNBillwiseTaxSell", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+			crnReport = responseEntity.getBody();
+
+			/*
+			 * Collections.sort(getRepTaxSell, new Comparator<GetRepTaxSell>() { public int
+			 * compare(GetRepTaxSell c1, GetRepTaxSell c2) {
+			 * 
+			 * String s1 = c1.getSellBillNo(); String s2 = c2.getSellBillNo(); return
+			 * s1.compareToIgnoreCase(s2); } });
+			 */
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+
+		System.out.println("Sell Bill Header " + crnReport.toString());
+
+		// export to excel
+
+		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+		ExportToExcel expoExcel = new ExportToExcel();
+		List<String> rowData = new ArrayList<String>();
+		rowData.add("Sr.No");
+		rowData.add("Sell Bill No");
+		rowData.add("Franchise Name");
+		/* rowData.add("Bill Date"); */
+		rowData.add("Taxable Amount");
+		rowData.add("Tax %");
+		rowData.add("cgst");
+		rowData.add("sgst");
+		rowData.add("igst");
+		rowData.add("cess");
+		/* rowData.add("Gst"); */
+		rowData.add("Bill Amount");
+
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+
+		float taxableAmt = 0;
+		float cgstAmt = 0;
+		float sgstAmt = 0;
+		float igstAmt = 0;
+		float cessAmt = 0;
+		float billAmt = 0;
+
+		for (int i = 0; i < crnReport.size(); i++) {
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+			rowData.add("" + (i + 1));
+			rowData.add("" + crnReport.get(i).getCrnInvoiceNo());
+			rowData.add("" + crnReport.get(i).getFrName());
+			/* rowData.add("" + getRepTaxSell.get(i).getBillDate()); */
+			rowData.add("" + roundUp(crnReport.get(i).getTaxAmount()));
+			rowData.add("" + roundUp(crnReport.get(i).getTaxPer()));
+			rowData.add("" + roundUp(crnReport.get(i).getCgst()));
+			rowData.add("" + roundUp(crnReport.get(i).getSgst()));
+			rowData.add("" + roundUp(crnReport.get(i).getIgst()));
+			rowData.add("" + roundUp(crnReport.get(i).getBillAmount()));
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+			taxableAmt = taxableAmt + crnReport.get(i).getTaxAmount();
+			cgstAmt = cgstAmt + crnReport.get(i).getCgst();
+			sgstAmt = sgstAmt + crnReport.get(i).getSgst();
+			igstAmt = igstAmt + crnReport.get(i).getIgst();
+			billAmt = billAmt + crnReport.get(i).getBillAmount();
+
+		}
+
+		expoExcel = new ExportToExcel();
+		rowData = new ArrayList<String>();
+		rowData.add("");
+		rowData.add("");
+		rowData.add("Total");
+		/* rowData.add("" + getRepTaxSell.get(i).getBillDate()); */
+		rowData.add("" + roundUp(taxableAmt));
+		rowData.add("");
+		rowData.add("" + roundUp(cgstAmt));
+		rowData.add("" + roundUp(sgstAmt));
+		rowData.add("" + roundUp(igstAmt));
+		rowData.add("" + roundUp(cessAmt));
+		rowData.add("" + roundUp(billAmt));
+
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+
+		HttpSession session = request.getSession();
+		session.setAttribute("exportExcelList", exportToExcelList);
+		session.setAttribute("excelName", "BillWiseSellTaxReport");
+
+		return crnReport;
+
+	}
+	
+	
+	
 	List<GetSpAdvanceReport> advList = new ArrayList<>();
 
 	@RequestMapping(value = "/getSpAdvance", method = RequestMethod.GET)
@@ -3155,6 +3535,212 @@ public class ReportsController {
 		}
 		return model;
 	}
+	
+	
+
+	@RequestMapping(value = "/itemWiseHsnReport", method = RequestMethod.GET)
+	public ModelAndView itemWiseHsnReport(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("report/sellReport/itemWiseHsnReport");
+
+		HttpSession ses = request.getSession();
+		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+
+		model.addObject("frId", frDetails.getFrId());
+		model.addObject("frName", frDetails.getFrName());
+
+		return model;
+	}
+
+	
+	List<HSNItemWiseReport> hsnItemListBill = new ArrayList<>();
+
+	@RequestMapping(value = "/getItemWiseHsnReportAjax", method = RequestMethod.GET)
+	public @ResponseBody List<HSNItemWiseReport> getItemWiseHsnReportAjax(HttpServletRequest request,
+			HttpServletResponse response) {
+		String fromDate = "";
+		String toDate = "";
+		List<HSNItemWiseReport> hsnList = null;
+
+		try {
+			HttpSession ses = request.getSession();
+			System.out.println("Inside get hsnList    ");
+			hsnItemListBill = new ArrayList<>();
+			hsnList = new ArrayList<>();
+			fromDate = request.getParameter("fromDate");
+			toDate = request.getParameter("toDate");
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			RestTemplate restTemplate = new RestTemplate();
+
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
+			map.add("frId", frDetails.getFrId());
+
+			ParameterizedTypeReference<List<HSNItemWiseReport>> typeRef = new ParameterizedTypeReference<List<HSNItemWiseReport>>() {
+			};
+			ResponseEntity<List<HSNItemWiseReport>> responseEntity = restTemplate.exchange(
+					Constant.URL + "getOPSHsnItemWiseBillReport", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+			hsnItemListBill = responseEntity.getBody();
+			
+			ParameterizedTypeReference<List<HSNItemWiseReport>> typeRef1 = new ParameterizedTypeReference<List<HSNItemWiseReport>>() {
+			};
+			ResponseEntity<List<HSNItemWiseReport>> responseEntity1 = restTemplate
+					.exchange(Constant.URL + "getOPSHsnItemReport", HttpMethod.POST, new HttpEntity<>(map), typeRef1);
+
+			hsnList = responseEntity1.getBody();
+
+			System.out.println("hsn List Bill Wise " + hsnList.toString());
+
+			if (hsnItemListBill.isEmpty() && hsnList.isEmpty()) {
+				hsnItemListBill = new ArrayList<>();
+			} else if (!hsnList.isEmpty()) {
+				for (int i = 0; i < hsnList.size(); i++) {
+					for (int j = 0; j < hsnItemListBill.size(); j++) {
+						if (hsnList.get(i).getItemId() == hsnItemListBill.get(j).getItemId()) {
+							hsnItemListBill.get(j).setTaxableAmt(
+									hsnItemListBill.get(j).getTaxableAmt() - hsnList.get(i).getTaxableAmt());
+							hsnItemListBill.get(j).setGrnGvnQty(hsnList.get(i).getBillQty());
+
+							hsnItemListBill.get(j)
+									.setCgstRs(hsnItemListBill.get(j).getCgstRs() - hsnList.get(i).getCgstRs());
+
+							hsnItemListBill.get(j)
+									.setSgstRs(hsnItemListBill.get(j).getSgstRs() - hsnList.get(i).getSgstRs());
+
+						}
+						// hsnListBill.get(j).setGrnGvnQty(0);
+					}
+				}
+			}
+
+			/*
+			 * if (type == 2) { hsnItemListBill.addAll(hsnList); }
+			 */
+			System.out.println(hsnItemListBill.toString());
+			System.out.println(hsnList.toString());
+
+		} catch (Exception e) {
+			System.out.println("get sale Report hsn Wise " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		// exportToExcel
+
+		if (!hsnItemListBill.isEmpty()) {
+
+			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+			ExportToExcel expoExcel = new ExportToExcel();
+			List<String> rowData = new ArrayList<String>();
+
+			rowData.add("Sr No");
+			rowData.add("Item Name");
+			rowData.add("HSN Code");
+			rowData.add("UOM");
+			rowData.add("Tax %");
+			rowData.add("Bill Qty");
+			rowData.add("Rej Qty");
+			rowData.add("Total Qty");
+			rowData.add("Taxable Amount");
+			rowData.add("CGST");
+			rowData.add("CGST Amount");
+			rowData.add("SGST");
+			rowData.add("SGST Amount");
+			rowData.add("Total");
+
+			float taxableAmt = 0.0f;
+			float cgstSum = 0.0f;
+			float sgstSum = 0.0f;
+			float igstSum = 0.0f;
+			float totalTax = 0.0f;
+			float grandTotal = 0.0f;
+
+			expoExcel.setRowData(rowData);
+			int srno = 1;
+			exportToExcelList.add(expoExcel);
+			for (int i = 0; i < hsnItemListBill.size(); i++) {
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+
+				rowData.add("" + srno);
+				rowData.add(hsnItemListBill.get(i).getItemName());
+				rowData.add(hsnItemListBill.get(i).getItemHsncd());
+				rowData.add(hsnItemListBill.get(i).getItemUom());
+				
+				rowData.add(""+(hsnItemListBill.get(i).getItemTax1() + hsnItemListBill.get(i).getItemTax2()));
+				rowData.add(""+hsnItemListBill.get(i).getBillQty());
+				rowData.add(""+hsnItemListBill.get(i).getGrnGvnQty());
+				rowData.add(" " + (hsnItemListBill.get(i).getBillQty() - hsnItemListBill.get(i).getGrnGvnQty()));
+				
+				rowData.add("" + Long.toString((long) (hsnItemListBill.get(i).getTaxableAmt())));
+				
+				rowData.add(""+hsnItemListBill.get(i).getItemTax1());
+				rowData.add(""+hsnItemListBill.get(i).getCgstRs());
+				rowData.add(""+hsnItemListBill.get(i).getItemTax2());
+				rowData.add(""+hsnItemListBill.get(i).getSgstRs());
+				
+				rowData.add(" " + roundUp(hsnItemListBill.get(i).getTaxableAmt() + hsnItemListBill.get(i).getCgstRs()
+						+ hsnItemListBill.get(i).getSgstRs()));
+
+				totalTax = totalTax + roundUp(hsnItemListBill.get(i).getItemTax1())
+						+ roundUp(hsnItemListBill.get(i).getItemTax2());
+				taxableAmt = taxableAmt + roundUp(hsnItemListBill.get(i).getTaxableAmt());
+				cgstSum = cgstSum + roundUp(hsnItemListBill.get(i).getCgstRs());
+				sgstSum = sgstSum + roundUp(hsnItemListBill.get(i).getSgstRs());
+				grandTotal = grandTotal + roundUp(hsnItemListBill.get(i).getTaxableAmt()
+						+ hsnItemListBill.get(i).getCgstRs() + hsnItemListBill.get(i).getSgstRs());
+
+				srno = srno + 1;
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+			}
+
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+
+			rowData.add("");
+			rowData.add("Total");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("" + Long.toString((long) (taxableAmt)));
+			rowData.add("");
+			rowData.add("" + roundUp(cgstSum));
+			rowData.add("");
+			rowData.add("" + roundUp(sgstSum));
+			rowData.add("" + Long.toString((long) (grandTotal)));
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+			HttpSession session = request.getSession();
+			session.setAttribute("exportExcelListNew", exportToExcelList);
+			session.setAttribute("excelNameNew", "HSNWiseReport");
+			session.setAttribute("reportNameNew", "View Item Wise Report");
+			session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
+			session.setAttribute("mergeUpto1", "$A$1:$L$1");
+			session.setAttribute("mergeUpto2", "$A$2:$L$2");
+
+			session.setAttribute("exportExcelList", exportToExcelList);
+			session.setAttribute("excelName", "HSNWiseReport");
+
+		}
+
+		return hsnItemListBill;
+	}
+
+	
+	
+	
+	
+	
 
 	@RequestMapping(value = "/getTaxSellReport", method = RequestMethod.GET)
 	public @ResponseBody List<GetRepTaxSell> getFrTaxSellBill(HttpServletRequest request,

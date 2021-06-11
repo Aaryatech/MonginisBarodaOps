@@ -35,6 +35,13 @@ public class GetRepTaxSell {
 	private float sgst;
 
 	private float cess;
+	
+	
+	private String fromBill;
+	private String toBill;
+	
+	
+	
 
 	public int getSellBillDetailNo() {
 		return sellBillDetailNo;
@@ -140,13 +147,31 @@ public class GetRepTaxSell {
 		this.cess = cess;
 	}
 
+	public String getFromBill() {
+		return fromBill;
+	}
+
+	public void setFromBill(String fromBill) {
+		this.fromBill = fromBill;
+	}
+
+	public String getToBill() {
+		return toBill;
+	}
+
+	public void setToBill(String toBill) {
+		this.toBill = toBill;
+	}
+
 	@Override
 	public String toString() {
 		return "GetRepTaxSell [sellBillDetailNo=" + sellBillDetailNo + ", sellBillNo=" + sellBillNo + ", billDate="
 				+ billDate + ", frId=" + frId + ", frName=" + frName + ", tax_amount=" + tax_amount + ", tax_per="
 				+ tax_per + ", gstn=" + gstn + ", bill_amount=" + bill_amount + ", igst=" + igst + ", cgst=" + cgst
-				+ ", sgst=" + sgst + ", cess=" + cess + "]";
+				+ ", sgst=" + sgst + ", cess=" + cess + ", fromBill=" + fromBill + ", toBill=" + toBill + "]";
 	}
+
+	
 	
 	
 }
